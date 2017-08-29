@@ -1,12 +1,13 @@
 {
-  "name": "vue-hackernews-2.0",
-  "description": "A Vue.js project",
-  "author": "Evan You <yyx990803@gmail.com>",
+  "name": "taiwan-watch-web",
+  "description": "Taiwan Watch Web Interface for the Public.",
+  "author": "Bruce Lee <fockerlee@gmail.com>",
   "private": true,
   "scripts": {
+    "use-local-module-as-command": "PATH=$(npm bin):$PATH",
     "dev": "node server",
-    "start": "cross-env NODE_ENV=production node server",
-    "build": "rimraf dist && npm run build:client && npm run build:server",
+    "start": "npm run use-local-module-as-command && cross-env NODE_ENV=production node server",
+    "build": "npm run use-local-module-as-command && rimraf dist && npm run build:client && npm run build:server",
     "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.client.config.js --progress --hide-modules",
     "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.server.config.js --progress --hide-modules"
   },

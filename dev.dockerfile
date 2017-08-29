@@ -4,4 +4,4 @@ ENV NODE_ENV=development
 
 VOLUME ["/var/app"]
 
-CMD ["./initialize.sh"]
+CMD ["./dev.sh"]
