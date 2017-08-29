@@ -1,27 +1,25 @@
 FROM node:alpine
 
-ENV NODE_ENV=development PORT=8080
+ENV NODE_ENV=production PORT=8080
 
 COPY . /var/app
 WORKDIR /var/app
 
 EXPOSE $PORT
 
+# help require() to find node_modules
 RUN npm config set prefix /var/app
+
+# commands to run build script
 RUN npm install -g --silent \
   rimraf \
   cross-env \
   webpack
 
+# install node_modules
 RUN npm install
 
-RUN npm install \
-  babel-plugin-transform-runtime \
-  babel-preset-es2015 \
-  babel-preset-stage-2 \
-  babel-preset-stage-0 \
-  babel-preset-react
-
+# build for production
 RUN npm run build
 
 CMD ["npm", "run", "start"]
