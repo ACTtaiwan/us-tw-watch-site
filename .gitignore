@@ -10,6 +10,9 @@ npm-debug.log
 # Nuxt generate
 dist
 
+# serverless generate
+.serverless
+
 # IDE
 .editorconfig
 
