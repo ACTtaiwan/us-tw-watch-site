@@ -12,3 +12,6 @@ dist
 
 # IDE
 .editorconfig
+
+# OS
+.DS_Store

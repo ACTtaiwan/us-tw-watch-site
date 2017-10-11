@@ -108,6 +108,7 @@ Deploy:
 ``` bash
 # Deploy to a cloud-hosted development environment
 npm run deploy-dev
+
 # When everything looks good, deploy to production
 npm run deploy-prod
 ```

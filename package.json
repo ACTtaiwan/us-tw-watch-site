@@ -15,6 +15,8 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "aws-serverless-express": "^3.0.2",
+    "express": "^4.16.2",
     "nuxt": "^1.0.0-rc11"
   },
   "devDependencies": {
