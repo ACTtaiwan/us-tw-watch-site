@@ -63,19 +63,18 @@
 
 ## Directory Structure
 ```
-├── assets ------------ un-compiled assets such as Less, Sass or JavaScript
-├── components -------- Vue.js Components. Nuxt.js doesn't supercharge the data method on these components
-├── layouts ----------- app Layouts
-├── middleware -------- Middleware lets you define custom functions that can be run before rendering either a page or a group of pages (layouts)
-├── pages ------------- app Views and Routes
-├── plugins ----------- Javascript plugins that you want to run before instantiating the root Vue.js app
-├── static ------------ static files, and each file inside this directory is mapped to /
-├── store ------------  Vuex Store files
-├── handler.js -------- lambda function to export the SSR server to an endpoint
-├── nuxt.config.js ---- Nuxt.js custom configuration
-├── package.json ------ app dependencies and scripts.
-├── serverless.yml ---- config for delpoying AWS serverless stack
-└── yarn.lock
+├── 📂 assets ------------ un-compiled assets such as Less, Sass or JavaScript
+├── 📂 components -------- Vue.js Components. Nuxt.js doesn't supercharge the data method on these components
+├── 📂 layouts ----------- app Layouts
+├── 📂 middleware -------- Middleware lets you define custom functions that can be run before rendering either a page or a group of pages (layouts)
+├── 📂 pages ------------- app Views and Routes
+├── 📂 plugins ----------- Javascript plugins that you want to run before instantiating the root Vue.js app
+├── 📂 static ------------ static files, and each file inside this directory is mapped to /
+├── 📂 store ------------  Vuex Store files
+├── 📄 handler.js -------- lambda function to export the SSR server to an endpoint
+├── 📄 nuxt.config.js ---- Nuxt.js custom configuration
+├── 📄 package.json ------ app dependencies and scripts.
+└── 📄 serverless.yml ---- config for delpoying AWS serverless stack
 ```
 
 ## Development
