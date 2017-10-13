@@ -1,15 +1,16 @@
 {
   "name": "ssr",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Nuxt.js project",
   "author": "Jerry Hsu <hsuyachieh@gmail.com>",
   "private": true,
+  "main": "index.js",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "deploy-dev": "nuxt build && sls deploy --stage dev",
-    "deploy-prod": "nuxt build && sls deploy --stage prod",
+    "deploy-dev": "BASE_URL=/dev/ nuxt build && serverless deploy --stage dev",
+    "deploy-prod": "BASE_URL=/prod/ nuxt build && serverless deploy --stage prod",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint"
