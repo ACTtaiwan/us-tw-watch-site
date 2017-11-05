@@ -1,20 +1,15 @@
-# dependencies
+# file meta data
+.DS_Store
+
+# Node.js
 node_modules
+jspm_packages
+npm-debug.log*
+.npm
+.node_repl_history
 
-# logs
-npm-debug.log
-
-# Nuxt build
+# Nuxt.js build
 .nuxt
 
-# Nuxt generate
-dist
-
-# serverless
+# Serverless directories
 .serverless
-
-# IDE
-.editorconfig
-
-# OS
-.DS_Store

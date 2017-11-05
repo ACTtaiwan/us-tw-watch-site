@@ -1,33 +1,37 @@
 {
-  "name": "ssr",
-  "version": "0.1.0",
-  "description": "Nuxt.js project",
-  "author": "Jerry Hsu <hsuyachieh@gmail.com>",
+  "name": "nuxt-on-lambda",
+  "version": "0.0.1",
+  "description": "a perfect-paca project",
+  "author": "dieface <fockerlee@gmail.com>",
   "private": true,
   "main": "index.js",
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
+    "dev": "BASE_URL=/dev/ node serve-local.js",
     "deploy-dev": "BASE_URL=/dev/ nuxt build && serverless deploy --stage dev",
-    "deploy-prod": "BASE_URL=/prod/ nuxt build && serverless deploy --stage prod",
-    "generate": "nuxt generate",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint"
+    "deploy-dev-fast": "BASE_URL=/dev/ nuxt build && serverless deploy --stage dev --function main",
+    "deploy-prod": "BASE_URL=/prod/ nuxt build && serverless deploy --stage prod"
   },
   "dependencies": {
-    "aws-serverless-express": "^3.0.2",
-    "express": "^4.16.2",
-    "nuxt": "^1.0.0-rc11"
+    "aws-serverless-express": "^3.0.0",
+    "axios": "^0.16.1",
+    "body-parser": "^1.18.2",
+    "bulma": "^0.6.0",
+    "express": "^4.15.2",
+    "express-session": "^1.15.6",
+    "lru-cache": "^4.1.1",
+    "mini-toastr": "^0.6.6",
+    "nuxt": "1.0.0-rc11",
+    "vue-i18n": "^7.3.1",
+    "vue-notifications": "^0.9.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
-    "eslint": "^4.3.0",
+    "eslint": "^3.19.0",
     "eslint-config-standard": "^10.2.1",
-    "eslint-loader": "^1.9.0",
-    "eslint-plugin-html": "^3.1.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^5.1.1",
+    "eslint-loader": "^1.7.1",
+    "eslint-plugin-html": "^2.0.3",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.2",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1"
   }
