@@ -15,11 +15,13 @@
 
 - [x] [Vue.js](https://vuejs.org/) - component-based MVVM library
   - [x] [vue-router](https://github.com/vuejs/vue-router)
-  - [x] [vue-resource](https://github.com/vuejs/vue-resource)
+  - [ ] [axios](https://github.com/axios/axios)
 - [x] [Vuex](https://github.com/vuejs/vuex) - Flux application architecture for Vue.js
   - [x] [vue-router-sync](https://github.com/vuejs/vuex-router-sync)
 - [x] [iView](https://github.com/iview/iview) - A high quality UI Toolkit built on Vue.js
 - [x] [Nuxt.js](https://nuxtjs.org/guide/installation) - Vue SSR
+- [x] [vue-apollo](https://github.com/akryum/vue-apollo) - GraphQL Client
+- [x] [Vue-i18n](https://github.com/kazupon/vue-i18n) - i18n
 
 #### Tools
 
@@ -46,17 +48,12 @@
 ### DevOps
 
 - [x] [BitBucket](https://bitbucket.org/) - source-code hosting
-  - [x] [BitBucket Pipeline](https://bitbucket.org/product/features/pipelines) - continuous integration and delivery
-
-#### Monitoring
-
-- [x] [Dashbird](https://app.dashbird.io/) - AWS Lambda monitoring
+  - [ ] [BitBucket Pipeline](https://bitbucket.org/product/features/pipelines) - continuous integration and delivery
 
 #### Business Tools
 
 - [x] [Slack](https://taiwan-watch-slack-invite.herokuapp.com/) - group notifications
 - [x] [HackMD](https://hackmd.io/c/BJKPgq5sZ/) - collaborative project notes
-
 
 ## Architecture
 🚧

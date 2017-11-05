@@ -15,8 +15,12 @@
         <a href="https://github.com/nuxt/nuxt.js"
           target="_blank"
           class="button--grey">GitHub</a>
-        <nuxt-link to="/a">page A</nuxt-link>
-        <nuxt-link to="/b">page B</nuxt-link>
+        <br>
+        <nuxt-link to="/bills">bills</nuxt-link>
+        <br>
+        <nuxt-link to="/bills/123">bill A</nuxt-link>
+        <br>
+        <nuxt-link to="/bills/345345">bill B</nuxt-link>
       </div>
     </div>
   </section>
