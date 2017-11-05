@@ -6,7 +6,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "dev": "BASE_URL=/dev/ node serve-local.js",
+    "dev": "BASE_URL=/dev/ node local-server.js",
     "deploy-dev": "BASE_URL=/dev/ nuxt build && serverless deploy --stage dev",
     "deploy-dev-fast": "BASE_URL=/dev/ nuxt build && serverless deploy --stage dev --function main",
     "deploy-prod": "BASE_URL=/prod/ nuxt build && serverless deploy --stage prod"

@@ -1,7 +1,7 @@
 module.exports = {
   css: [
     'bulma/css/bulma.css',
-    '~/css/main.css'
+    '~/assets/css/main.css'
   ],
   render: {
     bundleRenderer: {
