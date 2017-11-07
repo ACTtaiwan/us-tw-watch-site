@@ -1,0 +1,13 @@
+{
+  "links": {
+    "home": "首頁",
+    "about": "關於",
+    "english": "英文",
+    "zh-tw": "中文",
+    "bills": "法案"
+  },
+  "home": {
+    "title": "首頁",
+    "introduction": "This is an introduction in Chinese."
+  }
+}

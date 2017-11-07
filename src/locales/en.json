@@ -1,13 +1,14 @@
-
 {
   "links": {
     "home": "Home",
     "about": "About",
-    "english": "English version",
-    "french": "French version"
+    "english": "English",
+    "french": "French",
+    "chinese": "Chinese",
+    "bills": "Bills"
   },
   "home": {
-    "title": "Welcome",
+    "title": "Index",
     "introduction": "This is an introduction in English."
   },
   "about": {

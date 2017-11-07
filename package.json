@@ -1,21 +1,20 @@
 {
-  "name": "nuxt-on-lambda",
+  "name": "taiwanwatch-main-site",
   "version": "0.0.1",
-  "description": "a perfect-paca project",
+  "description": "Taiwan Watch Official Website",
   "author": "dieface <fockerlee@gmail.com>",
   "private": true,
   "main": "index.js",
   "scripts": {
-    "dev": "BASE_URL=/dev/ node local-server.js",
-    "deploy-dev": "BASE_URL=/dev/ nuxt build && serverless deploy --stage dev",
-    "deploy-dev-fast": "BASE_URL=/dev/ nuxt build && serverless deploy --stage dev --function main",
-    "deploy-prod": "BASE_URL=/prod/ nuxt build && serverless deploy --stage prod"
+    "dev": "node local-server.js",
+    "deploy-dev": "nuxt build && serverless deploy --stage dev",
+    "deploy-dev-fast": "nuxt build && serverless deploy --stage dev --function main",
+    "deploy-prod": "nuxt build && serverless deploy --stage prod"
   },
   "dependencies": {
     "aws-serverless-express": "^3.0.0",
     "axios": "^0.16.1",
     "body-parser": "^1.18.2",
-    "bulma": "^0.6.0",
     "express": "^4.15.2",
     "express-session": "^1.15.6",
     "iview": "^2.6.0",

@@ -18,7 +18,7 @@ app.use(session({
   cookie: { maxAge: 60000 }
 }))
 
-app.use(process.env.BASE_URL + 'api', require('./src/api'))
+app.use('/api', require('./src/api'))
 
 let nuxtConfig = require('./nuxt.config.js')
 nuxtConfig.dev = (process.env.NODE_ENV !== 'production')

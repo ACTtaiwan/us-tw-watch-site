@@ -1,6 +1,5 @@
 module.exports = {
   css: [
-    'bulma/css/bulma.css',
     '~/assets/css/main.css'
   ],
   render: {
@@ -15,7 +14,7 @@ module.exports = {
     }
   },
   env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+    baseUrl: '/',
     players: [
       { id: 1, name: 'Kobe Bryant', number: 24 },
       { id: 2, name: 'Michael Jordan', number: 23 },
@@ -29,10 +28,12 @@ module.exports = {
   plugins: [
     '~/plugins/i18n.js',
     // ssr: false to only include it on client-side
-    { src: '~/plugins/vue-notifications.js', ssr: false }
+    { src: '~/plugins/vue-notifications.js', ssr: false },
+    { src: '~plugins/iview', ssr: true }
   ],
   generate: {
     routes: [
+      '/zh-tw',
       '/fr',
       '/players/1',
       '/players/2',
@@ -44,10 +45,10 @@ module.exports = {
   },
   router: {
     middleware: ['visits', 'user-agent', 'i18n'],
-    base: process.env.BASE_URL ? process.env.BASE_URL : '/'
+    base: '/'
   },
   head: {
-    titleTemplate: '%s - Paca',
+    titleTemplate: '%s - TaiwanWatch',
     htmlAttrs: {
       'lang': 'en-US'
     },

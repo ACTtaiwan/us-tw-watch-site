@@ -1,103 +1,116 @@
 <template>
-  <div>
-    <header class="Header">
-      <div class="container">
-        <h1 class="Header__Title">Nuxt i18n</h1>
-        <nav class="Header__Menu">
-          <nuxt-link class="Header__Link" :to="path('/')" exact>
-            {{ $t('links.home') }}
-          </nuxt-link>
-          <nuxt-link class="Header__Link" :to="path('/about')" exact>
-            {{ $t('links.about') }}
-          </nuxt-link>
-          <nuxt-link class="Header__Link" v-if="$i18n.locale === 'en'" :to="`/fr` + $route.fullPath" active-class="none" exact>
-            {{ $t('links.french') }}
-          </nuxt-link>
-          <nuxt-link class="Header__Link" v-else :to="$route.fullPath.replace(/^\/[^\/]+/, '')" active-class="none" exact>
-            {{ $t('links.english') }}
-          </nuxt-link>
-        </nav>
-      </div>
-    </header>
-    <nuxt/>
-    <visits/>
-  </div>
+    <div class="layout">
+        <Menu mode="horizontal" theme="dark" active-name="1">
+            <div class="layout-logo"></div>
+            <div class="layout-nav">
+                <MenuItem name="1">
+                    <Icon type="ios-navigate"></Icon>
+                    Item 1
+                </MenuItem>
+                <MenuItem name="2">
+                    <Icon type="ios-keypad"></Icon>
+                    Item 2
+                </MenuItem>
+                <MenuItem name="3">
+                    <Icon type="ios-analytics"></Icon>
+                    Item 3
+                </MenuItem>
+                <MenuItem name="4">
+                    <Icon type="ios-paper"></Icon>
+                    Item 4
+                </MenuItem>
+            </div>
+        </Menu>
+        <div class="layout-content">
+            <Row>
+                <Col span="5">
+                    <Menu active-name="1-2" width="auto" :open-names="['1']">
+                        <Submenu name="1">
+                            <template slot="title">
+                                <Icon type="ios-navigate"></Icon>
+                                Item 1
+                            </template>
+                            <MenuItem name="1-1">Option 1</MenuItem>
+                            <MenuItem name="1-2">Option 2</MenuItem>
+                            <MenuItem name="1-3">Option 3</MenuItem>
+                        </Submenu>
+                        <Submenu name="2">
+                            <template slot="title">
+                                <Icon type="ios-keypad"></Icon>
+                                Item 2
+                            </template>
+                            <MenuItem name="2-1">Option 1</MenuItem>
+                            <MenuItem name="2-2">Option 2</MenuItem>
+                        </Submenu>
+                        <Submenu name="3">
+                            <template slot="title">
+                                <Icon type="ios-analytics"></Icon>
+                                Item 3
+                            </template>
+                            <MenuItem name="3-1">Option 1</MenuItem>
+                            <MenuItem name="3-2">Option 2</MenuItem>
+                        </Submenu>
+                    </Menu>
+                </Col>
+                <Col span="19">
+                    <div class="layout-content-main">Content</div>
+                </Col>
+            </Row>
+        </div>
+        <div class="layout-footer">
+            2011-2016 &copy; TalkingData
+        </div>
+    </div>
 </template>
 
 <script>
-import Visits from '~/components/Visits'
-
-export default {
-  methods: {
-    path (url) {
-      return (this.$i18n.locale === 'en' ? url : '/' + this.$i18n.locale + url)
+  export default {
+    head () {
+      return {
+        title: this.$t('home.title')
+      }
     }
-  },
-  components: { Visits }
-}
+  }
 </script>
 
-<style>
-*, *:before, *:after {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-html, body {
-  background-color: #fff;
-  color: #2e2f30;
-  letter-spacing: 0.5px;
-  font-size: 18px;
-  font-family: "Source Sans Pro", Arial, sans-serif;
-  height: 100vh;
-  margin: 0;
-}
-.container {
-  width: 75%;
-  margin: 0 auto;
-}
-.container:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-.Header {
-  color: #fff;
-  height: 80px;
-  line-height: 80px;
-  background-color: #2e2f30;
-}
-.Header__Title {
-  float: left;
-  font-weight: 300;
-  font-size: 30px;
-}
-.Header__Menu {
-  float: right;
-}
-.Header__Link {
-  font-size: 16px;
-  color: #fff;
-  border: 1px solid #fff;
-  padding: 7px 12px;
-  text-transform: uppercase;
-  text-decoration: none;
-  border-radius: 5px;
-  margin-left: 10px;
-}
-.Header__Link:hover {
-  color: #2e2f30;
-  background-color: #fff;
-}
-.nuxt-link-active {
-  color: cyan;
-}
-.Content {
-  padding: 50px 0;
-  text-align: center;
-}
-.Content__Title {
-  font-weight: 300;
-  padding-bottom: 30px;
-}
+<style scoped>
+  :root {
+    --header-height: 60px;
+    --footer-height: 60px;
+  }
+  .layout{
+      border: 1px solid #d7dde4;
+      background: #f5f7f9;
+  }
+  .layout-logo{
+      width: 100px;
+      height: 30px;
+      background: #5b6270;
+      border-radius: 3px;
+      float: left;
+      position: relative;
+      top: 15px;
+      left: 20px;
+  }
+  .layout-nav{
+      width: 420px;
+      margin: 0 auto;
+  }
+  .layout-breadcrumb{
+      padding: 10px 15px 0;
+  }
+  .layout-content{
+      height: calc(100vh - var(--header-height) - var(--footer-height));
+      overflow: hidden;
+      background: #fff;
+  }
+  .layout-content-main{
+      padding: 10px;
+  }
+  .layout-footer {
+      height: var(--footer-height);
+      text-align: center;
+      padding: 10px 0 20px;
+      color: #9ea7b4;
+  }
 </style>
