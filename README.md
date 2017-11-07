@@ -23,6 +23,7 @@
 - [x] [aws-serverless-express](https://github.com/awslabs/aws-serverless-express) - Run serverless applications and REST APIs using your existing Node.js application framework, on top of AWS Lambda and Amazon API Gateway
 - [x] [express-session](https://github.com/expressjs/session) - Simple session middleware for Express
 - [x] [lru-cache](https://github.com/isaacs/node-lru-cache ) - A cache object that deletes the least-recently-used items.
+- [x] [mobile-detect](https://github.com/hgoebl/mobile-detect.js/) - Device detection (phone, tablet, desktop, mobile grade, os, versions) 
 - [ ] [axios](https://github.com/axios/axios) - Promise based HTTP client for the browser and node.js
 - [ ] [vue-notifications](https://github.com/se-panfilov/vue-notifications) - Vue.js agnostic library for non-blocking notifications
 
