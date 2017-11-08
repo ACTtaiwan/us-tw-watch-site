@@ -5,19 +5,23 @@
             <div class="layout-nav">
                 <MenuItem name="1">
                     <Icon type="ios-navigate"></Icon>
-                    Item 1
+                    <nuxt-link id="A_16" :to="'/about'" exact>
+                      {{ $t('links.about') }}
+                    </nuxt-link>
                 </MenuItem>
                 <MenuItem name="2">
                     <Icon type="ios-keypad"></Icon>
-                    Item 2
+                    <nuxt-link id="A_18" :to="'/bills'" exact>
+                      {{ $t('links.bills') }}
+                    </nuxt-link>
                 </MenuItem>
                 <MenuItem name="3">
-                    <Icon type="ios-analytics"></Icon>
-                    Item 3
-                </MenuItem>
-                <MenuItem name="4">
-                    <Icon type="ios-paper"></Icon>
-                    Item 4
+                  <nuxt-link id="A_20" v-if="$i18n.locale === 'en'" :to="`/zh-tw` + $route.fullPath" active-class="none" exact>
+                    {{ $t('links.chinese') }}
+                  </nuxt-link>
+                  <nuxt-link id="A_20" v-else :to="$route.fullPath.replace(/^\/[^\/]+/, '')" active-class="none" exact>
+                    {{ $t('links.english') }}
+                  </nuxt-link>
                 </MenuItem>
             </div>
         </Menu>
@@ -58,7 +62,7 @@
             </Row>
         </div>
         <div class="layout-footer">
-            2011-2016 &copy; TalkingData
+            2017 &copy; TaiwanWatch
         </div>
     </div>
 </template>
