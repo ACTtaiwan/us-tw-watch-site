@@ -1,6 +1,7 @@
 module.exports = {
   css: [
-    '~/assets/css/main.css'
+    '~/assets/css/patch-iview.css',
+    '~/assets/css/ionicons.min.css'
   ],
   render: {
     bundleRenderer: {
@@ -29,7 +30,7 @@ module.exports = {
     '~/plugins/i18n.js',
     // ssr: false to only include it on client-side
     { src: '~/plugins/vue-notifications.js', ssr: false },
-    { src: '~plugins/iview', ssr: true }
+    { src: '~/plugins/iview', ssr: true }
   ],
   generate: {
     routes: [
@@ -63,6 +64,7 @@ module.exports = {
   },
   srcDir: 'src/',
   build: {
+    extractCSS: true,
     vendor: ['axios', 'mini-toastr', 'vue-notifications', 'vue-i18n'],
 
     /*

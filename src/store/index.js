@@ -2,7 +2,7 @@ import axios from 'axios'
 // import axios_factory from '~/plugins/axios_factory'
 
 export const state = () => ({
-  locales: ['en', 'fr'],
+  locales: ['en', 'zh-tw', 'fr'],
   locale: 'en',
   authUser: null,
   visits: []

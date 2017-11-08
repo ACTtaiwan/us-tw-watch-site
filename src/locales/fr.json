@@ -6,14 +6,6 @@
     "french": "Version FranÃ§aise"
   },
   "home": {
-    "title": "Bienvenue",
-    "introduction": "Ceci est un texte d'introduction en FranÃ§ais."
-  },
-  "about": {
-    "title": "Ã propos",
-    "introduction": "Cette page est faite pour vous donner plus d'informations."
-  },
-  "user": {
-    "email": "MAIL"
+    "title": "Bienvenue"
   }
 }

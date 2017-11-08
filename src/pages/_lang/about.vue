@@ -40,7 +40,7 @@ function timeout (ms) {
 }
 
 export default {
-  layout: 'dark',
+  // layout: 'dark',
 
   transition: 'bounce',
 
