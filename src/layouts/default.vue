@@ -11,19 +11,23 @@
       <ul class="layout-nav">
         <li>
           <nuxt-link class="header-link" :to="path('/about')" exact>
+            <Icon type="ios-navigate"></Icon>
             {{ $t('links.about') }}
           </nuxt-link>
         </li>
         <li>
           <nuxt-link class="header-link" :to="path('/bills')" exact>
+            <Icon type="ios-navigate"></Icon>
             {{ $t('links.bills') }}
           </nuxt-link>
         </li>
         <li>
           <nuxt-link class="header-link" v-if="$i18n.locale === 'en'" :to="`/zh-tw` + $route.fullPath" active-class="none" exact>
+            <Icon type="ios-navigate"></Icon>
             {{ $t('links.chinese') }}
           </nuxt-link>
           <nuxt-link class="header-link" v-else :to="$route.fullPath.replace(/^\/[^\/]+/, '')" active-class="none" exact>
+            <Icon type="ios-navigate"></Icon>
             {{ $t('links.english') }}
           </nuxt-link>
         </li>

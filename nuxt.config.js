@@ -1,8 +1,4 @@
 module.exports = {
-  css: [
-    '~/assets/css/patch-iview.css',
-    '~/assets/css/ionicons.min.css'
-  ],
   render: {
     bundleRenderer: {
       cache: require('lru-cache')({
@@ -64,7 +60,6 @@ module.exports = {
   },
   srcDir: 'src/',
   build: {
-    extractCSS: true,
     vendor: ['axios', 'mini-toastr', 'vue-notifications', 'vue-i18n'],
 
     /*

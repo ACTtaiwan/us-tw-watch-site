@@ -11,6 +11,8 @@ process.env.HOST = HOST
 process.env.PORT = PORT
 
 app.use(bodyParser.json()) // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true }))
+
 app.use(session({
   secret: 'super-secret-key',
   resave: false,
@@ -25,6 +27,14 @@ nuxtConfig.dev = (process.env.NODE_ENV !== 'production')
 
 const nuxt = new Nuxt(nuxtConfig)
 app.use(nuxt.render)
+
+// app.all(/^\/[\w-]+.(jpg|png)/, (req, res) => {
+//   const url = req.url
+//   const imgName = url.match(/[\w-]+.(jpg|png|txt)/)[0]
+
+//   res.redirect(`/static/${imgName}`)
+// })
+// app.use('/static/', express.static(`${__dirname}/src/static`))
 
 if (nuxtConfig.dev) {
   // nuxt.build()
