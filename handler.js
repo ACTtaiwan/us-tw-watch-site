@@ -90,7 +90,7 @@ app.use(nuxt.render)
 module.exports.main = (event, context) => {
   // workaround for double gzip encoding issue
   // HTTP gzip encoding should be done higher-up via something like CloudFront/CloudFlare
-  event.headers['Accept-Encoding'] = 'identity'
+  // event.headers['Accept-Encoding'] = 'identity'
 
   console.log('proxying event=', event)
 
