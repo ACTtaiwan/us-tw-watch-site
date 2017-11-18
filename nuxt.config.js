@@ -10,6 +10,9 @@ module.exports = {
       }
     }
   },
+  css: [
+    '@/assets/mapbox.css'
+  ],
   env: {
     baseUrl: '/',
     players: [
@@ -60,7 +63,7 @@ module.exports = {
   },
   srcDir: 'src/',
   build: {
-    vendor: ['axios', 'mini-toastr', 'vue-notifications', 'vue-i18n'],
+    vendor: ['axios', 'mini-toastr', 'vue-notifications', 'vue-i18n', 'firebase'],
 
     /*
     ** Run ESLINT on save

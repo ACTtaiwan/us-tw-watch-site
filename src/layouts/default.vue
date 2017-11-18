@@ -10,6 +10,13 @@
       </div>
       <ul class="layout-nav">
         <li>
+          <nuxt-link class="header-link" :to="path('/map')" exact>
+            <Icon type="ios-navigate"></Icon>
+            {{ $t('links.map') }}
+          </nuxt-link>
+        </li>
+
+        <li>
           <nuxt-link class="header-link" :to="path('/about')" exact>
             <Icon type="ios-navigate"></Icon>
             {{ $t('links.about') }}

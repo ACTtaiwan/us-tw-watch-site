@@ -14,5 +14,6 @@ router.use((req, res, next) => {
 router.use('/hello-world', require('./hello-world'))
 router.use('/login', require('./login'))
 router.use('/logout', require('./logout'))
+router.use('/bills', require('./bills'))
 
 module.exports = router
