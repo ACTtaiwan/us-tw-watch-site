@@ -10,9 +10,7 @@ module.exports = {
       }
     }
   },
-  css: [
-    '@/assets/mapbox.css'
-  ],
+  css: [{ src: '@/assets/css/main.css', lang: 'scss' }, { src: '@/assets/mapbox.css', lang: 'css' }],
   env: {
     baseUrl: '/',
     players: [
@@ -32,16 +30,7 @@ module.exports = {
     { src: '~/plugins/iview', ssr: true }
   ],
   generate: {
-    routes: [
-      '/zh-tw',
-      '/fr',
-      '/players/1',
-      '/players/2',
-      '/players/3',
-      '/players/4',
-      '/players/5',
-      '/players/6'
-    ]
+    routes: ['/zh-tw', '/fr', '/players/1', '/players/2', '/players/3', '/players/4', '/players/5', '/players/6']
   },
   router: {
     middleware: ['visits', 'user-agent', 'i18n'],
@@ -50,16 +39,14 @@ module.exports = {
   head: {
     titleTemplate: '%s - TaiwanWatch',
     htmlAttrs: {
-      'lang': 'en-US'
+      lang: 'en-US'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'Meta description' }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
   srcDir: 'src/',
   build: {
