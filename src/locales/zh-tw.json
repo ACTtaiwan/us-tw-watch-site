@@ -9,5 +9,17 @@
   },
   "home": {
     "title": "首頁"
+  },
+  "locales": {
+    "en-us": "EN",
+    "zh-tw": "中文"
+  },
+  "menu": {
+    "homeItemText": "主頁",
+    "docItemText": "說明",
+    "workItemText": "工作區",
+    "billItemText": "法案",
+    "votesItemText": "投票",
+    "congressMemberItemText": "國會議員"
   }
 }

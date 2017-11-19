@@ -1,0 +1,26 @@
+{
+  "links": {
+    "map": "Map",
+    "home": "Home",
+    "about": "About",
+    "english": "English",
+    "french": "French",
+    "chinese": "Chinese",
+    "bills": "Bills"
+  },
+  "home": {
+    "title": "Index"
+  },
+  "locales": {
+    "en-us": "EN",
+    "zh-tw": "中文"
+  },
+  "menu": {
+    "homeItemText": "Home",
+    "docItemText": "Read Me",
+    "workItemText": "Workspace",
+    "billItemText": "Bills",
+    "votesItemText": "Votes",
+    "congressMemberItemText": "Congress members"
+  }
+}

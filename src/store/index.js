@@ -2,14 +2,14 @@ import axios from 'axios'
 // import axios_factory from '~/plugins/axios_factory'
 
 export const state = () => ({
-  locales: ['en', 'zh-tw', 'fr'],
-  locale: 'en',
+  locales: ['en-us', 'zh-tw'],
+  locale: 'en-us',
   authUser: null,
   visits: []
 })
 
 export const mutations = {
-  SET_LANG (state, locale) {
+  SET_LOCALE (state, locale) {
     if (state.locales.indexOf(locale) !== -1) {
       state.locale = locale
     }
