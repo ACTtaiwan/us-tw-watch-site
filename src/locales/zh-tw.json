@@ -14,6 +14,10 @@
     "en-us": "EN",
     "zh-tw": "中文"
   },
+  "title": {
+    "siteMainTitle": "Taiwan Watch 美國國會觀測站",
+    "billsPageTitle": "法案"
+  },
   "menu": {
     "homeItemText": "主頁",
     "docItemText": "說明",
