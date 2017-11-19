@@ -3599,15 +3599,11 @@ export default {
 </script>
 
 <style>
+  
   :root {
     --header-height: 60px;
     --footer-height: 60px;
-    --map-height: calc(100vh - var(--header-height) - var(--footer-height));
-  }
-
-  body {
-    margin:0;
-    padding:0;
+    --map-height: calc(100% - var(--header-height));
   }
 
   .mapboxgl-missing-css {
@@ -3618,7 +3614,14 @@ export default {
     position:absolute;
     top: var(--header-height);
     bottom: var(--footer-height);
+    left: 0;
     width: 100%;
+    height: var(--map-height);
+  }
+  
+  .mapboxgl-canvas {
+    top: 0;
+    left: 0;
   }
 
   /* INTERACTIVE MENU */

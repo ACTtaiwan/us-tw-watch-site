@@ -1,0 +1,28 @@
+{
+  "binaryMimeTypes": [
+    "application/javascript",
+    "application/json",
+    "application/octet-stream",
+    "application/xml",
+    "application/x-font-ttf",
+    "application/x-font-woff",
+    "font/ttf",
+    "font/woff",
+    "font/woff2",
+    "font/eot",
+    "font/opentype",
+    "font/otf",
+    "image/jpeg",
+    "image/png",
+    "image/svg+xml",
+    "image/x-icon",
+    "image/vnd.microsoft.icon",
+    "text/comma-separated-values",
+    "text/css",
+    "text/html",
+    "text/javascript",
+    "text/plain",
+    "text/text",
+    "text/xml"
+  ]
+}
