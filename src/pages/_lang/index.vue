@@ -28,30 +28,32 @@
 <script>
 export default {
   head () {
-    return { title: this.$t('home.title') }
+    return {
+      title: this.$t('title.siteMainTitle')
+    }
   }
 }
 </script>
 
 <style scoped>
-  .home {
-    width: 100%;
-    height: 100%;
-    --banner-height: 30vh;
-    --highlight-height: 120px;
-  }
-  .home .home-banner {
-    width: 100%;
-    height: var(--banner-height);
-    background: #ddd;
-    text-align: center;
-    line-height: var(--banner-height);
-  }
-  .home .home-highlight {
-    width: 100%;
-    height: var(--highlight-height);
-    background: #999;
-    text-align: center;
-    line-height: var(--highlight-height);
-  }
+.home {
+  width: 100%;
+  height: 100%;
+  --banner-height: 30vh;
+  --highlight-height: 120px;
+}
+.home .home-banner {
+  width: 100%;
+  height: var(--banner-height);
+  background: #ddd;
+  text-align: center;
+  line-height: var(--banner-height);
+}
+.home .home-highlight {
+  width: 100%;
+  height: var(--highlight-height);
+  background: #999;
+  text-align: center;
+  line-height: var(--highlight-height);
+}
 </style>

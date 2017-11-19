@@ -15,6 +15,10 @@
     "en-us": "EN",
     "zh-tw": "中文"
   },
+  "title": {
+    "siteMainTitle": "Taiwan Watch",
+    "billsPageTitle": "Bills"
+  },
   "menu": {
     "homeItemText": "Home",
     "docItemText": "Read Me",

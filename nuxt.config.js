@@ -37,7 +37,7 @@ module.exports = {
     base: '/'
   },
   head: {
-    titleTemplate: '%s - TaiwanWatch',
+    titleTemplate: '',
     htmlAttrs: {
       lang: 'en-US'
     },
