@@ -11,7 +11,8 @@ module.exports = {
     }
   },
   css: [
-    '@/assets/mapbox.css'
+    '@/assets/mapbox.css',
+    '@/assets/mapbox-gl.css'
   ],
   env: {
     baseUrl: '/',
