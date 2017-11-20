@@ -1,50 +1,57 @@
 <template>
-    <Table :columns="columns1" :data="data1"></Table>
+    <div>
+      <Table
+        :columns="billSchema"
+        :data="bills"
+        :loading="loading"
+      >
+      </Table>
+    </div>
 </template>
 <script>
 export default {
-  data () {
-    return {
-      columns1: [
+  beforeCreate () {
+    this.$store.dispatch('getBills')
+  },
+
+  computed: {
+    loading () {
+      return this.$store.state.loading
+    },
+
+    bills () {
+      return this.$store.state.bills
+    },
+
+    billSchema () {
+      const schema = [
         {
-          title: 'Name',
-          key: 'name'
+          title: 'Bill',
+          key: 'billNumber'
         },
         {
-          title: 'Age',
-          key: 'age'
+          title: 'Chamber',
+          key: 'chamber'
         },
         {
-          title: 'Address',
-          key: 'address'
-        }
-      ],
-      data1: [
-        {
-          name: 'John Brown',
-          age: 18,
-          address: 'New York No. 1 Lake Park',
-          date: '2016-10-03'
+          title: 'LastUpdated',
+          key: 'lastUpdated'
         },
         {
-          name: 'Jim Green',
-          age: 24,
-          address: 'London No. 1 Lake Park',
-          date: '2016-10-01'
+          title: 'Sponsor',
+          key: 'sponsor'
         },
         {
-          name: 'Joe Black',
-          age: 30,
-          address: 'Sydney No. 1 Lake Park',
-          date: '2016-10-02'
+          title: 'Congress',
+          key: 'congress'
         },
         {
-          name: 'Jon Snow',
-          age: 26,
-          address: 'Ottawa No. 2 Lake Park',
-          date: '2016-10-04'
+          title: 'Title',
+          key: 'title'
         }
       ]
+
+      return schema
     }
   }
 }
