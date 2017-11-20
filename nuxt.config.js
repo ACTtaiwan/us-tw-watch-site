@@ -63,7 +63,20 @@ module.exports = {
   },
   srcDir: 'src/',
   build: {
-    vendor: ['axios', 'mini-toastr', 'vue-notifications', 'vue-i18n', 'firebase'],
+    vendor: [
+      'axios',
+      'mini-toastr',
+      'vue-notifications',
+      'vue-i18n',
+      'firebase',
+      'jquery',
+      'mapbox-gl',
+      'mapbox.js',
+      '@mapbox/geo-viewport',
+      'd3',
+      'd3-queue',
+      'topojson'
+    ],
 
     /*
     ** Run ESLINT on save

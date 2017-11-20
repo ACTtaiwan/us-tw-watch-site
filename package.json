@@ -17,6 +17,8 @@
     "aws-serverless-express": "^3.0.0",
     "axios": "^0.16.1",
     "body-parser": "^1.18.2",
+    "d3": "v3.5.17",
+    "d3-queue": "v1.2.3",
     "express": "^4.15.2",
     "express-session": "^1.15.6",
     "firebase": "^4.6.2",
@@ -29,6 +31,7 @@
     "mapbox.js": "2.2.4",
     "mini-toastr": "^0.6.6",
     "nuxt": "^1.0.0-rc11",
+    "topojson": "v1.6.27",
     "vue-apollo": "^3.0.0-alpha.2",
     "vue-i18n": "^7.3.1",
     "vue-notifications": "^0.9.0"
