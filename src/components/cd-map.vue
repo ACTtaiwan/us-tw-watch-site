@@ -26,17 +26,9 @@ export default {
         .attr('width', width)
         .attr('height', height)
 
-    // queue()
-    //     .defer(d3.json, require('~/assets/us.json'))
-    //     .defer(d3.json, require('~/assets/us-cd115-topo.json'))
-    //     .await(ready)
-
-    ready(null, require('@/assets/us.json'), require('@/assets/us-cd115-topo.json'))
+    ready(null, require('@/assets/json/us.json'), require('@/assets/json/us-cd115-topo.json'))
 
     function ready (error, us, congress) {
-      console.log('us: ', us)
-      console.log('congress: ', congress)
-
       if (error) throw error
 
       svg.append('defs').append('path')

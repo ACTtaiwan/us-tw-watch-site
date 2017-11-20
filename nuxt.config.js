@@ -14,26 +14,10 @@ module.exports = {
     {
       src: '@/assets/css/main.css',
       lang: 'scss'
-    },
-    {
-      src: '@/assets/mapbox-gl.css',
-      lang: 'css'
-    },
-    {
-      src: '@/assets/mapbox.css',
-      lang: 'css'
     }
   ],
   env: {
-    baseUrl: '/',
-    players: [
-      { id: 1, name: 'Kobe Bryant', number: 24 },
-      { id: 2, name: 'Michael Jordan', number: 23 },
-      { id: 3, name: 'Stephen Curry', number: 30 },
-      { id: 4, name: 'Lebron James', number: 23 },
-      { id: 5, name: 'Kevin Durant', number: 35 },
-      { id: 6, name: 'Kyrie Irving', number: 2 }
-    ]
+    baseUrl: '/'
   },
   loading: '~/components/loading.vue',
   plugins: [
@@ -43,7 +27,9 @@ module.exports = {
     { src: '~/plugins/iview', ssr: true }
   ],
   generate: {
-    routes: ['/zh-tw', '/fr', '/players/1', '/players/2', '/players/3', '/players/4', '/players/5', '/players/6']
+    routes: [
+      '/zh-tw'
+    ]
   },
   router: {
     middleware: ['visits', 'user-agent', 'i18n'],
@@ -68,11 +54,6 @@ module.exports = {
       'mini-toastr',
       'vue-notifications',
       'vue-i18n',
-      'firebase',
-      'jquery',
-      'mapbox-gl',
-      'mapbox.js',
-      '@mapbox/geo-viewport',
       'd3',
       'd3-queue',
       'topojson'
