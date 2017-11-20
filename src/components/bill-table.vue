@@ -3,51 +3,44 @@
       <Table
         :columns="billSchema"
         :data="bills"
-        :loading="loading"
+        :loading="isLoading"
       >
       </Table>
     </div>
 </template>
 <script>
 export default {
-  beforeCreate () {
-    this.$store.dispatch('getBills')
-  },
+  // beforeCreate () {
+  //   this.$store.dispatch('getBills')
+  // },
+
+  props: [
+    'bills',
+    'loading'
+  ],
 
   computed: {
-    loading () {
-      return this.$store.state.loading
+    isLoading () {
+      return this.loading === 1
     },
 
-    bills () {
-      return this.$store.state.bills
-    },
+    // bills () {
+    //   return this.$store.state.bills
+    // },
 
     billSchema () {
       const schema = [
         {
-          title: 'Bill',
-          key: 'billNumber'
-        },
-        {
-          title: 'Chamber',
-          key: 'chamber'
-        },
-        {
-          title: 'LastUpdated',
-          key: 'lastUpdated'
-        },
-        {
-          title: 'Sponsor',
-          key: 'sponsor'
-        },
-        {
-          title: 'Congress',
-          key: 'congress'
+          title: 'ID',
+          key: 'id'
         },
         {
           title: 'Title',
           key: 'title'
+        },
+        {
+          title: 'Congress',
+          key: 'congress'
         }
       ]
 

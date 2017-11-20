@@ -72,5 +72,14 @@ module.exports = {
         })
       }
     }
+  },
+  modules: ['@nuxtjs/apollo'],
+  apollo: {
+    networkInterfaces: {
+      default: '~/apollo/network-interfaces/default.js'
+    },
+    clientConfigs: {
+      default: '~/apollo/client-configs/default.js'
+    }
   }
 }

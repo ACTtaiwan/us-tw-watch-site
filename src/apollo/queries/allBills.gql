@@ -1,0 +1,20 @@
+{
+  bills {
+    id
+    title,
+    congress,
+    billType,
+    billTypeLabel,
+    currentChamber,
+    currentStatus,
+    currentStatusDate,
+    currentStatusDescription,
+    currentStatusLabel,
+    introducedDate,
+    isAlive,
+    isCurrent,
+    link,
+    titleWithoutNumber,
+    billCode
+  }
+}
