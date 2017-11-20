@@ -1,8 +1,12 @@
 <template>
-  <cd-map />
+  <div>
+    <bill-table />
+    <cd-map />
+  </div>
 </template>
 <script>
 import CdMap from '~/components/cd-map.vue'
+import BillTable from '~/components/bill-table.vue'
 
 export default {
   head () {
@@ -12,7 +16,8 @@ export default {
   },
 
   components: {
-    CdMap
+    CdMap,
+    BillTable
   }
 }
 </script>

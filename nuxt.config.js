@@ -21,8 +21,8 @@ module.exports = {
   },
   loading: '~/components/loading.vue',
   plugins: [
-    '~/plugins/i18n.js',
     // ssr: false to only include it on client-side
+    { src: '~/plugins/i18n.js', ssr: true },
     { src: '~/plugins/vue-notifications.js', ssr: false },
     { src: '~/plugins/iview', ssr: true }
   ],
