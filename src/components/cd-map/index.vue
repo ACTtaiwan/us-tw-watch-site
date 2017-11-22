@@ -4,14 +4,11 @@
 
 <script>
 export default {
-  props: [
-    'state',
-    'district',
-    'highlightColor'
-  ],
+  props: ['state', 'district', 'highlightColor'],
 
   data () {
-    const stateCodeToFipsMap = require('@/assets/json/stateCodeToFips.json')
+    // const stateCodeToFipsMap = require('@/assets/json/stateCodeToFips.json')
+    const stateCodeToFipsMap = ''
     return {
       stateCodeToFipsMap
     }
@@ -32,75 +29,86 @@ export default {
       return formattedNumber
     },
 
-    drawMap ({
-      getId,
-      selectedId,
-      selectedColor,
-      d3,
-      topojson
-    }) {
+    drawMap ({ getId, selectedId, selectedColor, d3, topojson }) {
       const width = 960
       const height = 600
 
-      const projection = d3.geo.albersUsa()
+      const projection = d3.geo
+        .albersUsa()
         .scale(1280)
         .translate([width / 2, height / 2])
 
-      const path = d3.geo.path()
-        .projection(projection)
+      const path = d3.geo.path().projection(projection)
 
-      const svg = d3.select('#cd-map').append('svg')
+      const svg = d3
+        .select('#cd-map')
+        .append('svg')
         .attr('width', width)
         .attr('height', height)
 
       const us = require('@/assets/json/us.json')
       const congress = require('@/assets/json/us-cd115-topo.json')
 
-      svg.append('defs').append('path')
-          .attr('id', 'land')
-          .datum(topojson.feature(us, us.objects.land))
-          .attr('d', path)
+      svg
+        .append('defs')
+        .append('path')
+        .attr('id', 'land')
+        .datum(topojson.feature(us, us.objects.land))
+        .attr('d', path)
 
-      svg.append('clipPath')
+      svg
+        .append('clipPath')
         .attr('id', 'clip-land')
-      .append('use')
+        .append('use')
         .attr('xlink:href', '#land')
 
-      svg.append('g')
+      svg
+        .append('g')
         .attr('class', 'districts')
         .attr('clip-path', 'url(#clip-land)')
-      .selectAll('path')
+        .selectAll('path')
         .data(topojson.feature(congress, congress.objects.districts).features)
-      .enter().append('path')
+        .enter()
+        .append('path')
         .attr('d', path)
         .attr('id', function (d) {
           const GEOID = d.properties.GEOID
           const id = getId(GEOID)
           return id
         })
-      .append('title')
+        .append('title')
         .text(function (d) {
           return d.properties.GEOID
         })
 
-      svg.append('path')
+      svg
+        .append('path')
         .attr('class', 'district-boundaries')
-        .datum(topojson.mesh(congress, congress.objects.districts, function (a, b) {
-          return a !== b && (a.id / 1000 | 0) === (b.id / 1000 | 0)
-        }))
+        .datum(
+          topojson.mesh(congress, congress.objects.districts, function (a, b) {
+            return a !== b && ((a.id / 1000) | 0) === ((b.id / 1000) | 0)
+          })
+        )
         .attr('d', path)
 
-      svg.append('path')
+      svg
+        .append('path')
         .attr('class', 'state-boundaries')
-        .datum(topojson.mesh(us, us.objects.states, function (a, b) { return a !== b }))
+        .datum(
+          topojson.mesh(us, us.objects.states, function (a, b) {
+            return a !== b
+          })
+        )
         .attr('d', path)
 
-      svg.append('g')
+      svg
+        .append('g')
         .attr('class', 'states')
         .attr('clip-path', 'url(#clip-land)')
-      .selectAll('path')
+        .selectAll('path')
         .data(topojson.feature(us, us.objects.states).features)
-      .enter().append('path')
+        .enter()
+        .append('path')
         .attr('d', path)
         .attr('id', function (d) {
           const fips = d.id
@@ -176,7 +184,7 @@ path {
   pointer-events: none;
   fill: none;
   stroke: #fff;
-  stroke-width: .5px;
+  stroke-width: 0.5px;
 }
 
 .state-boundaries {

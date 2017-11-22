@@ -27,9 +27,7 @@ module.exports = {
     { src: '~/plugins/iview', ssr: true }
   ],
   generate: {
-    routes: [
-      '/zh-tw'
-    ]
+    routes: ['/zh-tw']
   },
   router: {
     middleware: ['visits', 'user-agent', 'i18n'],
@@ -45,19 +43,11 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'Meta description' }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/twfavicon.ico' }]
   },
   srcDir: 'src/',
   build: {
-    vendor: [
-      'axios',
-      'mini-toastr',
-      'vue-notifications',
-      'vue-i18n',
-      'd3',
-      'd3-queue',
-      'topojson'
-    ],
+    vendor: ['axios', 'mini-toastr', 'vue-notifications', 'vue-i18n', 'd3', 'd3-queue', 'topojson'],
 
     /*
     ** Run ESLINT on save
