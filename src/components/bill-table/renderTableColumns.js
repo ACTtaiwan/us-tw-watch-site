@@ -1,3 +1,5 @@
+import { path } from '@/plugins/locale'
+
 const renderTableColumns = (vm) => {
   return [
     {
@@ -5,12 +7,17 @@ const renderTableColumns = (vm) => {
       key: 'id',
       renderHeader: (h, { column, index }) => {
         function remoteMethodId (query) {
-          if (query !== '') {
+          const keyword = (query !== '') && (query.trim() !== '') && query.trim()
+          vm.keywordColumnId = keyword
+          if (keyword) {
             vm.loadingColumnId = true
+            vm.optionsColumnId = vm.listColumnId.filter(item => item.toLowerCase().indexOf(keyword.toLowerCase()) > -1)
+
             setTimeout(() => {
               vm.loadingColumnId = false
-              vm.optionsColumnId = vm.listColumnId.filter(item => item.toLowerCase().indexOf(query.toLowerCase()) > -1)
             }, 200)
+          } else {
+            vm.optionsColumnId = vm.listColumnId
           }
         }
 
@@ -25,6 +32,24 @@ const renderTableColumns = (vm) => {
           }
         }
         return h('Select', dataObject)
+      }
+    },
+    {
+      title: 'Link',
+      key: 'link',
+      render: (h, params) => {
+        const bill = params.row
+
+        const dataObject = {
+          props: {
+            to: path(vm, `/bills/${bill.id}`)
+          },
+          domProps: {
+            innerHTML: 'link'
+          }
+        }
+
+        return h('nuxt-link', dataObject)
       }
     },
     {

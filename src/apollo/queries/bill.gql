@@ -1,0 +1,13 @@
+query Bill($id: ID!) {
+  bills(billId: $id) {
+    id,
+    title,
+    congress,
+    sponsor {
+      person {
+        lastname,
+        firstname
+      }
+    }
+  }
+}

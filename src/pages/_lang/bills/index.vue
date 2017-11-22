@@ -19,7 +19,7 @@
 <script>
 import CdMap from '~/components/cd-map.vue'
 import BillTable from '~/components/bill-table'
-import allBills from '@/apollo/queries/allBills.gql'
+import queryAllBills from '@/apollo/queries/allBills.gql'
 
 export default {
   head () {
@@ -69,7 +69,7 @@ export default {
     $loadingKey: 'loading',
     bills: {
       prefetch: true,
-      query: allBills
+      query: queryAllBills
     }
   },
 
