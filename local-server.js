@@ -2,6 +2,7 @@ const { Nuxt, Builder } = require('nuxt')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const express = require('express')
+const cors = require('cors')
 
 const HOST = process.env.HOST || 'localhost'
 const PORT = process.env.POST || 3000
@@ -10,6 +11,7 @@ const app = express()
 process.env.HOST = HOST
 process.env.PORT = PORT
 
+app.use(cors())
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }))
 

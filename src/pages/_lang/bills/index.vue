@@ -13,11 +13,9 @@
       :bills="bills"
       :loading="loading"
     />
-    <cd-map />
   </div>
 </template>
 <script>
-import CdMap from '~/components/cd-map.vue'
 import BillTable from '~/components/bill-table'
 import queryAllBills from '@/apollo/queries/allBills.gql'
 
@@ -68,13 +66,12 @@ export default {
   apollo: {
     $loadingKey: 'loading',
     bills: {
-      prefetch: true,
-      query: queryAllBills
+      query: queryAllBills,
+      prefetch: true
     }
   },
 
   components: {
-    CdMap,
     BillTable
   }
 }

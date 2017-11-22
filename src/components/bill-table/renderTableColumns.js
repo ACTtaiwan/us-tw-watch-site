@@ -42,14 +42,15 @@ const renderTableColumns = (vm) => {
 
         const dataObject = {
           props: {
-            to: path(vm, `/bills/${bill.id}`)
+            to: path(vm, `/bills/${bill.id}`),
+            replace: true
           },
           domProps: {
             innerHTML: 'link'
           }
         }
 
-        return h('nuxt-link', dataObject)
+        return h('router-link', dataObject)
       }
     },
     {

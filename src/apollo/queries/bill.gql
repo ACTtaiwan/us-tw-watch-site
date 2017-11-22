@@ -4,6 +4,9 @@ query Bill($id: ID!) {
     title,
     congress,
     sponsor {
+      party,
+      state,
+      district,
       person {
         lastname,
         firstname

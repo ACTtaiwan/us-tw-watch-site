@@ -17,6 +17,7 @@
     "aws-serverless-express": "^3.0.0",
     "axios": "^0.16.1",
     "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
     "d3": "v3.5.17",
     "express": "^4.15.2",
     "express-session": "^1.15.6",
