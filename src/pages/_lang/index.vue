@@ -36,8 +36,8 @@ export default {
     }
   },
   computed: {
-    locale () {
-      return this.$i18n.locale
+    lang () {
+      return this.$i18n.locale.split('-')[0]
     }
   },
   components: {
@@ -50,8 +50,7 @@ export default {
       query: queryAllBills,
       fetchPolicy: 'network-only',
       variables () {
-        console.log('ddd', this.$i18n.locale)
-        return { lang: this.locale }
+        return { lang: this.lang }
       }
     }
   }
