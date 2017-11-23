@@ -13,9 +13,6 @@
       :bills="bills"
       :loading="loading"
     />
-    <nuxt-link to="/zh-tw/bills/2a43f3df-695d-47c7-976c-b738cd2d0cc1">
-      sss
-    </nuxt-link>
   </div>
 </template>
 <script>
