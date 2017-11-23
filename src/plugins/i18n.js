@@ -1,7 +1,11 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
+
 import enUS from '@/locales/en-us.json'
 import zhTW from '@/locales/zh-tw.json'
+// import i18n texts for iView
+import enIview from 'iview/dist/locale/en-US'
+import zhIview from 'iview/dist/locale/zh-TW'
 
 Vue.use(VueI18n)
 
@@ -12,8 +16,14 @@ export default ({ app, isClient, store }) => {
     locale: store.state.locale,
     fallbackLocale: 'en-us',
     messages: {
-      'en-us': enUS,
-      'zh-tw': zhTW
+      'en-us': {
+        ...enUS,
+        ...enIview
+      },
+      'zh-tw': {
+        ...zhTW,
+        ...zhIview
+      }
     }
   })
 }
