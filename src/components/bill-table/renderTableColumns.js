@@ -1,13 +1,13 @@
 import { path } from '@/plugins/locale'
 
-const renderTableColumns = (vm) => {
+const renderTableColumns = vm => {
   return [
     {
       title: 'ID',
       key: 'id',
       renderHeader: (h, { column, index }) => {
         function remoteMethodId (query) {
-          const keyword = (query !== '') && (query.trim() !== '') && query.trim()
+          const keyword = query !== '' && query.trim() !== '' && query.trim()
           vm.keywordColumnId = keyword
           if (keyword) {
             vm.loadingColumnId = true
@@ -50,7 +50,7 @@ const renderTableColumns = (vm) => {
           }
         }
 
-        return h('router-link', dataObject)
+        return h('nuxt-link', dataObject)
       }
     },
     {

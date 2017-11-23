@@ -41,10 +41,13 @@ export default {
   apollo: {
     bills: {
       query: queryBill,
+      fetchPolicy: 'network-only',
       prefetch: ({ route }) => {
+        console.log('000')
         return { id: route.params.id }
       },
       variables () {
+        console.log('111', this.$route)
         return { id: this.$route.params.id }
       }
     }
@@ -52,7 +55,7 @@ export default {
 
   head () {
     return {
-      title: (this.bill ? this.bill.title : 'Loading')
+      title: this.bill ? this.bill.title : 'Loading'
     }
   },
 
