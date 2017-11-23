@@ -111,8 +111,7 @@ export default {
     $loadingKey: 'loading',
     bills: {
       fetchPolicy: 'network-only',
-      query: queryAllBills,
-      prefetch: true
+      query: queryAllBills
     }
   },
 
