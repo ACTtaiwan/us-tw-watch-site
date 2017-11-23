@@ -1,6 +1,6 @@
 <template>
   <header>
-    <Menu mode="horizontal" theme="dark" :active-name="activeMenuItem" @on-select="onMenuSelect">
+    <Menu mode="horizontal" theme="dark" :active-name="activeMenuItem">
       <div class="header-wrapper">
         <div class="header-menu-hamburger" :class="{isMenuOpen: isMenuOpen}" @click="onHamburgerClick">
           <span></span>
@@ -65,9 +65,6 @@ export default {
   methods: {
     onHamburgerClick (event) {
       this.isMenuOpen = !this.isMenuOpen
-    },
-    onMenuSelect (selectedItemName) {
-      this.activeMenuItem = selectedItemName
     },
     path
   },
