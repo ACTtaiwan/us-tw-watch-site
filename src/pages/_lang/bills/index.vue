@@ -9,7 +9,7 @@
 </template>
 <script>
 import BillTable from '~/components/bill-table'
-import queryAllBills from '@/apollo/queries/allBills.gql'
+import queryAllBills from '~/apollo/queries/allBills'
 
 export default {
   head () {
@@ -29,7 +29,58 @@ export default {
       loading2: false,
       options2: [],
       placeholder: '',
-      list: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New hampshire', 'New jersey', 'New mexico', 'New york', 'North carolina', 'North dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode island', 'South carolina', 'South dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West virginia', 'Wisconsin', 'Wyoming']
+      list: [
+        'Alabama',
+        'Alaska',
+        'Arizona',
+        'Arkansas',
+        'California',
+        'Colorado',
+        'Connecticut',
+        'Delaware',
+        'Florida',
+        'Georgia',
+        'Hawaii',
+        'Idaho',
+        'Illinois',
+        'Indiana',
+        'Iowa',
+        'Kansas',
+        'Kentucky',
+        'Louisiana',
+        'Maine',
+        'Maryland',
+        'Massachusetts',
+        'Michigan',
+        'Minnesota',
+        'Mississippi',
+        'Missouri',
+        'Montana',
+        'Nebraska',
+        'Nevada',
+        'New hampshire',
+        'New jersey',
+        'New mexico',
+        'New york',
+        'North carolina',
+        'North dakota',
+        'Ohio',
+        'Oklahoma',
+        'Oregon',
+        'Pennsylvania',
+        'Rhode island',
+        'South carolina',
+        'South dakota',
+        'Tennessee',
+        'Texas',
+        'Utah',
+        'Vermont',
+        'Virginia',
+        'Washington',
+        'West virginia',
+        'Wisconsin',
+        'Wyoming'
+      ]
     }
   },
 
@@ -59,6 +110,7 @@ export default {
   apollo: {
     $loadingKey: 'loading',
     bills: {
+      fetchPolicy: 'network-only',
       query: queryAllBills,
       prefetch: true
     }
@@ -78,7 +130,7 @@ ul {
 }
 a {
   text-decoration: none;
-  color: #3498DB;
+  color: #3498db;
 }
 a:hover {
   border-bottom: 1px solid;

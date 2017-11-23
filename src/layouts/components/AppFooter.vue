@@ -1,7 +1,7 @@
 <template>
   <footer>
     Copyright © TaiwanWatch.org 2017
-    <a class="powerByG0v" href="https://grants.g0v.tw/power/" alt="power by g0v" data-reactid="76">
+    <a class="powerByG0v"  target="_blank" href="https://grants.g0v.tw/power/" alt="power by g0v" data-reactid="76">
       <img src="https://image.goodjob.life/logo-g0v-white.svg" alt="g0v" data-reactid="77">
     </a>
   </footer>
