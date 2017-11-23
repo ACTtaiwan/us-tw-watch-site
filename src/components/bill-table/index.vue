@@ -1,6 +1,5 @@
 <template>
     <div>
-      {{ optionsColumnId }}
       <Table
         :columns="tableColumns"
         :data="filteredBills"
@@ -19,7 +18,8 @@ import renderTableColumns from './renderTableColumns'
 export default {
   props: [
     'bills',
-    'loading'
+    'loading',
+    'customHeight'
   ],
 
   data () {
@@ -29,17 +29,26 @@ export default {
       showBorder: true,
       showStripe: true,
       showHeader: true,
-      tableHeight: 500,
+      defaulTableHeight: 500,
       tableSize: 'large',
       tableColumns: renderTableColumns(vm),
-      loadingColumnId: false,
-      keywordColumnId: '',
-      optionsColumnId: []
+      loadingColumnTitle: false,
+      keywordColumnTitle: '',
+      optionsColumnTitle: []
       // listColumnId: (this.bills && this.bills.map(b => b.id)) || []
     }
   },
 
   computed: {
+    tableHeight () {
+      const customHeight = this.customHeight
+
+      if (!customHeight) {
+        return this.defaulTableHeight
+      }
+
+      return customHeight
+    },
     // optionsColumnId: {
     //   get () {
     //     return
@@ -48,8 +57,8 @@ export default {
 
     //   }
     // },
-    listColumnId () {
-      return (this.bills && this.bills.map(b => b.id)) || []
+    listColumnTitle () {
+      return (this.bills && this.bills.map(b => b.title)) || []
     },
 
     isLoading () {
@@ -66,9 +75,9 @@ export default {
       const filters = [
         bills,
         {
-          key: 'id',
-          value: this.optionsColumnId,
-          keyword: this.keywordColumnId
+          key: 'title',
+          value: this.optionsColumnTitle,
+          keyword: this.keywordColumnTitle
         }
       ]
 

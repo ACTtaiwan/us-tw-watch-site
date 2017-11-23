@@ -3,21 +3,21 @@ import { path } from '@/plugins/locale'
 const renderTableColumns = (vm) => {
   return [
     {
-      title: 'ID',
-      key: 'id',
+      title: 'Title',
+      key: 'title',
       renderHeader: (h, { column, index }) => {
-        function remoteMethodId (query) {
+        function remoteMethodTitle (query) {
           const keyword = (query !== '') && (query.trim() !== '') && query.trim()
-          vm.keywordColumnId = keyword
+          vm.keywordColumnTitle = keyword
           if (keyword) {
-            vm.loadingColumnId = true
-            vm.optionsColumnId = vm.listColumnId.filter(item => item.toLowerCase().indexOf(keyword.toLowerCase()) > -1)
+            vm.loadingColumnTitle = true
+            vm.optionsColumnTitle = vm.listColumnTitle.filter(item => item.toLowerCase().indexOf(keyword.toLowerCase()) > -1)
 
             setTimeout(() => {
-              vm.loadingColumnId = false
+              vm.loadingColumnTitle = false
             }, 200)
           } else {
-            vm.optionsColumnId = vm.listColumnId
+            vm.optionsColumnTitle = vm.listColumnTitle
           }
         }
 
@@ -25,13 +25,54 @@ const renderTableColumns = (vm) => {
           props: {
             filterable: true,
             remote: true,
-            'remote-method': remoteMethodId,
-            loading: vm.loadingColumnId,
+            'remote-method': remoteMethodTitle,
+            loading: vm.loadingColumnTitle,
             'loading-text': 'Loading....',
             'not-found-text': 'Not found'
           }
         }
         return h('Select', dataObject)
+      }
+    },
+    {
+      title: 'Congress',
+      key: 'congress'
+    },
+    {
+      title: 'Code',
+      key: 'billCode',
+      sortable: true
+    },
+    {
+      title: 'Party',
+      key: 'party',
+      sortable: true,
+      render: (h, params) => {
+        const bill = params.row
+        const party = bill.sponsor.party
+        const dataObject = {
+          domProps: {
+            innerHTML: party
+          }
+        }
+
+        return h('span', dataObject)
+      }
+    },
+    {
+      title: 'Sponsor',
+      key: 'sponsor',
+      render: (h, params) => {
+        const bill = params.row
+        const person = bill.sponsor.person
+        const fullName = `${person.firstname} ${person.lastname}`
+        const dataObject = {
+          domProps: {
+            innerHTML: fullName
+          }
+        }
+
+        return h('span', dataObject)
       }
     },
     {
@@ -52,19 +93,6 @@ const renderTableColumns = (vm) => {
 
         return h('router-link', dataObject)
       }
-    },
-    {
-      title: 'Congress',
-      key: 'congress'
-    },
-    {
-      title: 'Code',
-      key: 'billCode',
-      sortable: true
-    },
-    {
-      title: 'Title',
-      key: 'title'
     }
   ]
 }

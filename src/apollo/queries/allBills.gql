@@ -3,6 +3,13 @@
     id
     title,
     congress,
-    billCode
+    billCode,
+    sponsor {
+      party,
+      person {
+        lastname,
+        firstname
+      }
+    }
   }
 }

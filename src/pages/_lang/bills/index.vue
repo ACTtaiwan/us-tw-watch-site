@@ -1,17 +1,9 @@
 <template>
   <div>
-      <Select
-        v-model="model13"
-        filterable
-        remote
-        :placeholder="placeholder"
-        :remote-method="remoteMethod1"
-        :loading="loading1">
-        <Option v-for="(option, index) in options1" :value="option.value" :key="index">{{option.label}}</Option>
-      </Select>
     <bill-table
       :bills="bills"
       :loading="loading"
+      :customHeight="600"
     />
   </div>
 </template>
