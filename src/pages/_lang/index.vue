@@ -35,7 +35,11 @@ export default {
       title: this.$t('title.siteMainTitle')
     }
   },
-
+  computed: {
+    locale () {
+      return this.$i18n.locale
+    }
+  },
   components: {
     BillCard
   },
@@ -44,7 +48,11 @@ export default {
     $loadingKey: 'loading',
     bills: {
       query: queryAllBills,
-      fetchPolicy: 'network-only'
+      fetchPolicy: 'network-only',
+      variables () {
+        console.log('ddd', this.$i18n.locale)
+        return { lang: this.locale }
+      }
     }
   }
 }
