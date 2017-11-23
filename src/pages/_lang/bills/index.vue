@@ -20,6 +20,7 @@ export default {
 
   data () {
     return {
+      bills: [],
       loading: 0,
       model13: '',
       loading1: false,

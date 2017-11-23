@@ -1,5 +1,6 @@
 <template>
   <div v-if="bill">
+    <h3>{{ `Title: ${bill.title}` }}</h3>
     <h3>{{ `Congress: ${bill.congress}` }}</h3>
     <h3>{{ `State: ${bill.sponsor.state}` }}</h3>
     <h3>{{ `District: ${bill.sponsor.district}` }}</h3>
@@ -10,8 +11,6 @@
         {{ bill.sponsor.party}}
       </span>
     </h3>
-    <p><nuxt-link :to="path(this, '/bills')">{{ `< Back to Bills` }}</nuxt-link></p>
-    <nuxt-link class="logo" :to="path(this, '/')" />
     <cd-map :state="bill.sponsor.state" :district="bill.sponsor.district" :highlightColor="this.highlightColor" />
   </div>
 </template>

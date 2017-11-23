@@ -7,8 +7,7 @@ export default {
   props: ['state', 'district', 'highlightColor'],
 
   data () {
-    // const stateCodeToFipsMap = require('@/assets/json/stateCodeToFips.json')
-    const stateCodeToFipsMap = ''
+    const stateCodeToFipsMap = require('@/assets/json/stateCodeToFips.json')
     return {
       stateCodeToFipsMap
     }

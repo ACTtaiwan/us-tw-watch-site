@@ -91,7 +91,7 @@ const renderTableColumns = (vm) => {
           }
         }
 
-        return h('router-link', dataObject)
+        return h('nuxt-link', dataObject)
       }
     }
   ]
