@@ -25,5 +25,8 @@
     "billItemText": "法案",
     "votesItemText": "投票",
     "congressMemberItemText": "國會議員"
+  },
+  "landingPage": {
+    "bannerTitle": "國會最新動態"
   }
 }

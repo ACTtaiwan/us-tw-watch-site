@@ -26,5 +26,8 @@
     "billItemText": "Bills",
     "votesItemText": "Votes",
     "congressMemberItemText": "Congress members"
+  },
+  "landingPage": {
+    "bannerTitle": "What's new in congress"
   }
 }
