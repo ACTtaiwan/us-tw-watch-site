@@ -1,40 +1,42 @@
 <template>
-  <Menu mode="horizontal" theme="dark" :active-name="activeMenuItem" @on-select="onMenuSelect">
-    <div class="header">
-      <div class="header-menu-hamburger" :class="{isMenuOpen: isMenuOpen}" @click="onHamburgerClick">
-        <span></span>
-      </div>
-      <Logo></Logo>
-      <div class="header-nav" :class="{isMenuOpen: isMenuOpen}">
-        <!-- MENU -->
-        <div class="header-menu">
-          <nuxt-link class="menu-item" :class="{'menu-item-selected': activeMenuItem === 'bills'}" :to="path(this, '/bills')">
-            <MenuItem name="bills" >
-              <Icon type="ios-navigate"></Icon>
-              {{ $t('menu.billItemText') }}
-            </MenuItem>
-          </nuxt-link>
-          <nuxt-link class="menu-item" :class="{'menu-item-selected': activeMenuItem === 'votes'}" :to="path(this, '/votes')">
-            <MenuItem name="votes">
-              <Icon type="ios-navigate"></Icon>
-              {{ $t('menu.votesItemText') }}
-            </MenuItem>
-          </nuxt-link>
-          <nuxt-link class="menu-item" :class="{'menu-item-selected': activeMenuItem === 'members'}" :to="path(this, '/members')">
-            <MenuItem name="members">
-              <Icon type="ios-keypad"></Icon>
-              {{ $t('menu.congressMemberItemText') }}
-            </MenuItem>
-          </nuxt-link>
+  <header>
+    <Menu mode="horizontal" theme="dark" :active-name="activeMenuItem" @on-select="onMenuSelect">
+      <div class="header-wrapper">
+        <div class="header-menu-hamburger" :class="{isMenuOpen: isMenuOpen}" @click="onHamburgerClick">
+          <span></span>
         </div>
-        <!-- INFO -->
-        <div class="header-info">
-          <!-- <UserInfo></UserInfo> -->
-          <LangSwitch></LangSwitch>
+        <Logo></Logo>
+        <div class="header-nav" :class="{isMenuOpen: isMenuOpen}">
+          <!-- MENU -->
+          <div class="header-menu">
+            <nuxt-link class="menu-item" :class="{'menu-item-selected': activeMenuItem === 'bills'}" :to="path(this, '/bills')">
+              <MenuItem name="bills" >
+                <Icon type="ios-navigate"></Icon>
+                {{ $t('menu.billItemText') }}
+              </MenuItem>
+            </nuxt-link>
+            <nuxt-link class="menu-item" :class="{'menu-item-selected': activeMenuItem === 'votes'}" :to="path(this, '/votes')">
+              <MenuItem name="votes">
+                <Icon type="ios-navigate"></Icon>
+                {{ $t('menu.votesItemText') }}
+              </MenuItem>
+            </nuxt-link>
+            <nuxt-link class="menu-item" :class="{'menu-item-selected': activeMenuItem === 'members'}" :to="path(this, '/members')">
+              <MenuItem name="members">
+                <Icon type="ios-keypad"></Icon>
+                {{ $t('menu.congressMemberItemText') }}
+              </MenuItem>
+            </nuxt-link>
+          </div>
+          <!-- INFO -->
+          <div class="header-info">
+            <!-- <UserInfo></UserInfo> -->
+            <LangSwitch></LangSwitch>
+          </div>
         </div>
       </div>
-    </div>
-  </Menu>
+    </Menu>
+  </header>
 </template>
 
 <script>
@@ -80,13 +82,18 @@ export default {
 <style scoped lang="scss">
 @import 'src/assets/css/app';
 
-.header {
-  margin: 0 auto;
+header {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.header-wrapper {
   display: flex;
   justify-content: center;
-  max-width: 1264px;
-  padding-left: 64px;
-  padding-right: 64px;
+  @extend .pageWrapper-large;
 }
 
 .header-nav {

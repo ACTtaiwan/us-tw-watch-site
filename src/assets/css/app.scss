@@ -1,4 +1,49 @@
 $appHeaderHeight: 60px;
+$appFooterHeight: 40px;
 
 $largeDeviceWidth: 1024px;
 $largeDeviceWidthPlusOne: 1025px;
+
+.pageWrapper-large {
+  width: 100%;
+  max-width: 1264px;
+  padding: 0 64px;
+  margin: 0 auto;
+}
+@media (max-width: 850px) {
+  .pageWrapper-large {
+    padding: 0 40px;
+  }
+}
+@media (max-width: 550px) {
+  .pageWrapper-large {
+    padding: 0 15px;
+  }
+}
+.wpageWrapper-medium {
+  width: 100%;
+  max-width: 964px;
+  padding: 0 60px;
+  margin: 0 auto;
+}
+@media (max-width: 850px) {
+  .wpageWrapper-medium {
+    padding: 0 40px;
+  }
+}
+@media (max-width: 550px) {
+  .wpageWrapper-medium {
+    padding: 0 15px;
+  }
+}
+.wpageWrapper-small {
+  width: 100%;
+  max-width: 630px;
+  padding: 0 40px;
+  margin: 0 auto;
+}
+@media (max-width: 550px) {
+  .wpageWrapper-small {
+    padding: 0 15px;
+  }
+}

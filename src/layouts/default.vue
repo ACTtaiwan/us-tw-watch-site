@@ -1,14 +1,16 @@
 <template>
-  <div class="layout">
+  <div id="app" class="app">
     <AppHeader></AppHeader>
-    <div id="layout-content" class="layout-content">
+    <main id="main-content" class="main-content">
       <router-view></router-view>
-    </div>
+    </main>
+    <AppFooter></AppFooter>
   </div>
 </template>
 
 <script>
 import AppHeader from './components/AppHeader.vue'
+import AppFooter from './components/AppFooter.vue'
 
 export default {
   data () {
@@ -17,7 +19,8 @@ export default {
   computed: {},
   methods: {},
   components: {
-    AppHeader
+    AppHeader,
+    AppFooter
   }
 }
 </script>
@@ -25,19 +28,8 @@ export default {
 <style scoped lang="scss">
 @import 'src/assets/css/app';
 
-.layout {
-  background: #f5f7f9;
-  position: relative;
-  overflow: hidden;
-  height: 100%;
-}
-
-.layout-content {
-  min-height: 200px;
-  height: calc(100% - #{$appHeaderHeight});
-  overflow: scroll;
-  background: #fff;
-  border-radius: 4px;
-  padding: 40px;
+.main-content {
+  padding-top: $appHeaderHeight;
+  min-height: calc(100vh - #{$appFooterHeight});
 }
 </style>
