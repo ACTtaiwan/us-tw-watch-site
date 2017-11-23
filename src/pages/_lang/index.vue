@@ -19,7 +19,7 @@
 <script>
 import congress from '@/assets/img/congress.png'
 import BillCard from '@/components/bill-card'
-import queryAllBills from '@/apollo/queries/allBills.gql'
+import allBillsQuery from '@/apollo/queries/allBills.gql'
 
 export default {
   data () {
@@ -32,7 +32,8 @@ export default {
 
   head () {
     return {
-      title: this.$t('title.siteMainTitle')
+      title: this.$t('site.title.mainTitle'),
+      meta: [{ hid: 'description', name: 'description', content: this.$t('site.description.mainDescription') }]
     }
   },
   computed: {
@@ -47,7 +48,7 @@ export default {
   apollo: {
     $loadingKey: 'loading',
     bills: {
-      query: queryAllBills,
+      query: allBillsQuery,
       fetchPolicy: 'network-only',
       variables () {
         return { lang: this.lang }

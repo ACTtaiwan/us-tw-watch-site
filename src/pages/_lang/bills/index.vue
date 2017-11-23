@@ -1,28 +1,31 @@
 <template>
-  <div>
-    <bill-table
-      :bills="bills"
-      :loading="loading"
-      :customHeight="600"
-    />
+  <div class="bills-page">
+    <section class="banner">
+      <div class="banner-wrapper">
+        <h1 class="banner-title">{{ this.$t('billsPage.bannerTitle') }}</h1>
+      </div>
+    </section>
+    <div class="table-section">
+      <div class="table-section-wrapper">
+        <bill-table :bills="bills" :loading="loading" />
+      </div>
+    </div>
   </div>
 </template>
 <script>
 import BillTable from '~/components/bill-table'
-import queryAllBills from '~/apollo/queries/allBills'
+import allBillsQuery from '~/apollo/queries/allBills'
 
 export default {
   head () {
     return {
-      title: `${this.$t('title.billsPageTitle')} | ${this.$t('title.siteMainTitle')}`
+      title: `${this.$t('site.title.billsPageTitle')} | ${this.$t('site.title.mainTitle')}`
     }
   },
-
   data () {
     return {
       bills: [],
       loading: 0,
-      model13: '',
       loading1: false,
       options1: [],
       model14: [],
@@ -84,54 +87,55 @@ export default {
     }
   },
 
-  methods: {
-    remoteMethod1 (query) {
-      if (query !== '') {
-        this.loading1 = true
-
-        setTimeout(() => {
-          this.loading1 = false
-
-          const list = this.list.map(item => {
-            return {
-              value: item,
-              label: item
-            }
-          })
-
-          this.options1 = list.filter(item => item.label.toLowerCase().indexOf(query.toLowerCase()) > -1)
-        }, 200)
-      } else {
-        this.options1 = []
-      }
+  methods: {},
+  computed: {
+    lang () {
+      return this.$i18n.locale.split('-')[0]
     }
   },
-
   apollo: {
     $loadingKey: 'loading',
     bills: {
       fetchPolicy: 'network-only',
-      query: queryAllBills
+      query: allBillsQuery,
+      variables () {
+        return { lang: this.lang }
+      }
     }
   },
-
   components: {
     BillTable
   }
 }
 </script>
-<style scoped>
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  line-height: 1.6;
+<style scoped lang="scss">
+@import 'src/assets/css/app';
+
+.banner {
+  background-color: #fff;
+  border-bottom: 1px solid #eeeeed;
+  position: relative;
+
+  .banner-wrapper {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    @extend .pageWrapper-large;
+
+    .banner-title {
+      font-size: 2.5em;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+    }
+  }
 }
-a {
-  text-decoration: none;
-  color: #3498db;
-}
-a:hover {
-  border-bottom: 1px solid;
+
+.table-section {
+  background-color: #f8f8f9;
+  padding: 40px 0;
+
+  .table-section-wrapper {
+    @extend .pageWrapper-large;
+  }
 }
 </style>
