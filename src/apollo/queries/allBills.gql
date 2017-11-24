@@ -1,13 +1,16 @@
 {
   bills {
     id
-    title,
-    congress,
-    billCode,
+    title
+    congress
+    billCode
+    billType {
+      chamber
+    }
     sponsor {
-      party,
+      party
       person {
-        lastname,
+        lastname
         firstname
       }
     }

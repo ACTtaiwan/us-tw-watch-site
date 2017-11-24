@@ -1,70 +1,27 @@
 <template>
-    <div>
-      <Table
-        :columns="tableColumns"
-        :data="filteredBills"
-        :border="showBorder"
-        :stripe="showStripe"
-        :show-header="showHeader"
-        :height="tableHeight"
-        :size="tableSize" 
-        :loading="isLoading"
-      />
-    </div>
+    <Table class="bills-table"
+      :columns="tableColumns"
+      :data="filteredBills"
+      :loading="loading === 1"/>
 </template>
+
 <script>
-import renderTableColumns from './renderTableColumns'
+import columnRenderer from './columnRenderer'
 
 export default {
-  props: [
-    'bills',
-    'loading',
-    'customHeight'
-  ],
-
+  props: ['bills', 'loading'],
   data () {
-    const vm = this
-
     return {
-      showBorder: true,
-      showStripe: true,
-      showHeader: true,
-      defaulTableHeight: 500,
-      tableSize: 'large',
-      tableColumns: renderTableColumns(vm),
-      loadingColumnTitle: false,
       keywordColumnTitle: '',
       optionsColumnTitle: []
-      // listColumnId: (this.bills && this.bills.map(b => b.id)) || []
     }
   },
 
   computed: {
-    tableHeight () {
-      const customHeight = this.customHeight
-
-      if (!customHeight) {
-        return this.defaulTableHeight
-      }
-
-      return customHeight
+    tableColumns () {
+      let vm = this
+      return columnRenderer(vm)
     },
-    // optionsColumnId: {
-    //   get () {
-    //     return
-    //   },
-    //   set () {
-
-    //   }
-    // },
-    listColumnTitle () {
-      return (this.bills && this.bills.map(b => b.title)) || []
-    },
-
-    isLoading () {
-      return this.loading === 1
-    },
-
     filteredBills () {
       const bills = this.bills
 
@@ -95,3 +52,43 @@ export default {
   }
 }
 </script>
+
+
+<style scoped lang="scss">
+
+</style>
+
+
+<style lang="scss">
+@import 'src/assets/css/app';
+
+.bills-table {
+  .ivu-table th {
+    background: #ffffff;
+  }
+
+  .ivu-table-cell {
+    font-size: 14px;
+  }
+}
+
+.title-col {
+  .ivu-table-cell {
+    padding: 18px;
+  }
+
+  .bill-link {
+    font-weight: 700;
+    color: $strongTextLinkColor;
+
+    &:hover {
+      color: $normalTextLinkColor;
+    }
+  }
+}
+
+.sponsor-col {
+  font-weight: 700;
+  color: $strongTextLinkColor;
+}
+</style>
