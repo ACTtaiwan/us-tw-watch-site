@@ -83,9 +83,10 @@ export default {
       //   }
       // ]
       // const onlyOneSponsor = Math.random() >= 0.5
-      // const mainSponsorArray = [sponsor]
       // const sponsors = onlyOneSponsor ? mainSponsorArray : mainSponsorArray.concat(cosponsors)
-      const sponsors = [sponsor].concat(cosponsors)
+      const hasCosponsors = cosponsors && cosponsors.length > 0
+      const mainSponsorArray = [sponsor]
+      const sponsors = hasCosponsors ? mainSponsorArray.concat(cosponsors) : mainSponsorArray
 
       return sponsors
     },
