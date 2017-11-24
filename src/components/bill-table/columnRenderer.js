@@ -44,7 +44,7 @@ const columnRenderer = vm => {
       }
     },
     {
-      title: 'Party',
+      title: vm.$t('billsPage.table.partyColLabel'),
       key: 'party',
       className: 'party-col table-col',
       width: 150,
@@ -57,7 +57,7 @@ const columnRenderer = vm => {
       }
     },
     {
-      title: 'Sponsor',
+      title: vm.$t('billsPage.table.sponsorColLabel'),
       key: 'sponsor',
       className: 'sponsor-col table-col',
       width: 180,

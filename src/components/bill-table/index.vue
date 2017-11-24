@@ -78,12 +78,17 @@ export default {
   }
 
   .bill-link {
-    font-weight: 600;
+    font-weight: 700;
     color: $strongTextLinkColor;
 
     &:hover {
       color: $normalTextLinkColor;
     }
   }
+}
+
+.sponsor-col {
+  font-weight: 700;
+  color: $strongTextLinkColor;
 }
 </style>

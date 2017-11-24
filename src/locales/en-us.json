@@ -30,6 +30,7 @@
       "versionsPopTitleUnit": "version(s)",
       "sponsorColLabel": "Sponsor",
       "chamberColLabel": "Chamber",
+      "partyColLabel": "Party",
       "lastUpdatedColLabel": "Last Updated"
     }
   }
