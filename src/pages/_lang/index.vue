@@ -8,11 +8,15 @@
         </div>
       </div>
     </section>
-    <Row :gutter="30" type="flex" justify="space-around">
-      <Col style="margin-bottom: 30px;" span="8" v-for="bill in bills" :key="bill.id">
-        <bill-card :bill="bill" />
-      </Col>
-    </Row>
+    <div class="info-cards-section">
+      <div class="info-cards-section-wrapper">
+        <Row :gutter="30" type="flex" justify="space-around">
+          <Col style="margin-bottom: 30px;" span="8" v-for="bill in bills" :key="bill.id">
+            <bill-card :bill="bill" />
+          </Col>
+        </Row>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -93,6 +97,15 @@ export default {
     .congress-img {
       width: 300px;
     }
+  }
+}
+
+.info-cards-section {
+  background-color: #f8f8f9;
+  padding: 40px 0;
+
+  .info-cards-section-wrapper {
+    @extend .pageWrapper-large;
   }
 }
 </style>
