@@ -38,12 +38,10 @@
     "bannerTitle": "Find members",
     "table": {
       "congressColLabel": "Congress",
-      "billCodeColLabel": "Bill Code",
-      "titleColLabel": "Title",
-      "versionsColLabel": "Versions",
-      "versionsPopTitleUnit": "version(s)",
-      "sponsorColLabel": "Sponsor",
-      "chamberColLabel": "Chamber",
+      "nameColLabel": "Name",
+      "titleColLabel": "Title (Senator or Representative)",
+      "stateColLabel": "State",
+      "districtColLabel": "District",
       "partyColLabel": "Party",
       "lastUpdatedColLabel": "Last Updated"
     }

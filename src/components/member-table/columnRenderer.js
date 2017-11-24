@@ -3,24 +3,12 @@
 const columnRenderer = vm => {
   return [
     {
-      title: vm.$t('membersPage.table.partyColLabel'),
-      key: 'party',
-      className: 'party-col table-col',
-      width: 150,
-      sortable: true,
-      render: (h, params) => {
-        let party = params.row.party
-        let color = 'gray'
-        if (party === 'Democrat') color = 'blue'
-        if (party === 'Republican') color = 'red'
-        return h('Tag', { props: { type: 'dot', color: color } }, party)
-      }
-    },
-    {
       title: vm.$t('membersPage.table.congressColLabel'),
       key: 'congressNumbers',
       className: 'congress-col table-col',
       width: 120,
+      sortable: true,
+      sortType: 'desc',
       render: (h, params) => {
         const memeber = params.row
         const congressNumbersDisplay = memeber.congressNumbers.join(', ')
@@ -28,20 +16,9 @@ const columnRenderer = vm => {
       }
     },
     {
-      title: 'State',
-      key: 'state',
-      className: 'congress-col table-col',
-      width: 120,
-      render: (h, params) => {
-        const memeber = params.row
-        const state = memeber.state
-        return state
-      }
-    },
-    {
-      title: 'Name',
+      title: vm.$t('membersPage.table.nameColLabel'),
       key: 'name',
-      className: 'title-col table-col',
+      className: 'sponsor-col table-col',
       width: 180,
       render: (h, params) => {
         const memeber = params.row
@@ -63,13 +40,20 @@ const columnRenderer = vm => {
       }
     },
     {
-      title: 'Level',
-      key: 'type',
-      className: 'chamber-col table-col',
-      width: 200,
+      title: vm.$t('membersPage.table.titleColLabel'),
+      key: 'title',
+      className: 'title-col table-col',
+      width: 300,
+      sortable: true,
       render: (h, params) => {
         const member = params.row
         const role = member.roleTypeDisplay
+        const isSenator = role === 'Senator'
+
+        if (!isSenator) {
+          return h('div', role)
+        }
+
         const senatorClass = member.senatorClassDisplay
         const rank = member.senatorRankDisplay
         const level = `${senatorClass}, ${rank} ${role}`
@@ -78,10 +62,42 @@ const columnRenderer = vm => {
       }
     },
     {
-      title: 'Phone',
-      key: 'phone',
-      className: 'sponsor-col table-col',
-      width: 180
+      title: 'State',
+      key: 'state',
+      className: 'congress-col table-col',
+      width: 120,
+      sortable: true
+    },
+    {
+      title: 'District',
+      key: 'district',
+      className: 'district-col table-col',
+      width: 120,
+      sortable: true,
+      render: (h, params) => {
+        const member = params.row
+        const district = member.district
+
+        if (!district) {
+          return '--'
+        }
+
+        return district
+      }
+    },
+    {
+      title: vm.$t('membersPage.table.partyColLabel'),
+      key: 'party',
+      className: 'party-col table-col',
+      width: 150,
+      sortable: true,
+      render: (h, params) => {
+        let party = params.row.party
+        let color = 'gray'
+        if (party === 'Democrat') color = 'blue'
+        if (party === 'Republican') color = 'red'
+        return h('Tag', { props: { type: 'dot', color: color } }, party)
+      }
     }
   ]
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="bills-page">
+  <div class="members-page">
     <section class="banner">
       <div class="banner-wrapper">
         <h1 class="banner-title">{{ this.$t('membersPage.bannerTitle') }}</h1>

@@ -38,12 +38,10 @@
     "bannerTitle": "找議員",
     "table": {
       "congressColLabel": "國會屆數",
-      "billCodeColLabel": "法案編號",
-      "titleColLabel": "標題",
-      "versionsColLabel": "版本",
-      "versionsPopTitleUnit": "個版本",
-      "sponsorColLabel": "提案者",
-      "chamberColLabel": "議院",
+      "titleColLabel": "標題 (參議員 或 眾議員)",
+      "nameColLabel": "名稱",
+      "stateColLabel": "州",
+      "districtColLabel": "區",
       "partyColLabel": "政黨",
       "lastUpdatedColLabel": "更新時間"
     }
