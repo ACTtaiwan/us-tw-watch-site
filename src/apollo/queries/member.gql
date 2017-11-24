@@ -1,0 +1,29 @@
+query Member($id: ID!) {
+  bills(billId: $id) {
+    id,
+    title,
+    congress,
+    sponsor {
+      id,
+      roleType,
+      party,
+      state,
+      district,
+      person {
+        lastname,
+        firstname
+      }
+    },
+    cosponsors {
+      id,
+      roleType,
+      party,
+      state,
+      district,
+      person {
+        lastname,
+        firstname
+      }
+    }
+  }
+}

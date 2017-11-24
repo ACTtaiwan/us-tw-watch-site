@@ -33,5 +33,19 @@
       "partyColLabel": "Party",
       "lastUpdatedColLabel": "Last Updated"
     }
+  },
+  "membersPage": {
+    "bannerTitle": "Find members",
+    "table": {
+      "congressColLabel": "Congress",
+      "billCodeColLabel": "Bill Code",
+      "titleColLabel": "Title",
+      "versionsColLabel": "Versions",
+      "versionsPopTitleUnit": "version(s)",
+      "sponsorColLabel": "Sponsor",
+      "chamberColLabel": "Chamber",
+      "partyColLabel": "Party",
+      "lastUpdatedColLabel": "Last Updated"
+    }
   }
 }

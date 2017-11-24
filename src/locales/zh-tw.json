@@ -33,5 +33,19 @@
       "partyColLabel": "政黨",
       "lastUpdatedColLabel": "更新時間"
     }
+  },
+  "membersPage": {
+    "bannerTitle": "找議員",
+    "table": {
+      "congressColLabel": "國會屆數",
+      "billCodeColLabel": "法案編號",
+      "titleColLabel": "標題",
+      "versionsColLabel": "版本",
+      "versionsPopTitleUnit": "個版本",
+      "sponsorColLabel": "提案者",
+      "chamberColLabel": "議院",
+      "partyColLabel": "政黨",
+      "lastUpdatedColLabel": "更新時間"
+    }
   }
 }
