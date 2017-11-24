@@ -1,17 +1,20 @@
 <template>
   <div v-if="bill">
-    <h3>{{ `Title: ${bill.title}` }}</h3>
-    <h3>{{ `Congress: ${bill.congress}` }}</h3>
-    <h3>{{ `State: ${bill.sponsor.state}` }}</h3>
-    <h3>{{ `District: ${bill.sponsor.district}` }}</h3>
-    <h3>{{ `Sponsor: ${bill.sponsor.person.firstname} ${bill.sponsor.person.lastname}` }}</h3>
-    <h3>
-      {{ `Party: ` }}
-      <span :style="{ color: this.partyColor }">
-        {{ bill.sponsor.party}}
-      </span>
-    </h3>
+    <Card id="details">
+      <h3 slot="title">{{ bill.title }}</h3>
+      <h4>{{ `Congress: ${bill.congress}` }}</h4>
+      <h4>{{ `State: ${bill.sponsor.state}` }}</h4>
+      <h4>{{ `District: ${bill.sponsor.district}` }}</h4>
+      <h4>{{ `Sponsor: ${bill.sponsor.person.firstname} ${bill.sponsor.person.lastname}` }}</h4>
+      <h4>
+        {{ `Party: ` }}
+        <span :style="{ color: this.partyColor }">
+          {{ bill.sponsor.party}}
+        </span>
+      </h4>
+    </Card>
     <cd-map
+      :mapStyle="mapStyle"
       :sponsors="sponsors"
     />
   </div>
@@ -23,6 +26,17 @@ import { path } from '@/plugins/locale'
 import CdMap from '~/components/cd-map'
 
 export default {
+  data () {
+    const mapStyle = {
+      position: 'absolute',
+      top: 0,
+      left: '300px'
+    }
+
+    return {
+      mapStyle
+    }
+  },
   computed: {
     bill () {
       return this.bills && this.bills[0]
@@ -30,8 +44,8 @@ export default {
 
     sponsors () {
       const sponsor = this.bill.sponsor
-
       const showDistrict = sponsor.district
+      // const cosponsors = this.bill.cosponsors
 
       const cosponsors = [
         {
@@ -80,14 +94,14 @@ export default {
       const party = this.bill.sponsor.party
 
       if (party === 'Republican') {
-        return 'red'
+        return '#E53A4C'
       }
 
       if (party === 'Democrat') {
-        return 'blue'
+        return '#2984B8'
       }
 
-      return 'gray'
+      return '#333333'
     }
   },
 
@@ -116,3 +130,10 @@ export default {
   }
 }
 </script>
+<style>
+#details {
+  width: 400px;
+  margin-top: 100px;
+  margin-left: 50px;
+}
+</style>

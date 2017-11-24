@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :style="mapStyle">
     <div id="cd-map">
     </div>
     <tooltip
@@ -18,6 +18,7 @@ export default {
   },
 
   props: [
+    'mapStyle',
     'state',
     'district',
     'highlightColor',
@@ -97,6 +98,7 @@ export default {
     },
 
     drawMap ({
+      mapStyle,
       getId,
       getGeoNameFromGeoId,
       getGeoIdFromSponsor,
@@ -107,12 +109,13 @@ export default {
       showDistrict,
       vm
     }) {
-      const width = 960
-      const height = 600
+      const ratio = 1.5
+      const width = 960 * ratio
+      const height = 600 * ratio
 
       const projection = d3.geo
         .albersUsa()
-        .scale(1280)
+        .scale(width)
         .translate([width / 2, height / 2])
 
       const path = d3.geo.path().projection(projection)
@@ -194,6 +197,7 @@ export default {
           .attr('d', path)
       }
 
+      const offsetX = parseInt(mapStyle.left.replace('px', ''))
       const checkedStateOrDistrict = {}
 
       sponsors.forEach((s) => {
@@ -224,7 +228,7 @@ export default {
         d3
           .select(`#${selectedId}`)
           .attr('class', 'selected')
-          .style('fill', areSameParty ? color : 'purple')
+          .style('fill', areSameParty ? color : '#875F82')
           .on('mouseover', function (d) {
             const geoName = getGeoNameFromGeoId(geoId)
 
@@ -238,7 +242,7 @@ export default {
           .on('mousemove', function () {
             tooltip
               .style('top', (d3.event.pageY - 10) + 'px')
-              .style('left', (d3.event.pageX + 10) + 'px')
+              .style('left', (d3.event.pageX + 10 - offsetX) + 'px')
 
             return tooltip
           })
@@ -258,10 +262,12 @@ export default {
     const getGeoIdFromSponsor = this.getGeoIdFromSponsor
     const d3 = require('d3')
     const topojson = require('topojson')
+    const mapStyle = this.mapStyle
 
     const showDistrict = !!sponsors[0].district
 
     this.drawMap({
+      mapStyle,
       sponsors,
       getColorFromSponsor,
       getGeoNameFromGeoId,
@@ -284,19 +290,19 @@ path {
 }
 
 .states {
-  fill: #bbb;
+  fill: #EFEFEF;
 }
 
 .states :hover {
-  fill: orange;
+  fill: #FFCC00;
 }
 
 .districts {
-  fill: #bbb;
+  fill: #EFEFEF;
 }
 
 .districts :hover {
-  fill: orange;
+  fill: #FFCC00;
 }
 
 .district-boundaries {
