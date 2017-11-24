@@ -13,6 +13,17 @@ query Bill($id: ID!) {
         lastname,
         firstname
       }
+    },
+    cosponsors {
+      id,
+      roleType,
+      party,
+      state,
+      district,
+      person {
+        lastname,
+        firstname
+      }
     }
   }
 }

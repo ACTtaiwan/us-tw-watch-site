@@ -44,48 +44,48 @@ export default {
 
     sponsors () {
       const sponsor = this.bill.sponsor
-      const showDistrict = sponsor.district
-      // const cosponsors = this.bill.cosponsors
+      const cosponsors = this.bill.cosponsors
 
-      const cosponsors = [
-        {
-          id: '1',
-          roleType: 'senator',
-          party: 'Democrat',
-          state: 'TX',
-          district: showDistrict && 10,
-          person: {
-            lastname: 'Manchin',
-            firstname: 'Joe'
-          }
-        },
-        {
-          id: '2',
-          roleType: 'representative',
-          party: 'Republican',
-          state: 'CA',
-          district: showDistrict && 42,
-          person: {
-            lastname: 'Calvert',
-            firstname: 'Ken'
-          }
-        },
-        {
-          id: '3',
-          roleType: 'senator',
-          party: 'Democrat',
-          state: 'FL',
-          district: showDistrict && 3,
-          person: {
-            lastname: 'Rubio',
-            firstname: 'Marco'
-          }
-        }
-      ]
-
-      const onlyOneSponsor = Math.random() >= 0.5
-      const mainSponsorArray = [sponsor]
-      const sponsors = onlyOneSponsor ? mainSponsorArray : mainSponsorArray.concat(cosponsors)
+      // const showDistrict = sponsor.district
+      // const fakeCosponsors = [
+      //   {
+      //     id: '1',
+      //     roleType: 'senator',
+      //     party: 'Democrat',
+      //     state: 'TX',
+      //     district: showDistrict && 10,
+      //     person: {
+      //       lastname: 'Manchin',
+      //       firstname: 'Joe'
+      //     }
+      //   },
+      //   {
+      //     id: '2',
+      //     roleType: 'representative',
+      //     party: 'Republican',
+      //     state: 'CA',
+      //     district: showDistrict && 42,
+      //     person: {
+      //       lastname: 'Calvert',
+      //       firstname: 'Ken'
+      //     }
+      //   },
+      //   {
+      //     id: '3',
+      //     roleType: 'senator',
+      //     party: 'Democrat',
+      //     state: 'FL',
+      //     district: showDistrict && 3,
+      //     person: {
+      //       lastname: 'Rubio',
+      //       firstname: 'Marco'
+      //     }
+      //   }
+      // ]
+      // const onlyOneSponsor = Math.random() >= 0.5
+      // const mainSponsorArray = [sponsor]
+      // const sponsors = onlyOneSponsor ? mainSponsorArray : mainSponsorArray.concat(cosponsors)
+      const sponsors = [sponsor].concat(cosponsors)
 
       return sponsors
     },
@@ -135,5 +135,6 @@ export default {
   width: 400px;
   margin-top: 100px;
   margin-left: 50px;
+  text-align: left;
 }
 </style>

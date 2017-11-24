@@ -1,5 +1,7 @@
 <template>
-  <div :style="mapStyle">
+  <div>
+    <button id="zoom_in">+</button>
+    <button id="zoom_out">-</button>
     <div id="cd-map">
     </div>
     <tooltip
@@ -120,11 +122,16 @@ export default {
 
       const path = d3.geo.path().projection(projection)
 
+      let zoom = d3.behavior.zoom().scaleExtent([1, 8]).on('zoom', zoomed)
+
       const svg = d3
         .select('#cd-map')
         .append('svg')
         .attr('width', width)
         .attr('height', height)
+        .append('g')
+        .call(zoom)
+        .append('g')
 
       const tooltip = d3.select('#tooltip')
 
@@ -197,7 +204,7 @@ export default {
           .attr('d', path)
       }
 
-      const offsetX = parseInt(mapStyle.left.replace('px', ''))
+      // const offsetX = parseInt(mapStyle.left.replace('px', ''))
       const checkedStateOrDistrict = {}
 
       sponsors.forEach((s) => {
@@ -242,7 +249,8 @@ export default {
           .on('mousemove', function () {
             tooltip
               .style('top', (d3.event.pageY - 10) + 'px')
-              .style('left', (d3.event.pageX + 10 - offsetX) + 'px')
+              .style('left', (d3.event.pageX + 10) + 'px')
+              // .style('left', (d3.event.pageX + 10 - offsetX) + 'px')
 
             return tooltip
           })
@@ -250,6 +258,60 @@ export default {
             return tooltip.style('visibility', 'hidden')
           })
       })
+
+      function zoomed () {
+        svg.attr('transform',
+            'translate(' + zoom.translate() + ')' +
+            'scale(' + zoom.scale() + ')'
+        )
+      }
+
+      function interpolateZoom (translate, scale) {
+        // const self = this;
+
+        return d3.transition().duration(350).tween('zoom', function () {
+          const iTranslate = d3.interpolate(zoom.translate(), translate)
+          const iScale = d3.interpolate(zoom.scale(), scale)
+          return function (t) {
+            zoom
+              .scale(iScale(t))
+              .translate(iTranslate(t))
+            zoomed()
+          }
+        })
+      }
+
+      function zoomClick () {
+        // const clicked = d3.event.target
+        let direction = 1
+        const factor = 0.2
+        let target_zoom = 1
+        const center = [width / 2, height / 2]
+        const extent = zoom.scaleExtent()
+        const translate = zoom.translate()
+        let translate0 = []
+        let l = []
+        const view = {x: translate[0], y: translate[1], k: zoom.scale()}
+
+        d3.event.preventDefault()
+        direction = (this.id === 'zoom_in') ? 1 : -1
+        target_zoom = zoom.scale() * (1 + factor * direction)
+
+        if (target_zoom < extent[0] || target_zoom > extent[1]) {
+          return false
+        }
+
+        translate0 = [(center[0] - view.x) / view.k, (center[1] - view.y) / view.k]
+        view.k = target_zoom
+        l = [translate0[0] * view.k + view.x, translate0[1] * view.k + view.y]
+
+        view.x += center[0] - l[0]
+        view.y += center[1] - l[1]
+
+        interpolateZoom([view.x, view.y], view.k)
+      }
+
+      d3.selectAll('button').on('click', zoomClick)
     }
   },
 
@@ -317,5 +379,9 @@ path {
   fill: none;
   stroke: #fff;
   stroke-width: 1.5px;
+}
+
+button {
+  padding: 10px 20px;
 }
 </style>
