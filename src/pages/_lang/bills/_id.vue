@@ -7,11 +7,13 @@
     <h3>{{ `Sponsor: ${bill.sponsor.person.firstname} ${bill.sponsor.person.lastname}` }}</h3>
     <h3>
       {{ `Party: ` }}
-      <span :style="{ color: this.highlightColor }">
+      <span :style="{ color: this.partyColor }">
         {{ bill.sponsor.party}}
       </span>
     </h3>
-    <cd-map :state="bill.sponsor.state" :district="bill.sponsor.district" :highlightColor="this.highlightColor" />
+    <cd-map
+      :sponsors="sponsors"
+    />
   </div>
 </template>
 
@@ -26,14 +28,66 @@ export default {
       return this.bills && this.bills[0]
     },
 
-    highlightColor () {
+    sponsors () {
+      const sponsor = this.bill.sponsor
+
+      const showDistrict = sponsor.district
+
+      const cosponsors = [
+        {
+          id: '1',
+          roleType: 'senator',
+          party: 'Democrat',
+          state: 'TX',
+          district: showDistrict && 10,
+          person: {
+            lastname: 'Manchin',
+            firstname: 'Joe'
+          }
+        },
+        {
+          id: '2',
+          roleType: 'representative',
+          party: 'Republican',
+          state: 'CA',
+          district: showDistrict && 42,
+          person: {
+            lastname: 'Calvert',
+            firstname: 'Ken'
+          }
+        },
+        {
+          id: '3',
+          roleType: 'senator',
+          party: 'Democrat',
+          state: 'FL',
+          district: showDistrict && 3,
+          person: {
+            lastname: 'Rubio',
+            firstname: 'Marco'
+          }
+        }
+      ]
+
+      const onlyOneSponsor = Math.random() >= 0.5
+      const mainSponsorArray = [sponsor]
+      const sponsors = onlyOneSponsor ? mainSponsorArray : mainSponsorArray.concat(cosponsors)
+
+      return sponsors
+    },
+
+    partyColor () {
       const party = this.bill.sponsor.party
 
       if (party === 'Republican') {
         return 'red'
       }
 
-      return 'blue'
+      if (party === 'Democrat') {
+        return 'blue'
+      }
+
+      return 'gray'
     }
   },
 
@@ -42,7 +96,6 @@ export default {
       query: queryBill,
       fetchPolicy: 'network-only',
       variables () {
-        console.log('111', this.$route)
         return { id: this.$route.params.id }
       }
     }

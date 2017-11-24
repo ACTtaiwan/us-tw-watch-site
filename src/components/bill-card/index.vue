@@ -37,7 +37,4 @@ export default {
 }
 </script>
 <style scoped>
-.bill-card {
-
-}
 </style>

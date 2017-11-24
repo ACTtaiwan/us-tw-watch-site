@@ -4,6 +4,8 @@ query Bill($id: ID!) {
     title,
     congress,
     sponsor {
+      id,
+      roleType,
       party,
       state,
       district,
