@@ -1,22 +1,45 @@
 <template>
-  <div v-if="bill">
-    <Card id="details">
-      <h3 slot="title">{{ bill.title }}</h3>
-      <h4>{{ `Congress: ${bill.congress}` }}</h4>
-      <h4>{{ `State: ${bill.sponsor.state}` }}</h4>
-      <h4>{{ `District: ${bill.sponsor.district}` }}</h4>
-      <h4>{{ `Sponsor: ${bill.sponsor.person.firstname} ${bill.sponsor.person.lastname}` }}</h4>
-      <h4>
-        {{ `Party: ` }}
-        <span :style="{ color: this.partyColor }">
-          {{ bill.sponsor.party}}
-        </span>
-      </h4>
-    </Card>
-    <cd-map
-      :mapStyle="mapStyle"
-      :sponsors="sponsors"
-    />
+  <div v-if="bill" class="bill-page">
+    <section class="banner">
+      <div class="banner-wrapper">
+        <h1 class="banner-title">{{ bill.title }}</h1>
+      </div>
+    </section>
+    <div class="bill-meta-section">
+      <div class="bill-meta-section-wrapper">
+        <div class="meta-item">
+          <h1 class="item-title">Congress</h1>
+          <p class="item-value">{{ bill.congress }}</p>
+        </div>
+        <div class="meta-item">
+          <h1 class="item-title">Bill code</h1>
+          <p class="item-value">{{ `${bill.billType.display} ${bill.billNumber}` }}</p>
+        </div>
+        <div class="meta-item">
+          <h1 class="item-title">Introduced</h1>
+          <p class="item-value">{{ bill.introducedDate }}</p>
+        </div>
+        <div class="meta-item">
+          <h1 class="item-title">Sponsor</h1>
+          <p class="item-value">{{ `${bill.sponsor.person.firstname} ${bill.sponsor.person.lastname} (${bill.sponsor.state}, ${bill.sponsor.party})` }}</p>
+        </div>
+        <div class="meta-item">
+          <h1 class="item-title">Co-Sponsors</h1>
+          <div class="cosponsors-block">
+            <Tag v-for="cosponsor in bill.cosponsors"
+              :key="cosponsor.id"
+              :name="cosponsor.id"
+              :color="{Republican: 'red', Democrat: 'blue'}[cosponsor.party]"
+              type="dot">{{ `${cosponsor.person.firstname} ${cosponsor.person.lastname} (${cosponsor.state})` }}</Tag>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="map-section">
+      <div class="map-section-wrapper">
+        <cd-map :mapStyle="mapStyle" :sponsors="sponsors"/>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -32,13 +55,14 @@ export default {
       top: 0,
       left: '300px'
     }
-
     return {
+      formLabelWidth: 100,
       mapStyle
     }
   },
   computed: {
     bill () {
+      console.log('the bill', this.bills)
       return this.bills && this.bills[0]
     },
 
@@ -131,11 +155,73 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped lang="scss">
+@import 'src/assets/css/app';
+
 #details {
   width: 400px;
   margin-top: 100px;
   margin-left: 50px;
   text-align: left;
+}
+
+.banner {
+  background-color: #fff;
+  border-bottom: 1px solid #eeeeed;
+  position: relative;
+
+  .banner-wrapper {
+    min-height: 200px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    display: flex;
+    align-items: center;
+    @extend .pageWrapper-large;
+
+    .banner-title {
+      font-size: 2.5em;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+    }
+  }
+}
+
+.bill-meta-section {
+  background-color: #f8f8f9;
+  padding: 40px 0;
+  text-align: left;
+
+  .bill-meta-section-wrapper {
+    @extend .pageWrapper-large;
+  }
+
+  .meta-item {
+    display: flex;
+    margin-bottom: 10px;
+
+    .item-title {
+      font-weight: 600;
+      font-size: 1.5em;
+      width: 130px;
+    }
+
+    .item-value {
+      font-size: 1.5em;
+      font-weight: 400;
+    }
+  }
+
+  .cosponsors-block {
+    flex: 1;
+  }
+}
+
+.map-section {
+  background-color: #f8f8f9;
+  padding: 0 0 40px 0;
+
+  .map-section-wrapper {
+    @extend .pageWrapper-large;
+  }
 }
 </style>

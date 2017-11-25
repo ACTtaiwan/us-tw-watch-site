@@ -1,27 +1,32 @@
 query Bill($id: ID!) {
   bills(billId: $id) {
-    id,
-    title,
-    congress,
+    id
+    title
+    congress
+    billNumber
+    introducedDate
+    billType {
+      display
+    }
     sponsor {
-      id,
-      roleType,
-      party,
-      state,
-      district,
+      id
+      roleType
+      party
+      state
+      district
       person {
-        lastname,
+        lastname
         firstname
       }
-    },
+    }
     cosponsors {
-      id,
-      roleType,
-      party,
-      state,
-      district,
+      id
+      roleType
+      party
+      state
+      district
       person {
-        lastname,
+        lastname
         firstname
       }
     }

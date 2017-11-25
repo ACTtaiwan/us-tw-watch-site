@@ -1,8 +1,10 @@
 <template>
-  <div>
-    <button id="zoom_in">+</button>
-    <button id="zoom_out">-</button>
-    <div id="cd-map">
+  <div class="bill-map">
+    <ButtonGroup class="map-controls">
+      <Button type="primary" icon="plus" id="zoom_in"></Button>
+      <Button type="primary" icon="minus" id="zoom_out"></Button>
+    </ButtonGroup>
+    <div class="map" id="cd-map">
     </div>
     <tooltip
       :title="tooltipTitle"
@@ -19,13 +21,7 @@ export default {
     tooltip
   },
 
-  props: [
-    'mapStyle',
-    'state',
-    'district',
-    'highlightColor',
-    'sponsors'
-  ],
+  props: ['mapStyle', 'state', 'district', 'highlightColor', 'sponsors'],
 
   data () {
     const stateCodeToFipsMap = require('@/assets/json/stateCodeToFips.json')
@@ -111,7 +107,7 @@ export default {
       showDistrict,
       vm
     }) {
-      const ratio = 1.5
+      const ratio = 1.2
       const width = 960 * ratio
       const height = 600 * ratio
 
@@ -122,7 +118,10 @@ export default {
 
       const path = d3.geo.path().projection(projection)
 
-      let zoom = d3.behavior.zoom().scaleExtent([1, 8]).on('zoom', zoomed)
+      let zoom = d3.behavior
+        .zoom()
+        .scaleExtent([1, 8])
+        .on('zoom', zoomed)
 
       const svg = d3
         .select('#cd-map')
@@ -207,7 +206,7 @@ export default {
       // const offsetX = parseInt(mapStyle.left.replace('px', ''))
       const checkedStateOrDistrict = {}
 
-      sponsors.forEach((s) => {
+      sponsors.forEach(s => {
         const geoId = getGeoIdFromSponsor(s)
         const selectedId = getId(geoId)
         const name = `${s.person.firstname} ${s.person.lastname}`
@@ -230,7 +229,7 @@ export default {
         const sameGeoSponsors = checkedStateOrDistrict[geoId]
 
         const firstParty = sameGeoSponsors[0].party
-        const areSameParty = sameGeoSponsors.slice(1).every((s) => s.party === firstParty)
+        const areSameParty = sameGeoSponsors.slice(1).every(s => s.party === firstParty)
 
         d3
           .select(`#${selectedId}`)
@@ -247,10 +246,8 @@ export default {
             return tooltip
           })
           .on('mousemove', function () {
-            tooltip
-              .style('top', (d3.event.pageY - 10) + 'px')
-              .style('left', (d3.event.pageX + 10) + 'px')
-              // .style('left', (d3.event.pageX + 10 - offsetX) + 'px')
+            tooltip.style('top', d3.event.pageY - 10 + 'px').style('left', d3.event.pageX + 10 + 'px')
+            // .style('left', (d3.event.pageX + 10 - offsetX) + 'px')
 
             return tooltip
           })
@@ -260,25 +257,23 @@ export default {
       })
 
       function zoomed () {
-        svg.attr('transform',
-            'translate(' + zoom.translate() + ')' +
-            'scale(' + zoom.scale() + ')'
-        )
+        svg.attr('transform', 'translate(' + zoom.translate() + ')' + 'scale(' + zoom.scale() + ')')
       }
 
       function interpolateZoom (translate, scale) {
         // const self = this;
 
-        return d3.transition().duration(350).tween('zoom', function () {
-          const iTranslate = d3.interpolate(zoom.translate(), translate)
-          const iScale = d3.interpolate(zoom.scale(), scale)
-          return function (t) {
-            zoom
-              .scale(iScale(t))
-              .translate(iTranslate(t))
-            zoomed()
-          }
-        })
+        return d3
+          .transition()
+          .duration(350)
+          .tween('zoom', function () {
+            const iTranslate = d3.interpolate(zoom.translate(), translate)
+            const iScale = d3.interpolate(zoom.scale(), scale)
+            return function (t) {
+              zoom.scale(iScale(t)).translate(iTranslate(t))
+              zoomed()
+            }
+          })
       }
 
       function zoomClick () {
@@ -291,10 +286,10 @@ export default {
         const translate = zoom.translate()
         let translate0 = []
         let l = []
-        const view = {x: translate[0], y: translate[1], k: zoom.scale()}
+        const view = { x: translate[0], y: translate[1], k: zoom.scale() }
 
         d3.event.preventDefault()
-        direction = (this.id === 'zoom_in') ? 1 : -1
+        direction = this.id === 'zoom_in' ? 1 : -1
         target_zoom = zoom.scale() * (1 + factor * direction)
 
         if (target_zoom < extent[0] || target_zoom > extent[1]) {
@@ -345,6 +340,22 @@ export default {
 }
 </script>
 
+<style scoped lang="scss">
+.bill-map {
+  text-align: left;
+
+  .map-controls {
+    margin-bottom: 10px;
+  }
+
+  .map {
+    background: #fff;
+    border: 1px solid #eeeeed;
+    text-align: center;
+  }
+}
+</style>
+
 <style>
 path {
   stroke-linejoin: round;
@@ -352,19 +363,19 @@ path {
 }
 
 .states {
-  fill: #EFEFEF;
+  fill: #efefef;
 }
 
 .states :hover {
-  fill: #FFCC00;
+  fill: #a5a5a5;
 }
 
 .districts {
-  fill: #EFEFEF;
+  fill: #efefef;
 }
 
 .districts :hover {
-  fill: #FFCC00;
+  fill: #a5a5a5;
 }
 
 .district-boundaries {
