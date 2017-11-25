@@ -9,7 +9,8 @@
       <div class="search-section-wrapper">
         <Row>
           <!-- Category -->
-          <Col span="8">
+          <Col span="12" class="category-filter-block">
+            <h1>Category</h1>
             <Select multiple
               v-model="selectedCategories"
               @on-change="onCategorySelect"
@@ -126,12 +127,21 @@ export default {
 
 .search-section {
   background-color: #f8f8f9;
-  padding: 40px 0;
+  padding: 40px 0 0 0;
   text-align: left;
 
   .search-section-wrapper {
-    height: 100px;
     @extend .pageWrapper-medium;
+  }
+
+  .category-filter-block {
+    display: flex;
+    align-self: center;
+    h1 {
+      font-weight: 600;
+      font-size: 1.5em;
+      margin-right: 10px;
+    }
   }
 }
 
