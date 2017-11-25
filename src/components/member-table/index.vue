@@ -1,6 +1,5 @@
 <template>
   <Table class="members-table"
-    height="500"
     :columns="tableColumns"
     :data="filteredMembers"
     :loading="loading === 1"

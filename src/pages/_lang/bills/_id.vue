@@ -2,7 +2,7 @@
   <div v-if="bill" class="bill-page">
     <section class="banner">
       <div class="banner-wrapper">
-        <h1 class="banner-title">{{ bill.title }}</h1>
+        <h1 class="banner-title">{{ bill.title }} <Button class="pdfBtn" shape="circle" icon="ios-paper-outline" @click="openPdf"></Button></h1>
       </div>
     </section>
     <div class="bill-meta-section">
@@ -65,7 +65,17 @@ export default {
       console.log('the bill', this.bills)
       return this.bills && this.bills[0]
     },
-
+    pdfUrl () {
+      let url = ''
+      if (this.bill && this.bill.versions) {
+        let numOfVersions = this.bill.versions.length
+        let latestVersion = this.bill.versions[numOfVersions - 1]
+        let bucketKey = latestVersion.documents.filter(doc => doc.contentType === 'pdf')[0].bucketKey
+        url = `https://s3.amazonaws.com/volunteer.bills/${bucketKey}`
+      }
+      console.log('url', url)
+      return url
+    },
     sponsors () {
       const sponsor = this.bill.sponsor
       const cosponsors = this.bill.cosponsors
@@ -147,7 +157,10 @@ export default {
   },
 
   methods: {
-    path
+    path,
+    openPdf () {
+      window.open(this.pdfUrl, '_blank')
+    }
   },
 
   components: {
@@ -182,6 +195,12 @@ export default {
       font-size: 2.5em;
       font-weight: 400;
       letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+    }
+
+    .pdfBtn {
+      margin-left: 10px;
     }
   }
 }

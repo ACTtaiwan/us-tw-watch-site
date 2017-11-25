@@ -5,6 +5,12 @@ query Bill($id: ID!) {
     congress
     billNumber
     introducedDate
+    versions {
+      documents {
+        bucketKey
+        contentType
+      }
+    }
     billType {
       display
     }

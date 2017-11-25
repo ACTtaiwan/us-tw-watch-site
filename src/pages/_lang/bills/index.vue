@@ -9,9 +9,10 @@
       <div class="search-section-wrapper">
         <Row>
           <!-- Category -->
-          <Col span="12" class="category-filter-block">
+          <Col span="24" class="category-filter-block">
             <h1>Category</h1>
             <Select multiple
+              style="width: 400px"
               v-model="selectedCategories"
               @on-change="onCategorySelect"
               placeholder="Select bill categories">
@@ -21,9 +22,12 @@
           <!-- Sponsor -->
           <!-- <Col span="8">
             <Select
-              v-model="selectedCategories"
-              @on-change="onCategorySelect"
-              placeholder="Select bill categories">
+              v-model="selectedSponsorId"
+              @on-change="onSponsorSelect"
+              clearable
+              remote
+              :remote-method="getSponsorSuggestList"
+              placeholder="Select a sponsor">
               <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
             </Select>
           </Col> -->
@@ -52,7 +56,8 @@ export default {
     return {
       bills: [],
       loading: 0,
-      selectedCategories: []
+      selectedCategories: [],
+      selectedSponsorId: ''
     }
   },
   methods: {
