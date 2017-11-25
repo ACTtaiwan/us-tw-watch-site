@@ -4,6 +4,10 @@
     title
     congress
     billCode
+    categories {
+      id
+      name
+    }
     billType {
       chamber
     }

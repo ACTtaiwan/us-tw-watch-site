@@ -5,9 +5,33 @@
         <h1 class="banner-title">{{ this.$t('billsPage.bannerTitle') }}</h1>
       </div>
     </section>
+    <div class="search-section">
+      <div class="search-section-wrapper">
+        <Row>
+          <!-- Category -->
+          <Col span="8">
+            <Select multiple
+              v-model="selectedCategories"
+              @on-change="onCategorySelect"
+              placeholder="Select bill categories">
+              <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
+            </Select>
+          </Col>
+          <!-- Sponsor -->
+          <!-- <Col span="8">
+            <Select
+              v-model="selectedCategories"
+              @on-change="onCategorySelect"
+              placeholder="Select bill categories">
+              <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
+            </Select>
+          </Col> -->
+        </Row>
+      </div>
+    </div>
     <div class="table-section">
       <div class="table-section-wrapper">
-        <bill-table :bills="bills" :loading="loading" />
+        <bill-table :bills="filterredBills" :loading="loading" />
       </div>
     </div>
   </div>
@@ -15,6 +39,7 @@
 <script>
 import BillTable from '~/components/bill-table'
 import allBillsQuery from '~/apollo/queries/allBills'
+import allCategoriesQuery from '~/apollo/queries/allCategories'
 
 export default {
   head () {
@@ -25,14 +50,37 @@ export default {
   data () {
     return {
       bills: [],
-      loading: 0
+      loading: 0,
+      selectedCategories: []
     }
   },
-
-  methods: {},
+  methods: {
+    onCategorySelect (selected) {
+      console.log('000', selected)
+      console.log('111', this.selectedCategories)
+    }
+  },
   computed: {
     lang () {
       return this.$i18n.locale.split('-')[0]
+    },
+    filterredBills () {
+      let that = this
+
+      // when no category selected, return all bills
+      if (!this.selectedCategories || this.selectedCategories.length === 0) return this.bills
+
+      let bills = this.bills.filter(bill => {
+        if (!bill.categories || bill.categories.length === 0) return false
+        let mactched = false
+        bill.categories.forEach(category => {
+          if (that.selectedCategories.indexOf(category.id) >= 0) {
+            mactched = true
+          }
+        })
+        return mactched
+      })
+      return bills
     }
   },
   apollo: {
@@ -43,6 +91,10 @@ export default {
       variables () {
         return { lang: this.lang }
       }
+    },
+    categories: {
+      query: allCategoriesQuery,
+      fetchPolicy: 'network-only'
     }
   },
   components: {
@@ -69,6 +121,17 @@ export default {
       font-weight: 400;
       letter-spacing: 0.05em;
     }
+  }
+}
+
+.search-section {
+  background-color: #f8f8f9;
+  padding: 40px 0;
+  text-align: left;
+
+  .search-section-wrapper {
+    height: 100px;
+    @extend .pageWrapper-medium;
   }
 }
 

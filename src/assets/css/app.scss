@@ -29,30 +29,30 @@ $mediumDeviceWidth: 850px;
     padding: 0 15px;
   }
 }
-.wpageWrapper-medium {
+.pageWrapper-medium {
   width: 100%;
   max-width: 964px;
   padding: 0 60px;
   margin: 0 auto;
 }
 @media (max-width: 850px) {
-  .wpageWrapper-medium {
+  .pageWrapper-medium {
     padding: 0 40px;
   }
 }
 @media (max-width: 550px) {
-  .wpageWrapper-medium {
+  .pageWrapper-medium {
     padding: 0 15px;
   }
 }
-.wpageWrapper-small {
+.pageWrapper-small {
   width: 100%;
   max-width: 630px;
   padding: 0 40px;
   margin: 0 auto;
 }
 @media (max-width: 550px) {
-  .wpageWrapper-small {
+  .pageWrapper-small {
     padding: 0 15px;
   }
 }
