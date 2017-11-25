@@ -11,19 +11,19 @@
           <div class="header-menu">
             <nuxt-link class="menu-item" :class="{'menu-item-selected': activeMenuItem === 'bills'}" :to="path(this, '/bills')">
               <MenuItem name="bills" >
-                <Icon type="ios-navigate"></Icon>
+                <Icon type="ios-paper-outline"></Icon>
                 {{ $t('site.menu.billItemText') }}
               </MenuItem>
             </nuxt-link>
             <nuxt-link class="menu-item" :class="{'menu-item-selected': activeMenuItem === 'votes'}" :to="path(this, '/votes')">
               <MenuItem name="votes">
-                <Icon type="ios-navigate"></Icon>
+                <Icon type="ios-list-outline"></Icon>
                 {{ $t('site.menu.votesItemText') }}
               </MenuItem>
             </nuxt-link>
             <nuxt-link class="menu-item" :class="{'menu-item-selected': activeMenuItem === 'members'}" :to="path(this, '/members')">
               <MenuItem name="members">
-                <Icon type="ios-keypad"></Icon>
+                <Icon type="person"></Icon>
                 {{ $t('site.menu.congressMemberItemText') }}
               </MenuItem>
             </nuxt-link>
