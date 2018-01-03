@@ -7,12 +7,10 @@ module.exports = {
   },
   extends: 'standard',
   // required to lint *.vue files
-  plugins: [
-    'html'
-  ],
+  plugins: ['html'],
   // add your custom rules here
   rules: {
-    'camelcase': 'off',
+    camelcase: 'off'
   },
   globals: {}
 }

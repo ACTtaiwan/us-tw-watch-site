@@ -12,7 +12,7 @@
       <div class="info-cards-section-wrapper">
         <Row :gutter="30" type="flex" justify="space-around">
           <Col style="margin-bottom: 30px;" span="8" v-for="bill in bills" :key="bill.id">
-            <bill-card :bill="bill" />
+            <bill-update-card :bill="bill" />
           </Col>
         </Row>
       </div>
@@ -22,7 +22,7 @@
 
 <script>
 import congress from '@/assets/img/congress.png'
-import BillCard from '@/components/bill-card'
+import BillUpdateCard from '@/components/bill-update-card'
 import allBillsQuery from '@/apollo/queries/allBills.gql'
 
 export default {
@@ -46,7 +46,7 @@ export default {
     }
   },
   components: {
-    BillCard
+    BillUpdateCard
   },
 
   apollo: {
