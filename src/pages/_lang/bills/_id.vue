@@ -168,6 +168,7 @@ export default {
   }
 }
 </script>
+
 <style scoped lang="scss">
 @import 'src/assets/css/app';
 
