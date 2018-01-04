@@ -36,13 +36,19 @@
     </div>
     <div class="table-section">
       <div class="table-section-wrapper">
-        <bill-table :bills="filterredBills" :loading="loading" />
+        <!-- <bill-table :bills="filterredBills" :loading="loading" /> -->
+        <Row :gutter="30" type="flex" justify="space-around">
+          <Col span="24" v-for="bill in filterredBills" :key="bill.id">
+            <bill-card :bill="bill" />
+          </Col>
+        </Row>
       </div>
     </div>
   </div>
 </template>
 <script>
 import BillTable from '~/components/bill-table'
+import BillCard from '~/components/bill-card'
 import allBillsQuery from '~/apollo/queries/allBills'
 import allCategoriesQuery from '~/apollo/queries/allCategories'
 
@@ -104,6 +110,7 @@ export default {
     }
   },
   components: {
+    BillCard,
     BillTable
   }
 }
@@ -131,7 +138,6 @@ export default {
 }
 
 .search-section {
-  background-color: #f8f8f9;
   padding: 40px 0 0 0;
   text-align: left;
 
@@ -151,7 +157,6 @@ export default {
 }
 
 .table-section {
-  background-color: #f8f8f9;
   padding: 40px 0;
 
   .table-section-wrapper {

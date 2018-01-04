@@ -31,5 +31,6 @@ export default {
 .main-content {
   padding-top: $appHeaderHeight;
   min-height: calc(100vh - #{$appFooterHeight});
+  background: $backgroundColorLight;
 }
 </style>
