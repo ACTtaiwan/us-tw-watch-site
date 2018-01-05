@@ -1,7 +1,7 @@
 <template>
   <div v-if="Bill">
     <h3>{{ Bill.title }}</h3>
-    <p><nuxt-link to="/">Home page</nuxt-link></p>
+    <p><nuxt-link to="/bills">Back to Bills</nuxt-link></p>
   </div>
 </template>
 

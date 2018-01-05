@@ -36,7 +36,7 @@ app.use(
   })
 )
 
-app.use('/api', require('./src/api'))
+// app.use('/api', require('./src/api'))
 
 // assets/img/
 // app.get(/^\/_nuxt\/img\/[\w-]+.(jpg|png)/, (req, res) => {

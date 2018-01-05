@@ -23,7 +23,7 @@ module.exports = {
   //   routes: ['/zh-tw']
   // },
   router: {
-    middleware: ['user-agent'],
+    // middleware: ['user-agent'],
     base: '/'
   },
   srcDir: 'src/',
