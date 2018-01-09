@@ -1,15 +1,22 @@
 {
   "name": "taiwanwatch-main-site",
+  "description": "Taiwan Watch project main site",
   "version": "0.0.1",
-  "description": "Taiwan Watch Official Website",
   "author": "dieface <fockerlee@gmail.com>",
   "private": true,
-  "main": "index.js",
   "scripts": {
-    "dev": "node local-server.js",
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "start": "nuxt start",
     "deploy-dev": "nuxt build && serverless deploy --stage dev",
     "deploy-dev-fast": "nuxt build && serverless deploy --stage dev --function main",
-    "deploy-prod": "nuxt build && serverless deploy --stage prod"
+    "deploy-prod": "nuxt build && serverless deploy --stage prod",
+    "dev-spa": "nuxt dev --spa",
+    "build-spa": "nuxt build --spa",
+    "start-spa": "nuxt start --spa"
+  },
+  "now": {
+    "alias": "www.taiwanwatch.org"
   },
   "dependencies": {
     "@nuxtjs/apollo": "2.1.1",
