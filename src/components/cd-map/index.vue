@@ -107,27 +107,25 @@ export default {
       showDistrict,
       vm
     }) {
-      const ratio = 1.2
-      const width = 960 * ratio
-      const height = 600 * ratio
-
+      const width = 960
+      const height = 600
       const projection = d3.geo
         .albersUsa()
         .scale(width)
         .translate([width / 2, height / 2])
-
       const path = d3.geo.path().projection(projection)
 
       let zoom = d3.behavior
         .zoom()
-        .scaleExtent([1, 8])
+        .scaleExtent([1, 12])
         .on('zoom', zoomed)
 
       const svg = d3
         .select('#cd-map')
+        .classed('svg-container', true)
         .append('svg')
-        .attr('width', width)
-        .attr('height', height)
+        .attr('viewBox', `0 0 ${width} ${height}`)
+        .classed('svg-content-responsive', true)
         .append('g')
         .call(zoom)
         .append('g')
@@ -278,7 +276,8 @@ export default {
 
       function zoomClick () {
         // const clicked = d3.event.target
-        let direction = 1
+        // 1: zoom out, 0: zoom in
+        let direction = this.id === 'zoom_in' ? 1 : -1
         const factor = 0.2
         let target_zoom = 1
         const center = [width / 2, height / 2]
@@ -289,8 +288,9 @@ export default {
         const view = { x: translate[0], y: translate[1], k: zoom.scale() }
 
         d3.event.preventDefault()
-        direction = this.id === 'zoom_in' ? 1 : -1
         target_zoom = zoom.scale() * (1 + factor * direction)
+
+        console.log(direction)
 
         if (target_zoom < extent[0] || target_zoom > extent[1]) {
           return false
@@ -360,6 +360,21 @@ export default {
 path {
   stroke-linejoin: round;
   stroke-linecap: round;
+}
+
+.svg-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 65%; /* aspect ratio */
+  vertical-align: top;
+  overflow: hidden;
+}
+.svg-content-responsive {
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  left: 0;
 }
 
 .states {
