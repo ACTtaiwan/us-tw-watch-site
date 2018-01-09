@@ -10,12 +10,6 @@ module.exports = {
   //     }
   //   }
   // },
-  // css: [
-  //   {
-  //     src: '@/assets/css/main.css',
-  //     lang: 'scss'
-  //   }
-  // ],
   env: {
     baseUrl: '/'
   },
@@ -26,7 +20,6 @@ module.exports = {
     // middleware: ['user-agent'],
     base: '/'
   },
-  srcDir: 'src/',
   build: {
     /*
     ** Run ESLINT on save

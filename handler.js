@@ -12,7 +12,7 @@ const nuxt = new Nuxt(nuxtConfig)
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 const awsServerlessExpress = require('aws-serverless-express')
 const app = require('express')()
-const appConfig = require('./src/config/app.json')
+const appConfig = require('./config/app.json')
 
 // NOTE: If you get ERR_CONTENT_DECODING_FAILED in your browser, this is likely
 // due to a compressed response (e.g. gzip) which has not been handled correctly
@@ -35,31 +35,6 @@ app.use(
     cookie: { maxAge: 60000 }
   })
 )
-
-// app.use('/api', require('./src/api'))
-
-// assets/img/
-// app.get(/^\/_nuxt\/img\/[\w-]+.(jpg|png)/, (req, res) => {
-//   const url = req.url
-//   const imgName = url.match(/[\w-]+.(jpg|png)/)[0]
-//   res.sendFile(`${__dirname}/.nuxt/dist/img/${imgName}`)
-// })
-
-// static/*.(jpg/png)
-// app.get(/^\/[\w-]+.(jpg|png)/, (req, res) => {
-//   const url = req.url
-//   const imgName = url.match(/[\w-]+.(jpg|png)/)[0]
-//   res.sendFile(`${__dirname}/src/static/${imgName}`)
-// })
-
-// app.use(/^\/[\w-]+.(jpg|png)/, express.static(`${__dirname}/src/static`))
-// app.all(/^\/[\w-]+.(jpg|png)/, (req, res) => {
-//   const url = req.url
-//   const imgName = url.match(/[\w-]+.(jpg|png|txt)/)[0]
-
-//   res.redirect(`/static/${imgName}`)
-// })
-// app.use('/static/', express.static(`${__dirname}/src/static`))
 
 app.use(awsServerlessExpressMiddleware.eventContext())
 app.use(nuxt.render)
