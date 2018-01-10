@@ -28,7 +28,7 @@ module.exports = {
     baseUrl: '/'
   },
   router: {
-    // middleware: ['user-agent'],
+    middleware: ['https', 'i18n'],
     base: '/'
   },
   modules: [
