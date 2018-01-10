@@ -1,0 +1,30 @@
+{
+  members {
+    caucus
+    congressNumbers
+    description
+    district
+    id
+    leadershipTitle
+    office
+    party
+    person {
+      firstname
+      gender
+      lastname
+      middlename
+      id
+    }
+    phone
+    roleType
+    roleTypeDisplay
+    senatorClass
+    senatorClassDisplay
+    senatorRank
+    senatorRankDisplay
+    state
+    title
+    titleLong
+    website
+  }
+}

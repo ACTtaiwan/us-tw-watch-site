@@ -1,21 +1,8 @@
-query Bill($id: ID!) {
+query Member($id: ID!) {
   bills(billId: $id) {
     id
     title
     congress
-    billNumber
-    introducedDate
-    versions {
-      id
-      documents {
-        bucketKey
-        contentType
-      }
-    }
-    billType {
-      id
-      display
-    }
     sponsor {
       id
       roleType
@@ -23,7 +10,6 @@ query Bill($id: ID!) {
       state
       district
       person {
-        id
         lastname
         firstname
       }
@@ -35,7 +21,6 @@ query Bill($id: ID!) {
       state
       district
       person {
-        id
         lastname
         firstname
       }
