@@ -1,4 +1,10 @@
 {
+  "site": {
+    "url": "https://www.taiwanwatch.org"
+  },
+  "api": {
+    "url": "https://api.taiwanwatch.org/dev/api"
+  },
   "binaryMimeTypes": [
     "application/javascript",
     "application/json",

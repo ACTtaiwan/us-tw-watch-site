@@ -1,10 +1,6 @@
 module.exports = {
   // render: {
   //   bundleRenderer: {
-  //     cache: require('lru-cache')({
-  //       max: 1000,
-  //       maxAge: 1000 * 60 * 15
-  //     }),
   //     shouldPreload: (file, type) => {
   //       return ['script', 'style', 'font'].includes(type)
   //     }
@@ -20,6 +16,22 @@ module.exports = {
     // middleware: ['user-agent'],
     base: '/'
   },
+  modules: [
+    [
+      // https://ssr.vuejs.org/en/caching.html#component-level-caching
+      '@nuxtjs/component-cache',
+      {
+        max: 10000,
+        maxAge: 1000 * 60 * 60
+      }
+    ],
+    '@nuxtjs/apollo'
+  ],
+  apollo: {
+    clientConfigs: {
+      default: '~/apollo/client-configs/default.js'
+    }
+  },
   build: {
     /*
     ** Run ESLINT on save
@@ -33,12 +45,6 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
-    }
-  },
-  modules: ['@nuxtjs/apollo'],
-  apollo: {
-    networkInterfaces: {
-      default: '~/apollo/network-interfaces/default.js'
     }
   }
 }
