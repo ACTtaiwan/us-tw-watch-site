@@ -16,12 +16,17 @@ module.exports = {
       { rel: 'dns-prefetch', href: appConfig.api.url }
     ]
   },
+  loading: {
+    color: '#3762CC'
+  },
+  loadingIndicator: {
+    name: 'rectangle-bounce',
+    color: 'white',
+    background: '#3762CC'
+  },
   env: {
     baseUrl: '/'
   },
-  // generate: {
-  //   routes: ['/zh-tw']
-  // },
   router: {
     // middleware: ['user-agent'],
     base: '/'
@@ -42,6 +47,7 @@ module.exports = {
       default: '~/apollo/client-configs/default.js'
     }
   },
+  plugins: ['~/plugins/locale', '~/plugins/i18n.js', '~/plugins/iview'],
   build: {
     vendor: ['vue-i18n', 'd3', 'topojson'],
     // run ESLINT on save

@@ -1,0 +1,49 @@
+{
+  "locales": {
+    "en-us": "EN",
+    "zh-tw": "中文"
+  },
+  "site": {
+    "title": {
+      "mainTitle": "Taiwan Watch",
+      "billsPageTitle": "Bills"
+    },
+    "description": {
+      "mainDescription": "Taiwan affairs in U.S. Congress"
+    },
+    "menu": {
+      "billItemText": "Bills",
+      "votesItemText": "Votes",
+      "congressMemberItemText": "Congress members"
+    }
+  },
+  "landingPage": {
+    "bannerTitle": "What's new in congress"
+  },
+  "billsPage": {
+    "bannerTitle": "Find bills",
+    "table": {
+      "congressColLabel": "Congress",
+      "billCodeColLabel": "Bill Code",
+      "titleColLabel": "Title",
+      "versionsColLabel": "Versions",
+      "versionsPopTitleUnit": "version(s)",
+      "sponsorColLabel": "Sponsor",
+      "chamberColLabel": "Chamber",
+      "partyColLabel": "Party",
+      "lastUpdatedColLabel": "Last Updated"
+    }
+  },
+  "membersPage": {
+    "bannerTitle": "Find members",
+    "table": {
+      "congressColLabel": "Congress",
+      "nameColLabel": "Name",
+      "titleColLabel": "Title (Senator or Representative)",
+      "stateColLabel": "State",
+      "districtColLabel": "District",
+      "partyColLabel": "Party",
+      "lastUpdatedColLabel": "Last Updated"
+    }
+  }
+}

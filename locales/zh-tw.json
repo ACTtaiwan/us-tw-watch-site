@@ -1,0 +1,49 @@
+{
+  "locales": {
+    "en-us": "EN",
+    "zh-tw": "中文"
+  },
+  "site": {
+    "title": {
+      "mainTitle": "Taiwan Watch 美國國會觀測站",
+      "billsPageTitle": "法案"
+    },
+    "description": {
+      "mainDescription": "美國國會台灣大小事"
+    },
+    "menu": {
+      "billItemText": "法案",
+      "votesItemText": "投票",
+      "congressMemberItemText": "國會議員"
+    }
+  },
+  "landingPage": {
+    "bannerTitle": "國會最新動態"
+  },
+  "billsPage": {
+    "bannerTitle": "找法案",
+    "table": {
+      "congressColLabel": "國會屆數",
+      "billCodeColLabel": "法案編號",
+      "titleColLabel": "標題",
+      "versionsColLabel": "版本",
+      "versionsPopTitleUnit": "個版本",
+      "sponsorColLabel": "提案者",
+      "chamberColLabel": "議院",
+      "partyColLabel": "政黨",
+      "lastUpdatedColLabel": "更新時間"
+    }
+  },
+  "membersPage": {
+    "bannerTitle": "找議員",
+    "table": {
+      "congressColLabel": "國會屆數",
+      "titleColLabel": "標題 (參議員 或 眾議員)",
+      "nameColLabel": "名稱",
+      "stateColLabel": "州",
+      "districtColLabel": "區",
+      "partyColLabel": "政黨",
+      "lastUpdatedColLabel": "更新時間"
+    }
+  }
+}

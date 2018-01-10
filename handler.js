@@ -1,10 +1,7 @@
 /*
  * Handler definition for https://serverless.com/
  */
-// const Nuxt = require('nuxt')
 const { Nuxt } = require('nuxt')
-// const express = require('express')
-
 let nuxtConfig = require('./nuxt.config.js')
 nuxtConfig.dev = false
 const nuxt = new Nuxt(nuxtConfig)
@@ -19,8 +16,6 @@ const appConfig = require('./config/app.json')
 // by aws-serverless-express and/or API Gateway. Add the necessary MIME types to
 // binaryMimeTypes below, then redeploy (`npm run package-deploy`)
 const server = awsServerlessExpress.createServer(app, null, appConfig.binaryMimeTypes)
-// const server = awsServerlessExpress.createServer(app)
-
 const bodyParser = require('body-parser')
 const session = require('express-session')
 

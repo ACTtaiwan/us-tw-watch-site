@@ -43,9 +43,6 @@ ul {
 }
 a {
   text-decoration: none;
-  color: #3498DB;
-}
-a:hover {
-  border-bottom: 1px solid;
+  color: #3498db;
 }
 </style>

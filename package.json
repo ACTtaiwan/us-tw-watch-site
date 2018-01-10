@@ -32,7 +32,7 @@
     "iview": "^2.8.0",
     "nuxt": "^1.0.0-rc11",
     "topojson": "v1.6.27",
-    "vue-i18n": "^7.3.1"
+    "vue-i18n": "^7.3.4"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

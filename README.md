@@ -15,7 +15,6 @@
 * [x] [Vue.js](https://vuejs.org/) - component-based MVVM library
 * [x] [vue-router](https://github.com/vuejs/vue-router)
 * [x] [Vuex](https://github.com/vuejs/vuex) - Flux application architecture for Vue.js
-* [x] [vue-router-sync](https://github.com/vuejs/vuex-router-sync)
 * [x] [iView](https://github.com/iview/iview) - A high quality UI Toolkit built on Vue.js
 * [x] [Nuxt.js](https://nuxtjs.org/guide/installation) - Vue SSR
 * [x] [vue-apollo](https://github.com/akryum/vue-apollo) - GraphQL Client
