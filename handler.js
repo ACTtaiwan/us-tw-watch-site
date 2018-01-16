@@ -1,10 +1,7 @@
 /*
  * Handler definition for https://serverless.com/
  */
-// const Nuxt = require('nuxt')
 const { Nuxt } = require('nuxt')
-// const express = require('express')
-
 let nuxtConfig = require('./nuxt.config.js')
 nuxtConfig.dev = false
 const nuxt = new Nuxt(nuxtConfig)
@@ -12,15 +9,13 @@ const nuxt = new Nuxt(nuxtConfig)
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 const awsServerlessExpress = require('aws-serverless-express')
 const app = require('express')()
-const appConfig = require('./src/config/app.json')
+const appConfig = require('./config/app.json')
 
 // NOTE: If you get ERR_CONTENT_DECODING_FAILED in your browser, this is likely
 // due to a compressed response (e.g. gzip) which has not been handled correctly
 // by aws-serverless-express and/or API Gateway. Add the necessary MIME types to
 // binaryMimeTypes below, then redeploy (`npm run package-deploy`)
 const server = awsServerlessExpress.createServer(app, null, appConfig.binaryMimeTypes)
-// const server = awsServerlessExpress.createServer(app)
-
 const bodyParser = require('body-parser')
 const session = require('express-session')
 
@@ -35,31 +30,6 @@ app.use(
     cookie: { maxAge: 60000 }
   })
 )
-
-app.use('/api', require('./src/api'))
-
-// assets/img/
-// app.get(/^\/_nuxt\/img\/[\w-]+.(jpg|png)/, (req, res) => {
-//   const url = req.url
-//   const imgName = url.match(/[\w-]+.(jpg|png)/)[0]
-//   res.sendFile(`${__dirname}/.nuxt/dist/img/${imgName}`)
-// })
-
-// static/*.(jpg/png)
-// app.get(/^\/[\w-]+.(jpg|png)/, (req, res) => {
-//   const url = req.url
-//   const imgName = url.match(/[\w-]+.(jpg|png)/)[0]
-//   res.sendFile(`${__dirname}/src/static/${imgName}`)
-// })
-
-// app.use(/^\/[\w-]+.(jpg|png)/, express.static(`${__dirname}/src/static`))
-// app.all(/^\/[\w-]+.(jpg|png)/, (req, res) => {
-//   const url = req.url
-//   const imgName = url.match(/[\w-]+.(jpg|png|txt)/)[0]
-
-//   res.redirect(`/static/${imgName}`)
-// })
-// app.use('/static/', express.static(`${__dirname}/src/static`))
 
 app.use(awsServerlessExpressMiddleware.eventContext())
 app.use(nuxt.render)

@@ -1,0 +1,25 @@
+query AllBillsQuery($lang: String) {
+  bills(lang: $lang) {
+    id
+    title
+    congress
+    billCode
+    categories {
+      id
+      name
+    }
+    billType {
+      id
+      chamber
+    }
+    sponsor {
+      id
+      party
+      person {
+        id
+        lastname
+        firstname
+      }
+    }
+  }
+}

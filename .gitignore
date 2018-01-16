@@ -1,6 +1,9 @@
 # file meta data
 .DS_Store
 
+# IDE
+.vscode
+
 # Node.js
 node_modules
 jspm_packages

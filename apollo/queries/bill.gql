@@ -1,0 +1,44 @@
+query Bill($id: ID!) {
+  bills(billId: $id) {
+    id
+    title
+    congress
+    billNumber
+    introducedDate
+    versions {
+      id
+      documents {
+        bucketKey
+        contentType
+      }
+    }
+    billType {
+      id
+      display
+    }
+    sponsor {
+      id
+      roleType
+      party
+      state
+      district
+      person {
+        id
+        lastname
+        firstname
+      }
+    }
+    cosponsors {
+      id
+      roleType
+      party
+      state
+      district
+      person {
+        id
+        lastname
+        firstname
+      }
+    }
+  }
+}

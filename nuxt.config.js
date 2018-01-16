@@ -1,53 +1,56 @@
+var appConfig = require('./config/app.json')
+
 module.exports = {
-  render: {
-    bundleRenderer: {
-      cache: require('lru-cache')({
-        max: 1000,
-        maxAge: 1000 * 60 * 15
-      }),
-      shouldPreload: (file, type) => {
-        return ['script', 'style', 'font'].includes(type)
-      }
-    }
+  head: {
+    titleTemplate: '',
+    meta: [
+      {
+        property: 'og:image',
+        content: 'https://s3.amazonaws.com/taiwanwatch-static/assets/tw-site-banner.png'
+      },
+      { property: 'twitter:card', content: 'summary_large_image' },
+      { property: 'twitter:site', content: '@nuxt_js' }
+    ],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'dns-prefetch', href: appConfig.api.url }
+    ]
   },
-  css: [
-    {
-      src: '@/assets/css/main.css',
-      lang: 'scss'
-    }
-  ],
+  loading: {
+    color: '#3762CC'
+  },
+  loadingIndicator: {
+    name: 'rectangle-bounce',
+    color: 'white',
+    background: '#3762CC'
+  },
   env: {
     baseUrl: '/'
   },
-  loading: '~/components/loading.vue',
-  plugins: [
-    // ssr: false to only include it on client-side
-    { src: '~/plugins/i18n.js', ssr: true },
-    { src: '~/plugins/vue-notifications.js', ssr: false },
-    { src: '~/plugins/iview', ssr: true }
-  ],
-  generate: {
-    routes: ['/zh-tw']
-  },
   router: {
-    middleware: ['visits', 'user-agent', 'i18n'],
+    middleware: ['https', 'i18n'],
     base: '/'
   },
-  head: {
-    titleTemplate: '',
-    htmlAttrs: {
-      lang: 'en-US'
-    },
-    meta: [{ charset: 'utf-8' }, { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/twfavicon.ico' }]
+  modules: [
+    [
+      // https://ssr.vuejs.org/en/caching.html#component-level-caching
+      '@nuxtjs/component-cache',
+      {
+        max: 10000,
+        maxAge: 1000 * 60 * 60
+      }
+    ],
+    '@nuxtjs/apollo'
+  ],
+  apollo: {
+    clientConfigs: {
+      default: '~/apollo/client-configs/default.js'
+    }
   },
-  srcDir: 'src/',
+  plugins: ['~/plugins/locale', '~/plugins/i18n.js', '~/plugins/iview'],
   build: {
-    vendor: ['axios', 'mini-toastr', 'vue-notifications', 'vue-i18n', 'd3', 'd3-queue', 'topojson'],
-
-    /*
-    ** Run ESLINT on save
-    */
+    vendor: ['vue-i18n', 'd3', 'topojson'],
+    // run ESLINT on save
     extend (config, ctx) {
       if (ctx.isClient) {
         config.module.rules.push({
@@ -59,10 +62,11 @@ module.exports = {
       }
     }
   },
-  modules: ['@nuxtjs/apollo'],
-  apollo: {
-    networkInterfaces: {
-      default: '~/apollo/network-interfaces/default.js'
+  render: {
+    bundleRenderer: {
+      shouldPreload: (file, type) => {
+        return ['script', 'style', 'font'].includes(type)
+      }
     }
   }
 }
