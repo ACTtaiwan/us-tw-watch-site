@@ -9,7 +9,8 @@ module.exports = {
         content: 'https://s3.amazonaws.com/taiwanwatch-static/assets/tw-site-banner.png'
       },
       { property: 'twitter:card', content: 'summary_large_image' },
-      { property: 'twitter:site', content: '@nuxt_js' }
+      { property: 'twitter:site', content: '@nuxt_js' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },

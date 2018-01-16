@@ -75,24 +75,40 @@ export default {
   @extend .pageWrapper-large;
 
   .banner-title {
+    order: 0;
     font-size: 2.5em;
     font-weight: 400;
     letter-spacing: 0.05em;
     padding-top: 50px;
   }
+
+  .image-container {
+    order: 1;
+    display: flex;
+
+    .congress-img {
+      margin-top: auto;
+      width: 400px;
+    }
+  }
 }
 
-.image-container {
-  display: flex;
+@media (max-width: $mediumDeviceWidth) {
+  .banner-wrapper {
+    text-align: center;
+    flex-direction: column;
+    justify-content: initial;
 
-  .congress-img {
-    margin-top: auto;
-    width: 400px;
-  }
+    .banner-title {
+      padding-top: 30px;
+    }
 
-  @media (max-width: $mediumDeviceWidth) {
-    .congress-img {
-      width: 300px;
+    .image-container {
+      justify-content: center;
+
+      .congress-img {
+        width: 200px;
+      }
     }
   }
 }
