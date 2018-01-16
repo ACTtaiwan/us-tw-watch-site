@@ -32,6 +32,7 @@ export default {
 <style lang="scss">
 @import 'assets/css/site';
 @import 'assets/css/app';
+@import 'assets/css/colors';
 
 .main-content {
   padding-top: $appHeaderHeight;

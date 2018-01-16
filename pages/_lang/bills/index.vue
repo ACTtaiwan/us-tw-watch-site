@@ -1,14 +1,17 @@
 <template>
   <div class="bills-page">
+    <!-- Banner -->
     <section class="banner">
       <div class="banner-wrapper">
         <h1 class="banner-title">{{ this.$t('billsPage.bannerTitle') }}</h1>
       </div>
     </section>
-    <div class="search-section">
-      <div class="search-section-wrapper">
-        <Row>
-          <!-- Category -->
+    <!-- Tabs -->
+    <div class="tab-section">
+      <div class="tab-section-wrapper">
+        <TabButton class="tab-button" icon="ios-paper" label="Bills" :selected="this.billsTabSelected" @select="selectTab({bills: true, insight: false})"/>
+        <TabButton class="tab-button" icon="stats-bars" label="Insight" :selected="this.insightTabSelected" @select="selectTab({bills: false, insight: true})"/>
+        <!-- <Row>
           <Col span="24" class="category-filter-block">
             <h1>Category</h1>
             <Select multiple
@@ -19,8 +22,7 @@
               <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
             </Select>
           </Col>
-          <!-- Sponsor -->
-          <!-- <Col span="8">
+          <Col span="8">
             <Select
               v-model="selectedSponsorId"
               @on-change="onSponsorSelect"
@@ -30,8 +32,8 @@
               placeholder="Select a sponsor">
               <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
             </Select>
-          </Col> -->
-        </Row>
+          </Col>
+        </Row> -->
       </div>
     </div>
     <div class="table-section">
@@ -50,9 +52,10 @@
 <script>
 import BillTable from '~/components/BillTable'
 import BillCard from '~/components/BillCard'
+import TabButton from '~/components/TabButton'
+import Spinner from '~/components/Spinner'
 import allBillsQuery from '~/apollo/queries/allBills'
 import allCategoriesQuery from '~/apollo/queries/allCategories'
-import Spinner from '~/components/Spinner'
 
 export default {
   head () {
@@ -66,13 +69,19 @@ export default {
       loadingBills: true,
       loadingCategories: true,
       selectedCategories: [],
-      selectedSponsorId: ''
+      selectedSponsorId: '',
+      billsTabSelected: true,
+      insightTabSelected: false
     }
   },
   methods: {
     onCategorySelect (selected) {
       console.log('000', selected)
       console.log('111', this.selectedCategories)
+    },
+    selectTab ({ bills, insight }) {
+      this.billsTabSelected = bills
+      this.insightTabSelected = insight
     }
   },
   computed: {
@@ -123,6 +132,7 @@ export default {
   components: {
     BillCard,
     BillTable,
+    TabButton,
     Spinner
   }
 }
@@ -149,12 +159,20 @@ export default {
   }
 }
 
-.search-section {
+.tab-section {
   padding: 40px 0 0 0;
-  text-align: left;
+  text-align: center;
 
-  .search-section-wrapper {
+  .tab-section-wrapper {
     @extend .pageWrapper-medium;
+  }
+
+  .tab-button {
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0px;
+    }
   }
 
   .category-filter-block {

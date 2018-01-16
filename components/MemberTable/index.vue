@@ -62,6 +62,7 @@ export default {
 
 <style lang="scss">
 @import 'assets/css/app';
+@import 'assets/css/colors';
 
 .members-table {
   .ivu-table th {
