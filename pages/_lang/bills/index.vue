@@ -11,46 +11,48 @@
       <div class="tab-section-wrapper">
         <TabButton class="tab-button" icon="ios-paper" label="Bills" :selected="this.billsTabSelected" @select="selectTab({bills: true, insight: false})"/>
         <TabButton class="tab-button" icon="stats-bars" label="Insight" :selected="this.insightTabSelected" @select="selectTab({bills: false, insight: true})"/>
-        <!-- <Row>
-          <Col span="24" class="category-filter-block">
-            <h1>Category</h1>
-            <Select multiple
-              style="width: 400px"
-              v-model="selectedCategories"
-              @on-change="onCategorySelect"
-              placeholder="Select bill categories">
-              <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
-            </Select>
-          </Col>
-          <Col span="8">
-            <Select
-              v-model="selectedSponsorId"
-              @on-change="onSponsorSelect"
-              clearable
-              remote
-              :remote-method="getSponsorSuggestList"
-              placeholder="Select a sponsor">
-              <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
-            </Select>
-          </Col>
-        </Row> -->
       </div>
     </div>
-    <div class="table-section">
-      <div class="table-section-wrapper">
-        <!-- <bill-table :bills="filterredBills" :loading="loading" /> -->
-        <Spinner :show="loadingBills"></Spinner>
-        <Row :gutter="30" type="flex" justify="space-around">
-          <Col span="24" v-for="bill in filterredBills" :key="bill.id">
-            <bill-card :bill="bill" />
+    <!-- Bills -->
+    <div v-if="this.billsTabSelected" class="bills-section">
+      <div class="bills-section-wrapper">
+        <Row>
+          <!-- Filters -->
+          <Col span="6" class="filters">
+            <Row class="filter-block">
+              <h2 class="filter-title">Category</h2>
+              <Select multiple v-model="selectedCategories" @on-change="onCategorySelect" placeholder="Select bill categories">
+                <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
+              </Select>
+            </Row>
+            <Row class="filter-block">
+              <h2 class="filter-title">Sponsor</h2>
+              <Select v-model="selectedSponsorId" @on-change="onSponsorSelect" clearable remote :remote-method="getSponsorSuggestList" placeholder="Select a sponsor">
+                <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
+              </Select>
+            </Row>
+          </Col>
+          <!-- List -->
+          <Col span="18" class="list">
+            <Row :gutter="30" type="flex" justify="space-around">
+              <Col span="24" v-for="bill in filterredBills" :key="bill.id">
+                <bill-card :bill="bill" />
+              </Col>
+              <Spinner :show="loadingBills"></Spinner>
+            </Row>
           </Col>
         </Row>
+      </div>
+    </div>
+    <!-- Insights -->
+    <div v-if="this.insightTabSelected" class="insights-section">
+      <div class="insights-section-wrapper">
+        asd
       </div>
     </div>
   </div>
 </template>
 <script>
-import BillTable from '~/components/BillTable'
 import BillCard from '~/components/BillCard'
 import TabButton from '~/components/TabButton'
 import Spinner from '~/components/Spinner'
@@ -76,13 +78,14 @@ export default {
   },
   methods: {
     onCategorySelect (selected) {
-      console.log('000', selected)
       console.log('111', this.selectedCategories)
     },
     selectTab ({ bills, insight }) {
       this.billsTabSelected = bills
       this.insightTabSelected = insight
-    }
+    },
+    onSponsorSelect () {},
+    getSponsorSuggestList () {}
   },
   computed: {
     locale () {
@@ -131,7 +134,6 @@ export default {
   },
   components: {
     BillCard,
-    BillTable,
     TabButton,
     Spinner
   }
@@ -139,6 +141,7 @@ export default {
 </script>
 <style scoped lang="scss">
 @import 'assets/css/app';
+@import 'assets/css/colors';
 
 .banner {
   background-color: #fff;
@@ -186,11 +189,25 @@ export default {
   }
 }
 
-.table-section {
+.bills-section {
   padding: 40px 0;
 
-  .table-section-wrapper {
+  .bills-section-wrapper {
     @extend .pageWrapper-large;
+  }
+}
+
+.filters {
+  padding-right: 40px;
+
+  .filter-block {
+    margin-bottom: 20px;
+
+    .filter-title {
+      color: $twGray;
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
   }
 }
 </style>

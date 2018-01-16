@@ -33,13 +33,20 @@ export default {
 @import 'assets/css/typograghy';
 
 .tab-button {
-  font-size: 1rem;
+  font-size: 1em;
   background: #ffffff;
   color: $twGrayLight;
   padding: 10px 20px;
+  border-width: 2px;
   font-weight: $twBold;
+
+  &:hover {
+    color: $twBlue;
+    border-color: $twBlue;
+  }
 }
 .enabled {
-  color: $twBlack;
+  color: $twBlue;
+  border-color: $twBlue;
 }
 </style>

@@ -29,6 +29,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import 'assets/css/typograghy';
+
 .card {
   background-color: #ffffff;
   padding: 30px;
@@ -51,6 +53,8 @@ export default {
 .bill-title {
   font-weight: 400;
   line-height: 1.2em;
+  font-size: 1.6em;
+  font-weight: $twSemiBold;
   margin: 14px 0;
 }
 </style>
