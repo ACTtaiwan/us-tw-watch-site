@@ -2,9 +2,22 @@
 $twBlack: #000000;
 $twGray: #4a4a4a;
 $twGrayLight: #9b9b9b;
+$twGrayLighter: #f5f5f5;
+$twIron: #7b8694;
+$twIronLight: #939fae;
+$twBlue: #4b8fea;
+$twBlueLighter: #90caff;
+$twBlueDark: #0f82b9;
+$twCyanLighter: #50d1e3;
+$twIndigo: #3e57c1;
+$twIndigoLight: #7baafe;
+$twPurple: #7987fe;
+$twPurpleLight: #c1c6fe;
+$twRed: #e73a48;
+$twYellow: #eebd47;
 
 // Usage
-$backgroundColorLight: #f6f6f6;
+$backgroundColorLight: $twGrayLighter;
 $titleColor: $twBlack;
-$strongTextLinkColor: #474c5a;
-$normalTextLinkColor: #2d8cf0;
+$strongTextLinkColor: $twGray;
+$normalTextLinkColor: $twBlue;
