@@ -1,27 +1,45 @@
 <template>
   <router-link :to="path(this, `/bills/${bill.id}`)">
     <div class="card">
-      <div class="bill-meta">{{ bill.congress }}th Congress ・ {{ bill.billCode}} </div>
+      <div class="bill-meta">
+        <span class="bill-code">{{ bill.billCode}}</span>
+        <span class="bill-congress"> ・  {{ bill.congress }}th Congress</span>
+      </div>
       <h1 class="bill-title">{{ bill.title }}</h1>
-      <div class="bill-sponsor">{{ bill.sponsor.person.firstname }} {{ bill.sponsor.person.lastname }}</div>
+      <div class="bill-sponsor">
+        <img class="avatar" :src="defaultAvatar" :style="style" />
+        <span class="name">{{ bill.sponsor.person.firstname }} {{ bill.sponsor.person.lastname }}</span>
+      </div>
     </div>
   </router-link>
 </template>
 <script>
 import { path } from '@/plugins/locale'
+import defaultAvatar from '~/assets/img/defaultAvatar.jpeg'
 
 export default {
-  props: ['bill'],
+  props: {
+    bill: {
+      type: Object,
+      required: true
+    }
+  },
 
   data () {
     return {
-      styleObject: {
-        color: 'black',
-        'text-align': 'left'
-      }
+      defaultAvatar,
+      size: 40
     }
   },
-  computed: {},
+  computed: {
+    style () {
+      return `
+        object-fit: cover;
+        width: ${this.size}px;
+        height: ${this.size}px;
+      `
+    }
+  },
   methods: {
     path
   }
@@ -30,6 +48,7 @@ export default {
 
 <style scoped lang="scss">
 @import 'assets/css/typograghy';
+@import 'assets/css/colors';
 
 .card {
   background-color: #ffffff;
@@ -47,14 +66,41 @@ export default {
 }
 
 .bill-meta {
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+
+  .bill-code {
+    font-size: 1.2em;
+    color: $twBlue;
+    font-weight: $twBold;
+  }
+  .bill-congress {
+    font-size: 1em;
+    color: $twGrayLight;
+    font-weight: $twRegular;
+  }
 }
 
 .bill-title {
-  font-weight: 400;
-  line-height: 1.2em;
   font-size: 1.4em;
-  font-weight: $twSemiBold;
-  margin: 14px 0;
+  font-weight: $twRegular;
+  margin-bottom: 20px;
+}
+
+.bill-sponsor {
+  display: flex;
+  align-items: center;
+
+  .avatar {
+    border-radius: 50%;
+    border: 3px solid $twBlue;
+    margin-right: 10px;
+  }
+
+  .name {
+    font-size: 1em;
+    color: $twBlack;
+    font-weight: $twSemiBold;
+  }
 }
 </style>
