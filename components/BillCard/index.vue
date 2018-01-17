@@ -8,7 +8,8 @@
       <h1 class="bill-title">{{ bill.title }}</h1>
       <div class="bill-sponsor">
         <img class="avatar" :src="defaultAvatar" :style="style" />
-        <span class="name">{{ bill.sponsor.person.firstname }} {{ bill.sponsor.person.lastname }}</span>
+        <span class="name">{{ bill.sponsor.title }} {{ bill.sponsor.person.firstname }} {{ bill.sponsor.person.lastname }}</span>
+        <span class="area">{{ this.area }} </span>
       </div>
     </div>
   </router-link>
@@ -38,6 +39,13 @@ export default {
         width: ${this.size}px;
         height: ${this.size}px;
       `
+    },
+    area () {
+      if (this.bill.sponsor.district) {
+        return `${this.bill.sponsor.state}-${this.bill.sponsor.district}`
+      } else {
+        return this.bill.sponsor.state
+      }
     }
   },
   methods: {
@@ -101,6 +109,16 @@ export default {
     font-size: 1em;
     color: $twBlack;
     font-weight: $twSemiBold;
+    margin-right: 10px;
+  }
+
+  .area {
+    font-size: 1em;
+    color: $twBlack;
+    font-weight: $twSemiBold;
+    background: $twGrayLighter;
+    border-radius: 3px;
+    padding: 0 5px;
   }
 }
 </style>

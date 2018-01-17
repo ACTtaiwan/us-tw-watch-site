@@ -15,6 +15,9 @@ query AllBillsQuery($lang: String) {
     sponsor {
       id
       party
+      state
+      district
+      title
       person {
         id
         lastname
