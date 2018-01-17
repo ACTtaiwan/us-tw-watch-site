@@ -4,6 +4,10 @@ query AllBillsQuery($lang: String) {
     title
     congress
     billCode
+    introducedDate
+    cosponsors {
+      id
+    }
     categories {
       id
       name
@@ -11,6 +15,7 @@ query AllBillsQuery($lang: String) {
     billType {
       id
       chamber
+      code
     }
     sponsor {
       id
