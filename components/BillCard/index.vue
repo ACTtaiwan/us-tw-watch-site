@@ -53,7 +53,7 @@ export default {
 .bill-title {
   font-weight: 400;
   line-height: 1.2em;
-  font-size: 1.6em;
+  font-size: 1.4em;
   font-weight: $twSemiBold;
   margin: 14px 0;
 }

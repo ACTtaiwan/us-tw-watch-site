@@ -8,7 +8,8 @@ export default () => {
   return new Vuex.Store({
     state: {
       locales: ['en-us', 'zh-tw'],
-      locale: 'en-us'
+      locale: 'en-us',
+      clientWidth: 2000
     },
     actions,
     mutations,

@@ -18,22 +18,25 @@
       <div class="bills-section-wrapper">
         <Row>
           <!-- Filters -->
-          <Col span="6" class="filters">
-            <Row class="filter-block">
-              <h2 class="filter-title">Category</h2>
-              <Select multiple v-model="selectedCategories" @on-change="onCategorySelect" placeholder="Select bill categories">
-                <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
-              </Select>
+          <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="filters" :class="{ mobile: this.isTablet || this.isPhone }">
+            <Row :gutter="20">
+              <Col :span="this.isTablet ? 12 : 24" class="filter-block" :class="{ tablet: this.isTablet }">
+                <h2 class="filter-title">Category</h2>
+                <Select multiple v-model="selectedCategories" @on-change="onCategorySelect" placeholder="Select bill categories">
+                  <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
+                </Select>
+              </Col>
+              <Col :span="this.isTablet ? 12 : 24" class="filter-block" :class="{ tablet: this.isTablet }">
+                <h2 class="filter-title">Sponsor</h2>
+                <Select v-model="selectedSponsorId" @on-change="onSponsorSelect" clearable remote :remote-method="getSponsorSuggestList" placeholder="Select a sponsor">
+                  <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
+                </Select>
+              </Col>
             </Row>
-            <Row class="filter-block">
-              <h2 class="filter-title">Sponsor</h2>
-              <Select v-model="selectedSponsorId" @on-change="onSponsorSelect" clearable remote :remote-method="getSponsorSuggestList" placeholder="Select a sponsor">
-                <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
-              </Select>
-            </Row>
+
           </Col>
           <!-- List -->
-          <Col span="18" class="list">
+          <Col :span="this.isTablet || this.isPhone ? 24 : 18" class="list" :class="{ mobile: this.isTablet || this.isPhone }">
             <Row :gutter="30" type="flex" justify="space-around">
               <Col span="24" v-for="bill in filterredBills" :key="bill.id">
                 <bill-card :bill="bill" />
@@ -47,7 +50,7 @@
     <!-- Insights -->
     <div v-if="this.insightTabSelected" class="insights-section">
       <div class="insights-section-wrapper">
-        asd
+        XDDDD
       </div>
     </div>
   </div>
@@ -90,6 +93,12 @@ export default {
   computed: {
     locale () {
       return this.$store.state.locale
+    },
+    isPhone () {
+      return this.$store.getters.isPhone
+    },
+    isTablet () {
+      return this.$store.getters.isTablet
     },
     filterredBills () {
       let that = this
@@ -142,6 +151,7 @@ export default {
 <style scoped lang="scss">
 @import 'assets/css/app';
 @import 'assets/css/colors';
+@import 'assets/css/typograghy';
 
 .banner {
   background-color: #fff;
@@ -200,14 +210,22 @@ export default {
 .filters {
   padding-right: 40px;
 
+  &.mobile {
+    padding-right: 0px;
+  }
+
   .filter-block {
     margin-bottom: 20px;
 
     .filter-title {
       color: $twGray;
-      font-size: 1.5em;
+      font-size: 1.4em;
+      font-weight: $twBold;
       margin-bottom: 10px;
     }
   }
+}
+
+.list {
 }
 </style>

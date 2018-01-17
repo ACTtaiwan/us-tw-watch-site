@@ -22,6 +22,18 @@ export default {
       ]
     }
   },
+  beforeMount () {
+    window.addEventListener('resize', this.parseWindowWidth)
+    this.parseWindowWidth()
+  },
+  beforeDestroy () {
+    window.removeEventListener('resize', this.parseWindowWidth)
+  },
+  methods: {
+    parseWindowWidth (event) {
+      this.$store.commit('SET_WINDOW_WIDTH', document.documentElement.clientWidth)
+    }
+  },
   components: {
     AppHeader,
     AppFooter
