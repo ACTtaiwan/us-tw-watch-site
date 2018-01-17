@@ -60,7 +60,7 @@ export default {
   data () {
     return {
       defaultAvatar,
-      size: 40
+      size: 36
     }
   },
   computed: {
@@ -121,6 +121,7 @@ export default {
 
 .bill-meta {
   display: flex;
+  align-items: flex-start;
 
   .bill-code {
     font-size: 1.2em;
@@ -134,12 +135,12 @@ export default {
     font-weight: $twSemiBold;
     background: $twGrayLighter;
     border-radius: 10px;
-    padding: 0px 8px;
+    padding: 1px 8px;
   }
 }
 
 .bill-title {
-  font-size: 1.4em;
+  font-size: 1.2em;
   font-weight: $twRegular;
   margin-bottom: 20px;
 }
