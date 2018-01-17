@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <AppHeader></AppHeader>
-    <main id="main-content" class="main-content">
+    <main id="main-content" class="main-content" :class="{ phone: this.isPhone}">
       <nuxt nuxt-child-key="none"></nuxt>
     </main>
     <AppFooter></AppFooter>
@@ -22,12 +22,17 @@ export default {
       ]
     }
   },
-  beforeMount () {
+  mounted () {
     window.addEventListener('resize', this.parseWindowWidth)
     this.parseWindowWidth()
   },
   beforeDestroy () {
     window.removeEventListener('resize', this.parseWindowWidth)
+  },
+  computed: {
+    isPhone () {
+      return this.$store.getters.isPhone
+    }
   },
   methods: {
     parseWindowWidth (event) {
@@ -50,5 +55,9 @@ export default {
   padding-top: $appHeaderHeight;
   min-height: calc(100vh - #{$appFooterHeight});
   background: $backgroundColorLight;
+
+  &.phone {
+    min-height: calc(100vh - #{$appFooterHeightPhone});
+  }
 }
 </style>
