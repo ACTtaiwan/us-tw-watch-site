@@ -1,6 +1,6 @@
 <template>
   <router-link :to="path(this, `/bills/${bill.id}`)">
-    <div class="card">
+    <div class="card" :class="{ phone: this.isPhone }">
       <div class="bill-meta">
         <span class="bill-code">{{ bill.billCode}}</span>
         <span class="bill-type">{{ this.billType }}</span>
@@ -60,12 +60,15 @@ export default {
   data () {
     return {
       defaultAvatar,
-      size: 36
+      size: 30
     }
   },
   computed: {
     isDesktop () {
       return this.$store.getters.isDesktop
+    },
+    isPhone () {
+      return this.$store.getters.isPhone
     },
     style () {
       return `
@@ -106,16 +109,21 @@ export default {
 
 .card {
   background-color: #ffffff;
-  padding: 30px;
+  padding: 20px;
   color: #000000;
   text-align: left;
   margin-bottom: 30px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   transition-property: box-shadow;
+  border-radius: 5px;
 
   &:hover {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  }
+
+  &.phone {
+    border-radius: 0px;
   }
 }
 
@@ -142,7 +150,7 @@ export default {
 .bill-title {
   font-size: 1.2em;
   font-weight: $twRegular;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .bill-sponsor {
@@ -151,7 +159,7 @@ export default {
 
   .avatar {
     border-radius: 50%;
-    border: 3px solid $twBlue;
+    border: 2px solid $twBlue;
     margin-right: 10px;
   }
 
