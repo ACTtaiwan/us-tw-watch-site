@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
+    "build-analyze": "nuxt build --analyze",
     "start": "nuxt start",
     "deploy-dev": "nuxt build && serverless deploy --stage dev",
     "deploy-dev-fast": "nuxt build && serverless deploy --stage dev --function main",

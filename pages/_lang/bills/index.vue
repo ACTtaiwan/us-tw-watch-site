@@ -36,9 +36,9 @@
 
           </Col>
           <!-- List -->
-          <Col :span="this.isTablet || this.isPhone ? 24 : 18" class="list" :class="{ mobile: this.isTablet || this.isPhone }">
-            <Row :gutter="30" type="flex" justify="space-around">
-              <Col span="24" v-for="bill in filterredBills" :key="bill.id">
+          <Col :span="this.isTablet || this.isPhone ? 24 : 18" class="list" :class="{ mobile: this.isTablet || this.isPhone, phone: this.isPhone }">
+            <Row>
+              <Col class="card-row" span="24" v-for="bill in filterredBills" :key="bill.id">
                 <bill-card :bill="bill" />
               </Col>
               <Spinner :show="loadingBills"></Spinner>
@@ -227,5 +227,14 @@ export default {
 }
 
 .list {
+  &.phone {
+    .card-row {
+      margin-left: calc(15px * -1);
+      margin-right: calc(15px * -1);
+      width: 100%;
+      width: -moz-available; /* WebKit-based browsers will ignore this. */
+      width: -webkit-fill-available;
+    }
+  }
 }
 </style>
