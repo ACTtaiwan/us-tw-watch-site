@@ -37,7 +37,7 @@
     </div>
     <div class="map-section">
       <div class="map-section-wrapper">
-        <SponsorsMap :mapStyle="mapStyle" :sponsors="sponsors"/>
+        <!-- <SponsorsMap :mapStyle="mapStyle" :sponsors="sponsors"/> -->
       </div>
     </div>
   </div>
@@ -46,7 +46,7 @@
 <script>
 import queryBill from '~/apollo/queries/bill'
 import { path } from '@/plugins/locale'
-import SponsorsMap from '~/components/SponsorsMap'
+// import SponsorsMap from '~/components/SponsorsMap'
 
 export default {
   data () {
@@ -126,7 +126,7 @@ export default {
   },
 
   components: {
-    SponsorsMap
+    // SponsorsMap
   }
 }
 </script>
