@@ -36,15 +36,19 @@
         </Row> -->
       </div>
     </div>
-    <div class="table-section">
+    <div v-if="billsTabSelected" class="table-section">
       <div class="table-section-wrapper">
-        <!-- <bill-table :bills="filterredBills" :loading="loading" /> -->
         <Spinner :show="loadingBills"></Spinner>
         <Row :gutter="30" type="flex" justify="space-around">
           <Col span="24" v-for="bill in filterredBills" :key="bill.id">
             <bill-card :bill="bill" />
           </Col>
         </Row>
+      </div>
+    </div>
+    <div v-if="insightTabSelected" class="table-section">
+      <div class="table-section-wrapper">
+        <bill-category-trend />
       </div>
     </div>
   </div>
@@ -54,6 +58,7 @@ import BillTable from '~/components/BillTable'
 import BillCard from '~/components/BillCard'
 import TabButton from '~/components/TabButton'
 import Spinner from '~/components/Spinner'
+import BillCategoryTrend from '~/components/BillCategoryTrend'
 import allBillsQuery from '~/apollo/queries/allBills'
 import allCategoriesQuery from '~/apollo/queries/allCategories'
 
@@ -133,6 +138,7 @@ export default {
     BillCard,
     BillTable,
     TabButton,
+    BillCategoryTrend,
     Spinner
   }
 }
