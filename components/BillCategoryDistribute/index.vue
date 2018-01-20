@@ -3,16 +3,38 @@
 </template>
 <script>
 export default {
+  props: [
+    'bills'
+  ],
+
   data () {
     return {
       styleObject: {
         color: 'black',
         'text-align': 'left'
+      },
+      congressList: [
+        '110',
+        '111',
+        '112',
+        '113',
+        '114',
+        '115'
+      ],
+      billCountByCongress: {
+        '110': 5,
+        '111': 10,
+        '112': 34,
+        '113': 78,
+        '114': 12,
+        '115': 87
       }
     }
   },
 
   mounted () {
+    console.log('bills: ', this.bills)
+
     const d3 = require('d3')
     const svg = d3.select('svg')
     const margin = {top: 20, right: 20, bottom: 30, left: 40}
@@ -24,39 +46,35 @@ export default {
 
     const g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
 
-    d3.tsv('data.tsv', (d) => {
-      d.frequency = +d.frequency
-      return d
-    }, (error, data) => {
-      if (error) throw error
+    const ids = this.congressList
+    const countById = this.billCountByCongress
 
-      x.domain(data.map((d) => { return d.letter }))
-      y.domain([0, d3.max(data, (d) => { return d.frequency })])
+    x.domain(ids.map((id) => { return id }))
+    y.domain([0, d3.max(ids, (id) => { return countById[id] })])
 
-      g.append('g')
-          .attr('class', 'axis axis--x')
-          .attr('transform', 'translate(0,' + height + ')')
-          .call(d3.axisBottom(x))
+    g.append('g')
+        .attr('class', 'axis axis--x')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(d3.axisBottom(x))
 
-      g.append('g')
-          .attr('class', 'axis axis--y')
-          .call(d3.axisLeft(y).ticks(10, '%'))
-        .append('text')
-          .attr('transform', 'rotate(-90)')
-          .attr('y', 6)
-          .attr('dy', '0.71em')
-          .attr('text-anchor', 'end')
-          .text('Frequency')
+    g.append('g')
+        .attr('class', 'axis axis--y')
+        .call(d3.axisLeft(y))
+      .append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('y', 6)
+        .attr('dy', '0.71em')
+        .attr('text-anchor', 'end')
+        .text('Count')
 
-      g.selectAll('.bar')
-        .data(data)
-        .enter().append('rect')
-          .attr('class', 'bar')
-          .attr('x', (d) => { return x(d.letter) })
-          .attr('y', (d) => { return y(d.frequency) })
-          .attr('width', x.bandwidth())
-          .attr('height', (d) => { return height - y(d.frequency) })
-    })
+    g.selectAll('.bar')
+      .data(ids)
+      .enter().append('rect')
+        .attr('class', 'bar')
+        .attr('x', (id) => { return x(id) })
+        .attr('y', (id) => { return y(countById[id]) })
+        .attr('width', x.bandwidth())
+        .attr('height', (id) => { return height - y(countById[id]) })
   }
 }
 </script>

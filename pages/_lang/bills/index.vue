@@ -48,7 +48,7 @@
     </div>
     <div v-if="insightTabSelected" class="table-section">
       <div class="table-section-wrapper">
-        <bill-category-distribute />
+        <bill-category-distribute :bills="filterredBills" />
       </div>
     </div>
   </div>
