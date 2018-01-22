@@ -41,6 +41,11 @@
             </div>
             <span v-else class="value">none</span>
           </Col>
+          <Col :span="24" class="info-block">
+            <span class="label">Status</span>
+            <span class="value">Introduced to House</span>
+            <BillTracker class="tracker" :progress="20"></BillTracker>
+          </Col>
         </Row>
       </div>
     </div>
@@ -49,6 +54,7 @@
 <script>
 import { path } from '@/plugins/locale'
 import defaultAvatar from '~/assets/img/defaultAvatar.jpeg'
+import BillTracker from '~/components/BillTracker'
 
 export default {
   props: {
@@ -99,6 +105,9 @@ export default {
   },
   methods: {
     path
+  },
+  components: {
+    BillTracker
   }
 }
 </script>
@@ -174,6 +183,10 @@ export default {
     color: $twBlack;
     font-weight: $twSemiBold;
   }
+}
+
+.tracker {
+  margin-top: 5px;
 }
 
 .bill-info {
