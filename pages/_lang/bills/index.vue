@@ -48,7 +48,10 @@
     </div>
     <div v-if="insightTabSelected" class="table-section">
       <div class="table-section-wrapper">
-        <bill-category-distribute :bills="filterredBills" />
+        <bill-category-distribute 
+          :congressList="congressList"
+          :billCountByCongress="billCountByCongress"
+        />
       </div>
     </div>
   </div>
