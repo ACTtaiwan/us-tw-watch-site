@@ -1,0 +1,7 @@
+query MapUtilsQuery {
+  maps {
+    usMap
+    stateToFips
+    fipsToState
+  }
+}

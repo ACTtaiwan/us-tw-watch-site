@@ -37,7 +37,13 @@
     </div>
     <div class="map-section">
       <div class="map-section-wrapper">
-        <!-- <SponsorsMap :mapStyle="mapStyle" :sponsors="sponsors"/> -->
+        <SponsorsMap
+          v-if="isMapDataLoaded"
+          :sponsors="sponsors"
+          :usMap="usMap"
+          :stateToFips="stateToFips"
+          :fipsToState="fipsToState"
+          :congressMap="congressMap"/>
       </div>
     </div>
   </div>
@@ -45,27 +51,42 @@
 
 <script>
 import queryBill from '~/apollo/queries/bill'
+import queryMapUtils from '~/apollo/queries/mapUtils'
+import queryCdMap from '~/apollo/queries/cdMap'
+
 import { path } from '@/plugins/locale'
-// import SponsorsMap from '~/components/SponsorsMap'
+import SponsorsMap from '~/components/SponsorsMap'
 
 export default {
   data () {
-    const mapStyle = {
-      position: 'absolute',
-      top: 0,
-      left: '300px'
-    }
     return {
-      formLabelWidth: 100,
-      mapStyle
+      formLabelWidth: 100
     }
   },
   computed: {
     locale () {
       return this.$store.state.locale
     },
+    isMapDataLoaded () {
+      let loaded = false
+      if (this.mapUtils && this.cdMap) {
+        loaded = true
+      }
+      return loaded
+    },
+    usMap () {
+      return JSON.parse(this.mapUtils.usMap)
+    },
+    stateToFips () {
+      return JSON.parse(this.mapUtils.stateToFips)
+    },
+    fipsToState () {
+      return JSON.parse(this.mapUtils.fipsToState)
+    },
+    congressMap () {
+      return JSON.parse(this.cdMap)
+    },
     bill () {
-      console.log('the bill', this.bills)
       return this.bills && this.bills[0]
     },
     pdfUrl () {
@@ -109,6 +130,25 @@ export default {
           lang: this.locale
         }
       }
+    },
+    mapUtils: {
+      query: queryMapUtils,
+      fetchPolicy: 'cache-and-network',
+      update (data) {
+        return data.maps[0]
+      }
+    },
+    cdMap: {
+      query: queryCdMap,
+      fetchPolicy: 'cache-and-network',
+      variables () {
+        return {
+          congress: 115
+        }
+      },
+      update (data) {
+        return data.maps[0].cdMap
+      }
     }
   },
 
@@ -126,7 +166,7 @@ export default {
   },
 
   components: {
-    // SponsorsMap
+    SponsorsMap
   }
 }
 </script>
