@@ -13,9 +13,7 @@
         </span>
       </h4>
     </Card>
-    <SponsorsMap
-      :mapStyle="mapStyle"
-      :sponsors="sponsors"
+    <!-- <SponsorsMap :mapStyle="mapStyle" :sponsors="sponsors" -->
     />
   </div>
 </template>
@@ -23,7 +21,7 @@
 <script>
 import queryBill from '~/apollo/queries/bill'
 import { path } from '@/plugins/locale'
-import SponsorsMap from '~/components/SponsorsMap'
+// import SponsorsMap from '~/components/SponsorsMap'
 
 export default {
   data () {
@@ -89,7 +87,7 @@ export default {
   },
 
   components: {
-    SponsorsMap
+    // SponsorsMap
   }
 }
 </script>

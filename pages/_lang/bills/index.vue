@@ -11,46 +11,51 @@
       <div class="tab-section-wrapper">
         <TabButton class="tab-button" icon="ios-paper" label="Bills" :selected="this.billsTabSelected" @select="selectTab({bills: true, insight: false})"/>
         <TabButton class="tab-button" icon="stats-bars" label="Insight" :selected="this.insightTabSelected" @select="selectTab({bills: false, insight: true})"/>
-        <!-- <Row>
-          <Col span="24" class="category-filter-block">
-            <h1>Category</h1>
-            <Select multiple
-              style="width: 400px"
-              v-model="selectedCategories"
-              @on-change="onCategorySelect"
-              placeholder="Select bill categories">
-              <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
-            </Select>
-          </Col>
-          <Col span="8">
-            <Select
-              v-model="selectedSponsorId"
-              @on-change="onSponsorSelect"
-              clearable
-              remote
-              :remote-method="getSponsorSuggestList"
-              placeholder="Select a sponsor">
-              <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
-            </Select>
-          </Col>
-        </Row> -->
       </div>
     </div>
-    <div class="table-section">
-      <div class="table-section-wrapper">
-        <!-- <bill-table :bills="filterredBills" :loading="loading" /> -->
-        <Spinner :show="loadingBills"></Spinner>
-        <Row :gutter="30" type="flex" justify="space-around">
-          <Col span="24" v-for="bill in filterredBills" :key="bill.id">
-            <bill-card :bill="bill" />
+    <!-- Bills -->
+    <div v-if="this.billsTabSelected" class="bills-section">
+      <div class="bills-section-wrapper">
+        <Row>
+          <!-- Filters -->
+          <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="filters" :class="{ mobile: this.isTablet || this.isPhone }">
+            <Row :gutter="20">
+              <Col :span="this.isTablet ? 12 : 24" class="filter-block" :class="{ tablet: this.isTablet }">
+                <h2 class="filter-title">Category</h2>
+                <Select multiple v-model="selectedCategories" @on-change="onCategorySelect" placeholder="Select bill categories">
+                  <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
+                </Select>
+              </Col>
+              <Col :span="this.isTablet ? 12 : 24" class="filter-block" :class="{ tablet: this.isTablet }">
+                <h2 class="filter-title">Sponsor</h2>
+                <Select v-model="selectedSponsorId" @on-change="onSponsorSelect" clearable remote :remote-method="getSponsorSuggestList" placeholder="Select a sponsor">
+                  <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
+                </Select>
+              </Col>
+            </Row>
+
+          </Col>
+          <!-- List -->
+          <Col :span="this.isTablet || this.isPhone ? 24 : 18" class="list" :class="{ mobile: this.isTablet || this.isPhone, phone: this.isPhone }">
+            <Row>
+              <Col class="card-row" span="24" v-for="bill in filterredBills" :key="bill.id">
+                <bill-card :bill="bill" />
+              </Col>
+              <Spinner :show="loadingBills"></Spinner>
+            </Row>
           </Col>
         </Row>
+      </div>
+    </div>
+    <!-- Insights -->
+    <div v-if="this.insightTabSelected" class="insights-section">
+      <div class="insights-section-wrapper">
+        XDDDD
       </div>
     </div>
   </div>
 </template>
 <script>
-import BillTable from '~/components/BillTable'
 import BillCard from '~/components/BillCard'
 import TabButton from '~/components/TabButton'
 import Spinner from '~/components/Spinner'
@@ -76,17 +81,24 @@ export default {
   },
   methods: {
     onCategorySelect (selected) {
-      console.log('000', selected)
       console.log('111', this.selectedCategories)
     },
     selectTab ({ bills, insight }) {
       this.billsTabSelected = bills
       this.insightTabSelected = insight
-    }
+    },
+    onSponsorSelect () {},
+    getSponsorSuggestList () {}
   },
   computed: {
     locale () {
       return this.$store.state.locale
+    },
+    isPhone () {
+      return this.$store.getters.isPhone
+    },
+    isTablet () {
+      return this.$store.getters.isTablet
     },
     filterredBills () {
       let that = this
@@ -131,7 +143,6 @@ export default {
   },
   components: {
     BillCard,
-    BillTable,
     TabButton,
     Spinner
   }
@@ -139,6 +150,8 @@ export default {
 </script>
 <style scoped lang="scss">
 @import 'assets/css/app';
+@import 'assets/css/colors';
+@import 'assets/css/typography';
 
 .banner {
   background-color: #fff;
@@ -186,11 +199,42 @@ export default {
   }
 }
 
-.table-section {
+.bills-section {
   padding: 40px 0;
 
-  .table-section-wrapper {
+  .bills-section-wrapper {
     @extend .pageWrapper-large;
+  }
+}
+
+.filters {
+  padding-right: 40px;
+
+  &.mobile {
+    padding-right: 0px;
+  }
+
+  .filter-block {
+    margin-bottom: 20px;
+
+    .filter-title {
+      color: $twGray;
+      font-size: 1.4em;
+      font-weight: $twBold;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.list {
+  &.phone {
+    .card-row {
+      margin-left: calc(15px * -1);
+      margin-right: calc(15px * -1);
+      width: 100%;
+      width: -moz-available; /* WebKit-based browsers will ignore this. */
+      width: -webkit-fill-available;
+    }
   }
 }
 </style>

@@ -1,76 +1,72 @@
 <template>
   <div class="bill-map">
-    <div class="map" id="cd-map">
-    </div>
-    <tooltip
-      :title="tooltipTitle"
-      :sponsors="tooltipSponsors"
-    />
+    <div class="map" id="cd-map" />
+    <tooltip :title="tooltipTitle" :sponsors="tooltipSponsors"/>
   </div>
 </template>
 
 <script>
+import * as d3 from 'd3'
+import * as topojson from 'topojson'
 import tooltip from './tooltip'
 
 export default {
   components: {
     tooltip
   },
-
-  props: ['mapStyle', 'state', 'district', 'highlightColor', 'sponsors'],
-
+  props: ['sponsors', 'usMap', 'stateToFips', 'fipsToState', 'congressMap'],
   data () {
-    const stateCodeToFipsMap = require('@/assets/json/stateCodeToFips.json')
-    const fipsToStateMap = require('@/assets/json/fipsToState.json')
-
     return {
-      stateCodeToFipsMap,
-      fipsToStateMap,
       tooltipTitle: '',
-      tooltipSponsors: []
+      tooltipSponsors: [],
+      defaultWidth: 900,
+      defaultHeight: 600
+    }
+  },
+  computed: {
+    projection () {
+      return d3
+        .geoAlbersUsa()
+        .scale(this.defaultWidth)
+        .translate([this.defaultWidth / 2, this.defaultHeight / 2])
+    },
+    svg () {
+      let zoom = d3
+        .zoom()
+        .scaleExtent([1, 12])
+        .on('zoom', this.zoomed)
+
+      return d3
+        .select('#cd-map')
+        .classed('svg-container', true)
+        .append('svg')
+        .attr('viewBox', `0 0 ${this.defaultWidth} ${this.defaultHeight}`)
+        .classed('svg-content-responsive', true)
+        .append('g')
+        .call(zoom)
+        .append('g')
     }
   },
 
   mounted () {
-    const sponsors = this.sponsors
-    const getColorFromSponsor = this.getColorFromSponsor
-    const getId = this.getId
-    const getGeoNameFromGeoId = this.getGeoNameFromGeoId
-    const getStateFromFips = this.getStateFromFips
-    const getGeoIdFromSponsor = this.getGeoIdFromSponsor
-    const d3 = require('d3')
-    const topojson = require('topojson')
-    const mapStyle = this.mapStyle
-
-    const showDistrict = !!sponsors[0].district
-
-    this.drawMap({
-      mapStyle,
-      sponsors,
-      getColorFromSponsor,
-      getGeoNameFromGeoId,
-      getId,
-      getStateFromFips,
-      getGeoIdFromSponsor,
-      d3,
-      topojson,
-      showDistrict,
-      vm: this
-    })
+    this.drawMap()
   },
 
   methods: {
+    zoomed () {
+      this.svg.attr('transform', d3.event.transform)
+    },
     getGeoNameFromGeoId (id) {
       let name
-      console.log(id)
+
       if (id.length >= 4) {
         const district = id.slice(-2)
         const fips = id.slice(-4, -2)
-        const state = this.fipsToStateMap[fips]
+        const state = this.fipsToState[fips]
         name = `${state}, ${district}`
       } else {
         const fips = id.slice(-2)
-        const state = this.fipsToStateMap[fips]
+        const state = this.fipsToState[fips]
         name = `${state}`
       }
 
@@ -78,22 +74,21 @@ export default {
     },
 
     getColorFromSponsor (sponsor) {
-      const party = sponsor.party
+      let color = 'gray'
 
-      if (party === 'Republican') {
-        return 'red'
+      if (sponsor.party === 'Republican') {
+        color = 'red'
       }
 
-      if (party === 'Democrat') {
-        return 'blue'
+      if (sponsor.party === 'Democrat') {
+        color = 'blue'
       }
 
-      return 'gray'
+      return color
     },
 
     getFipsFromStateCode (stateCode) {
-      const fips = this.stateCodeToFipsMap[stateCode]
-      return fips
+      return this.stateToFips[stateCode]
     },
 
     getId (value) {
@@ -115,66 +110,31 @@ export default {
     },
 
     getFormattedNumber (value) {
-      const formattedNumber = ('0' + value).slice(-2)
-      return formattedNumber
+      return ('0' + value).slice(-2)
     },
 
-    drawMap ({
-      mapStyle,
-      getId,
-      getGeoNameFromGeoId,
-      getGeoIdFromSponsor,
-      getColorFromSponsor,
-      sponsors,
-      d3,
-      topojson,
-      showDistrict,
-      vm
-    }) {
-      const width = 960
-      const height = 600
-      const projection = d3
-        .geoAlbersUsa()
-        .scale(width)
-        .translate([width / 2, height / 2])
-      const path = d3.geoPath().projection(projection)
-
-      let zoom = d3
-        .zoom()
-        .scaleExtent([1, 12])
-        .on('zoom', zoomed)
-
-      const svg = d3
-        .select('#cd-map')
-        .classed('svg-container', true)
-        .append('svg')
-        .attr('viewBox', `0 0 ${width} ${height}`)
-        .classed('svg-content-responsive', true)
-        .append('g')
-        .call(zoom)
-        .append('g')
-
+    drawMap () {
+      let self = this
+      const path = d3.geoPath().projection(this.projection)
       const tooltip = d3.select('#tooltip')
+      const showDistrict = !!this.sponsors[0].district
+      const congress = this.congressMap
 
-      const us = require('@/assets/json/us.json')
-
-      svg
+      this.svg
         .append('defs')
         .append('path')
         .attr('id', 'land')
-        .datum(topojson.feature(us, us.objects.land))
+        .datum(topojson.feature(this.usMap, this.usMap.objects.land))
         .attr('d', path)
 
-      svg
+      this.svg
         .append('clipPath')
         .attr('id', 'clip-land')
         .append('use')
         .attr('xlink:href', '#land')
 
       if (showDistrict) {
-        const congress = require('@/assets/json/us-cd115-topo.json')
-
-        svg
+        this.svg
           .append('g')
           .attr('class', 'districts')
           .attr('clip-path', 'url(#clip-land)')
@@ -185,11 +145,11 @@ export default {
           .attr('d', path)
           .attr('id', function (d) {
             const GEOID = d.properties.GEOID
-            const id = getId(GEOID)
+            const id = self.getId(GEOID)
             return id
           })
 
-        svg
+        this.svg
           .append('path')
           .attr('class', 'district-boundaries')
           .datum(
@@ -199,40 +159,39 @@ export default {
           )
           .attr('d', path)
       } else {
-        svg
+        this.svg
           .append('g')
           .attr('class', 'states')
           .attr('clip-path', 'url(#clip-land)')
           .selectAll('path')
-          .data(topojson.feature(us, us.objects.states).features)
+          .data(topojson.feature(this.usMap, this.usMap.objects.states).features)
           .enter()
           .append('path')
           .attr('d', path)
           .attr('id', function (d) {
             const fips = d.id
-            const id = getId(fips)
+            const id = self.getId(fips)
             return id
           })
 
-        svg
+        this.svg
           .append('path')
           .attr('class', 'state-boundaries')
           .datum(
-            topojson.mesh(us, us.objects.states, function (a, b) {
+            topojson.mesh(this.usMap, this.usMap.objects.states, function (a, b) {
               return a !== b
             })
           )
           .attr('d', path)
       }
 
-      // const offsetX = parseInt(mapStyle.left.replace('px', ''))
       const checkedStateOrDistrict = {}
 
-      sponsors.forEach(s => {
-        const geoId = getGeoIdFromSponsor(s)
-        const selectedId = getId(geoId)
+      this.sponsors.forEach(s => {
+        const geoId = self.getGeoIdFromSponsor(s)
+        const selectedId = self.getId(geoId)
         const name = `${s.person.firstname} ${s.person.lastname}`
-        const color = getColorFromSponsor(s)
+        const color = this.getColorFromSponsor(s)
         const isDuplicate = Object.keys(checkedStateOrDistrict).indexOf(geoId) > -1
 
         const sponsor = {
@@ -257,10 +216,10 @@ export default {
           .attr('class', 'selected')
           .style('fill', areSameParty ? color : '#875F82')
           .on('mouseover', function (d) {
-            const geoName = getGeoNameFromGeoId(geoId)
+            const geoName = self.getGeoNameFromGeoId(geoId)
 
-            vm.tooltipTitle = geoName
-            vm.tooltipSponsors = sameGeoSponsors
+            self.tooltipTitle = geoName
+            self.tooltipSponsors = sameGeoSponsors
 
             tooltip.style('visibility', 'visible')
 
@@ -276,10 +235,6 @@ export default {
             return tooltip.style('visibility', 'hidden')
           })
       })
-
-      function zoomed () {
-        svg.attr('transform', d3.event.transform)
-      }
     }
   }
 }

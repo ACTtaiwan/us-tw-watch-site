@@ -1,0 +1,5 @@
+query CdMapQuery($congress: Int) {
+  maps(congress: $congress) {
+    cdMap
+  }
+}

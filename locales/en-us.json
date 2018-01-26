@@ -18,7 +18,10 @@
     }
   },
   "landingPage": {
-    "bannerTitle": "What's new in congress"
+    "bannerTitle": "Taiwan affairs in Congress",
+    "newsTitle": "115th bills now available",
+    "newsContent":
+      "The U.S. House of Representatives unanimously passed Taiwan Travel Act (HR535) and WHO for Taiwan (HR3320) bills on January 9."
   },
   "billsPage": {
     "bannerTitle": "Find bills",
