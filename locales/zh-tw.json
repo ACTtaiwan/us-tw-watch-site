@@ -18,7 +18,10 @@
     }
   },
   "landingPage": {
-    "bannerTitle": "國會最新動態"
+    "bannerTitle": "美國國會台灣大小事",
+    "newsTitle": "115屆法案全面上線",
+    "newsContent":
+      "美國當地時間1月9日，眾議院表決通過了兩項去年提出的台灣相關法案。一項是最受熱議的《台灣旅行法》，另外一個則是《幫助台灣取得WHO觀察員資格》。"
   },
   "billsPage": {
     "bannerTitle": "找法案",

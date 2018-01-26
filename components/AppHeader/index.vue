@@ -1,6 +1,6 @@
 <template>
   <header>
-    <Menu mode="horizontal" theme="dark" :active-name="activeMenuItem">
+    <Menu mode="horizontal" theme="light" :active-name="activeMenuItem">
       <div class="header-wrapper">
         <div class="header-menu-hamburger" :class="{isMenuOpen: isMenuOpen}" @click="onHamburgerClick">
           <span></span>
@@ -11,19 +11,16 @@
           <div class="header-menu">
             <router-link class="menu-item" :class="{'menu-item-selected': activeMenuItem === 'bills'}" :to="path(this, '/bills')">
               <MenuItem name="bills" >
-                <Icon type="ios-paper-outline"></Icon>
                 {{ $t('site.menu.billItemText') }}
               </MenuItem>
             </router-link>
             <router-link class="menu-item" :class="{'menu-item-selected': activeMenuItem === 'votes'}" :to="path(this, '/votes')">
               <MenuItem name="votes">
-                <Icon type="ios-list-outline"></Icon>
                 {{ $t('site.menu.votesItemText') }}
               </MenuItem>
             </router-link>
             <router-link class="menu-item" :class="{'menu-item-selected': activeMenuItem === 'members'}" :to="path(this, '/members')">
               <MenuItem name="members">
-                <Icon type="person"></Icon>
                 {{ $t('site.menu.congressMemberItemText') }}
               </MenuItem>
             </router-link>
@@ -78,6 +75,7 @@ export default {
 
 <style scoped lang="scss">
 @import 'assets/css/app';
+@import 'assets/css/colors';
 
 header {
   position: fixed;
@@ -162,8 +160,17 @@ header {
   justify-content: center;
 }
 
+.menu-item {
+  .ivu-menu-item {
+    color: $twBlack;
+    font-weight: 400;
+    letter-spacing: 1px;
+    font-size: 1em;
+  }
+}
+
 .menu-item-selected {
-  background-color: #40444f;
+  // background-color: #40444f;
 }
 
 .header-info {

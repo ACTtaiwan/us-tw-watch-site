@@ -2,11 +2,15 @@
   <div class="landing">
     <section class="banner" :style="style">
       <div class="banner-wrapper">
-        <h1 class="banner-title">{{ this.$t('landingPage.bannerTitle') }}</h1>
-        <!-- <h1 class="banner-title">115屆法案全面上線！</h1> -->
-        <p></p>
         <div class="image-container" >
           <img class="front-img" :src="people" />
+        </div>
+        <div class="text-container">
+          <h1 class="banner-title">{{ this.$t('landingPage.bannerTitle') }}</h1>
+          <div class="news">
+            <h1 class="news-title">{{ this.$t('landingPage.newsTitle') }}</h1>
+            <p class="news-content">{{ this.$t('landingPage.newsContent') }}</p>
+          </div>
         </div>
       </div>
     </section>
@@ -66,6 +70,7 @@ export default {
 
 <style scoped lang="scss">
 @import 'assets/css/app';
+@import 'assets/css/colors';
 
 .banner {
   background-color: #fff;
@@ -76,25 +81,45 @@ export default {
 .banner-wrapper {
   height: 300px;
   display: flex;
-  justify-content: space-between;
   @extend .pageWrapper-large;
 
-  .banner-title {
-    order: 0;
-    font-size: 2em;
-    font-weight: 400;
-    padding-top: 50px;
-    text-align: left;
-    color: #fff;
-  }
-
   .image-container {
-    order: 1;
+    order: 0;
     display: flex;
+    margin-right: 100px;
 
     .front-img {
       margin-top: auto;
-      width: 380px;
+      width: 340px;
+    }
+  }
+
+  .text-container {
+    order: 1;
+
+    .banner-title {
+      font-size: 2.4em;
+      font-weight: 500;
+      padding-top: 50px;
+      letter-spacing: 2px;
+      text-align: left;
+      margin-bottom: 20px;
+      color: $twWhite;
+    }
+
+    .news {
+      .news-title {
+        font-weight: 400;
+        font-size: 1.8em;
+        color: $twWhite;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+      }
+
+      .news-content {
+        color: $twWhite;
+        max-width: 350px;
+      }
     }
   }
 }
@@ -106,12 +131,22 @@ export default {
     flex-direction: column;
     justify-content: initial;
 
-    .banner-title {
-      text-align: center;
-      padding-top: 50px;
+    .text-container {
+      order: 0;
+
+      .banner-title {
+        text-align: center;
+        padding-top: 50px;
+      }
+
+      .news {
+        display: none;
+      }
     }
 
     .image-container {
+      order: 1;
+      margin-right: 0px;
       justify-content: center;
 
       .front-img {

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import logo from '~/assets/img/tw-logo.png'
+import logo from '~/assets/img/tw-logo-color.png'
 import { path } from '@/plugins/locale'
 
 export default {
@@ -23,6 +23,7 @@ export default {
 
 <style scoped lang="scss">
 @import 'assets/css/app';
+@import 'assets/css/colors';
 
 .logo {
   width: 200px;
@@ -34,14 +35,14 @@ export default {
 }
 
 .logo-img {
-  height: 40px;
+  height: 36px;
   display: block;
 }
 
 .logo-text {
-  color: white;
+  color: $twBlack;
   margin-left: 10px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 1px;
 }
 
