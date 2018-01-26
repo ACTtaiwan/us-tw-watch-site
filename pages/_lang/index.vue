@@ -1,10 +1,12 @@
 <template>
   <div class="landing">
-    <section class="banner">
+    <section class="banner" :style="style">
       <div class="banner-wrapper">
         <h1 class="banner-title">{{ this.$t('landingPage.bannerTitle') }}</h1>
-        <div class="image-container">
-          <img class="congress-img" :src="congress" />
+        <!-- <h1 class="banner-title">115屆法案全面上線！</h1> -->
+        <p></p>
+        <div class="image-container" >
+          <img class="front-img" :src="people" />
         </div>
       </div>
     </section>
@@ -21,7 +23,8 @@
 </template>
 
 <script>
-import congress from '~/assets/img/congress.png'
+import congress from '~/assets/img/banner-home.png'
+import people from '~/assets/img/banner-people.png'
 import BillUpdateCard from '~/components/BillUpdateCard'
 import allBillsQuery from '~/apollo/queries/allBills.gql'
 
@@ -29,7 +32,9 @@ export default {
   data () {
     return {
       loading: 0,
-      congress
+      congress,
+      people,
+      style: `background-image: url("${congress}"); background-size: cover;`
     }
   },
   head () {
@@ -76,38 +81,41 @@ export default {
 
   .banner-title {
     order: 0;
-    font-size: 2.5em;
+    font-size: 2em;
     font-weight: 400;
-    letter-spacing: 0.05em;
     padding-top: 50px;
+    text-align: left;
+    color: #fff;
   }
 
   .image-container {
     order: 1;
     display: flex;
 
-    .congress-img {
+    .front-img {
       margin-top: auto;
-      width: 400px;
+      width: 380px;
     }
   }
 }
 
 @media (max-width: $mediumDeviceWidth) {
   .banner-wrapper {
+    height: 400px;
     text-align: center;
     flex-direction: column;
     justify-content: initial;
 
     .banner-title {
-      padding-top: 30px;
+      text-align: center;
+      padding-top: 50px;
     }
 
     .image-container {
       justify-content: center;
 
-      .congress-img {
-        width: 200px;
+      .front-img {
+        width: 300px;
       }
     }
   }
