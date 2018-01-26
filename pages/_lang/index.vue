@@ -126,7 +126,7 @@ export default {
 
 @media (max-width: $mediumDeviceWidth) {
   .banner-wrapper {
-    height: 400px;
+    height: 300px;
     text-align: center;
     flex-direction: column;
     justify-content: initial;
@@ -137,6 +137,7 @@ export default {
       .banner-title {
         text-align: center;
         padding-top: 50px;
+        font-size: 1.6em;
       }
 
       .news {
@@ -150,7 +151,7 @@ export default {
       justify-content: center;
 
       .front-img {
-        width: 300px;
+        width: 250px;
       }
     }
   }

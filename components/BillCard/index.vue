@@ -113,7 +113,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import 'assets/css/typograghy';
+@import 'assets/css/typography';
 @import 'assets/css/colors';
 
 .card {

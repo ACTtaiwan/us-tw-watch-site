@@ -30,7 +30,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import 'assets/css/colors';
-@import 'assets/css/typograghy';
+@import 'assets/css/typography';
 
 .tab-button {
   font-size: 1em;

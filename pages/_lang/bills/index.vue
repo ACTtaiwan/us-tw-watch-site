@@ -151,7 +151,7 @@ export default {
 <style scoped lang="scss">
 @import 'assets/css/app';
 @import 'assets/css/colors';
-@import 'assets/css/typograghy';
+@import 'assets/css/typography';
 
 .banner {
   background-color: #fff;

@@ -45,7 +45,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import 'assets/css/colors';
-@import 'assets/css/typograghy';
+@import 'assets/css/typography';
 
 $bar-height: 14px;
 $bg: #393943;

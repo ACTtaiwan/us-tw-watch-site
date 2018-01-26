@@ -76,6 +76,7 @@ export default {
 <style scoped lang="scss">
 @import 'assets/css/app';
 @import 'assets/css/colors';
+@import 'assets/css/typography';
 
 header {
   position: fixed;
@@ -95,6 +96,7 @@ header {
   flex: 1;
   display: flex;
   justify-content: space-between;
+  padding-left: 50px;
 }
 
 .header-menu-hamburger {
@@ -111,7 +113,7 @@ header {
   }
 
   span {
-    background: #fff;
+    background: $twBlack;
     border-radius: 3px;
     content: '';
     display: block;
@@ -131,7 +133,7 @@ header {
   }
 
   &:before {
-    background: #fff;
+    background: $twBlack;
     border-radius: 3px;
     content: '';
     display: block;
@@ -143,7 +145,7 @@ header {
   }
 
   &:after {
-    background: #fff;
+    background: $twBlack;
     border-radius: 3px;
     content: '';
     display: block;
@@ -163,8 +165,7 @@ header {
 .menu-item {
   .ivu-menu-item {
     color: $twBlack;
-    font-weight: 400;
-    letter-spacing: 1px;
+    font-weight: $twRegular;
     font-size: 1em;
   }
 }
@@ -188,6 +189,7 @@ header {
     position: fixed;
     top: 60px;
     left: 0;
+    padding-left: 0;
     width: 100%;
     height: 100%;
     z-index: 4;
