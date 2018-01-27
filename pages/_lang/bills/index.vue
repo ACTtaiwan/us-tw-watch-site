@@ -47,8 +47,14 @@
       </div>
     </div>
     <div v-if="insightTabSelected" class="table-section">
-      <div class="table-section-wrapper">
+      <!-- <div class="table-section-wrapper">
         <bill-category-distribute 
+          :congressList="congressList"
+          :billCountByCongress="billCountByCongress"
+        />
+      </div> -->
+      <div class="table-section-wrapper">
+        <bill-category-trend
           :congressList="congressList"
           :billCountByCongress="billCountByCongress"
         />
@@ -62,6 +68,7 @@ import BillCard from '~/components/BillCard'
 import TabButton from '~/components/TabButton'
 import Spinner from '~/components/Spinner'
 import BillCategoryDistribute from '~/components/BillCategoryDistribute'
+import BillCategoryTrend from '~/components/BillCategoryTrend'
 import allBillsQuery from '~/apollo/queries/allBills'
 import allCategoriesQuery from '~/apollo/queries/allCategories'
 
@@ -142,6 +149,7 @@ export default {
     BillTable,
     TabButton,
     BillCategoryDistribute,
+    BillCategoryTrend,
     Spinner
   }
 }
