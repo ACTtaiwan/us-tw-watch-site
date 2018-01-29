@@ -124,6 +124,12 @@ export default {
     bills: {
       query: queryBill,
       fetchPolicy: 'cache-and-network',
+      // Add prefetch for SSR
+      // https://github.com/Akryum/vue-apollo#server-side-rendering
+      prefetch: ({ route, app }) => ({
+        id: route.params.id,
+        locale: app.store.state.locale
+      }),
       variables () {
         return {
           id: this.$route.params.id,
@@ -154,7 +160,14 @@ export default {
 
   head () {
     return {
-      title: this.bill ? this.bill.title : 'Loading'
+      title: this.bill ? this.bill.title : 'Loading',
+      meta: [
+        {
+          hid: `description`,
+          name: 'description',
+          content: this.bill ? this.bill.id : 'Loading'
+        }
+      ]
     }
   },
 

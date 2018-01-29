@@ -14,7 +14,8 @@
     "deploy-prod": "nuxt build && serverless deploy --stage prod",
     "dev-spa": "nuxt dev --spa",
     "build-spa": "nuxt build --spa",
-    "start-spa": "nuxt start --spa"
+    "start-spa": "nuxt start --spa",
+    "generate": "nuxt generate"
   },
   "now": {
     "alias": "www.taiwanwatch.org"
