@@ -3,8 +3,8 @@
     <Card :style="styleObject" v-if="bill">
       <p slot="title">{{ bill.title }}</p>
       <p>{{ `Code: ${bill.billCode}` }}</p>
-      <p>{{ `Sponsor: ${getFullName(bill)}` }}</p>
-      <p>{{ `Party: ${bill.sponsor.party}` }}</p>
+      <!-- <p>{{ `Sponsor: ${getFullName(bill)}` }}</p> -->
+      <!-- <p>{{ `Party: ${bill.sponsor.party}` }}</p> -->
     </Card>
   </router-link>
 </template>

@@ -87,6 +87,7 @@ export default {
       return JSON.parse(this.cdMap)
     },
     bill () {
+      // console.log(this.bills[0])
       return this.bills && this.bills[0]
     },
     pdfUrl () {

@@ -1,11 +1,19 @@
 <template>
   <div class="bills-page">
+
     <!-- Banner -->
-    <section class="banner">
+    <section class="banner" :style="bannerStyle" :class="{ tablet: this.isTablet, phone: this.isPhone }">
       <div class="banner-wrapper">
-        <h1 class="banner-title">{{ this.$t('billsPage.bannerTitle') }}</h1>
+        <div class="image-container" >
+          <img class="front-img" :src="bannerBills" />
+        </div>
+        <div class="text-container">
+          <h1 class="banner-title">{{ this.$t('billsPage.bannerTitle') }}</h1>
+        </div>
       </div>
     </section>
+
+
     <!-- Tabs -->
     <div class="tab-section">
       <div class="tab-section-wrapper">
@@ -56,10 +64,13 @@
   </div>
 </template>
 <script>
+import bannerBackground from '~/assets/img/banner.png'
+import bannerBills from '~/assets/img/banner-bills.png'
 import BillCard from '~/components/BillCard'
 import TabButton from '~/components/TabButton'
 import Spinner from '~/components/Spinner'
-import allBillsQuery from '~/apollo/queries/allBills'
+
+// import allBillsQuery from '~/apollo/queries/allBills'
 import allCategoriesQuery from '~/apollo/queries/allCategories'
 
 export default {
@@ -76,7 +87,10 @@ export default {
       selectedCategories: [],
       selectedSponsorId: '',
       billsTabSelected: true,
-      insightTabSelected: false
+      insightTabSelected: false,
+      bannerBackground,
+      bannerBills,
+      bannerStyle: `background-image: url("${bannerBackground}"); background-size: cover;`
     }
   },
   methods: {
@@ -116,20 +130,24 @@ export default {
         })
         return mactched
       })
+
       return bills
     }
   },
   apollo: {
-    bills: {
-      fetchPolicy: 'cache-and-network',
-      query: allBillsQuery,
-      variables () {
-        return { lang: this.locale }
-      },
-      watchLoading (isLoading, countModifier) {
-        this.loadingBills = isLoading
-      }
-    },
+    // bills: {
+    //   fetchPolicy: 'cache-and-network',
+    //   query: allBillsQuery,
+    //   prefetch: ({ app }) => ({
+    //     locale: app.store.state.locale
+    //   }),
+    //   variables () {
+    //     return { lang: this.locale }
+    //   },
+    //   watchLoading (isLoading, countModifier) {
+    //     this.loadingBills = isLoading
+    //   }
+    // },
     categories: {
       query: allCategoriesQuery,
       fetchPolicy: 'cache-and-network',
@@ -161,13 +179,57 @@ export default {
   .banner-wrapper {
     height: 200px;
     display: flex;
-    align-items: center;
     @extend .pageWrapper-large;
 
-    .banner-title {
-      font-size: 2.5em;
-      font-weight: 400;
-      letter-spacing: 0.05em;
+    .image-container {
+      order: 0;
+      display: flex;
+      margin-right: 100px;
+
+      .front-img {
+        margin-top: auto;
+        width: 280px;
+      }
+    }
+
+    .text-container {
+      order: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .banner-title {
+        font-weight: 500;
+        font-size: 2.4em;
+        letter-spacing: 2px;
+        text-align: left;
+        color: $twWhite;
+      }
+    }
+  }
+
+  &.tablet {
+    .banner-wrapper {
+      .image-container {
+        margin-right: 50px;
+      }
+    }
+  }
+
+  &.phone {
+    .banner-wrapper {
+      height: 160px;
+
+      .text-container {
+        width: 100%;
+        .banner-title {
+          font-size: 1.6em;
+        }
+      }
+
+      .image-container {
+        display: none;
+      }
     }
   }
 }

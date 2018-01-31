@@ -14,7 +14,7 @@
         </div>
       </div>
     </section>
-    <div class="info-cards-section">
+    <!-- <div class="info-cards-section">
       <div class="info-cards-section-wrapper">
         <Row :gutter="30" type="flex" justify="space-around">
           <Col style="margin-bottom: 30px;" span="8" v-for="bill in bills" :key="bill.id">
@@ -22,7 +22,7 @@
           </Col>
         </Row>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -30,7 +30,8 @@
 import congress from '~/assets/img/banner-home.png'
 import people from '~/assets/img/banner-people.png'
 import BillUpdateCard from '~/components/BillUpdateCard'
-import allBillsQuery from '~/apollo/queries/allBills.gql'
+
+// import allBillsQuery from '~/apollo/queries/allBills.gql'
 
 export default {
   data () {
@@ -56,14 +57,14 @@ export default {
     BillUpdateCard
   },
   apollo: {
-    bills: {
-      query: allBillsQuery,
-      fetchPolicy: 'cache-and-network',
-      variables () {
-        return { lang: this.locale }
-      },
-      prefetch: true
-    }
+    // bills: {
+    //   query: allBillsQuery,
+    //   fetchPolicy: 'cache-and-network',
+    //   variables () {
+    //     return { lang: this.locale }
+    //   },
+    //   prefetch: true
+    // }
   }
 }
 </script>
