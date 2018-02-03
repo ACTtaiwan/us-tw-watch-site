@@ -6,7 +6,10 @@ query AllBillsQuery($lang: String) {
     billCode
     introducedDate
     cosponsors {
-      id
+      role {
+        id
+      }
+      dateCosponsored
     }
     categories {
       id

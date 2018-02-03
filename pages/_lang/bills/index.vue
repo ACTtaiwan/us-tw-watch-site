@@ -4,23 +4,21 @@
     <!-- Banner -->
     <section class="banner" :style="bannerStyle" :class="{ tablet: this.isTablet, phone: this.isPhone }">
       <div class="banner-wrapper">
-        <div class="image-container" >
-          <img class="front-img" :src="bannerBills" />
-        </div>
+
         <div class="text-container">
           <h1 class="banner-title">{{ this.$t('billsPage.bannerTitle') }}</h1>
+          <div class="tabs">
+            <TabButton class="tab-button" icon="ios-paper" label="Bills" :selected="this.billsTabSelected" @select="selectTab({bills: true, insight: false})"/>
+            <TabButton class="tab-button" icon="stats-bars" label="Insight" :selected="this.insightTabSelected" @select="selectTab({bills: false, insight: true})"/>
+          </div>
+        </div>
+
+        <div class="image-container" >
+          <img class="front-img" :src="bannerBills" />
         </div>
       </div>
     </section>
 
-
-    <!-- Tabs -->
-    <div class="tab-section">
-      <div class="tab-section-wrapper">
-        <TabButton class="tab-button" icon="ios-paper" label="Bills" :selected="this.billsTabSelected" @select="selectTab({bills: true, insight: false})"/>
-        <TabButton class="tab-button" icon="stats-bars" label="Insight" :selected="this.insightTabSelected" @select="selectTab({bills: false, insight: true})"/>
-      </div>
-    </div>
     <!-- Bills -->
     <div v-if="this.billsTabSelected" class="bills-section">
       <div class="bills-section-wrapper">
@@ -66,11 +64,12 @@
 <script>
 import bannerBackground from '~/assets/img/banner.png'
 import bannerBills from '~/assets/img/banner-bills.png'
+
 import BillCard from '~/components/BillCard'
 import TabButton from '~/components/TabButton'
 import Spinner from '~/components/Spinner'
 
-// import allBillsQuery from '~/apollo/queries/allBills'
+import allBillsQuery from '~/apollo/queries/allBills'
 import allCategoriesQuery from '~/apollo/queries/allCategories'
 
 export default {
@@ -135,19 +134,19 @@ export default {
     }
   },
   apollo: {
-    // bills: {
-    //   fetchPolicy: 'cache-and-network',
-    //   query: allBillsQuery,
-    //   prefetch: ({ app }) => ({
-    //     locale: app.store.state.locale
-    //   }),
-    //   variables () {
-    //     return { lang: this.locale }
-    //   },
-    //   watchLoading (isLoading, countModifier) {
-    //     this.loadingBills = isLoading
-    //   }
-    // },
+    bills: {
+      fetchPolicy: 'cache-and-network',
+      query: allBillsQuery,
+      prefetch: ({ app }) => ({
+        locale: app.store.state.locale
+      }),
+      variables () {
+        return { lang: this.locale }
+      },
+      watchLoading (isLoading, countModifier) {
+        this.loadingBills = isLoading
+      }
+    },
     categories: {
       query: allCategoriesQuery,
       fetchPolicy: 'cache-and-network',
@@ -172,17 +171,45 @@ export default {
 @import 'assets/css/typography';
 
 .banner {
-  background-color: #fff;
-  border-bottom: 1px solid #eeeeed;
-  position: relative;
-
+  // desktop
   .banner-wrapper {
-    height: 200px;
+    height: 180px;
     display: flex;
+    justify-content: space-between;
     @extend .pageWrapper-large;
 
-    .image-container {
+    .text-container {
       order: 0;
+      padding-top: 50px;
+
+      .banner-title {
+        display: inline-block;
+        font-size: 2em;
+        font-weight: $twMedium;
+        line-height: 1.1em;
+        text-align: left;
+        letter-spacing: 0.02em;
+        color: $twWhite;
+        margin-right: 20px;
+      }
+
+      .tabs {
+        display: inline-block;
+        vertical-align: bottom;
+        margin-top: 15px;
+
+        .tab-button {
+          margin-right: 10px;
+
+          &:last-child {
+            margin-right: 0px;
+          }
+        }
+      }
+    }
+
+    .image-container {
+      order: 1;
       display: flex;
       margin-right: 100px;
 
@@ -191,72 +218,23 @@ export default {
         width: 280px;
       }
     }
-
-    .text-container {
-      order: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      .banner-title {
-        font-weight: 500;
-        font-size: 2.4em;
-        letter-spacing: 2px;
-        text-align: left;
-        color: $twWhite;
-      }
-    }
   }
 
+  // tablet
   &.tablet {
     .banner-wrapper {
-      .image-container {
-        margin-right: 50px;
-      }
-    }
-  }
-
-  &.phone {
-    .banner-wrapper {
-      height: 160px;
-
-      .text-container {
-        width: 100%;
-        .banner-title {
-          font-size: 1.6em;
-        }
-      }
-
       .image-container {
         display: none;
       }
     }
   }
-}
 
-.tab-section {
-  padding: 40px 0 0 0;
-  text-align: center;
-
-  .tab-section-wrapper {
-    @extend .pageWrapper-medium;
-  }
-
-  .tab-button {
-    margin-right: 10px;
-
-    &:last-child {
-      margin-right: 0px;
-    }
-  }
-
-  .category-filter-block {
-    display: flex;
-    align-self: center;
-    h1 {
-      font-weight: 600;
-      font-size: 1.5em;
-      margin-right: 10px;
+  // phone
+  &.phone {
+    .banner-wrapper {
+      .image-container {
+        display: none;
+      }
     }
   }
 }

@@ -96,7 +96,6 @@ header {
   flex: 1;
   display: flex;
   justify-content: space-between;
-  padding-left: 50px;
 }
 
 .header-menu-hamburger {
@@ -165,13 +164,19 @@ header {
 .menu-item {
   .ivu-menu-item {
     color: $twBlack;
-    font-weight: $twRegular;
-    font-size: 1em;
+    font-weight: $twMedium;
+    font-size: 1.1em;
+
+    &:hover {
+      border-bottom: none;
+    }
   }
 }
 
 .menu-item-selected {
-  // background-color: #40444f;
+  .ivu-menu-item {
+    border-bottom: none;
+  }
 }
 
 .header-info {
@@ -189,7 +194,6 @@ header {
     position: fixed;
     top: 60px;
     left: 0;
-    padding-left: 0;
     width: 100%;
     height: 100%;
     z-index: 4;

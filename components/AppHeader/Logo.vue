@@ -24,6 +24,7 @@ export default {
 <style scoped lang="scss">
 @import 'assets/css/app';
 @import 'assets/css/colors';
+@import 'assets/css/typography';
 
 .logo {
   width: 200px;
@@ -42,7 +43,7 @@ export default {
 .logo-text {
   color: $twBlack;
   margin-left: 10px;
-  font-weight: 600;
+  font-weight: $twMedium;
   letter-spacing: 1px;
 }
 

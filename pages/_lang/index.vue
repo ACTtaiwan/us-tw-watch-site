@@ -1,7 +1,9 @@
 <template>
   <div class="landing">
+
+    <!-- Banner -->
     <section class="banner" :style="style">
-      <div class="banner-wrapper">
+      <div class="banner-wrapper" :class="{ tablet: this.isTablet, phone: this.isPhone }">
         <div class="image-container" >
           <img class="front-img" :src="people" />
         </div>
@@ -14,24 +16,95 @@
         </div>
       </div>
     </section>
-    <!-- <div class="info-cards-section">
-      <div class="info-cards-section-wrapper">
-        <Row :gutter="30" type="flex" justify="space-around">
-          <Col style="margin-bottom: 30px;" span="8" v-for="bill in bills" :key="bill.id">
-            <bill-update-card :bill="bill" />
-          </Col>
-        </Row>
+
+    <!-- Bills Updates -->
+    <section class="bills-update section">
+      <div class="section-wrapper">
+        <h1 class="section-title">Bill updates</h1>
+        <div class="info-cards-section-wrapper">
+          <Row :gutter="30" type="flex">
+            <Col style="margin-bottom: 30px;" :span="cardSpan">
+              <Card >
+                <p slot="title">No border title</p>
+                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
+              </Card>
+            </Col>
+            <Col style="margin-bottom: 30px;" :span="cardSpan">
+              <Card >
+                <p slot="title">No border title</p>
+                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
+              </Card>
+            </Col>
+            <Col style="margin-bottom: 30px;" :span="cardSpan">
+              <Card >
+                <p slot="title">No border title</p>
+                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
+              </Card>
+            </Col>
+            <Col style="margin-bottom: 30px;" :span="cardSpan">
+              <Card >
+                <p slot="title">No border title</p>
+                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
+              </Card>
+            </Col>
+            <Col style="margin-bottom: 30px;" :span="cardSpan">
+              <Card >
+                <p slot="title">No border title</p>
+                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
+              </Card>
+            </Col>
+          </Row>
+        </div>
       </div>
-    </div> -->
+    </section>
+
+    <!-- Articles -->
+    <section class="bills-update section">
+      <div class="section-wrapper">
+        <h1 class="section-title">Articles</h1>
+        <div class="info-cards-section-wrapper">
+          <Row :gutter="30" type="flex">
+            <Col style="margin-bottom: 30px;" :span="cardSpan" >
+              <Card >
+                <p slot="title">No border title</p>
+                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
+              </Card>
+            </Col>
+            <Col style="margin-bottom: 30px;" :span="cardSpan">
+              <Card >
+                <p slot="title">No border title</p>
+                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
+              </Card>
+            </Col>
+            <Col style="margin-bottom: 30px;" :span="cardSpan">
+              <Card >
+                <p slot="title">No border title</p>
+                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
+              </Card>
+            </Col>
+            <Col style="margin-bottom: 30px;" :span="cardSpan">
+              <Card >
+                <p slot="title">No border title</p>
+                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
+              </Card>
+            </Col>
+            <Col style="margin-bottom: 30px;" :span="cardSpan">
+              <Card >
+                <p slot="title">No border title</p>
+                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
+              </Card>
+            </Col>
+          </Row>
+        </div>
+      </div>
+    </section>
+
   </div>
 </template>
 
 <script>
 import congress from '~/assets/img/banner-home.png'
 import people from '~/assets/img/banner-people.png'
-import BillUpdateCard from '~/components/BillUpdateCard'
-
-// import allBillsQuery from '~/apollo/queries/allBills.gql'
 
 export default {
   data () {
@@ -51,27 +124,28 @@ export default {
   computed: {
     locale () {
       return this.$store.state.locale
+    },
+    isPhone () {
+      return this.$store.getters.isPhone
+    },
+    isTablet () {
+      return this.$store.getters.isTablet
+    },
+    cardSpan () {
+      let span = 8
+      if (this.$store.getters.isTablet) span = 12
+      if (this.$store.getters.isPhone) span = 24
+      return span
     }
   },
-  components: {
-    BillUpdateCard
-  },
-  apollo: {
-    // bills: {
-    //   query: allBillsQuery,
-    //   fetchPolicy: 'cache-and-network',
-    //   variables () {
-    //     return { lang: this.locale }
-    //   },
-    //   prefetch: true
-    // }
-  }
+  components: {}
 }
 </script>
 
 <style scoped lang="scss">
 @import 'assets/css/app';
 @import 'assets/css/colors';
+@import 'assets/css/typography';
 
 .banner {
   background-color: #fff;
@@ -99,10 +173,10 @@ export default {
     order: 1;
 
     .banner-title {
-      font-size: 2.4em;
-      font-weight: 500;
+      font-size: 3em;
+      font-weight: $twSemiBold;
+      line-height: 1.1em;
       padding-top: 50px;
-      letter-spacing: 2px;
       text-align: left;
       margin-bottom: 20px;
       color: $twWhite;
@@ -112,6 +186,7 @@ export default {
       .news-title {
         font-weight: 400;
         font-size: 1.8em;
+        line-height: 1.1em;
         color: $twWhite;
         letter-spacing: 1px;
         margin-bottom: 5px;
@@ -125,45 +200,85 @@ export default {
   }
 }
 
-@media (max-width: $mediumDeviceWidth) {
-  .banner-wrapper {
-    height: 300px;
-    text-align: center;
+.banner-wrapper.tablet {
+  height: 300px;
+  text-align: center;
+  justify-content: initial;
+
+  .image-container {
+    order: 0;
+    margin-right: 50px;
+    justify-content: center;
+
+    .front-img {
+      width: 260px;
+    }
+  }
+
+  .text-container {
+    order: 1;
+    text-align: left;
+    display: flex;
     flex-direction: column;
-    justify-content: initial;
+    justify-content: center;
 
-    .text-container {
-      order: 0;
-
-      .banner-title {
-        text-align: center;
-        padding-top: 50px;
-        font-size: 1.6em;
-      }
-
-      .news {
-        display: none;
-      }
+    .banner-title {
+      font-size: 2.4em;
+      margin-bottom: 10px;
     }
 
-    .image-container {
-      order: 1;
-      margin-right: 0px;
-      justify-content: center;
-
-      .front-img {
-        width: 250px;
+    .news {
+      .news-title {
+        font-size: 1.4em;
+      }
+      .news-content {
+        display: none;
       }
     }
   }
 }
 
-.info-cards-section {
-  background-color: #f8f8f9;
-  padding: 40px 0;
+.banner-wrapper.phone {
+  height: 320px;
+  flex-direction: column;
 
-  .info-cards-section-wrapper {
+  .image-container {
+    order: 1;
+    margin-right: 0px;
+    justify-content: center;
+
+    .front-img {
+      width: 240px;
+    }
+  }
+
+  .text-container {
+    order: 0;
+
+    .banner-title {
+      font-size: 2.2em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .news {
+      display: none;
+    }
+  }
+}
+
+.section {
+  padding: 40px 0 0 0;
+
+  .section-wrapper {
     @extend .pageWrapper-large;
+
+    .section-title {
+      color: $twGrayDark;
+      font-size: 2em;
+      font-weight: $twSemiBold;
+      margin-bottom: 20px;
+    }
   }
 }
 </style>

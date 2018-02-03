@@ -34,19 +34,19 @@ export default {
 
 .tab-button {
   font-size: 1em;
-  background: #ffffff;
+  background: white;
   color: $twGrayLight;
-  padding: 10px 20px;
-  border-width: 2px;
-  font-weight: $twBold;
+  padding: 5px 10px;
+  border: none;
+  letter-spacing: 0.02em;
+  font-weight: $twMedium;
 
   &:hover {
-    color: $twBlue;
-    border-color: $twBlue;
+    color: $twGrayDark;
   }
 }
+
 .enabled {
-  color: $twBlue;
-  border-color: $twBlue;
+  color: $twGrayDark;
 }
 </style>
