@@ -1,5 +1,5 @@
-query AllBillsQuery($lang: String) {
-  bills(lang: $lang) {
+query BillsQuery($lang: String, $ids: [ID]) {
+  bills(lang: $lang, ids: $ids) {
     id
     title
     congress
@@ -8,6 +8,15 @@ query AllBillsQuery($lang: String) {
     cosponsors {
       role {
         id
+        party
+        state
+        district
+        title
+        person {
+          id
+          lastname
+          firstname
+        }
       }
       dateCosponsored
     }

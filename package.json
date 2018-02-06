@@ -34,7 +34,8 @@
     "iview": "^2.8.0",
     "nuxt": "^1.0.0-rc11",
     "topojson": "v1.6.27",
-    "vue-i18n": "^7.3.4"
+    "vue-i18n": "^7.3.4",
+    "vue-infinite-loading": "^2.2.3"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
@@ -46,6 +47,8 @@
     "eslint-plugin-node": "^4.2.2",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
     "node-sass": "^4.7.1",
     "sass-loader": "^6.0.6"
   }

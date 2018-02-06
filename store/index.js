@@ -9,7 +9,8 @@ export default () => {
     state: {
       locales: ['en-us', 'zh-tw'],
       locale: 'en-us',
-      clientWidth: 2000
+      clientWidth: 2000,
+      currentCongress: 115
     },
     actions,
     mutations,

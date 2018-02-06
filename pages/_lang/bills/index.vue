@@ -44,11 +44,15 @@
           <!-- List -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 18" class="list" :class="{ mobile: this.isTablet || this.isPhone, phone: this.isPhone }">
             <Row>
-              <Col class="card-row" span="24" v-for="bill in filterredBills" :key="bill.id">
+              <Col class="card-row" span="24" v-for="bill in bills" :key="bill.id">
                 <bill-card :bill="bill" />
               </Col>
-              <Spinner :show="loadingBills"></Spinner>
             </Row>
+            <InfiniteLoading ref="infiniteLoading" @infinite="moreItems">
+              <span slot="spinner">
+                <Spinner></Spinner>
+              </span>
+            </InfiniteLoading>
           </Col>
         </Row>
       </div>
@@ -62,6 +66,8 @@
   </div>
 </template>
 <script>
+import InfiniteLoading from 'vue-infinite-loading/src/components/InfiniteLoading.vue'
+
 import bannerBackground from '~/assets/img/banner.png'
 import bannerBills from '~/assets/img/banner-bills.png'
 
@@ -69,7 +75,9 @@ import BillCard from '~/components/BillCard'
 import TabButton from '~/components/TabButton'
 import Spinner from '~/components/Spinner'
 
-import allBillsQuery from '~/apollo/queries/allBills'
+// Queries
+import prefetchBillsQuery from '~/apollo/queries/prefetchBills'
+import billsQuery from '~/apollo/queries/bills'
 import allCategoriesQuery from '~/apollo/queries/allCategories'
 
 export default {
@@ -81,12 +89,15 @@ export default {
   data () {
     return {
       bills: [],
-      loadingBills: true,
+      billIds: [],
+      page: 0,
+      pageSize: 10,
       loadingCategories: true,
       selectedCategories: [],
       selectedSponsorId: '',
       billsTabSelected: true,
       insightTabSelected: false,
+      filterByCongress: null,
       bannerBackground,
       bannerBills,
       bannerStyle: `background-image: url("${bannerBackground}"); background-size: cover;`
@@ -94,17 +105,73 @@ export default {
   },
   methods: {
     onCategorySelect (selected) {
-      console.log('111', this.selectedCategories)
+      console.log('DDDDDD', this.selectedCategories)
     },
     selectTab ({ bills, insight }) {
       this.billsTabSelected = bills
       this.insightTabSelected = insight
     },
     onSponsorSelect () {},
-    getSponsorSuggestList () {}
+    getSponsorSuggestList () {},
+    resetPage () {
+      console.log('reset page')
+      if (this.$refs.infiniteLoading) {
+        this.$refs.infiniteLoading.stateChanger.reset()
+      }
+      this.bills = []
+      this.billIds = []
+    },
+    prefetchBillIds () {
+      return this.$apollo.query({
+        query: prefetchBillsQuery,
+        variables: { lang: this.locale, congress: this.congress }
+      })
+    },
+    fetchBills (ids) {
+      return this.$apollo.query({
+        query: billsQuery,
+        variables: { lang: this.locale, ids: ids }
+      })
+    },
+    getCurrentPageItems () {
+      return this.billIds.filter(
+        (id, index) => index >= this.page * this.pageSize && index < (this.page + 1) * this.pageSize
+      )
+    },
+    async moreItems ($state) {
+      // make sure billIds is fetched
+      if (!this.billIds.length) {
+        try {
+          let result = await this.prefetchBillIds()
+          this.billIds = result.data.bills[0].prefetchIds
+        } catch (error) {
+          console.log('no data :(', error)
+        }
+      }
+
+      const items = this.getCurrentPageItems()
+
+      if (items.length > 0) {
+        this.fetchBills(items)
+          .then(({ data }) => {
+            this.bills = [...this.bills, ...data.bills]
+            this.page++
+            $state.loaded()
+            console.log('BBBBB', data.bills)
+          })
+          .catch(error => {
+            console.log('get bills error', error)
+            $state.complete()
+          })
+      } else {
+        $state.complete()
+      }
+    }
   },
   computed: {
     locale () {
+      // when locale changes, reset the current page
+      this.resetPage()
       return this.$store.state.locale
     },
     isPhone () {
@@ -113,40 +180,11 @@ export default {
     isTablet () {
       return this.$store.getters.isTablet
     },
-    filterredBills () {
-      let that = this
-
-      // when no category selected, return all bills
-      if (!this.selectedCategories || this.selectedCategories.length === 0) return this.bills
-
-      let bills = this.bills.filter(bill => {
-        if (!bill.categories || bill.categories.length === 0) return false
-        let mactched = false
-        bill.categories.forEach(category => {
-          if (that.selectedCategories.indexOf(category.id) >= 0) {
-            mactched = true
-          }
-        })
-        return mactched
-      })
-
-      return bills
+    congress () {
+      return this.filterByCongress ? this.filterByCongress : this.$store.state.currentCongress
     }
   },
   apollo: {
-    bills: {
-      fetchPolicy: 'cache-and-network',
-      query: allBillsQuery,
-      prefetch: ({ app }) => ({
-        locale: app.store.state.locale
-      }),
-      variables () {
-        return { lang: this.locale }
-      },
-      watchLoading (isLoading, countModifier) {
-        this.loadingBills = isLoading
-      }
-    },
     categories: {
       query: allCategoriesQuery,
       fetchPolicy: 'cache-and-network',
@@ -159,6 +197,7 @@ export default {
     }
   },
   components: {
+    InfiniteLoading,
     BillCard,
     TabButton,
     Spinner

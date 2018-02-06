@@ -27,10 +27,10 @@
           <h1 class="item-title">Co-Sponsors</h1>
           <div class="cosponsors-block">
             <Tag v-for="cosponsor in bill.cosponsors"
-              :key="cosponsor.id"
-              :name="cosponsor.id"
-              :color="{Republican: 'red', Democrat: 'blue'}[cosponsor.party]"
-              type="dot">{{ `${cosponsor.person.firstname} ${cosponsor.person.lastname} (${cosponsor.state})` }}</Tag>
+              :key="cosponsor.role.id"
+              :name="cosponsor.role.id"
+              :color="{Republican: 'red', Democrat: 'blue'}[cosponsor.role.party]"
+              type="dot">{{ `${cosponsor.role.person.firstname} ${cosponsor.role.person.lastname} (${cosponsor.role.state})` }}</Tag>
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import queryBill from '~/apollo/queries/bill'
+import billsQuery from '~/apollo/queries/bills'
 import queryMapUtils from '~/apollo/queries/mapUtils'
 import queryCdMap from '~/apollo/queries/cdMap'
 
@@ -87,7 +87,10 @@ export default {
       return JSON.parse(this.cdMap)
     },
     bill () {
-      // console.log(this.bills[0])
+      if (this.bills) {
+        console.log(this.bills[0])
+      }
+
       return this.bills && this.bills[0]
     },
     pdfUrl () {
@@ -106,7 +109,10 @@ export default {
       const cosponsors = this.bill.cosponsors
       const hasCosponsors = cosponsors && cosponsors.length > 0
       const mainSponsorArray = [sponsor]
-      const sponsors = hasCosponsors ? mainSponsorArray.concat(cosponsors) : mainSponsorArray
+      const sponsors = hasCosponsors
+        ? mainSponsorArray.concat(cosponsors.map(cosponsor => cosponsor.role))
+        : mainSponsorArray
+      console.log(sponsors)
       return sponsors
     },
     partyColor () {
@@ -123,17 +129,17 @@ export default {
 
   apollo: {
     bills: {
-      query: queryBill,
+      query: billsQuery,
       fetchPolicy: 'cache-and-network',
       // Add prefetch for SSR
       // https://github.com/Akryum/vue-apollo#server-side-rendering
       prefetch: ({ route, app }) => ({
-        id: route.params.id,
+        ids: [route.params.id],
         locale: app.store.state.locale
       }),
       variables () {
         return {
-          id: this.$route.params.id,
+          ids: [this.$route.params.id],
           lang: this.locale
         }
       }
