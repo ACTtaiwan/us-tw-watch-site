@@ -13,7 +13,7 @@
         </div>
         <div class="meta-item">
           <h1 class="item-title">Bill code</h1>
-          <p class="item-value">{{ `${bill.billType.display} ${bill.billNumber}` }}</p>
+          <p class="item-value">{{ bill.billCode }}</p>
         </div>
         <div class="meta-item">
           <h1 class="item-title">Introduced</h1>

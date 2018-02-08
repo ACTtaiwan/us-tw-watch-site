@@ -56,6 +56,9 @@
               <span slot="spinner">
                 <Spinner></Spinner>
               </span>
+              <span slot="no-more">
+                no more data 😂
+              </span>
             </InfiniteLoading>
           </Col>
         </Row>
