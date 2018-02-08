@@ -31,6 +31,7 @@
     "express-session": "^1.15.6",
     "graphql": "^0.12.3",
     "graphql-tag": "^2.6.1",
+    "hchs-vue-charts": "^1.2.8",
     "iview": "^2.8.0",
     "nuxt": "^1.0.0-rc11",
     "topojson": "v1.6.27",
