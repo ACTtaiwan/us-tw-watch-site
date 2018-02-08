@@ -42,9 +42,10 @@
             <span v-else class="value">none</span>
           </Col>
           <Col :span="24" class="info-block">
+            <!-- Tracker -->
             <span class="label">Status</span>
-            <span class="value">Introduced to House</span>
-            <BillTracker class="tracker" :progress="20"></BillTracker>
+            <span class="value">{{ billStatus }}</span>
+            <BillTracker class="tracker" :steps="bill.trackers" :progress="billProgress"></BillTracker>
           </Col>
         </Row>
       </div>
@@ -101,6 +102,21 @@ export default {
         hjres: 'Joint Resolution',
         sjres: 'Joint Resolution'
       }[this.bill.billType.code]
+    },
+    billProgress () {
+      const totalSteps = this.bill.trackers.length
+      let currentStep
+      this.bill.trackers.forEach((step, index) => {
+        if (step.selected) currentStep = index + 1
+      })
+      return currentStep / totalSteps * 100
+    },
+    billStatus () {
+      let status = ''
+      this.bill.trackers.forEach(step => {
+        if (step.selected) status = step.stepName
+      })
+      return status
     }
   },
   methods: {

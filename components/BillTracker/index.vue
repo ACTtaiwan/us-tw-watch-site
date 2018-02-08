@@ -3,11 +3,7 @@
 
     <div class="progress-bar" :style="this.style" />
     <div class="stages">
-      <Tooltip class="dot" content="Introduced"></Tooltip>
-      <Tooltip class="dot" content="Passed House"></Tooltip>
-      <Tooltip class="dot" content="Passed Senate"></Tooltip>
-      <Tooltip class="dot" content="To President"></Tooltip>
-      <Tooltip class="dot" content="Become Law"></Tooltip>
+      <Tooltip :class="dotClass" v-for="step in steps" :content="step.stepName" :key="step.stepName"></Tooltip>
     </div>
 
   </div>
@@ -19,13 +15,9 @@ export default {
       type: Number,
       required: true
     },
-    icon: {
-      type: String,
-      required: false
-    },
-    label: {
-      type: String,
-      required: false
+    steps: {
+      type: Array,
+      required: true
     }
   },
   data () {
@@ -34,6 +26,9 @@ export default {
   computed: {
     style () {
       return `width: ${this.progress}%;`
+    },
+    dotClass () {
+      return ['dot', `dotLevel${this.steps.length}`]
     }
   },
   methods: {
@@ -60,6 +55,34 @@ $button-offset: #{4}px;
   width: 100%;
 }
 
+.dotLevel1 {
+  width: 100%;
+}
+
+.dotLevel2 {
+  width: 50%;
+}
+
+.dotLevel3 {
+  width: 33.33%;
+}
+
+.dotLevel4 {
+  width: 25%;
+}
+
+.dotLevel5 {
+  width: 20%;
+}
+
+.dotLevel6 {
+  width: 16.66%;
+}
+
+.dotLevel7 {
+  width: 14.28%;
+}
+
 .dot {
   display: block;
   text-align: center;
@@ -67,7 +90,6 @@ $button-offset: #{4}px;
   font-weight: $twSemiBold;
   color: $twGray;
   height: 100%;
-  width: 20%;
 
   &:after {
     content: '';
