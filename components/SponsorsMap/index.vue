@@ -92,7 +92,6 @@ export default {
     },
 
     getId (value) {
-      console.log('****', value)
       return value.length > 2 ? `ID-${value}` : `ID-${Number(value)}`
     },
 
@@ -194,8 +193,6 @@ export default {
         const name = `${s.person.firstname} ${s.person.lastname}`
         const color = this.getColorFromSponsor(s)
         const isDuplicate = Object.keys(checkedStateOrDistrict).indexOf(geoId) > -1
-
-        console.log('RRRR', geoId, selectedId, name, color, isDuplicate)
 
         const sponsor = {
           id: s.id,

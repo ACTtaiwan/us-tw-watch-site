@@ -1,5 +1,5 @@
-query MapUtilsQuery {
-  maps {
+query MapUtilsQuery($lang: String) {
+  maps(lang: $lang) {
     usMap
     stateToFips
     fipsToState

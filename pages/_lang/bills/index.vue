@@ -26,6 +26,10 @@
           <!-- Filters -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="filters" :class="{ mobile: this.isTablet || this.isPhone }">
             <Row :gutter="20">
+               <Col :span="24" class="filter-block" :class="{ tablet: this.isTablet }">
+                <h2 class="filter-title">Congress</h2>
+                <Slider v-model="congressSliderModel" :min="96" :max="115" :step="1" show-stops range></Slider>
+              </Col>
               <Col :span="this.isTablet ? 12 : 24" class="filter-block" :class="{ tablet: this.isTablet }">
                 <h2 class="filter-title">Category</h2>
                 <Select multiple v-model="selectedCategories" @on-change="onCategorySelect" placeholder="Select bill categories">
@@ -92,6 +96,7 @@ export default {
       billIds: [],
       page: 0,
       pageSize: 10,
+      congressSliderModel: [115, 115],
       loadingCategories: true,
       selectedCategories: [],
       selectedSponsorId: '',

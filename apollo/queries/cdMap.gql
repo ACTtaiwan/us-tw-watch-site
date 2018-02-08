@@ -1,5 +1,5 @@
-query CdMapQuery($congress: Int) {
-  maps(congress: $congress) {
+query CdMapQuery($congress: Int, $lang: String) {
+  maps(congress: $congress, lang: $lang) {
     cdMap
   }
 }

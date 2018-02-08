@@ -87,10 +87,6 @@ export default {
       return JSON.parse(this.cdMap)
     },
     bill () {
-      if (this.bills) {
-        console.log(this.bills[0])
-      }
-
       return this.bills && this.bills[0]
     },
     pdfUrl () {
@@ -135,7 +131,7 @@ export default {
       // https://github.com/Akryum/vue-apollo#server-side-rendering
       prefetch: ({ route, app }) => ({
         ids: [route.params.id],
-        locale: app.store.state.locale
+        lang: app.store.state.locale
       }),
       variables () {
         return {
@@ -147,6 +143,11 @@ export default {
     mapUtils: {
       query: queryMapUtils,
       fetchPolicy: 'cache-and-network',
+      variables () {
+        return {
+          lang: this.locale
+        }
+      },
       update (data) {
         return data.maps[0]
       }
@@ -156,7 +157,8 @@ export default {
       fetchPolicy: 'cache-and-network',
       variables () {
         return {
-          congress: 115
+          congress: 115,
+          lang: this.locale
         }
       },
       update (data) {
