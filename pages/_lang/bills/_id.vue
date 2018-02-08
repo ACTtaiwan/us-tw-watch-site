@@ -17,7 +17,7 @@
         </div>
         <div class="meta-item">
           <h1 class="item-title">Introduced</h1>
-          <p class="item-value">{{ bill.introducedDate }}</p>
+          <p class="item-value">{{ bill.introducedDate | localTime }}</p>
         </div>
         <div class="meta-item">
           <h1 class="item-title">Sponsor</h1>

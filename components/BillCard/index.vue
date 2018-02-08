@@ -24,7 +24,7 @@
           <Col :span="this.isDesktop ? 6 : 12" class="info-block">
             <!-- Introduced Date -->
             <span class="label">Introduced</span>
-            <span class="value">{{ bill.introducedDate }}</span>
+            <span class="value">{{ bill.introducedDate | localTime }}</span>
           </Col>
           <Col :span="this.isDesktop ? 6 : 12" class="info-block">
             <!-- Cosponsors -->
