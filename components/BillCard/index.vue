@@ -161,13 +161,17 @@ export default {
 
 .bill-meta {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
 
   .bill-code {
-    font-size: 1.2em;
-    color: $twBlue;
-    font-weight: $twBold;
-    margin-right: 10px;
+    font-size: 1em;
+    color: $twGrayLight;
+    font-weight: $twSemiBold;
+    background: $twGrayLighter;
+    border-radius: 10px;
+    padding: 1px 8px;
+    margin-right: 5px;
   }
   .bill-type {
     font-size: 1em;
@@ -180,8 +184,9 @@ export default {
 }
 
 .bill-title {
-  font-size: 1.2em;
-  font-weight: $twRegular;
+  font-size: 1.4em;
+  color: $twGrayDark;
+  font-weight: $twSemiBold;
   margin-bottom: 30px;
 }
 
@@ -197,13 +202,13 @@ export default {
 
   .name {
     font-size: 1em;
-    color: $twBlack;
+    color: $twGrayDark;
     font-weight: $twSemiBold;
   }
 
   .area {
     font-size: 1em;
-    color: $twBlack;
+    color: $twGrayDark;
     font-weight: $twSemiBold;
   }
 }
@@ -227,13 +232,8 @@ export default {
 
     .value {
       font-size: 1em;
-      color: $twBlack;
+      color: $twGrayDark;
       font-weight: $twSemiBold;
-      margin-right: 5px;
-
-      &:last-child {
-        margin-right: 0px;
-      }
 
       &.bill-category {
         font-size: 1.2em;

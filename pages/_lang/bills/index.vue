@@ -42,8 +42,10 @@
                   <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
                 </Select>
               </Col>
+              <Col :span="24" class="filter-block">
+                <TwButton label="Search"></TwButton>
+              </Col>
             </Row>
-
           </Col>
           <!-- List -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 18" class="list" :class="{ mobile: this.isTablet || this.isPhone, phone: this.isPhone }">
@@ -80,6 +82,7 @@ import bannerBills from '~/assets/img/banner-bills.png'
 
 import BillCard from '~/components/BillCard'
 import TabButton from '~/components/TabButton'
+import TwButton from '~/components/Button'
 import Spinner from '~/components/Spinner'
 
 // Queries
@@ -208,6 +211,7 @@ export default {
     InfiniteLoading,
     BillCard,
     TabButton,
+    TwButton,
     Spinner
   }
 }
