@@ -108,7 +108,6 @@ export default {
       const sponsors = hasCosponsors
         ? mainSponsorArray.concat(cosponsors.map(cosponsor => cosponsor.role))
         : mainSponsorArray
-      console.log(sponsors)
       return sponsors
     },
     partyColor () {

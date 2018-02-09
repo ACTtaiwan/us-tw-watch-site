@@ -41,6 +41,10 @@ query BillsQuery($lang: String, $ids: [ID]) {
         firstname
       }
     }
+    actionsAll {
+      datetime
+      description
+    }
     trackers {
       selected
       stepName

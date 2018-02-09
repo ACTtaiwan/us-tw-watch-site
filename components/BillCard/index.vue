@@ -44,7 +44,7 @@
           <Col :span="24" class="info-block">
             <!-- Tracker -->
             <span class="label">Status</span>
-            <span class="value">{{ billStatus }}</span>
+            <span class="value">{{ billLatestAction }}</span>
             <BillTracker class="tracker" :steps="bill.trackers" :progress="billProgress"></BillTracker>
           </Col>
         </Row>
@@ -111,12 +111,19 @@ export default {
       })
       return currentStep / totalSteps * 100
     },
-    billStatus () {
-      let status = ''
-      this.bill.trackers.forEach(step => {
-        if (step.selected) status = step.stepName
+    billLatestAction () {
+      let latestActionTime = 0
+      let latestAction = ''
+      this.bill.actionsAll.forEach(action => {
+        if (action.datetime > latestActionTime) {
+          latestAction = action.description
+          latestActionTime = action.datetime
+        }
       })
-      return status
+      // strip html tags from the string
+      var dom = document.createElement('DIV')
+      dom.innerHTML = latestAction
+      return dom.textContent || dom.innerText || ''
     }
   },
   methods: {
