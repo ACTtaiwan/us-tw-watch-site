@@ -33,9 +33,14 @@
 
 <script>
 import TwButton from '~/components/TwButton'
-import allCategoriesQuery from '~/apollo/queries/allCategories'
 
 export default {
+  props: {
+    categories: {
+      type: Array,
+      required: true
+    }
+  },
   data () {
     return {
       filterForm: {
@@ -64,15 +69,6 @@ export default {
     },
     isTablet () {
       return this.$store.getters.isTablet
-    }
-  },
-  apollo: {
-    categories: {
-      query: allCategoriesQuery,
-      fetchPolicy: 'cache-and-network',
-      variables () {
-        return { lang: this.locale }
-      }
     }
   },
   components: {
@@ -153,10 +149,34 @@ export default {
   .ivu-select-item {
     font-weight: $twMedium;
     color: $twGrayDark;
+    margin: 2px 0;
 
     &.ivu-select-item-selected {
-      background: $twIndigo;
-      color: $twWhite;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 28px;
+      background: none;
+
+      &:after {
+        color: $twIndigo;
+        display: inline-block;
+        font-family: Ionicons;
+        speak: none;
+        font-style: normal;
+        font-weight: 400;
+        -webkit-font-feature-settings: normal;
+        font-feature-settings: normal;
+        font-variant: normal;
+        text-transform: none;
+        text-rendering: auto;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        float: right;
+        font-size: 24px;
+        content: '\F3FD';
+      }
     }
   }
 }

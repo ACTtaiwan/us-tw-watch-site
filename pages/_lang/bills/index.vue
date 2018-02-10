@@ -23,7 +23,7 @@
         <Row>
           <!-- Filters -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="filters" :class="{ mobile: this.isTablet || this.isPhone }">
-            <BillsFilters></BillsFilters>
+            <BillsFilters :categories="categories"></BillsFilters>
           </Col>
           <!-- List -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 18" class="list" :class="{ mobile: this.isTablet || this.isPhone, phone: this.isPhone }">
@@ -66,6 +66,7 @@ import BillsFilters from '~/components/BillsFilters'
 // Queries
 import prefetchBillsQuery from '~/apollo/queries/prefetchBills'
 import billsQuery from '~/apollo/queries/bills'
+import allCategoriesQuery from '~/apollo/queries/allCategories'
 
 export default {
   head () {
@@ -75,6 +76,7 @@ export default {
   },
   data () {
     return {
+      categories: [],
       bills: [],
       billIds: [],
       page: 0,
@@ -162,6 +164,15 @@ export default {
     },
     congress () {
       return this.filterByCongress ? this.filterByCongress : this.$store.state.currentCongress
+    }
+  },
+  apollo: {
+    categories: {
+      query: allCategoriesQuery,
+      fetchPolicy: 'cache-and-network',
+      variables () {
+        return { lang: this.locale }
+      }
     }
   },
   components: {
