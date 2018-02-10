@@ -269,6 +269,7 @@ export default {
 
 .filters {
   padding-right: 40px;
+  margin-bottom: 20px;
 
   &.mobile {
     padding-right: 0px;

@@ -1,11 +1,13 @@
 <template>
-  <router-link :to="path(this, `/bills/${bill.id}`)">
+
     <div class="card" :class="{ phone: this.isPhone }">
       <div class="bill-meta">
         <span class="bill-code">{{ bill.billCode}}</span>
         <span class="bill-type">{{ this.billType }}</span>
       </div>
-      <h1 class="bill-title">{{ bill.title | truncate(160) }}</h1>
+      <router-link :to="path(this, `/bills/${bill.id}`)">
+        <h1 class="bill-title">{{ bill.title | truncate(160) }}</h1>
+      </router-link>
       <div class="bill-info">
         <Row>
           <Col :span="24" class="info-block">
@@ -49,13 +51,21 @@
           </Col>
         </Row>
       </div>
+      <div class="bill-footer">
+        <div class="social">
+          <TwButton class="social-button" icon="android-bookmark" type="icon" style="light"></TwButton>
+          <TwButton class="social-button" icon="android-share" type="icon" style="light"></TwButton>
+        </div>
+        <TwButton label="More"></TwButton>
+      </div>
     </div>
-  </router-link>
+
 </template>
 <script>
 import { path } from '@/plugins/locale'
 import defaultAvatar from '~/assets/img/defaultAvatar.jpeg'
 import BillTracker from '~/components/BillTracker'
+import TwButton from '~/components/TwButton'
 
 export default {
   props: {
@@ -130,7 +140,8 @@ export default {
     path
   },
   components: {
-    BillTracker
+    BillTracker,
+    TwButton
   }
 }
 </script>
@@ -187,7 +198,11 @@ export default {
   font-size: 1.4em;
   color: $twGrayDark;
   font-weight: $twSemiBold;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+
+  &:hover {
+    color: $twIndigo;
+  }
 }
 
 .bill-sponsor {
@@ -214,7 +229,7 @@ export default {
 }
 
 .tracker {
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 .bill-info {
@@ -237,6 +252,25 @@ export default {
 
       &.bill-category {
         font-size: 1.2em;
+      }
+    }
+  }
+}
+
+.bill-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 2px solid $twGrayLighter;
+  margin-top: 5px;
+  padding-top: 20px;
+
+  .social {
+    .social-button {
+      margin-right: 10px;
+
+      &:last-child {
+        margin-right: 0px;
       }
     }
   }

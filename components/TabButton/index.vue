@@ -41,11 +41,11 @@ export default {
   font-weight: $twSemiBold;
 
   &:hover {
-    color: $twBlue;
+    color: $twIndigo;
   }
 }
 
 .enabled {
-  color: $twBlue;
+  color: $twIndigo;
 }
 </style>
