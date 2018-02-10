@@ -5,7 +5,7 @@
         <span class="bill-code">{{ bill.billCode}}</span>
         <span class="bill-type">{{ this.billType }}</span>
       </div>
-      <h1 class="bill-title">{{ bill.title }}</h1>
+      <h1 class="bill-title">{{ bill.title | truncate(160) }}</h1>
       <div class="bill-info">
         <Row>
           <Col :span="24" class="info-block">
@@ -44,7 +44,7 @@
           <Col :span="24" class="info-block">
             <!-- Tracker -->
             <span class="label">Status</span>
-            <span class="value">{{ billLatestAction }}</span>
+            <span class="value">{{ billLatestAction | trimConGovAction }}</span>
             <BillTracker class="tracker" :steps="bill.trackers" :progress="billProgress"></BillTracker>
           </Col>
         </Row>
