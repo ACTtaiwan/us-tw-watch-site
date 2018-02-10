@@ -4,7 +4,6 @@
     <!-- Banner -->
     <section class="banner" :style="bannerStyle" :class="{ tablet: this.isTablet, phone: this.isPhone }">
       <div class="banner-wrapper">
-
         <div class="text-container">
           <h1 class="banner-title">{{ this.$t('billsPage.bannerTitle') }}</h1>
           <div class="tabs">
@@ -12,7 +11,6 @@
             <TabButton class="tab-button" icon="stats-bars" label="Insight" :selected="this.insightTabSelected" @select="selectTab({bills: false, insight: true})"/>
           </div>
         </div>
-
         <div class="image-container" >
           <img class="front-img" :src="bannerBills" />
         </div>
@@ -25,27 +23,7 @@
         <Row>
           <!-- Filters -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="filters" :class="{ mobile: this.isTablet || this.isPhone }">
-            <Row :gutter="20">
-               <Col :span="24" class="filter-block" :class="{ tablet: this.isTablet }">
-                <h2 class="filter-title">Congress</h2>
-                <Slider v-model="congressSliderModel" :min="96" :max="115" :step="1" show-stops range></Slider>
-              </Col>
-              <Col :span="this.isTablet ? 12 : 24" class="filter-block" :class="{ tablet: this.isTablet }">
-                <h2 class="filter-title">Category</h2>
-                <Select multiple v-model="selectedCategories" @on-change="onCategorySelect" placeholder="Select bill categories">
-                  <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
-                </Select>
-              </Col>
-              <Col :span="this.isTablet ? 12 : 24" class="filter-block" :class="{ tablet: this.isTablet }">
-                <h2 class="filter-title">Sponsor</h2>
-                <Select v-model="selectedSponsorId" @on-change="onSponsorSelect" clearable remote :remote-method="getSponsorSuggestList" placeholder="Select a sponsor">
-                  <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
-                </Select>
-              </Col>
-              <Col :span="24" class="filter-block">
-                <TwButton label="Search"></TwButton>
-              </Col>
-            </Row>
+            <BillsFilters></BillsFilters>
           </Col>
           <!-- List -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 18" class="list" :class="{ mobile: this.isTablet || this.isPhone, phone: this.isPhone }">
@@ -82,13 +60,12 @@ import bannerBills from '~/assets/img/banner-bills.png'
 
 import BillCard from '~/components/BillCard'
 import TabButton from '~/components/TabButton'
-import TwButton from '~/components/Button'
 import Spinner from '~/components/Spinner'
+import BillsFilters from '~/components/BillsFilters'
 
 // Queries
 import prefetchBillsQuery from '~/apollo/queries/prefetchBills'
 import billsQuery from '~/apollo/queries/bills'
-import allCategoriesQuery from '~/apollo/queries/allCategories'
 
 export default {
   head () {
@@ -102,10 +79,6 @@ export default {
       billIds: [],
       page: 0,
       pageSize: 10,
-      congressSliderModel: [115, 115],
-      loadingCategories: true,
-      selectedCategories: [],
-      selectedSponsorId: '',
       billsTabSelected: true,
       insightTabSelected: false,
       filterByCongress: null,
@@ -115,15 +88,11 @@ export default {
     }
   },
   methods: {
-    onCategorySelect (selected) {
-      console.log('DDDDDD', this.selectedCategories)
-    },
     selectTab ({ bills, insight }) {
       this.billsTabSelected = bills
       this.insightTabSelected = insight
     },
-    onSponsorSelect () {},
-    getSponsorSuggestList () {},
+
     resetPage () {
       console.log('reset page')
       if (this.$refs.infiniteLoading) {
@@ -195,27 +164,16 @@ export default {
       return this.filterByCongress ? this.filterByCongress : this.$store.state.currentCongress
     }
   },
-  apollo: {
-    categories: {
-      query: allCategoriesQuery,
-      fetchPolicy: 'cache-and-network',
-      variables () {
-        return { lang: this.locale }
-      },
-      watchLoading (isLoading, countModifier) {
-        this.loadingCategories = isLoading
-      }
-    }
-  },
   components: {
     InfiniteLoading,
     BillCard,
     TabButton,
-    TwButton,
-    Spinner
+    Spinner,
+    BillsFilters
   }
 }
 </script>
+
 <style scoped lang="scss">
 @import 'assets/css/app';
 @import 'assets/css/colors';
@@ -303,17 +261,6 @@ export default {
 
   &.mobile {
     padding-right: 0px;
-  }
-
-  .filter-block {
-    margin-bottom: 20px;
-
-    .filter-title {
-      color: $twGray;
-      font-size: 1.4em;
-      font-weight: $twBold;
-      margin-bottom: 10px;
-    }
   }
 }
 

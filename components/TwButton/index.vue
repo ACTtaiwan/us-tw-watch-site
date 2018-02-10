@@ -29,14 +29,10 @@ export default {
 
 .button {
   font-size: 0.9em;
-  background: $twBlue;
+  background: $twIndigo;
   color: $twWhite;
   padding: 6px 12px;
   border: none;
   font-weight: $twSemiBold;
-
-  &:hover {
-    background: $twIndigo;
-  }
 }
 </style>
