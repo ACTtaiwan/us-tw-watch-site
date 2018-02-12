@@ -23,7 +23,7 @@
         <Row>
           <!-- Filters -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="filters" :class="{ mobile: this.isTablet || this.isPhone }">
-            <BillsFilters :categories="categories"></BillsFilters>
+            <BillsFilters :categories="categories" @on-filter="filterBills"></BillsFilters>
           </Col>
           <!-- List -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 18" class="list" :class="{ mobile: this.isTablet || this.isPhone, phone: this.isPhone }">
@@ -148,6 +148,9 @@ export default {
       } else {
         $state.complete()
       }
+    },
+    filterBills (filterData) {
+      console.log('filterData', filterData.congressTo)
     }
   },
   computed: {

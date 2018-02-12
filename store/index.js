@@ -10,6 +10,7 @@ export default () => {
       locales: ['en-us', 'zh-tw'],
       locale: 'en-us',
       clientWidth: 2000,
+      earliestCongress: 96,
       currentCongress: 115
     },
     actions,

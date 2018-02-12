@@ -5,28 +5,29 @@
       <div class="filter-field-block">
         <div class="filter-field">
           <span class="filter-field-title">from</span>
-          <InputNumber class="filter-field-value" :value="filterForm.congressFrom"></InputNumber>
+          <InputNumber class="filter-field-value" v-model="filterData.congressFrom" @on-change="clearErros" :min="this.congressMin" :max="this.congressMax"></InputNumber>
         </div>
         <div class="filter-field">
           <span class="filter-field-title">to</span>
-          <InputNumber class="filter-field-value" :value="filterForm.congressTo"></InputNumber>
+          <InputNumber class="filter-field-value" v-model="filterData.congressTo" @on-change="clearErros" :min="this.congressMin" :max="this.congressMax"></InputNumber>
         </div>
       </div>
+      <div class="formErrorBlock" v-if="this.errors.congressError !== ''">{{ this.errors.congressError }}</div>
     </Col>
     <Col :span="this.isTablet ? 12 : 24" class="filter-block" :class="{ tablet: this.isTablet }">
       <h2 class="filter-title">Category</h2>
-      <Select multiple v-model="selectedCategories" @on-change="onCategorySelect" placeholder="select bill categories">
+      <Select multiple v-model="filterData.selectedCategories" @on-change="onCategorySelect" placeholder="select bill categories">
         <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
       </Select>
     </Col>
     <Col :span="this.isTablet ? 12 : 24" class="filter-block" :class="{ tablet: this.isTablet }">
       <h2 class="filter-title">Sponsor</h2>
-      <Select v-model="selectedSponsorId" @on-change="onSponsorSelect" clearable remote :remote-method="getSponsorSuggestList" placeholder="select a sponsor">
+      <Select v-model="filterData.selectedSponsorId" @on-change="onSponsorSelect" clearable remote :remote-method="getSponsorSuggestList" placeholder="select a sponsor">
         <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
       </Select>
     </Col>
     <Col :span="24" class="filter-block">
-      <TwButton label="Search"></TwButton>
+      <TwButton label="Search" @press="submit"></TwButton>
     </Col>
   </Row>
 </template>
@@ -43,22 +44,16 @@ export default {
   },
   data () {
     return {
-      filterForm: {
+      filterData: {
         congressFrom: 115,
         congressTo: 115,
-        congressMin: 96,
-        congressMax: 115
+        selectedCategories: [],
+        selectedSponsorId: ''
       },
-      selectedCategories: [],
-      selectedSponsorId: ''
+      errors: {
+        congressError: ''
+      }
     }
-  },
-  methods: {
-    onCategorySelect (selected) {
-      console.log('DDDDDD', this.selectedCategories)
-    },
-    onSponsorSelect () {},
-    getSponsorSuggestList () {}
   },
   computed: {
     locale () {
@@ -69,6 +64,43 @@ export default {
     },
     isTablet () {
       return this.$store.getters.isTablet
+    },
+    congressMax () {
+      return this.$store.state.currentCongress
+    },
+    congressMin () {
+      return this.$store.state.earliestCongress
+    }
+  },
+  methods: {
+    onCategorySelect (selected) {
+      console.log('select category', this.filterData.selectedCategories)
+    },
+    onSponsorSelect () {},
+    getSponsorSuggestList () {},
+    clearErros () {
+      for (var property in this.errors) {
+        this.errors[property] = ''
+      }
+    },
+    submit () {
+      let ok = true
+      this.clearErros()
+
+      // check congress
+      if (!this.filterData.congressTo || !this.filterData.congressFrom) {
+        this.errors.congressError = 'please specify the range for congress'
+        ok = false
+      }
+
+      if (this.filterData.congressTo < this.filterData.congressFrom) {
+        this.errors.congressError = 'initial congress is greater than ending congress'
+        ok = false
+      }
+
+      if (ok) {
+        this.$emit('on-filter', this.filterData)
+      }
     }
   },
   components: {
@@ -119,6 +151,19 @@ export default {
       }
     }
   }
+}
+</style>
+
+<style scoped lang="scss">
+@import 'assets/css/app';
+@import 'assets/css/colors';
+@import 'assets/css/typography';
+
+.formErrorBlock {
+  margin-top: 5px;
+  color: $twRed;
+  font-weight: $twRegular;
+  font-size: 12px;
 }
 </style>
 
