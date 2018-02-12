@@ -27,7 +27,7 @@
       </Select>
     </Col>
     <Col :span="24" class="filter-block">
-      <TwButton label="Search" @press="submit"></TwButton>
+      <TwButton label="Search" @press="submit" :loading="loading"></TwButton>
     </Col>
   </Row>
 </template>
@@ -40,9 +40,14 @@ export default {
     categories: {
       type: Array,
       required: true
+    },
+    loading: {
+      type: Boolean,
+      required: true
     }
   },
   data () {
+    console.log(this.loading)
     return {
       filterData: {
         congressFrom: 115,
@@ -89,12 +94,12 @@ export default {
 
       // check congress
       if (!this.filterData.congressTo || !this.filterData.congressFrom) {
-        this.errors.congressError = 'please specify the range for congress'
+        this.errors.congressError = 'Please specify the range for congress'
         ok = false
       }
 
       if (this.filterData.congressTo < this.filterData.congressFrom) {
-        this.errors.congressError = 'initial congress is greater than ending congress'
+        this.errors.congressError = 'Initial congress is greater than ending congress'
         ok = false
       }
 

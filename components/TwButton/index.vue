@@ -1,6 +1,6 @@
 <template>
   <Button v-if="this.type === 'icon'" class="iconButton" shape="circle" :icon="this.icon" @click="press"></Button>
-  <Button v-else class="button" shape="circle" :icon="this.icon" @click="press">{{ this.label }}</Button>
+  <Button v-else class="button" shape="circle" :icon="this.icon" @click="press" :loading="loading">{{ this.label }}</Button>
 </template>
 <script>
 export default {
@@ -15,6 +15,10 @@ export default {
     },
     type: {
       type: String,
+      required: false
+    },
+    loading: {
+      type: Boolean,
       required: false
     }
   },

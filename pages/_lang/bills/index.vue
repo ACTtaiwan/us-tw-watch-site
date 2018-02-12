@@ -23,7 +23,7 @@
         <Row>
           <!-- Filters -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="filters" :class="{ mobile: this.isTablet || this.isPhone }">
-            <BillsFilters :categories="categories" @on-filter="filterBills"></BillsFilters>
+            <BillsFilters :categories="categories" @on-filter="filterBills" :loading="filterLoading"></BillsFilters>
           </Col>
           <!-- List -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 18" class="list" :class="{ mobile: this.isTablet || this.isPhone, phone: this.isPhone }">
@@ -83,7 +83,8 @@ export default {
       pageSize: 10,
       billsTabSelected: true,
       insightTabSelected: false,
-      filterByCongress: null,
+      filterLoading: false,
+      filterData: {},
       bannerBackground,
       bannerBills,
       bannerStyle: `background-image: url("${bannerBackground}"); background-size: cover;`
@@ -94,14 +95,13 @@ export default {
       this.billsTabSelected = bills
       this.insightTabSelected = insight
     },
-
     resetPage () {
-      console.log('reset page')
       if (this.$refs.infiniteLoading) {
         this.$refs.infiniteLoading.stateChanger.reset()
       }
       this.bills = []
       this.billIds = []
+      this.page = 0
     },
     prefetchBillIds () {
       return this.$apollo.query({
@@ -136,6 +136,7 @@ export default {
       if (items.length > 0) {
         this.fetchBills(items)
           .then(({ data }) => {
+            this.filterLoading = false
             this.bills = [...this.bills, ...data.bills]
             this.page++
             $state.loaded()
@@ -150,6 +151,9 @@ export default {
       }
     },
     filterBills (filterData) {
+      this.filterLoading = true
+      this.resetPage()
+      this.filterData = filterData
       console.log('filterData', filterData.congressTo)
     }
   },
@@ -166,7 +170,15 @@ export default {
       return this.$store.getters.isTablet
     },
     congress () {
-      return this.filterByCongress ? this.filterByCongress : this.$store.state.currentCongress
+      let congress = []
+      if (this.filterData.congressFrom && this.filterData.congressTo) {
+        for (var i = this.filterData.congressFrom; i <= this.filterData.congressTo; i++) {
+          congress.push(i)
+        }
+      } else {
+        congress.push(this.$store.state.currentCongress)
+      }
+      return congress
     }
   },
   apollo: {
