@@ -18,7 +18,7 @@
     </section>
 
     <!-- Bills -->
-    <div v-if="this.billsTabSelected" class="bills-section">
+    <section v-if="this.billsTabSelected" class="bills-section">
       <div class="bills-section-wrapper">
         <Row>
           <!-- Filters -->
@@ -43,7 +43,7 @@
           </Col>
         </Row>
       </div>
-    </div>
+    </section>
     <!-- Insights -->
     <div v-if="this.insightTabSelected" class="insights-section">
       <div class="insights-section-wrapper">

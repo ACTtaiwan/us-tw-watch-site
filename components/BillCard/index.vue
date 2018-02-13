@@ -56,7 +56,9 @@
           <TwButton class="social-button" icon="android-bookmark" type="icon" style="light"></TwButton>
           <TwButton class="social-button" icon="android-share" type="icon" style="light"></TwButton>
         </div>
-        <TwButton label="More"></TwButton>
+        <router-link :to="path(this, `/bills/${bill.id}`)">
+          <TwButton label="More"></TwButton>
+        </router-link>
       </div>
     </div>
 
@@ -177,8 +179,8 @@ export default {
 
   .bill-code {
     font-size: 1em;
-    color: $twGrayLight;
     font-weight: $twSemiBold;
+    color: $twGrayLight;
     background: $twGrayLighter;
     border-radius: 10px;
     padding: 1px 8px;
@@ -186,8 +188,8 @@ export default {
   }
   .bill-type {
     font-size: 1em;
-    color: $twGrayLight;
     font-weight: $twSemiBold;
+    color: $twGrayLight;
     background: $twGrayLighter;
     border-radius: 10px;
     padding: 1px 8px;
@@ -238,6 +240,10 @@ export default {
     flex-direction: column;
     margin-bottom: 20px;
 
+    &:last-child {
+      margin-bottom: 0;
+    }
+
     .label {
       font-size: 0.8em;
       color: $twGrayLight;
@@ -261,9 +267,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 2px solid $twGrayLighter;
-  margin-top: 5px;
-  padding-top: 20px;
+  padding-top: 30px;
 
   .social {
     .social-button {

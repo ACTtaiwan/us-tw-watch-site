@@ -1,11 +1,85 @@
 <template>
-  <div v-if="bill" class="bill-page">
-    <section class="banner">
-      <div class="banner-wrapper">
-        <h1 class="banner-title">{{ bill.title }} <Button class="pdfBtn" shape="circle" icon="ios-paper-outline" @click="openPdf"></Button></h1>
+  <div class="bill-page">
+
+    <!-- Bill -->
+    <section v-if="bill" class="bill-section" :class="{ phone: this.isPhone }">
+      <div class="bill-section-wrapper">
+
+        <div class="bill-meta">
+          <span class="bill-code">{{ bill.billCode}}</span>
+          <span class="bill-type">{{ this.billType }}</span>
+        </div>
+        <h1 class="bill-title">{{ bill.title }}</h1>
+
+
+        <Row>
+          <Col :span="this.isTablet || this.isPhone ? 24 : 18"  class="overview-block" :class="{ mobile: this.isTablet || this.isPhone }">
+            <!-- Overview -->
+            <div class="section-block">
+              <h1 class="section-title">Overview</h1>
+              <Row>
+                <Col :span="24" class="info-block">
+                  <!-- Sponsor -->
+                  <!-- <div class="bill-sponsor">
+                    <img class="avatar" :src="defaultAvatar" :style="style" />
+                    <span class="name">{{ bill.sponsor.title }} {{ bill.sponsor.person.firstname }} {{ bill.sponsor.person.lastname }}</span>
+                    <span class="area">{{ this.area }} </span>
+                  </div> -->
+                </Col>
+
+              </Row>
+            </div>
+            <!-- Support Map -->
+            <div class="section-block">
+              <h1 class="section-title">Cosponsor Map</h1>
+              <SponsorsMap
+                v-if="isMapDataLoaded"
+                :sponsors="sponsors"
+                :usMap="usMap"
+                :stateToFips="stateToFips"
+                :fipsToState="fipsToState"
+                :congressMap="congressMap"/>
+            </div>
+          </Col>
+
+
+          <!-- Summary -->
+          <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="summary-block">
+            <div class="section-block">
+              <h1 class="section-title">Actions</h1>
+              <Timeline>
+                <TimelineItem>
+                  <p class="time">1976年</p>
+                  <p class="content">Apple I 问世</p>
+                </TimelineItem>
+                <TimelineItem>
+                  <p class="time">1984年</p>
+                  <p class="content">发布 Macintosh</p>
+                </TimelineItem>
+                <TimelineItem>
+                  <p class="time">2007年</p>
+                  <p class="content">发布 iPhone</p>
+                </TimelineItem>
+                <TimelineItem>
+                  <p class="time">2010年</p>
+                  <p class="content">发布 iPad</p>
+                </TimelineItem>
+                <TimelineItem>
+                  <p class="time">2011年10月5日</p>
+                  <p class="content">史蒂夫·乔布斯去世</p>
+                </TimelineItem>
+              </Timeline>
+            </div>
+          </Col>
+
+        </Row>
+
       </div>
     </section>
-    <div class="bill-meta-section">
+
+
+
+    <div v-if="bill" class="bill-meta-section">
       <div class="bill-meta-section-wrapper">
         <div class="meta-item">
           <h1 class="item-title">Congress</h1>
@@ -35,17 +109,9 @@
         </div>
       </div>
     </div>
-    <div class="map-section">
-      <div class="map-section-wrapper">
-        <SponsorsMap
-          v-if="isMapDataLoaded"
-          :sponsors="sponsors"
-          :usMap="usMap"
-          :stateToFips="stateToFips"
-          :fipsToState="fipsToState"
-          :congressMap="congressMap"/>
-      </div>
-    </div>
+
+
+
   </div>
 </template>
 
@@ -67,6 +133,12 @@ export default {
     locale () {
       return this.$store.state.locale
     },
+    isPhone () {
+      return this.$store.getters.isPhone
+    },
+    isTablet () {
+      return this.$store.getters.isTablet
+    },
     isMapDataLoaded () {
       let loaded = false
       if (this.mapUtils && this.cdMap) {
@@ -86,19 +158,28 @@ export default {
     congressMap () {
       return JSON.parse(this.cdMap)
     },
-    bill () {
-      return this.bills && this.bills[0]
-    },
-    pdfUrl () {
-      let url = ''
-      if (this.bill && this.bill.versions) {
-        let numOfVersions = this.bill.versions.length
-        let latestVersion = this.bill.versions[numOfVersions - 1]
-        let bucketKey = latestVersion.documents.filter(doc => doc.contentType === 'pdf')[0].bucketKey
-        url = `https://s3.amazonaws.com/volunteer.bills/${bucketKey}`
-      }
-      console.log('url', url)
-      return url
+    // pdfUrl () {
+    //   let url = ''
+    //   if (this.bill && this.bill.versions) {
+    //     let numOfVersions = this.bill.versions.length
+    //     let latestVersion = this.bill.versions[numOfVersions - 1]
+    //     let bucketKey = latestVersion.documents.filter(doc => doc.contentType === 'pdf')[0].bucketKey
+    //     url = `https://s3.amazonaws.com/volunteer.bills/${bucketKey}`
+    //   }
+    //   console.log('url', url)
+    //   return url
+    // },
+    billType () {
+      return {
+        s: 'Bill',
+        hr: 'Bill',
+        hconres: 'Concurrent Resolution',
+        sconres: 'Concurrent Resolution',
+        hres: 'Resolution',
+        sres: 'Resolution',
+        hjres: 'Joint Resolution',
+        sjres: 'Joint Resolution'
+      }[this.bill.billType.code]
     },
     sponsors () {
       const sponsor = this.bill.sponsor
@@ -123,7 +204,7 @@ export default {
   },
 
   apollo: {
-    bills: {
+    bill: {
       query: billsQuery,
       fetchPolicy: 'cache-and-network',
       // Add prefetch for SSR
@@ -137,6 +218,9 @@ export default {
           ids: [this.$route.params.id],
           lang: this.locale
         }
+      },
+      update (data) {
+        return data.bills[0]
       }
     },
     mapUtils: {
@@ -180,10 +264,7 @@ export default {
   },
 
   methods: {
-    path,
-    openPdf () {
-      window.open(this.pdfUrl, '_blank')
-    }
+    path
   },
 
   components: {
@@ -194,38 +275,78 @@ export default {
 
 <style scoped lang="scss">
 @import 'assets/css/app';
+@import 'assets/css/colors';
+@import 'assets/css/typography';
 
-#details {
-  width: 400px;
-  margin-top: 100px;
-  margin-left: 50px;
-  text-align: left;
+.bill-section {
+  padding: 40px 0;
+
+  &.phone {
+    .section-block {
+      margin-left: calc(15px * -1);
+      margin-right: calc(15px * -1);
+      border-radius: 0px;
+    }
+  }
+
+  .bill-section-wrapper {
+    @extend .pageWrapper-large;
+  }
 }
 
-.banner {
-  background-color: #fff;
-  border-bottom: 1px solid #eeeeed;
-  position: relative;
+.bill-meta {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 
-  .banner-wrapper {
-    min-height: 200px;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    display: flex;
-    align-items: center;
-    @extend .pageWrapper-large;
+  .bill-code {
+    font-size: 1.1em;
+    font-weight: $twSemiBold;
+    color: $twWhite;
+    background: $twGrayLight;
+    border-radius: 10px;
+    padding: 1px 8px;
+    margin-right: 5px;
+  }
+  .bill-type {
+    font-size: 1.1em;
+    font-weight: $twSemiBold;
+    color: $twWhite;
+    background: $twGrayLight;
+    border-radius: 10px;
+    padding: 1px 8px;
+  }
+}
 
-    .banner-title {
-      font-size: 2.5em;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      display: flex;
-      align-items: center;
-    }
+.bill-title {
+  font-size: 1.8em;
+  font-weight: $twSemiBold;
+  color: $twGrayDark;
+  margin-bottom: 20px;
+}
 
-    .pdfBtn {
-      margin-left: 10px;
-    }
+.section-block {
+  background: $twWhite;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-property: box-shadow;
+  margin-bottom: 20px;
+
+  .section-title {
+    font-weight: $twSemiBold;
+    color: $twGrayDark;
+    font-size: 1.4em;
+    margin-bottom: 20px;
+  }
+}
+
+.overview-block {
+  padding-right: 40px;
+
+  &.mobile {
+    padding-right: 0px;
   }
 }
 
@@ -260,11 +381,6 @@ export default {
 }
 
 .map-section {
-  background-color: #f8f8f9;
-  padding: 0 0 40px 0;
-
-  .map-section-wrapper {
-    @extend .pageWrapper-large;
-  }
+  // padding: 0 0 40px 0;
 }
 </style>

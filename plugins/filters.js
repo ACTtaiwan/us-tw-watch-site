@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 export function localTime (epoch) {
   const date = new Date(Number(epoch))
-  return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`
+  return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
 }
 
 export function trimConGovAction (description) {

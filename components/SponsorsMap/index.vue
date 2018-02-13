@@ -20,7 +20,7 @@ export default {
       tooltipTitle: '',
       tooltipSponsors: [],
       defaultWidth: 900,
-      defaultHeight: 600
+      defaultHeight: 500
     }
   },
   computed: {
@@ -217,19 +217,12 @@ export default {
           .style('fill', areSameParty ? color : '#875F82')
           .on('mouseover', function (d) {
             const geoName = self.getGeoNameFromGeoId(geoId)
-
             self.tooltipTitle = geoName
             self.tooltipSponsors = sameGeoSponsors
-
-            tooltip.style('visibility', 'visible')
-
-            return tooltip
+            return tooltip.style('visibility', 'visible')
           })
           .on('mousemove', function () {
-            tooltip.style('top', d3.event.pageY - 10 + 'px').style('left', d3.event.pageX + 10 + 'px')
-            // .style('left', (d3.event.pageX + 10 - offsetX) + 'px')
-
-            return tooltip
+            return tooltip.style('top', event.pageY - 10 + 'px').style('left', event.pageX + 10 + 'px')
           })
           .on('mouseout', function () {
             return tooltip.style('visibility', 'hidden')
@@ -246,7 +239,6 @@ export default {
 
   .map {
     background: #fff;
-    border: 1px solid #eeeeed;
     text-align: center;
   }
 }
@@ -262,14 +254,13 @@ path {
   display: inline-block;
   position: relative;
   width: 100%;
-  padding-bottom: 65%; /* aspect ratio */
+  padding-bottom: 55%; /* aspect ratio */
   vertical-align: top;
   overflow: hidden;
 }
 .svg-content-responsive {
   display: inline-block;
   position: absolute;
-  top: 10px;
   left: 0;
 }
 

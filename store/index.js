@@ -9,7 +9,7 @@ export default () => {
     state: {
       locales: ['en-us', 'zh-tw'],
       locale: 'en-us',
-      clientWidth: 2000,
+      clientWidth: null,
       earliestCongress: 96,
       currentCongress: 115
     },

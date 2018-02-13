@@ -26,12 +26,11 @@ export default {
 </script>
 <style scoped lang="scss">
 #tooltip {
-  position: absolute;
+  // position: absolute;
   z-index: 10;
   visibility: hidden;
   text-align: left;
   padding: 15px;
-  font: 12px sans-serif;
   line-height: 12px;
   background: rgba(0, 0, 0, 0.8);
   border: 0px;
