@@ -26,7 +26,7 @@ export default {
 </script>
 <style scoped lang="scss">
 #tooltip {
-  // position: absolute;
+  position: absolute;
   z-index: 10;
   visibility: hidden;
   text-align: left;
