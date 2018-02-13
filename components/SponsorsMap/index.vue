@@ -221,7 +221,7 @@ export default {
             self.tooltipSponsors = sameGeoSponsors
             return tooltip.style('visibility', 'visible')
           })
-          .on('mousemove', function () {
+          .on('mousemove', function (d) {
             return tooltip.style('top', event.pageY - 10 + 'px').style('left', event.pageX + 10 + 'px')
           })
           .on('mouseout', function () {

@@ -273,6 +273,12 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.ivu-row {
+  position: inherit;
+}
+</style>
+
 <style scoped lang="scss">
 @import 'assets/css/app';
 @import 'assets/css/colors';
@@ -326,6 +332,7 @@ export default {
 }
 
 .section-block {
+  position: inherit;
   background: $twWhite;
   padding: 20px;
   border-radius: 5px;
@@ -344,6 +351,7 @@ export default {
 
 .overview-block {
   padding-right: 40px;
+  position: inherit;
 
   &.mobile {
     padding-right: 0px;
@@ -378,9 +386,5 @@ export default {
   .cosponsors-block {
     flex: 1;
   }
-}
-
-.map-section {
-  // padding: 0 0 40px 0;
 }
 </style>
