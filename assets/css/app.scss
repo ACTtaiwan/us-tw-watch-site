@@ -1,3 +1,6 @@
+@import 'assets/css/colors';
+@import 'assets/css/typography';
+
 $appHeaderHeight: 60px;
 $appFooterHeight: 40px;
 $appFooterHeightPhone: 60px;
@@ -49,5 +52,50 @@ $mediumDeviceWidth: 850px;
 @media (max-width: 550px) {
   .pageWrapper-small {
     padding: 0 15px;
+  }
+}
+
+.card {
+  position: inherit;
+  background: $twWhite;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-property: box-shadow;
+
+  &.phone {
+    margin-left: calc(15px * -1);
+    margin-right: calc(15px * -1);
+    border-radius: 0px;
+  }
+}
+
+.card-title {
+  font-weight: $twSemiBold;
+  color: $twGrayDark;
+  font-size: 1.4em;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid $twGrayLighter;
+}
+
+.card-info-block {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+
+  .label {
+    font-size: 0.8em;
+    color: $twGrayLight;
+    font-weight: $twSemiBold;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+  }
+
+  .value {
+    font-size: 1em;
+    color: $twGrayDark;
+    // font-weight: $twSemiBold;
   }
 }

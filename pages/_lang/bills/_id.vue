@@ -13,22 +13,11 @@
 
 
         <Row>
-          <Col :span="this.isTablet || this.isPhone ? 24 : 18"  class="overview-block" :class="{ mobile: this.isTablet || this.isPhone }">
+          <Col :span="this.isTablet || this.isPhone ? 24 : 18"  class="main-block" :class="{ mobile: this.isTablet || this.isPhone }">
             <!-- Overview -->
-            <div class="section-block">
-              <h1 class="section-title">Overview</h1>
-              <Row>
-                <Col :span="24" class="info-block">
-                  <!-- Sponsor -->
-                  <!-- <div class="bill-sponsor">
-                    <img class="avatar" :src="defaultAvatar" :style="style" />
-                    <span class="name">{{ bill.sponsor.title }} {{ bill.sponsor.person.firstname }} {{ bill.sponsor.person.lastname }}</span>
-                    <span class="area">{{ this.area }} </span>
-                  </div> -->
-                </Col>
-
-              </Row>
-            </div>
+            <BillOverviewCard :bill="this.bill"></BillOverviewCard>
+            <!-- Summary -->
+            <BillSummaryCard :bill="this.bill"></BillSummaryCard>
             <!-- Support Map -->
             <div class="section-block">
               <h1 class="section-title">Cosponsor Map</h1>
@@ -44,10 +33,10 @@
 
 
           <!-- Summary -->
-          <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="summary-block">
+          <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="detail-block">
             <div class="section-block">
               <h1 class="section-title">Actions</h1>
-              <Timeline>
+              <!-- <Timeline>
                 <TimelineItem>
                   <p class="time">1976年</p>
                   <p class="content">Apple I 问世</p>
@@ -68,7 +57,7 @@
                   <p class="time">2011年10月5日</p>
                   <p class="content">史蒂夫·乔布斯去世</p>
                 </TimelineItem>
-              </Timeline>
+              </Timeline> -->
             </div>
           </Col>
 
@@ -76,8 +65,6 @@
 
       </div>
     </section>
-
-
 
     <div v-if="bill" class="bill-meta-section">
       <div class="bill-meta-section-wrapper">
@@ -116,12 +103,14 @@
 </template>
 
 <script>
-import billsQuery from '~/apollo/queries/bills'
+import BillDetailPageQuery from '~/apollo/queries/BillDetailPage'
 import queryMapUtils from '~/apollo/queries/mapUtils'
 import queryCdMap from '~/apollo/queries/cdMap'
 
 import { path } from '@/plugins/locale'
 import SponsorsMap from '~/components/SponsorsMap'
+import BillOverviewCard from '~/components/BillOverviewCard'
+import BillSummaryCard from '~/components/BillSummaryCard'
 
 export default {
   data () {
@@ -132,6 +121,9 @@ export default {
   computed: {
     locale () {
       return this.$store.state.locale
+    },
+    isDesktop () {
+      return this.$store.getters.isDesktop
     },
     isPhone () {
       return this.$store.getters.isPhone
@@ -145,6 +137,13 @@ export default {
         loaded = true
       }
       return loaded
+    },
+    memberArea () {
+      if (this.bill.sponsor.district) {
+        return `, ${this.bill.sponsor.state}-${this.bill.sponsor.district}`
+      } else {
+        return `, ${this.bill.sponsor.state}`
+      }
     },
     usMap () {
       return JSON.parse(this.mapUtils.usMap)
@@ -200,12 +199,34 @@ export default {
         return '#2984B8'
       }
       return '#333333'
+    },
+    billProgress () {
+      const totalSteps = this.bill.trackers.length
+      let currentStep
+      this.bill.trackers.forEach((step, index) => {
+        if (step.selected) currentStep = index + 1
+      })
+      return currentStep / totalSteps * 100
+    },
+    billLatestAction () {
+      let latestActionTime = 0
+      let latestAction = ''
+      this.bill.actionsAll.forEach(action => {
+        if (action.datetime > latestActionTime) {
+          latestAction = action.description
+          latestActionTime = action.datetime
+        }
+      })
+      // strip html tags from the string
+      var dom = document.createElement('DIV')
+      dom.innerHTML = latestAction
+      return dom.textContent || dom.innerText || ''
     }
   },
 
   apollo: {
     bill: {
-      query: billsQuery,
+      query: BillDetailPageQuery,
       fetchPolicy: 'cache-and-network',
       // Add prefetch for SSR
       // https://github.com/Akryum/vue-apollo#server-side-rendering
@@ -268,7 +289,9 @@ export default {
   },
 
   components: {
-    SponsorsMap
+    SponsorsMap,
+    BillOverviewCard,
+    BillSummaryCard
   }
 }
 </script>
@@ -346,10 +369,12 @@ export default {
     color: $twGrayDark;
     font-size: 1.4em;
     margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid $twGrayLighter;
   }
 }
 
-.overview-block {
+.main-block {
   padding-right: 40px;
   position: inherit;
 

@@ -79,7 +79,7 @@ export default {
   data () {
     return {
       defaultAvatar,
-      size: 30
+      size: 40
     }
   },
   computed: {
@@ -249,6 +249,7 @@ export default {
       color: $twGrayLight;
       font-weight: $twSemiBold;
       text-transform: uppercase;
+      margin-bottom: 5px;
     }
 
     .value {
