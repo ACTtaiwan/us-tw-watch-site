@@ -53,6 +53,7 @@
   </div>
 </template>
 <script>
+import _ from 'lodash'
 import InfiniteLoading from 'vue-infinite-loading/src/components/InfiniteLoading.vue'
 
 import bannerBackground from '~/assets/img/banner.png'
@@ -137,7 +138,9 @@ export default {
         this.fetchBills(items)
           .then(({ data }) => {
             this.filterLoading = false
-            this.bills = [...this.bills, ...data.bills]
+            const billsMap = _.keyBy(data.bills, 'id')
+            const bills = items.map(id => billsMap[id])
+            this.bills = [...this.bills, ...bills]
             this.page++
             $state.loaded()
             console.log('BBBBB', data.bills)
