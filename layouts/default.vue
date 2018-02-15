@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import AppHeader from '~/components/AppHeader'
 import AppFooter from '~/components/AppFooter'
 import appConfig from '~/config/app.json'
@@ -23,7 +24,7 @@ export default {
     }
   },
   mounted () {
-    window.addEventListener('resize', this.parseWindowWidth)
+    window.addEventListener('resize', _.debounce(this.parseWindowWidth, 500))
     this.parseWindowWidth()
   },
   beforeDestroy () {

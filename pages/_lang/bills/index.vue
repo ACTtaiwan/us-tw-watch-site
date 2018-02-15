@@ -293,16 +293,4 @@ export default {
     padding-right: 0px;
   }
 }
-
-.list {
-  &.phone {
-    .card-row {
-      margin-left: calc(15px * -1);
-      margin-right: calc(15px * -1);
-      width: 100%;
-      width: -moz-available; /* WebKit-based browsers will ignore this. */
-      width: -webkit-fill-available;
-    }
-  }
-}
 </style>

@@ -1,67 +1,65 @@
 <template>
-
-    <div class="card" :class="{ phone: this.isPhone }">
-      <div class="bill-meta">
-        <span class="bill-code">{{ bill.billCode}}</span>
-        <span class="bill-type">{{ this.billType }}</span>
+  <div class="bill-card" :class="{ phone: this.isPhone }">
+    <div class="bill-meta">
+      <span class="bill-code">{{ bill.billCode}}</span>
+      <span class="bill-type">{{ this.billType }}</span>
+    </div>
+    <router-link :to="path(this, `/bills/${bill.id}`)">
+      <h1 class="bill-title">{{ bill.title | truncate(160) }}</h1>
+    </router-link>
+    <div class="bill-info">
+      <Row>
+        <Col :span="24" class="bill-card-info-block">
+          <!-- Sponsor -->
+          <div class="bill-sponsor">
+            <img class="avatar" :src="defaultAvatar" :style="style" />
+            <p class="name">{{ bill.sponsor.title }} {{ bill.sponsor.person.firstname }} {{ bill.sponsor.person.lastname }}</p>
+            <p class="area">{{ this.memberArea }} </p>
+          </div>
+        </Col>
+        <Col :span="this.isDesktop ? 6 : 12" class="bill-card-info-block">
+          <!-- Congress -->
+          <span class="label">Congress</span>
+          <p class="value">{{ bill.congress }}th</p>
+        </Col>
+        <Col :span="this.isDesktop ? 6 : 12" class="bill-card-info-block">
+          <!-- Introduced Date -->
+          <span class="label">Introduced</span>
+          <p class="value">{{ bill.introducedDate | localTime }}</p>
+        </Col>
+        <Col :span="this.isDesktop ? 6 : 12" class="bill-card-info-block">
+          <!-- Cosponsors -->
+          <span class="label">Cosponsors</span>
+          <p class="value">{{ bill.cosponsors ? bill.cosponsors.length : 0 }}</p>
+        </Col>
+        <Col :span="this.isDesktop ? 6 : 12" class="bill-card-info-block">
+          <!-- Categories -->
+          <span class="label">Categories</span>
+          <div v-if="bill.categories">
+            <span class="value bill-category" v-for="category in bill.categories" :key="category.id">
+              <Icon type="social-codepen-outline"></Icon>
+            </span>
+          </div>
+          <span v-else class="value">none</span>
+        </Col>
+        <Col :span="24" class="bill-card-info-block">
+          <!-- Tracker -->
+          <span class="label">Status</span>
+           <p class="value">{{ billLatestAction | trimConGovAction }}</p>
+          <BillTracker class="tracker" :steps="bill.trackers" :progress="billProgress"></BillTracker>
+        </Col>
+      </Row>
+    </div>
+    <div class="bill-footer">
+      <div class="social">
+        <TwButton class="social-button" icon="android-bookmark" type="icon" style="light"></TwButton>
+        <TwButton class="social-button" icon="android-share" type="icon" style="light"></TwButton>
       </div>
       <router-link :to="path(this, `/bills/${bill.id}`)">
-        <h1 class="bill-title">{{ bill.title | truncate(160) }}</h1>
+        <TwButton label="More"></TwButton>
       </router-link>
-      <div class="bill-info">
-        <Row>
-          <Col :span="24" class="info-block">
-            <!-- Sponsor -->
-            <div class="bill-sponsor">
-              <img class="avatar" :src="defaultAvatar" :style="style" />
-              <span class="name">{{ bill.sponsor.title }} {{ bill.sponsor.person.firstname }} {{ bill.sponsor.person.lastname }}</span>
-              <span class="area">{{ this.area }} </span>
-            </div>
-          </Col>
-          <Col :span="this.isDesktop ? 6 : 12" class="info-block">
-            <!-- Congress -->
-            <span class="label">Congress</span>
-            <span class="value">{{ bill.congress }}th</span>
-          </Col>
-          <Col :span="this.isDesktop ? 6 : 12" class="info-block">
-            <!-- Introduced Date -->
-            <span class="label">Introduced</span>
-            <span class="value">{{ bill.introducedDate | localTime }}</span>
-          </Col>
-          <Col :span="this.isDesktop ? 6 : 12" class="info-block">
-            <!-- Cosponsors -->
-            <span class="label">Cosponsors</span>
-            <span class="value">{{ bill.cosponsors ? bill.cosponsors.length : 0 }}</span>
-          </Col>
-          <Col :span="this.isDesktop ? 6 : 12" class="info-block">
-            <!-- Categories -->
-            <span class="label">Categories</span>
-            <div v-if="bill.categories">
-              <span class="value bill-category" v-for="category in bill.categories" :key="category.id">
-                <Icon type="social-codepen-outline"></Icon>
-              </span>
-            </div>
-            <span v-else class="value">none</span>
-          </Col>
-          <Col :span="24" class="info-block">
-            <!-- Tracker -->
-            <span class="label">Status</span>
-            <span class="value">{{ billLatestAction | trimConGovAction }}</span>
-            <BillTracker class="tracker" :steps="bill.trackers" :progress="billProgress"></BillTracker>
-          </Col>
-        </Row>
-      </div>
-      <div class="bill-footer">
-        <div class="social">
-          <TwButton class="social-button" icon="android-bookmark" type="icon" style="light"></TwButton>
-          <TwButton class="social-button" icon="android-share" type="icon" style="light"></TwButton>
-        </div>
-        <router-link :to="path(this, `/bills/${bill.id}`)">
-          <TwButton label="More"></TwButton>
-        </router-link>
-      </div>
     </div>
-
+  </div>
 </template>
 <script>
 import { path } from '@/plugins/locale'
@@ -149,27 +147,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import 'assets/css/app';
 @import 'assets/css/typography';
 @import 'assets/css/colors';
 
-.card {
-  background-color: #ffffff;
-  padding: 20px;
-  color: #000000;
-  text-align: left;
-  margin-bottom: 30px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  transition-property: box-shadow;
-  border-radius: 5px;
-
-  &:hover {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  }
-
-  &.phone {
-    border-radius: 0px;
-  }
+.bill-card {
+  @extend .card;
+  margin-bottom: 20px;
 }
 
 .bill-meta {
@@ -220,13 +204,13 @@ export default {
   .name {
     font-size: 1em;
     color: $twGrayDark;
-    font-weight: $twSemiBold;
+    // font-weight: $twSemiBold;
   }
 
   .area {
     font-size: 1em;
     color: $twGrayDark;
-    font-weight: $twSemiBold;
+    // font-weight: $twSemiBold;
   }
 }
 
@@ -234,41 +218,15 @@ export default {
   margin-top: 10px;
 }
 
-.bill-info {
-  .info-block {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    .label {
-      font-size: 0.8em;
-      color: $twGrayLight;
-      font-weight: $twSemiBold;
-      text-transform: uppercase;
-      margin-bottom: 5px;
-    }
-
-    .value {
-      font-size: 1em;
-      color: $twGrayDark;
-      font-weight: $twSemiBold;
-
-      &.bill-category {
-        font-size: 1.2em;
-      }
-    }
-  }
+.bill-card-info-block {
+  @extend .card-info-block;
 }
 
 .bill-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 30px;
+  padding-top: 10px;
 
   .social {
     .social-button {

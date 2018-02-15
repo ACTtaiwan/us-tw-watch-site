@@ -11,6 +11,16 @@ $largeDeviceWidth: 1024px;
 $largeDeviceWidthPlusOne: 1025px;
 $mediumDeviceWidth: 850px;
 
+// Font
+
+.textFont {
+  font-family: 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.displayFont {
+  font-family: 'SF Pro Display', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 .pageWrapper-large {
   width: 100%;
   max-width: 1264px;
@@ -69,6 +79,10 @@ $mediumDeviceWidth: 850px;
     margin-right: calc(15px * -1);
     border-radius: 0px;
   }
+
+  &:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  }
 }
 
 .card-title {
@@ -86,11 +100,12 @@ $mediumDeviceWidth: 850px;
   margin-bottom: 20px;
 
   .label {
-    font-size: 0.8em;
-    color: $twGrayLight;
-    font-weight: $twSemiBold;
+    font-size: 0.9em;
+    color: $twGrayDark;
+    font-weight: $twBold;
     margin-bottom: 5px;
     text-transform: uppercase;
+    letter-spacing: 0.02em;
   }
 
   .value {

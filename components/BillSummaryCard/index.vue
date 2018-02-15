@@ -1,7 +1,9 @@
 <template>
   <div class="summary-card" :class="{ phone: this.isPhone }">
     <h1 class="summary-card-title">Summary</h1>
-    <p class="paragraph" v-for="paragraph in paragraphs">{{ paragraph }}</p>
+    <div class="summary-card-body">
+      <p class="paragraph" v-for="paragraph in paragraphs">{{ paragraph }}</p>
+    </div>
   </div>
 
 </template>
@@ -58,6 +60,11 @@ export default {
 
   .summary-card-title {
     @extend .card-title;
+  }
+
+  .summary-card-body {
+    max-height: 500px;
+    overflow: scroll;
   }
 }
 
