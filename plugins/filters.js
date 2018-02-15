@@ -1,8 +1,10 @@
 import Vue from 'vue'
+import moment from 'moment'
 
 export function localTime (epoch) {
-  const date = new Date(Number(epoch))
-  return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
+  return moment(new Date(Number(epoch)))
+    .utcOffset(-5 * 60)
+    .format('MM/DD/YYYY')
 }
 
 export function trimConGovAction (description) {

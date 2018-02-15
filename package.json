@@ -33,6 +33,7 @@
     "graphql-tag": "^2.6.1",
     "hchs-vue-charts": "^1.2.8",
     "iview": "^2.8.0",
+    "moment": "^2.20.1",
     "nuxt": "^1.0.0-rc11",
     "topojson": "v1.6.27",
     "vue-i18n": "^7.3.4",
