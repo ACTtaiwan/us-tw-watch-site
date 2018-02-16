@@ -4,6 +4,7 @@ query BillsQuery($lang: String, $ids: [ID]) {
     title
     congress
     billCode
+    billNumber
     introducedDate
     cosponsors {
       role {

@@ -146,6 +146,7 @@ export default {
     .sponsors {
       text-align: left;
       @extend .textFont;
+      margin-bottom: 20px;
     }
   }
 }

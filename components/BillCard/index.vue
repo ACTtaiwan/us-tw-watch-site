@@ -94,7 +94,7 @@ export default {
         height: ${this.size}px;
       `
     },
-    area () {
+    memberArea () {
       if (this.bill.sponsor.district) {
         return `, ${this.bill.sponsor.state}-${this.bill.sponsor.district}`
       } else {
