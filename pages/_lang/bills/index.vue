@@ -28,8 +28,8 @@
           <!-- List -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 18" class="list" :class="{ mobile: this.isTablet || this.isPhone, phone: this.isPhone }">
             <Row>
-              <Col class="card-row" span="24" v-for="bill in bills" :key="bill.id">
-                <bill-card :bill="bill" />
+              <Col span="24" v-for="bill in bills" :key="bill.id">
+                <BillSearchResultCard :bill="bill" />
               </Col>
             </Row>
             <InfiniteLoading ref="infiniteLoading" @infinite="moreItems">
@@ -47,7 +47,11 @@
     <!-- Insights -->
     <div v-if="this.insightTabSelected" class="insights-section">
       <div class="insights-section-wrapper">
-        XDDDD
+        <Row :gutter="20">
+          <Col :span="this.isTablet || this.isPhone ? 24 : 12">
+            <CategoryByCongressCard :categories="this.categories"></CategoryByCongressCard>
+          </Col>
+        </Row>
       </div>
     </div>
   </div>
@@ -59,14 +63,15 @@ import InfiniteLoading from 'vue-infinite-loading/src/components/InfiniteLoading
 import bannerBackground from '~/assets/img/banner.png'
 import bannerBills from '~/assets/img/banner-bills.png'
 
-import BillCard from '~/components/BillCard'
+import BillSearchResultCard from '~/components/BillSearchResultCard'
 import TabButton from '~/components/TabButton'
 import Spinner from '~/components/Spinner'
 import BillsFilters from '~/components/BillsFilters'
+import CategoryByCongressCard from '~/components/Analytics/CategoryByCongressCard'
 
 // Queries
 import prefetchBillsQuery from '~/apollo/queries/prefetchBills'
-import billsQuery from '~/apollo/queries/bills'
+import billsQuery from '~/apollo/queries/BillLandingPage'
 import allCategoriesQuery from '~/apollo/queries/allCategories'
 
 export default {
@@ -117,9 +122,7 @@ export default {
       })
     },
     getCurrentPageItems () {
-      return this.billIds.filter(
-        (id, index) => index >= this.page * this.pageSize && index < (this.page + 1) * this.pageSize
-      )
+      return this.billIds.filter((id, index) => index >= this.page * this.pageSize && index < (this.page + 1) * this.pageSize)
     },
     async moreItems ($state) {
       // make sure billIds is fetched
@@ -195,10 +198,11 @@ export default {
   },
   components: {
     InfiniteLoading,
-    BillCard,
+    BillSearchResultCard,
     TabButton,
     Spinner,
-    BillsFilters
+    BillsFilters,
+    CategoryByCongressCard
   }
 }
 </script>
@@ -291,6 +295,14 @@ export default {
 
   &.mobile {
     padding-right: 0px;
+  }
+}
+
+.insights-section {
+  padding: 40px 0;
+
+  .insights-section-wrapper {
+    @extend .pageWrapper-large;
   }
 }
 </style>

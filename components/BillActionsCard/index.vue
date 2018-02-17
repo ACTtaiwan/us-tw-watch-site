@@ -29,7 +29,7 @@ export default {
       return this.$store.getters.isPhone
     },
     actions () {
-      return this.bill.actionsAll.map((action, index) => {
+      return this.bill.actions.map((action, index) => {
         if (process.browser) {
           // strip html tags from the string
           var dom = document.createElement('DIV')

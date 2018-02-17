@@ -103,7 +103,7 @@ export default {
     billLatestAction (a, b, c) {
       let latestActionTime = 0
       let latestAction = ''
-      this.bill.actionsAll.forEach(action => {
+      this.bill.actions.forEach(action => {
         if (action.datetime > latestActionTime) {
           latestAction = action.description
           latestActionTime = action.datetime

@@ -1,4 +1,4 @@
-query BillDetailPageQuery($lang: String, $ids: [ID]) {
+query BillsQuery($lang: String, $ids: [ID]) {
   bills(lang: $lang, ids: $ids) {
     id
     title
@@ -6,21 +6,6 @@ query BillDetailPageQuery($lang: String, $ids: [ID]) {
     billCode
     billNumber
     introducedDate
-    cosponsors {
-      role {
-        id
-        party
-        state
-        district
-        title
-        person {
-          id
-          lastname
-          firstname
-        }
-      }
-      dateCosponsored
-    }
     categories {
       id
       name
@@ -49,10 +34,6 @@ query BillDetailPageQuery($lang: String, $ids: [ID]) {
     trackers {
       selected
       stepName
-    }
-    summary {
-      title
-      paragraphs
     }
   }
 }

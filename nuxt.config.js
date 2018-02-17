@@ -12,10 +12,7 @@ module.exports = {
       { property: 'twitter:site', content: '@nuxt_js' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'dns-prefetch', href: appConfig.api.url }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }, { rel: 'dns-prefetch', href: appConfig.api.url }]
   },
   loading: {
     color: '#3762CC'
@@ -48,7 +45,7 @@ module.exports = {
       default: '~/apollo/client-configs/default.js'
     }
   },
-  plugins: ['~/plugins/locale', '~/plugins/i18n.js', '~/plugins/filters', '~/plugins/iview'],
+  plugins: ['~/plugins/locale', '~/plugins/i18n.js', '~/plugins/filters', '~/plugins/iview', '~/plugins/vue-chartjs'],
   build: {
     vendor: ['vue-i18n', 'd3', 'topojson'],
     // run ESLINT on save
