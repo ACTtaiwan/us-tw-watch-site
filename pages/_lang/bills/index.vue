@@ -49,7 +49,7 @@
       <div class="insights-section-wrapper">
         <Row :gutter="20">
           <Col :span="this.isTablet || this.isPhone ? 24 : 12">
-            <CategoryByCongressCard :categories="this.categories"></CategoryByCongressCard>
+            <BillCountCategoryByCongressCard :categories="this.categories"></BillCountCategoryByCongressCard>
           </Col>
         </Row>
       </div>
@@ -67,7 +67,7 @@ import BillSearchResultCard from '~/components/BillSearchResultCard'
 import TabButton from '~/components/TabButton'
 import Spinner from '~/components/Spinner'
 import BillsFilters from '~/components/BillsFilters'
-import CategoryByCongressCard from '~/components/Analytics/CategoryByCongressCard'
+import BillCountCategoryByCongressCard from '~/components/Analytics/BillCountCategoryByCongressCard'
 
 // Queries
 import prefetchBillsQuery from '~/apollo/queries/prefetchBills'
@@ -202,7 +202,7 @@ export default {
     TabButton,
     Spinner,
     BillsFilters,
-    CategoryByCongressCard
+    BillCountCategoryByCongressCard
   }
 }
 </script>

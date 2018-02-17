@@ -6,13 +6,19 @@
         <span class="label">Congress ({{ this.congressRange[0] }} - {{ this.congressRange[1] }})</span>
         <Slider class="slider" v-model="congressRange" @on-change="updateChart" :step="1" show-stops range :min="this.congressMin" :max="this.congressMax"></Slider>
       </div>
-      <ChartjsBar class="chart" ref="chart" :chartData="this.chartData" :options="this.chartOptions"></ChartjsBar>
+      <div class="chart-container">
+        <div class="chart-loading-overlay" v-if="isChartLoading">
+          <Spinner></Spinner>
+        </div>
+        <ChartjsBar class="chart" :class="{ isLoading: this.isChartLoading }" ref="chart" :chartData="this.chartData" :options="this.chartOptions"></ChartjsBar>
+      </div>
     </div>
   </div>
 
 </template>
 
 <script>
+import Spinner from '~/components/Spinner'
 import CategoryByCongressQuery from '~/apollo/queries/Analytics/CategoryByCongress'
 
 export default {
@@ -24,6 +30,7 @@ export default {
   },
   data () {
     return {
+      isChartLoading: true,
       congressRange: [114, 115],
       billIdsByCategory: {},
       chartOptions: {
@@ -50,7 +57,9 @@ export default {
             {
               gridLines: {
                 display: false
-              }
+              },
+              categoryPercentage: 1.0,
+              barPercentage: 0.5
             }
           ]
         },
@@ -86,7 +95,8 @@ export default {
       const labels = this.categories.map(category => category.name.replace(' & ', '&').split(' '))
       const data = this.categories.map(category => this.billIdsByCategory[category.id])
       const dataSet = {
-        backgroundColor: '#4b8fea',
+        backgroundColor: 'rgba(0, 51, 78, 0.3)',
+        borderColor: 'rgba(0, 51, 78, 1)',
         borderWidth: 1,
         data: data
       }
@@ -107,33 +117,22 @@ export default {
       let self = this
       let bills = {}
 
+      this.isChartLoading = true
+
       Promise.all(this.categories.map(category => this.prefetchBillIdsByCategory(category.id))).then(function (results) {
         self.categories.forEach((category, index) => {
           bills[category.id] = results[index].data.bills[0].prefetchIds.length
           console.log('000', results[index].data.bills[0].prefetchIds.length)
         })
         console.log('bills', bills)
+        self.isChartLoading = false
         self.billIdsByCategory = bills
       })
-
-      // this.categories.forEach(async category => {
-      //   let result = await this.prefetchBillIdsByCategory(category.id)
-      //   bills[category.id] = result.data.bills[0].prefetchIds.length
-      //   console.log('pp')
-      // })
-
-      // for (var i = 0; i < this.categories.length; i++) {
-      //   const category = this.categories[i]
-      //   let result = await this.prefetchBillIdsByCategory(category.id)
-      //   bills[category.id] = result.data.bills[0].prefetchIds.length
-      // }
-      // console.log('ddd', bills)
-      // this.billIdsByCategory = bills
-      // console.log('chart', this.$refs.chart)
-      // this.$refs.chart.update()
     }
   },
-  components: {}
+  components: {
+    Spinner
+  }
 }
 </script>
 
@@ -159,9 +158,26 @@ export default {
   margin: 0 5px;
 }
 
-.chart {
-  height: 400px;
+.chart-container {
   position: relative;
+
+  .chart-loading-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .chart {
+    max-height: 360px;
+    position: relative;
+
+    &.isLoading {
+      opacity: 0.5;
+    }
+  }
 }
 </style>
 
