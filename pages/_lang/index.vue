@@ -22,36 +22,10 @@
       <div class="section-wrapper">
         <h1 class="section-title">Bill updates</h1>
         <div class="info-cards-section-wrapper">
-          <Row :gutter="30" type="flex">
-            <Col style="margin-bottom: 30px;" :span="cardSpan">
-              <Card >
-                <p slot="title">No border title</p>
-                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
-              </Card>
-            </Col>
-            <Col style="margin-bottom: 30px;" :span="cardSpan">
-              <Card >
-                <p slot="title">No border title</p>
-                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
-              </Card>
-            </Col>
-            <Col style="margin-bottom: 30px;" :span="cardSpan">
-              <Card >
-                <p slot="title">No border title</p>
-                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
-              </Card>
-            </Col>
-            <Col style="margin-bottom: 30px;" :span="cardSpan">
-              <Card >
-                <p slot="title">No border title</p>
-                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
-              </Card>
-            </Col>
-            <Col style="margin-bottom: 30px;" :span="cardSpan">
-              <Card >
-                <p slot="title">No border title</p>
-                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
-              </Card>
+          <Spinner v-if="isBillUpdateLoading" ></Spinner>
+          <Row :gutter="30">
+            <Col :span="isPhone ? 24 : isTablet ? 12 : 8" v-for="bill in bills" :key="bill.id">
+              <BillUpdateCard class="bill-update-card" :bill="bill" />
             </Col>
           </Row>
         </div>
@@ -103,13 +77,24 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import congress from '~/assets/img/banner-home.png'
 import people from '~/assets/img/banner-people.png'
+
+import Spinner from '~/components/Spinner'
+import BillUpdateCard from '~/components/BillUpdateCard'
+
+import prefetchBillsQuery from '~/apollo/queries/prefetchBills'
+import billsQuery from '~/apollo/queries/BillUpdatePage'
 
 export default {
   data () {
     return {
       loading: 0,
+      numberOfBillCards: 6,
+      isBillUpdateLoading: true,
+      bills: [],
+      billIds: [],
       congress,
       people,
       style: `background-image: url("${congress}"); background-size: cover;`
@@ -121,8 +106,70 @@ export default {
       meta: [{ hid: 'description', name: 'description', content: this.$t('site.description.mainDescription') }]
     }
   },
+  mounted () {
+    this.getUpdatedBills()
+  },
+  methods: {
+    resetPage () {
+      this.bills = []
+      this.billIds = []
+    },
+    prefetchBillIds () {
+      return this.$apollo.query({
+        query: prefetchBillsQuery,
+        variables: { lang: this.locale, congress: [115] }
+      })
+    },
+    getLatestActionDate (actions) {
+      let latestActionTime = 0
+      actions.forEach(action => {
+        if (action.datetime > latestActionTime) {
+          latestActionTime = action.datetime
+        }
+      })
+      return latestActionTime
+    },
+    fetchBills (ids) {
+      return this.$apollo.query({
+        query: billsQuery,
+        variables: { lang: this.locale, ids: ids }
+      })
+    },
+    async getUpdatedBills () {
+      if (!this.billIds.length) {
+        try {
+          let result = await this.prefetchBillIds()
+          this.billIds = result.data.bills[0].prefetchIds
+        } catch (error) {
+          console.log('no data :(', error)
+        }
+      }
+
+      this.isBillUpdateLoading = true
+
+      if (this.billIds.length > 0) {
+        this.fetchBills(this.billIds)
+          .then(({ data }) => {
+            this.filterLoading = false
+            const billsMap = _.keyBy(data.bills, 'id')
+            this.bills = this.billIds
+              .map(id => billsMap[id])
+              .sort((a, b) => this.getLatestActionDate(b.actionsAll) - this.getLatestActionDate(a.actionsAll))
+              .filter((bill, index) => index < this.numberOfBillCards)
+
+            this.isBillUpdateLoading = false
+            console.log('all the bills', this.bills)
+          })
+          .catch(error => {
+            console.log('get bills error', error)
+          })
+      }
+    }
+  },
   computed: {
     locale () {
+      // when locale changes, reset the current page
+      this.resetPage()
       return this.$store.state.locale
     },
     isPhone () {
@@ -138,7 +185,10 @@ export default {
       return span
     }
   },
-  components: {}
+  components: {
+    BillUpdateCard,
+    Spinner
+  }
 }
 </script>
 
@@ -275,7 +325,7 @@ export default {
 
     .section-title {
       color: $twGrayDark;
-      font-size: 2em;
+      font-size: 1.8em;
       font-weight: $twSemiBold;
       margin-bottom: 20px;
     }

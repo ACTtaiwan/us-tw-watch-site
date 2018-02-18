@@ -171,7 +171,7 @@ export default {
 
 .bill-title {
   font-size: 1.8em;
-  font-weight: $twMedium;
+  font-weight: $twSemiBold;
   color: $twGrayDark;
   margin-bottom: 20px;
 }

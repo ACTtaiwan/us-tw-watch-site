@@ -28,7 +28,7 @@ export function trimConGovAction (description) {
     })
   }
 
-  return result
+  return result.trim()
 }
 
 export function truncate (text, length = 30) {
