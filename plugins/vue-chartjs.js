@@ -3,7 +3,7 @@ import { Bar, Line, mixins } from 'vue-chartjs'
 
 // https://gist.github.com/rvanzon/096132b7b46be43659cf26360c664e9a
 
-Vue.component('ChartjsBar', {
+Vue.component('BarChart', {
   extends: Bar,
   mixins: [mixins.reactiveProp],
   props: ['chartData', 'options'],
@@ -12,10 +12,11 @@ Vue.component('ChartjsBar', {
   }
 })
 
-Vue.component('ChartjsLine', {
+Vue.component('LineChart', {
   extends: Line,
-  props: ['data', 'options'],
+  mixins: [mixins.reactiveProp],
+  props: ['chartData', 'options'],
   mounted () {
-    this.renderChart(this.data, this.options)
+    this.renderChart(this.chartData, this.options)
   }
 })

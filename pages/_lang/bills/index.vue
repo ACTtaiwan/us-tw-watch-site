@@ -51,6 +51,9 @@
           <Col :span="this.isTablet || this.isPhone ? 24 : 12">
             <BillCountCategoryByCongressCard :categories="this.categories"></BillCountCategoryByCongressCard>
           </Col>
+          <Col :span="this.isTablet || this.isPhone ? 24 : 12">
+            <BillCountCongressByCategoryCard :categories="this.categories"></BillCountCongressByCategoryCard>
+          </Col>
         </Row>
       </div>
     </div>
@@ -68,6 +71,7 @@ import TabButton from '~/components/TabButton'
 import Spinner from '~/components/Spinner'
 import BillsFilters from '~/components/BillsFilters'
 import BillCountCategoryByCongressCard from '~/components/Analytics/BillCountCategoryByCongressCard'
+import BillCountCongressByCategoryCard from '~/components/Analytics/BillCountCongressByCategoryCard'
 
 // Queries
 import prefetchBillsQuery from '~/apollo/queries/prefetchBills'
@@ -202,7 +206,8 @@ export default {
     TabButton,
     Spinner,
     BillsFilters,
-    BillCountCategoryByCongressCard
+    BillCountCategoryByCongressCard,
+    BillCountCongressByCategoryCard
   }
 }
 </script>

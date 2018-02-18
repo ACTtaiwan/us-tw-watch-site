@@ -1,6 +1,6 @@
 <template>
   <div class="analytic-card" :class="{ phone: this.isPhone }">
-    <h1 class="analytic-card-title">Category distribution</h1>
+    <h1 class="analytic-card-title">Bill count by category</h1>
     <div class="analytic-card-body">
       <div class="analytic-card-info-block">
         <span class="label">Congress ({{ this.congressRange[0] }} - {{ this.congressRange[1] }})</span>
@@ -10,7 +10,7 @@
         <div class="chart-loading-overlay" v-if="isChartLoading">
           <Spinner></Spinner>
         </div>
-        <ChartjsBar class="chart" :class="{ isLoading: this.isChartLoading }" ref="chart" :chartData="this.chartData" :options="this.chartOptions"></ChartjsBar>
+        <BarChart class="chart" :class="{ isLoading: this.isChartLoading }" ref="chart" :chartData="this.chartData" :options="this.chartOptions"></BarChart>
       </div>
     </div>
   </div>
