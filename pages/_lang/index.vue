@@ -37,6 +37,7 @@
       <div class="section-wrapper">
         <h1 class="section-title">Articles</h1>
         <div class="info-cards-section-wrapper">
+          {{ this.locale }}
           <Row :gutter="30" type="flex">
             <Col style="margin-bottom: 30px;" :span="cardSpan" >
               <Card >
@@ -107,19 +108,9 @@ export default {
     }
   },
   mounted () {
-    this.getUpdatedBills()
+    // this.getUpdatedBills()
   },
   methods: {
-    resetPage () {
-      this.bills = []
-      this.billIds = []
-    },
-    prefetchBillIds () {
-      return this.$apollo.query({
-        query: prefetchBillsQuery,
-        variables: { lang: this.locale, congress: [115] }
-      })
-    },
     getLatestActionDate (actions) {
       let latestActionTime = 0
       actions.forEach(action => {
@@ -136,15 +127,6 @@ export default {
       })
     },
     async getUpdatedBills () {
-      if (!this.billIds.length) {
-        try {
-          let result = await this.prefetchBillIds()
-          this.billIds = result.data.bills[0].prefetchIds
-        } catch (error) {
-          console.log('no data :(', error)
-        }
-      }
-
       this.isBillUpdateLoading = true
 
       if (this.billIds.length > 0) {
@@ -158,7 +140,6 @@ export default {
               .filter((bill, index) => index < this.numberOfBillCards)
 
             this.isBillUpdateLoading = false
-            console.log('all the bills', this.bills)
           })
           .catch(error => {
             console.log('get bills error', error)
@@ -169,7 +150,6 @@ export default {
   computed: {
     locale () {
       // when locale changes, reset the current page
-      this.resetPage()
       return this.$store.state.locale
     },
     isPhone () {
@@ -183,6 +163,24 @@ export default {
       if (this.$store.getters.isTablet) span = 12
       if (this.$store.getters.isPhone) span = 24
       return span
+    }
+  },
+  apollo: {
+    billIds: {
+      query: prefetchBillsQuery,
+      fetchPolicy: 'cache-and-network',
+      variables () {
+        return {
+          lang: this.locale,
+          congress: [115]
+        }
+      },
+      update (data) {
+        return data.bills[0].prefetchIds
+      },
+      result (data) {
+        this.getUpdatedBills()
+      }
     }
   },
   components: {
