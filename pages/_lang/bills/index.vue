@@ -49,10 +49,10 @@
       <div class="insights-section-wrapper">
         <Row :gutter="20">
           <Col :span="this.isTablet || this.isPhone ? 24 : 12">
-            <BillCountCategoryByCongressCard :categories="this.categories"></BillCountCategoryByCongressCard>
+            <BillCountCongressByCategoryCard :categories="this.categories"></BillCountCongressByCategoryCard>
           </Col>
           <Col :span="this.isTablet || this.isPhone ? 24 : 12">
-            <BillCountCongressByCategoryCard :categories="this.categories"></BillCountCongressByCategoryCard>
+            <BillCountCategoryByCongressCard :categories="this.categories"></BillCountCategoryByCongressCard>
           </Col>
         </Row>
       </div>

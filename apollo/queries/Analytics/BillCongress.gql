@@ -1,0 +1,6 @@
+query BillsQuery($lang: String, $ids: [ID]) {
+  bills(lang: $lang, ids: $ids) {
+    id
+    congress
+  }
+}
