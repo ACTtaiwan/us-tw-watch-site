@@ -6,7 +6,8 @@
   "site": {
     "title": {
       "mainTitle": "Taiwan Watch 美國國會觀測站",
-      "billsPageTitle": "法案"
+      "billsPageTitle": "法案",
+      "membersPageTitle": "國會成員"
     },
     "description": {
       "mainDescription": "美國國會台灣大小事"

@@ -4,57 +4,93 @@
     <!-- Banner -->
     <section class="banner" :style="bannerStyle" :class="{ tablet: this.isTablet, phone: this.isPhone }">
       <div class="banner-wrapper">
-
         <div class="text-container">
           <h1 class="banner-title">{{ this.$t('membersPage.bannerTitle') }}</h1>
           <div class="tabs">
-            <TabButton class="tab-button" icon="ios-paper" label="Bills" :selected="this.billsTabSelected" @select="selectTab({bills: true, insight: false})"/>
-            <TabButton class="tab-button" icon="stats-bars" label="Insight" :selected="this.insightTabSelected" @select="selectTab({bills: false, insight: true})"/>
+            <TabButton class="tab-button" icon="ios-paper" label="Members" :selected="this.membersTabSelected" @select="selectTab({members: true, insight: false})"/>
+            <TabButton class="tab-button" icon="stats-bars" label="Insight" :selected="this.insightTabSelected" @select="selectTab({members: false, insight: true})"/>
           </div>
         </div>
-
         <div class="image-container" >
           <img class="front-img" :src="bannerMembers" />
         </div>
       </div>
     </section>
 
-    <div class="table-section">
-      <div class="table-section-wrapper">
-        <Spinner :show="loadingMembers"></Spinner>
-        <MemberTable :members="members" :loading="loadingMembers" />
+    <!-- Members -->
+    <section v-if="this.membersTabSelected" class="members-section">
+      <div class="members-section-wrapper">
+        <Row>
+          <!-- Filters -->
+          <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="filters" :class="{ mobile: this.isTablet || this.isPhone }">
+            <!-- <BillsFilters :categories="categories" @on-filter="filterBills" :loading="filterLoading"></BillsFilters> -->
+          </Col>
+          <!-- List -->
+          <Col :span="this.isTablet || this.isPhone ? 24 : 18" class="list" :class="{ mobile: this.isTablet || this.isPhone, phone: this.isPhone }">
+            <Row>
+              <Col span="24" v-for="member in members" :key="member.id">
+                <MemberSearchResultCard :member="member" />
+              </Col>
+            </Row>
+            <InfiniteLoading ref="infiniteLoading" @infinite="moreItems">
+              <span slot="spinner">
+                <Spinner></Spinner>
+              </span>
+              <span slot="no-more">
+                no more data 😂
+              </span>
+            </InfiniteLoading>
+          </Col>
+        </Row>
       </div>
-    </div>
+    </section>
+    <!-- Insights -->
+    <section v-if="this.insightTabSelected" class="insights-section">
+      <div class="insights-section-wrapper">
+        <Row :gutter="20">
+          <Col :span="this.isTablet || this.isPhone ? 24 : 12">
+            <!-- <BillCountCongressByCategoryCard :categories="this.categories"></BillCountCongressByCategoryCard> -->
+          </Col>
+          <Col :span="this.isTablet || this.isPhone ? 24 : 12">
+            <!-- <BillCountCategoryByCongressCard :categories="this.categories"></BillCountCategoryByCongressCard> -->
+          </Col>
+        </Row>
+      </div>
+    </section>
   </div>
 </template>
 <script>
+// Packages
+import _ from 'lodash'
+import InfiniteLoading from 'vue-infinite-loading/src/components/InfiniteLoading.vue'
+// Images
 import bannerBackground from '~/assets/img/banner.png'
 import bannerMembers from '~/assets/img/banner-members.png'
-
+// Components
+import MemberSearchResultCard from '~/components/MemberSearchResultCard'
 import TabButton from '~/components/TabButton'
 import Spinner from '~/components/Spinner'
-import MemberTable from '~/components/MemberTable'
-
-// import allMembersQuery from '~/apollo/queries/allMembers'
+// Queries
+import MembersPrefetchQuery from '~/apollo/queries/MemberLandingPage/MembersPrefetch'
+import MembersQuery from '~/apollo/queries/MemberLandingPage/Members'
+import allCategoriesQuery from '~/apollo/queries/allCategories'
 
 export default {
   head () {
     return {
-      title: `${this.$t('site.title.billsPageTitle')} | ${this.$t('site.title.mainTitle')}`
+      title: `${this.$t('site.title.membersPageTitle')} | ${this.$t('site.title.mainTitle')}`
     }
   },
   data () {
     return {
       members: [],
-      loadingMembers: true,
-      loading1: false,
-      options1: [],
-      model14: [],
-      loading2: false,
-      options2: [],
-      placeholder: '',
-      billsTabSelected: true,
+      memberIds: [],
+      page: 0,
+      pageSize: 10,
+      membersTabSelected: true,
       insightTabSelected: false,
+      filterLoading: false,
+      filterData: {},
       bannerBackground,
       bannerMembers,
       bannerStyle: `background-image: url("${bannerBackground}"); background-size: cover;`
@@ -62,13 +98,76 @@ export default {
   },
 
   methods: {
-    selectTab ({ bills, insight }) {
-      this.billsTabSelected = bills
+    selectTab ({ members, insight }) {
+      this.membersTabSelected = members
       this.insightTabSelected = insight
+    },
+    resetPage () {
+      if (this.$refs.infiniteLoading) {
+        this.$refs.infiniteLoading.stateChanger.reset()
+      }
+      this.members = []
+      this.memberIds = []
+      this.page = 0
+    },
+    prefetchMemberIds () {
+      return this.$apollo.query({
+        query: MembersPrefetchQuery,
+        variables: { lang: this.locale, congress: this.congress }
+      })
+    },
+    fetchMembers (ids) {
+      return this.$apollo.query({
+        query: MembersQuery,
+        variables: { lang: this.locale, ids: ids }
+      })
+    },
+    getCurrentPageItems () {
+      return this.memberIds.filter((id, index) => index >= this.page * this.pageSize && index < (this.page + 1) * this.pageSize)
+    },
+    async moreItems ($state) {
+      // make sure memberIds is fetched
+      if (!this.memberIds.length) {
+        try {
+          let result = await this.prefetchMemberIds()
+          this.memberIds = result.data.members[0].prefetchIds
+        } catch (error) {
+          console.log('no data :(', error)
+        }
+      }
+
+      const items = this.getCurrentPageItems()
+
+      if (items.length > 0) {
+        this.fetchMembers(items)
+          .then(({ data }) => {
+            this.filterLoading = false
+            const membersMap = _.keyBy(data.members, 'id')
+            const members = items.map(id => membersMap[id])
+            this.members = [...this.members, ...members]
+            this.page++
+            $state.loaded()
+            console.log('BBBBB', data.members)
+          })
+          .catch(error => {
+            console.log('get members error', error)
+            $state.complete()
+          })
+      } else {
+        $state.complete()
+      }
+    },
+    filterBills (filterData) {
+      this.filterLoading = true
+      this.resetPage()
+      this.filterData = filterData
+      console.log('filterData', filterData.congressTo)
     }
   },
   computed: {
     locale () {
+      // when locale changes, reset the current page
+      this.resetPage()
       return this.$store.state.locale
     },
     isPhone () {
@@ -76,27 +175,37 @@ export default {
     },
     isTablet () {
       return this.$store.getters.isTablet
+    },
+    congress () {
+      let congress = []
+      if (this.filterData.congressFrom && this.filterData.congressTo) {
+        for (var i = this.filterData.congressFrom; i <= this.filterData.congressTo; i++) {
+          congress.push(i)
+        }
+      } else {
+        congress.push(this.$store.state.currentCongress)
+      }
+      return congress
     }
   },
   apollo: {
-    // members: {
-    //   fetchPolicy: 'cache-and-network',
-    //   query: allMembersQuery,
-    //   variables () {
-    //     return { lang: this.locale }
-    //   },
-    //   watchLoading (isLoading, countModifier) {
-    //     this.loadingMembers = isLoading
-    //   }
-    // }
+    categories: {
+      query: allCategoriesQuery,
+      fetchPolicy: 'cache-and-network',
+      variables () {
+        return { lang: this.locale }
+      }
+    }
   },
   components: {
-    MemberTable,
+    InfiniteLoading,
+    MemberSearchResultCard,
     Spinner,
     TabButton
   }
 }
 </script>
+
 <style scoped lang="scss">
 @import 'assets/css/app';
 @import 'assets/css/colors';
@@ -171,11 +280,27 @@ export default {
   }
 }
 
-.table-section {
-  background-color: #f8f8f9;
+.members-section {
   padding: 40px 0;
 
-  .table-section-wrapper {
+  .members-section-wrapper {
+    @extend .pageWrapper-large;
+  }
+}
+
+.filters {
+  padding-right: 40px;
+  margin-bottom: 20px;
+
+  &.mobile {
+    padding-right: 0px;
+  }
+}
+
+.insights-section {
+  padding: 40px 0;
+
+  .insights-section-wrapper {
     @extend .pageWrapper-large;
   }
 }

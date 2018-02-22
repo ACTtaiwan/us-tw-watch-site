@@ -1,52 +1,45 @@
 <template>
-  <div class="bill-card" :class="{ phone: this.isPhone }">
-    <div class="bill-meta">
-      <span class="bill-code">{{ bill.billCode}}</span>
-      <span class="bill-type">{{ this.billType }}</span>
+  <div class="member-card" :class="{ phone: this.isPhone }">
+    <div class="member-meta">
+      <span class="member-meta-info">{{ memberAreaCode }}</span>
+      <span class="member-meta-info">{{ member.party}}</span>
     </div>
-    <router-link :to="path(this, `/bills/${bill.id}`)">
-      <h1 class="bill-title">{{ bill.title | truncate(160) }}</h1>
-    </router-link>
-    <div class="bill-info">
+    <div class="member-profile">
+      <img class="avatar" :class="avatarClass" :src="avatarSource" :style="avatarStyle" />
+      <div class="member-name-title">
+        <router-link :to="path(this, `/members/${member.id}`)">
+          <h1 class="member-name">{{ member.title }} {{ member.person.firstname }} {{ member.person.middlename }} {{ member.person.lastname }}</h1>
+        </router-link>
+        <p class="area">{{ this.memberTitle }} </p>
+      </div>
+    </div>
+
+    <div class="member-info">
       <Row>
-        <Col :span="24" class="bill-card-info-block">
-          <!-- Sponsor -->
-          <div class="bill-sponsor">
-            <img class="avatar" :class="avatarClass" :src="avatarSource" :style="avatarStyle" />
-            <p class="name">{{ bill.sponsor.title }} {{ bill.sponsor.person.firstname }} {{ bill.sponsor.person.lastname }}</p>
-            <p class="area">{{ this.memberArea }} </p>
-          </div>
+        <Col :span="this.isDesktop ? 6 : 12" class="member-card-info-block">
+          <!-- Sponsored -->
+          <span class="label">Sponsored bills</span>
+          <p class="value">{{ billIdSponsored }}</p>
         </Col>
-        <Col :span="this.isDesktop ? 6 : 12" class="bill-card-info-block">
-          <!-- Congress -->
-          <span class="label">Congress</span>
-          <p class="value">{{ bill.congress }}th</p>
+        <Col :span="this.isDesktop ? 6 : 12" class="member-card-info-block">
+          <!-- Cosponsored -->
+          <span class="label">Cosponsored bills</span>
+          <p class="value">{{ billIdCosponsored }}</p>
         </Col>
-        <Col :span="this.isDesktop ? 6 : 12" class="bill-card-info-block">
-          <!-- Introduced Date -->
-          <span class="label">Introduced</span>
-          <p class="value">{{ bill.introducedDate | localTime }}</p>
+        <Col :span="this.isDesktop ? 6 : 12" class="member-card-info-block">
+          <!-- Social media -->
+          <span class="label">Social media</span>
+          <!-- <p class="value">{{ bill.cosponsors ? bill.cosponsors.length : 0 }}</p> -->
         </Col>
-        <Col :span="this.isDesktop ? 6 : 12" class="bill-card-info-block">
-          <!-- Cosponsors -->
-          <span class="label">Cosponsors</span>
-          <p class="value">{{ bill.cosponsors ? bill.cosponsors.length : 0 }}</p>
-        </Col>
-        <Col :span="this.isDesktop ? 6 : 12" class="bill-card-info-block">
-          <!-- Categories -->
-          <span class="label">Categories</span>
-          <div v-if="bill.categories">
+        <Col :span="this.isDesktop ? 6 : 12" class="member-card-info-block">
+          <!-- Website -->
+          <span class="label">Website</span>
+          <!-- <div v-if="bill.categories">
             <span class="value bill-category" v-for="category in bill.categories" :key="category.id">
               <Icon type="social-codepen-outline"></Icon>
             </span>
           </div>
-          <span v-else class="value">none</span>
-        </Col>
-        <Col :span="24" class="bill-card-info-block">
-          <!-- Tracker -->
-          <span class="label">Status</span>
-           <p class="value">{{ billLatestAction | trimConGovAction }}</p>
-          <BillTracker class="tracker" :steps="bill.trackers" :progress="billProgress"></BillTracker>
+          <span v-else class="value">none</span> -->
         </Col>
       </Row>
     </div>
@@ -55,7 +48,7 @@
         <TwButton class="social-button" icon="android-bookmark" type="icon" style="light"></TwButton>
         <TwButton class="social-button" icon="android-share" type="icon" style="light"></TwButton>
       </div>
-      <router-link :to="path(this, `/bills/${bill.id}`)">
+      <router-link :to="path(this, `/members/${member.id}`)">
         <TwButton label="More"></TwButton>
       </router-link>
     </div>
@@ -64,20 +57,39 @@
 <script>
 import { path } from '@/plugins/locale'
 import defaultAvatar from '~/assets/img/tw-logo-color.png'
-import BillTracker from '~/components/BillTracker'
 import TwButton from '~/components/TwButton'
+// Queries
+import RolesQuery from '~/apollo/queries/MemberLandingPage/Roles'
 
 export default {
   props: {
-    bill: {
+    member: {
       type: Object,
       required: true
     }
   },
   data () {
     return {
-      size: 40
+      size: 50,
+      billIdCosponsored: 0,
+      billIdSponsored: 0
     }
+  },
+  mounted () {
+    this.fetchMemberRoles({ personIds: [this.member.person.id] })
+      .then(result => {
+        this.billIdCosponsored = result.data.members.reduce((accumulator, member) => {
+          const billNum = member.billIdCosponsored ? member.billIdCosponsored.length : 0
+          return accumulator + billNum
+        }, 0)
+        this.billIdSponsored = result.data.members.reduce((accumulator, member) => {
+          const billNum = member.billIdSponsored ? member.billIdSponsored.length : 0
+          return accumulator + billNum
+        }, 0)
+      })
+      .catch(error => {
+        console.log('get all roles data error -->', error)
+      })
   },
   computed: {
     isDesktop () {
@@ -87,8 +99,8 @@ export default {
       return this.$store.getters.isPhone
     },
     avatarSource () {
-      const pictures = this.bill.sponsor.person.profilePictures
-      return pictures.tiny ? pictures.tiny : defaultAvatar
+      const pictures = this.member.person.profilePictures
+      return pictures && pictures.tiny ? pictures.tiny : defaultAvatar
     },
     avatarStyle () {
       return `
@@ -99,7 +111,7 @@ export default {
     },
     avatarClass () {
       let color = ''
-      switch (this.bill.sponsor.party) {
+      switch (this.member.party) {
         case 'Republican':
           color = 'red'
           break
@@ -112,11 +124,18 @@ export default {
       }
       return color
     },
-    memberArea () {
-      if (this.bill.sponsor.district) {
-        return `, ${this.bill.sponsor.state}-${this.bill.sponsor.district}`
+    memberAreaCode () {
+      if (this.member.district) {
+        return `${this.member.state}-${this.member.district}`
       } else {
-        return `, ${this.bill.sponsor.state}`
+        return `${this.member.state}`
+      }
+    },
+    memberTitle () {
+      if (this.member.district) {
+        return `${this.member.titleLong} for ${this.member.state}'s ${this.member.district}th district`
+      } else {
+        return `${this.member.titleLong} for ${this.member.state}`
       }
     },
     billType () {
@@ -155,10 +174,15 @@ export default {
     }
   },
   methods: {
-    path
+    path,
+    fetchMemberRoles ({ personIds }) {
+      return this.$apollo.query({
+        query: RolesQuery,
+        variables: { lang: this.locale, personIds }
+      })
+    }
   },
   components: {
-    BillTracker,
     TwButton
   }
 }
@@ -169,17 +193,17 @@ export default {
 @import 'assets/css/typography';
 @import 'assets/css/colors';
 
-.bill-card {
+.member-card {
   @extend .card;
   margin-bottom: 20px;
 }
 
-.bill-meta {
+.member-meta {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
 
-  .bill-code {
+  .member-meta-info {
     font-size: 1em;
     font-weight: $twSemiBold;
     color: $twGrayLight;
@@ -188,30 +212,12 @@ export default {
     padding: 1px 8px;
     margin-right: 5px;
   }
-  .bill-type {
-    font-size: 1em;
-    font-weight: $twSemiBold;
-    color: $twGrayLight;
-    background: $twGrayLighter;
-    border-radius: 10px;
-    padding: 1px 8px;
-  }
 }
 
-.bill-title {
-  font-size: 1.4em;
-  color: $twGrayDark;
-  font-weight: $twSemiBold;
-  margin-bottom: 20px;
-
-  &:hover {
-    color: $twIndigo;
-  }
-}
-
-.bill-sponsor {
+.member-profile {
   display: flex;
-  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 
   .avatar {
     border-radius: 50%;
@@ -232,24 +238,20 @@ export default {
     }
   }
 
-  .name {
-    font-size: 1em;
-    color: $twGrayDark;
-    // font-weight: $twSemiBold;
-  }
+  .member-name-title {
+    .member-name {
+      font-size: 1.4em;
+      color: $twGrayDark;
+      font-weight: $twSemiBold;
 
-  .area {
-    font-size: 1em;
-    color: $twGrayDark;
-    // font-weight: $twSemiBold;
+      &:hover {
+        color: $twIndigo;
+      }
+    }
   }
 }
 
-.tracker {
-  margin-top: 10px;
-}
-
-.bill-card-info-block {
+.member-card-info-block {
   @extend .card-info-block;
 }
 

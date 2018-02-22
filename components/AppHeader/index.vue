@@ -14,11 +14,11 @@
                 {{ $t('site.menu.billItemText') }}
               </MenuItem>
             </router-link>
-            <router-link class="menu-item" :class="{'menu-item-selected': activeMenuItem === 'votes'}" :to="path(this, '/votes')">
+            <!-- <router-link class="menu-item" :class="{'menu-item-selected': activeMenuItem === 'votes'}" :to="path(this, '/votes')">
               <MenuItem name="votes">
                 {{ $t('site.menu.votesItemText') }}
               </MenuItem>
-            </router-link>
+            </router-link> -->
             <router-link class="menu-item" :class="{'menu-item-selected': activeMenuItem === 'members'}" :to="path(this, '/members')">
               <MenuItem name="members">
                 {{ $t('site.menu.congressMemberItemText') }}

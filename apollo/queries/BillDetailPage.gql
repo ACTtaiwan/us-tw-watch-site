@@ -40,6 +40,9 @@ query BillDetailPageQuery($lang: String, $ids: [ID]) {
         id
         lastname
         firstname
+        profilePictures {
+          tiny
+        }
       }
     }
     actions {

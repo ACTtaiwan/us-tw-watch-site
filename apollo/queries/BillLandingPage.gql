@@ -15,6 +15,9 @@ query BillsQuery($lang: String, $ids: [ID]) {
       chamber
       code
     }
+    cosponsors {
+      dateCosponsored
+    }
     sponsor {
       id
       party
@@ -25,6 +28,9 @@ query BillsQuery($lang: String, $ids: [ID]) {
         id
         lastname
         firstname
+        profilePictures {
+          tiny
+        }
       }
     }
     actions {

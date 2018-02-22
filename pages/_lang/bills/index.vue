@@ -45,7 +45,7 @@
       </div>
     </section>
     <!-- Insights -->
-    <div v-if="this.insightTabSelected" class="insights-section">
+    <section v-if="this.insightTabSelected" class="insights-section">
       <div class="insights-section-wrapper">
         <Row :gutter="20">
           <Col :span="this.isTablet || this.isPhone ? 24 : 12">
@@ -56,23 +56,23 @@
           </Col>
         </Row>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 <script>
+// Packages
 import _ from 'lodash'
 import InfiniteLoading from 'vue-infinite-loading/src/components/InfiniteLoading.vue'
-
+// Images
 import bannerBackground from '~/assets/img/banner.png'
 import bannerBills from '~/assets/img/banner-bills.png'
-
+// Components
 import BillSearchResultCard from '~/components/BillSearchResultCard'
 import TabButton from '~/components/TabButton'
 import Spinner from '~/components/Spinner'
 import BillsFilters from '~/components/BillsFilters'
 import BillCountCategoryByCongressCard from '~/components/Analytics/BillCountCategoryByCongressCard'
 import BillCountCongressByCategoryCard from '~/components/Analytics/BillCountCongressByCategoryCard'
-
 // Queries
 import prefetchBillsQuery from '~/apollo/queries/prefetchBills'
 import billsQuery from '~/apollo/queries/BillLandingPage'

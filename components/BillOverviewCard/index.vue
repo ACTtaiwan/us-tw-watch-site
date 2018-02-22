@@ -6,7 +6,7 @@
         <!-- Sponsor -->
         <span class="label">Sponsor</span>
         <div class="bill-sponsor">
-          <img class="avatar" :src="defaultAvatar" :style="avatarStyle" />
+          <img class="avatar" :class="avatarClass" :src="avatarSource" :style="avatarStyle" />
           <p class="name">{{ bill.sponsor.title }} {{ bill.sponsor.person.firstname }} {{ bill.sponsor.person.lastname }}</p>
           <p class="area">{{ this.memberArea }} </p>
         </div>
@@ -49,7 +49,7 @@
 
 <script>
 import BillTracker from '~/components/BillTracker'
-import defaultAvatar from '~/assets/img/defaultAvatar.jpeg'
+import defaultAvatar from '~/assets/img/tw-logo-color.png'
 
 export default {
   props: {
@@ -60,7 +60,6 @@ export default {
   },
   data () {
     return {
-      defaultAvatar,
       avatarSize: 40
     }
   },
@@ -78,12 +77,31 @@ export default {
         height: ${this.size}px;
       `
     },
+    avatarSource () {
+      const pictures = this.bill.sponsor.person.profilePictures
+      return pictures && pictures.tiny ? pictures.tiny : defaultAvatar
+    },
     avatarStyle () {
       return `
         object-fit: cover;
         width: ${this.avatarSize}px;
         height: ${this.avatarSize}px;
       `
+    },
+    avatarClass () {
+      let color = ''
+      switch (this.bill.sponsor.party) {
+        case 'Republican':
+          color = 'red'
+          break
+        case 'Democrat':
+          color = 'blue'
+          break
+        default:
+          color = 'gray'
+          break
+      }
+      return color
     },
     memberArea () {
       if (this.bill.sponsor.district) {
@@ -149,8 +167,21 @@ export default {
 
   .avatar {
     border-radius: 50%;
-    border: 2px solid $twBlue;
+    border-style: solid;
+    border-width: 3px;
     margin-right: 10px;
+
+    &.red {
+      border-color: $twRed;
+    }
+
+    &.blue {
+      border-color: $twBlue;
+    }
+
+    &.gray {
+      border-color: $twGrayLight;
+    }
   }
 
   .name {
