@@ -29,7 +29,7 @@
           <Col :span="this.isTablet || this.isPhone ? 24 : 18" class="list" :class="{ mobile: this.isTablet || this.isPhone, phone: this.isPhone }">
             <Row>
               <Col span="24" v-for="member in members" :key="member.id">
-                <MemberSearchResultCard :member="member" />
+                <MemberSearchResultCard :member="member" :states="states" />
               </Col>
             </Row>
             <InfiniteLoading ref="infiniteLoading" @infinite="moreItems">
@@ -73,7 +73,7 @@ import Spinner from '~/components/Spinner'
 // Queries
 import MembersPrefetchQuery from '~/apollo/queries/MemberLandingPage/MembersPrefetch'
 import MembersQuery from '~/apollo/queries/MemberLandingPage/Members'
-import allCategoriesQuery from '~/apollo/queries/allCategories'
+import StateListQuery from '~/apollo/queries/StateList'
 
 export default {
   head () {
@@ -189,11 +189,14 @@ export default {
     }
   },
   apollo: {
-    categories: {
-      query: allCategoriesQuery,
+    states: {
+      query: StateListQuery,
       fetchPolicy: 'cache-and-network',
       variables () {
-        return { lang: this.locale }
+        return { lang: this.locale, stateList: true }
+      },
+      update (data) {
+        return JSON.parse(data.maps[0].states)
       }
     }
   },

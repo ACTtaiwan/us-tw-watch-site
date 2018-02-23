@@ -1,0 +1,5 @@
+query CdMapQuery($stateList: Boolean, $lang: String) {
+  maps(stateList: $stateList, lang: $lang) {
+    states
+  }
+}

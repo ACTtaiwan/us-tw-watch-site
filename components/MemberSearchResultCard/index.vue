@@ -66,6 +66,10 @@ export default {
     member: {
       type: Object,
       required: true
+    },
+    states: {
+      type: Object,
+      required: false
     }
   },
   data () {
@@ -92,6 +96,9 @@ export default {
       })
   },
   computed: {
+    locale () {
+      return this.$store.state.locale
+    },
     isDesktop () {
       return this.$store.getters.isDesktop
     },
@@ -132,10 +139,13 @@ export default {
       }
     },
     memberTitle () {
+      const lang = { 'en-us': 'en', 'zh-tw': 'zh' }[this.$store.state.locale]
+
+      if (!this.states) return ''
       if (this.member.district) {
-        return `${this.member.titleLong} for ${this.member.state}'s ${this.member.district}th district`
+        return `${this.member.titleLong} for ${this.states[this.member.state][lang]}'s ${this.member.district}th district`
       } else {
-        return `${this.member.titleLong} for ${this.member.state}`
+        return `${this.member.titleLong} for ${this.states[this.member.state][lang]}`
       }
     },
     billType () {
