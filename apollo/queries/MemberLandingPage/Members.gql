@@ -25,6 +25,7 @@ query MembersQuery($lang: String, $ids: [ID]) {
     state
     title
     titleLong
+    website
     billIdCosponsored
   }
 }

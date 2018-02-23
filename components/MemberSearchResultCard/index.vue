@@ -16,30 +16,29 @@
 
     <div class="member-info">
       <Row>
-        <Col :span="this.isDesktop ? 6 : 12" class="member-card-info-block">
+        <Col :span="this.isDesktop ? 8 : 12" class="member-card-info-block">
           <!-- Sponsored -->
           <span class="label">Sponsored bills</span>
           <p class="value">{{ billIdSponsored }}</p>
         </Col>
-        <Col :span="this.isDesktop ? 6 : 12" class="member-card-info-block">
+        <Col :span="this.isDesktop ? 8 : 12" class="member-card-info-block">
           <!-- Cosponsored -->
           <span class="label">Cosponsored bills</span>
           <p class="value">{{ billIdCosponsored }}</p>
         </Col>
         <Col :span="this.isDesktop ? 6 : 12" class="member-card-info-block">
-          <!-- Social media -->
-          <span class="label">Social media</span>
-          <!-- <p class="value">{{ bill.cosponsors ? bill.cosponsors.length : 0 }}</p> -->
+          <!-- Social Media -->
+          <span class="label">Social Media</span>
+          <p class="value">
+            <Icon type="social-twitter-outline" class="social" :size="17"></Icon>
+            <Icon type="social-facebook-outline" class="social" :size="17"></Icon>
+            <img :src="cspan" width="42px"/>
+          </p>
         </Col>
         <Col :span="this.isDesktop ? 6 : 12" class="member-card-info-block">
           <!-- Website -->
           <span class="label">Website</span>
-          <!-- <div v-if="bill.categories">
-            <span class="value bill-category" v-for="category in bill.categories" :key="category.id">
-              <Icon type="social-codepen-outline"></Icon>
-            </span>
-          </div>
-          <span v-else class="value">none</span> -->
+          <a class="value" :href="member.website" target="_blank">{{ member.website }}</a>
         </Col>
       </Row>
     </div>
@@ -57,6 +56,7 @@
 <script>
 import { path } from '@/plugins/locale'
 import defaultAvatar from '~/assets/img/tw-logo-color.png'
+import cspan from '~/assets/img/cspan.svg'
 import TwButton from '~/components/TwButton'
 // Queries
 import RolesQuery from '~/apollo/queries/MemberLandingPage/Roles'
@@ -74,6 +74,7 @@ export default {
   },
   data () {
     return {
+      cspan,
       size: 50,
       billIdCosponsored: 0,
       billIdSponsored: 0
@@ -263,6 +264,10 @@ export default {
 
 .member-card-info-block {
   @extend .card-info-block;
+
+  .social {
+    margin-right: 12px;
+  }
 }
 
 .bill-footer {
