@@ -30,9 +30,9 @@
           <!-- Social Media -->
           <span class="label">Social Media</span>
           <p class="value">
-            <Icon type="social-twitter-outline" class="social" :size="17"></Icon>
-            <Icon type="social-facebook-outline" class="social" :size="17"></Icon>
-            <img :src="cspan" width="42px"/>
+            <img class="social twitter" :src="twitterLogo"/>
+            <img class="social facebook" :src="facebookLogo"/>
+            <img class="social cspan" :src="cspanLogo"/>
           </p>
         </Col>
         <Col :span="this.isDesktop ? 6 : 12" class="member-card-info-block">
@@ -56,7 +56,9 @@
 <script>
 import { path } from '@/plugins/locale'
 import defaultAvatar from '~/assets/img/tw-logo-color.png'
-import cspan from '~/assets/img/cspan.svg'
+import cspanLogo from '~/assets/img/cspan_logo.svg'
+import facebookLogo from '~/assets/img/facebook_logo.svg'
+import twitterLogo from '~/assets/img/twitter_logo.svg'
 import TwButton from '~/components/TwButton'
 // Queries
 import RolesQuery from '~/apollo/queries/MemberLandingPage/Roles'
@@ -74,7 +76,9 @@ export default {
   },
   data () {
     return {
-      cspan,
+      twitterLogo,
+      facebookLogo,
+      cspanLogo,
       size: 50,
       billIdCosponsored: 0,
       billIdSponsored: 0
@@ -266,7 +270,20 @@ export default {
   @extend .card-info-block;
 
   .social {
-    margin-right: 12px;
+    margin-right: 10px;
+  }
+
+  .twitter {
+    width: 18px;
+  }
+
+  .facebook {
+    width: 16px;
+  }
+
+  .cspan {
+    width: 44px;
+    margin-bottom: 2px;
   }
 }
 
