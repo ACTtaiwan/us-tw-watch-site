@@ -8,7 +8,7 @@
           <!-- Main -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 18"  class="main-block" :class="{ mobile: this.isTablet || this.isPhone }">
             <!-- Overview -->
-            <MemberOverviewCard
+            <MemberOverviewCard v-if="this.ppMember"
               :ppMember="this.ppMember"
               :members="this.members"
               :memberTitle="memberTitle"
@@ -51,7 +51,7 @@ export default {
     return {
       sponsoredBills: null,
       cosponsoredBills: null,
-      ppMember: {}
+      ppMember: null
     }
   },
   computed: {
