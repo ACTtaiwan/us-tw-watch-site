@@ -39,6 +39,9 @@
               <span slot="no-more">
                 no more data 😂
               </span>
+              <span slot="no-results">
+                no results 😭
+              </span>
             </InfiniteLoading>
           </Col>
         </Row>
@@ -127,8 +130,6 @@ export default {
       return this.memberIds.filter((id, index) => index >= this.page * this.pageSize && index < (this.page + 1) * this.pageSize)
     },
     async moreItems ($state) {
-      console.log('fetch more!!!!!')
-
       // make sure memberIds is fetched
       if (!this.memberIds.length) {
         try {
@@ -153,10 +154,12 @@ export default {
             console.log('BBBBB', data.members)
           })
           .catch(error => {
+            this.filterLoading = false
             console.log('get members error', error)
             $state.complete()
           })
       } else {
+        this.filterLoading = false
         $state.complete()
       }
     },
