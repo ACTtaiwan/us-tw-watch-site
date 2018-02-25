@@ -23,7 +23,7 @@
         <Row>
           <!-- Filters -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="filters" :class="{ mobile: this.isTablet || this.isPhone }">
-            <!-- <BillsFilters :categories="categories" @on-filter="filterBills" :loading="filterLoading"></BillsFilters> -->
+            <MembersFilters :states="states" @on-filter="filterMembers" :loading="filterLoading"></MembersFilters>
           </Col>
           <!-- List -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 18" class="list" :class="{ mobile: this.isTablet || this.isPhone, phone: this.isPhone }">
@@ -70,6 +70,7 @@ import bannerMembers from '~/assets/img/banner-members.png'
 import MemberSearchResultCard from '~/components/MemberSearchResultCard'
 import TabButton from '~/components/TabButton'
 import Spinner from '~/components/Spinner'
+import MembersFilters from '~/components/MembersFilters'
 // Queries
 import MembersPrefetchQuery from '~/apollo/queries/MemberLandingPage/MembersPrefetch'
 import MembersQuery from '~/apollo/queries/MemberLandingPage/Members'
@@ -157,7 +158,7 @@ export default {
         $state.complete()
       }
     },
-    filterBills (filterData) {
+    filterMembers (filterData) {
       this.filterLoading = true
       this.resetPage()
       this.filterData = filterData
@@ -201,6 +202,7 @@ export default {
     }
   },
   components: {
+    MembersFilters,
     InfiniteLoading,
     MemberSearchResultCard,
     Spinner,

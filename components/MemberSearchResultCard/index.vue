@@ -26,7 +26,7 @@
           <span class="label">Cosponsored bills</span>
           <p class="value">{{ billIdCosponsored }}</p>
         </Col>
-        <Col :span="this.isDesktop ? 6 : 12" class="member-card-info-block">
+        <Col :span="this.isDesktop ? 8 : 12" class="member-card-info-block">
           <!-- Social Media -->
           <span class="label">Social Media</span>
           <p class="value">
@@ -35,10 +35,17 @@
             <img class="social cspan" :src="cspanLogo"/>
           </p>
         </Col>
-        <Col :span="this.isDesktop ? 6 : 12" class="member-card-info-block">
+        <Col :span="this.isDesktop ? 8 : 12" class="member-card-info-block">
           <!-- Website -->
           <span class="label">Website</span>
-          <a class="value" :href="member.website" target="_blank">{{ member.website }}</a>
+          <a class="value website" :href="member.website" target="_blank">{{ member.website }}</a>
+        </Col>
+        <Col :span="24" class="member-card-info-block" v-if="lastSupportBill">
+          <!-- Last Support Bill -->
+          <span class="label">Last support bill</span>
+          <p class="value">{{ lastSupportBill.bill.billCode }} - {{ lastSupportBill.bill.title | truncate(200) }}
+            <span class="support-bill">({{ lastSupportBill.role }} on <span class="date">{{ lastSupportBill.time | localTime }}</span>)</span>
+          </p>
         </Col>
       </Row>
     </div>
@@ -62,6 +69,7 @@ import twitterLogo from '~/assets/img/twitter_logo.svg'
 import TwButton from '~/components/TwButton'
 // Queries
 import RolesQuery from '~/apollo/queries/MemberLandingPage/Roles'
+import BillsQuery from '~/apollo/queries/MemberLandingPage/Bills'
 
 export default {
   props: {
@@ -81,20 +89,45 @@ export default {
       cspanLogo,
       size: 50,
       billIdCosponsored: 0,
-      billIdSponsored: 0
+      billIdSponsored: 0,
+      lastSupportBill: false
     }
   },
   mounted () {
-    this.fetchMemberRoles({ personIds: [this.member.person.id] })
+    const personId = this.member.person.id
+    this.fetchMemberRoles({ personIds: [personId] })
       .then(result => {
-        this.billIdCosponsored = result.data.members.reduce((accumulator, member) => {
-          const billNum = member.billIdCosponsored ? member.billIdCosponsored.length : 0
-          return accumulator + billNum
-        }, 0)
-        this.billIdSponsored = result.data.members.reduce((accumulator, member) => {
-          const billNum = member.billIdSponsored ? member.billIdSponsored.length : 0
-          return accumulator + billNum
-        }, 0)
+        let sponsored = []
+        let cosponsored = []
+
+        result.data.members.forEach(member => {
+          cosponsored = member.billIdCosponsored ? [...cosponsored, ...member.billIdCosponsored] : cosponsored
+          sponsored = member.billIdSponsored ? [...sponsored, ...member.billIdSponsored] : sponsored
+        })
+
+        this.billIdCosponsored = cosponsored.length
+        this.billIdSponsored = sponsored.length
+
+        return this.fetchBills([...cosponsored, ...sponsored])
+      })
+      .then(({ data }) => {
+        let lastSupportBill = { role: '', time: 0, bill: '' }
+
+        data.bills.forEach(bill => {
+          if (bill.sponsor.person.id === personId && Number(bill.introducedDate) > lastSupportBill.time) {
+            lastSupportBill.role = 'sponsored'
+            lastSupportBill.time = Number(bill.introducedDate)
+            lastSupportBill.bill = bill
+          }
+          bill.cosponsors.forEach(cosponsor => {
+            if (cosponsor.role.person.id === personId && Number(cosponsor.dateCosponsored) > lastSupportBill.time) {
+              lastSupportBill.role = 'cosponsored'
+              lastSupportBill.time = Number(cosponsor.dateCosponsored)
+              lastSupportBill.bill = bill
+            }
+          })
+        })
+        this.lastSupportBill = lastSupportBill
       })
       .catch(error => {
         console.log('get all roles data error -->', error)
@@ -195,6 +228,12 @@ export default {
         query: RolesQuery,
         variables: { lang: this.locale, personIds }
       })
+    },
+    fetchBills (ids) {
+      return this.$apollo.query({
+        query: BillsQuery,
+        variables: { lang: this.locale, ids: ids }
+      })
     }
   },
   components: {
@@ -284,6 +323,16 @@ export default {
   .cspan {
     width: 44px;
     margin-bottom: 2px;
+  }
+
+  .website {
+    &:hover {
+      color: $twIndigo;
+    }
+  }
+
+  .support-bill {
+    color: $twGrayLight;
   }
 }
 

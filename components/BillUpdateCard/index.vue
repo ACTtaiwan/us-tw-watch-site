@@ -11,7 +11,7 @@
     <div class="bill-info">
       <div class="bill-card-info-block">
         <span class="label">Latest Action</span>
-          <p class="value">{{ billLatestAction | trimConGovAction | truncate(200) }}</p>
+        <p class="value">{{ billLatestAction | trimConGovAction | truncate(200) }}</p>
         <BillTracker class="tracker" :steps="bill.trackers" :progress="billProgress"></BillTracker>
       </div>
     </div>

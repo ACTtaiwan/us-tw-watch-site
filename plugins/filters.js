@@ -34,7 +34,7 @@ export function trimConGovAction (description) {
 export function truncate (text, length = 30) {
   const clamp = '...'
 
-  if (text.length <= length) return text
+  if (!text || text.length <= length) return text
 
   var tcText = text.slice(0, length - clamp.length)
   var last = tcText.length - 1
