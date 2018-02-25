@@ -40,7 +40,7 @@
 import Logo from './Logo'
 import UserInfo from './UserInfo'
 import LangSwitch from './LangSwitch'
-import { path } from '@/plugins/locale'
+import { path } from '@/plugins/utils'
 
 export default {
   props: {},

@@ -15,6 +15,7 @@
               :sponsoredBills="sponsoredBills"
               :cosponsoredBills="cosponsoredBills">
             </MemberOverviewCard>
+            <Spinner v-else />
             <!-- Summary -->
             <!-- <BillSummaryCard v-if="this.bill.summary.paragraphs" :bill="this.bill"></BillSummaryCard> -->
             <!-- Support Map -->
@@ -34,12 +35,13 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { get } from '@/plugins/utils'
 // Components
 import MemberOverviewCard from '~/components/MemberOverviewCard'
 import BillSummaryCard from '~/components/BillSummaryCard'
 import BillSponsorsMapCard from '~/components/BillSponsorsMapCard'
 import BillActionsCard from '~/components/BillActionsCard'
+import Spinner from '~/components/Spinner'
 
 // Queries
 import StateListQuery from '~/apollo/queries/StateList'
@@ -101,11 +103,7 @@ export default {
       this.cosponsoredBills = cosponsoredBills.data.bills
     },
     async fetchProPublicaMember (bioGuideId) {
-      const response = await axios({
-        method: 'GET',
-        url: `https://api.propublica.org/congress/v1/members/${bioGuideId}.json`,
-        headers: { 'X-API-Key': 'syre14A0ZO81RzG81d5L4PbjkjF4Uu0aFWSjfNqf' }
-      })
+      const response = await get(`https://api.propublica.org/congress/v1/members/${bioGuideId}.json`)
       this.ppMember = response.data.results[0]
     },
     fetchBills (ids) {
@@ -170,7 +168,8 @@ export default {
     MemberOverviewCard,
     BillSummaryCard,
     BillSponsorsMapCard,
-    BillActionsCard
+    BillActionsCard,
+    Spinner
   }
 }
 </script>

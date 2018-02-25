@@ -62,7 +62,7 @@
   </div>
 </template>
 <script>
-import { path } from '@/plugins/locale'
+import { path } from '@/plugins/utils'
 import defaultAvatar from '~/assets/img/tw-logo-color.png'
 import BillTracker from '~/components/BillTracker'
 import TwButton from '~/components/TwButton'

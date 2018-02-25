@@ -25,7 +25,7 @@
             </div>
           </Poptip>
         </div>
-        <BeatLoader v-else />
+        <BeatLoader v-else class="stats-loader" />
       </Col>
       <Col :span="this.isDesktop ? 6 : 12" class="overview-card-info-block">
         <!-- Vote with party -->
@@ -39,25 +39,27 @@
             </div>
           </Poptip>
         </div>
-        <BeatLoader v-else />
+        <BeatLoader v-else class="stats-loader"/>
       </Col>
       <Col :span="this.isDesktop ? 6 : 12" class="overview-card-info-block">
         <!-- Sponsored -->
         <span class="label">Sponsored bills</span>
         <p class="value stats" v-if="sponsoredBills">{{ sponsoredBills.length }}</p>
-        <BeatLoader v-else />
+        <BeatLoader v-else class="stats-loader" />
       </Col>
       <Col :span="this.isDesktop ? 6 : 12" class="overview-card-info-block">
         <!-- Cosponsored -->
         <span class="label">Cosponsored bills</span>
         <p class="value stats" v-if="cosponsoredBills">{{ cosponsoredBills.length }}</p>
-        <BeatLoader v-else />
+        <BeatLoader v-else class="stats-loader" />
       </Col>
-      <Col :span="this.isDesktop ? 12 : 24" class="overview-card-info-block">
+      <Col :span="24" class="overview-card-info-block">
         <!-- Committees -->
-        <span class="label">Committees</span>
+        <span class="label">Current Committees</span>
         <!-- <DoughnutChart class="chart" :class="{ isLoading: this.isChartLoading }" ref="chart" :chartData="this.chartData" :options="this.chartOptions"></DoughnutChart> -->
-        <a class="value" v-for="committee in committees" :key="committee.code">{{ committee.name }}</a>
+        <p class="value" v-for="committee in ppMember.roles[0].committees" :key="committee.code">{{ committee.name }}
+          <span class="note">({{ committee.title }})</span>
+        </p>
       </Col>
     </Row>
   </div>
@@ -103,6 +105,7 @@ export default {
       }
     }
   },
+  asyncComputed: {},
   computed: {
     isDesktop () {
       return this.$store.getters.isDesktop
@@ -147,30 +150,16 @@ export default {
       }
     },
     terms () {
-      return this.ppMember.roles ? this.ppMember.roles.map(role => role.congress) : null
+      return this.ppMember.roles.map(role => role.congress)
     },
     isInCongress () {
       let isInCongress = false
-      if (this.ppMember && this.ppMember.roles) {
-        this.ppMember.roles.forEach(role => {
-          if (Number(role.congress) === this.currentCongress) {
-            isInCongress = true
-          }
-        })
-      }
+      this.ppMember.roles.forEach(role => {
+        if (Number(role.congress) === this.currentCongress) {
+          isInCongress = true
+        }
+      })
       return isInCongress
-    },
-    committees () {
-      let committees = []
-      // let result = this.ppMember.roles[0].committees.map(committee => {
-      //   const response = await axios({
-      //     method: 'GET',
-      //     url: `https://api.propublica.org/congress/v1/members/${bioGuideId}.json`,
-      //     headers: { 'X-API-Key': 'syre14A0ZO81RzG81d5L4PbjkjF4Uu0aFWSjfNqf' }
-      //   })
-      // })
-      // console.log('ooo', result)
-      return committees
     },
     chartData () {
       // const labels = this.categories.map(category => category.name.replace(' & ', '&').split(' '))
@@ -276,6 +265,14 @@ export default {
 
   .stats {
     font-size: 1.6em;
+  }
+
+  .stats-loader {
+    font-size: 1.6em;
+  }
+
+  .note {
+    color: $twGrayLight;
   }
 }
 

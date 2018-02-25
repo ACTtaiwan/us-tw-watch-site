@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import { path } from '@/plugins/locale'
+import { path } from '@/plugins/utils'
 
 export default {
   props: ['title', 'sponsors'],

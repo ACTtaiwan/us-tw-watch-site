@@ -7,7 +7,7 @@
 
 <script>
 import logo from '~/assets/img/tw-logo-color.png'
-import { path } from '@/plugins/locale'
+import { path } from '@/plugins/utils'
 
 export default {
   data () {

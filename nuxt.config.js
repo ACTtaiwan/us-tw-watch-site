@@ -45,7 +45,7 @@ module.exports = {
       default: '~/apollo/client-configs/default.js'
     }
   },
-  plugins: ['~/plugins/locale', '~/plugins/i18n.js', '~/plugins/filters', '~/plugins/iview', '~/plugins/vue-chartjs'],
+  plugins: ['~/plugins/utils', '~/plugins/i18n.js', '~/plugins/filters', '~/plugins/iview', '~/plugins/vue-chartjs', '~/plugins/asyncComputed'],
   build: {
     vendor: ['vue-i18n', 'd3', 'topojson'],
     // run ESLINT on save

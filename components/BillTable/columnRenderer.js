@@ -1,4 +1,4 @@
-import { path } from '@/plugins/locale'
+import { path } from '@/plugins/utils'
 
 const columnRenderer = vm => {
   return [

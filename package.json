@@ -38,6 +38,7 @@
     "moment": "^2.20.1",
     "nuxt": "^1.0.0-rc11",
     "topojson": "v1.6.27",
+    "vue-async-computed": "^3.3.1",
     "vue-chartjs": "^3.2.1",
     "vue-i18n": "^7.3.4",
     "vue-infinite-loading": "^2.2.3"
