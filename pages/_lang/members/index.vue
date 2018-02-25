@@ -134,6 +134,7 @@ export default {
       if (!this.memberIds.length) {
         try {
           let result = await this.prefetchMemberIds()
+          console.log('prefetch ids: ', result)
           this.memberIds = result.data.members[0].prefetchIds
         } catch (error) {
           console.log('no data :(', error)

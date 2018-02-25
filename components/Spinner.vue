@@ -20,9 +20,11 @@ export default {
   }
 }
 </script>
+
 <style lang="scss" scoped>
 $offset: 187;
 $duration: 1.4s;
+
 .spinner {
   animation: circle-rotator $duration linear infinite;
   * {

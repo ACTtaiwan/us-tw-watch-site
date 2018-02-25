@@ -42,7 +42,7 @@
         </Col>
         <Col :span="24" class="member-card-info-block" v-if="lastSupportBill.time">
           <!-- Last Support Bill -->
-          <span class="label">Last support bill</span>
+          <span class="label">Last supported bill</span>
           <p class="value">{{ lastSupportBill.bill.billCode }} - {{ lastSupportBill.bill.title | truncate(200) }}
             <span class="support-bill">({{ lastSupportBill.role }} on <span class="date">{{ lastSupportBill.time | localTime }}</span>)</span>
           </p>
@@ -61,6 +61,7 @@
   </div>
 </template>
 <script>
+import _ from 'lodash'
 import { path } from '@/plugins/locale'
 import defaultAvatar from '~/assets/img/tw-logo-color.png'
 import cspanLogo from '~/assets/img/cspan_logo.svg'
@@ -99,8 +100,16 @@ export default {
       .then(result => {
         let sponsored = []
         let cosponsored = []
+        let latestBills = []
+        let latestCongress = 0
 
         result.data.members.forEach(member => {
+          const maxCongressNumber = _.max(member.congressNumbers)
+          if (maxCongressNumber > latestCongress && (member.billIdCosponsored || member.billIdSponsored)) {
+            latestCongress = _.max(member.congressNumbers)
+            latestBills = member.billIdCosponsored ? [...latestBills, ...member.billIdCosponsored] : latestBills
+            latestBills = member.billIdSponsored ? [...latestBills, ...member.billIdSponsored] : latestBills
+          }
           cosponsored = member.billIdCosponsored ? [...cosponsored, ...member.billIdCosponsored] : cosponsored
           sponsored = member.billIdSponsored ? [...sponsored, ...member.billIdSponsored] : sponsored
         })
@@ -108,7 +117,7 @@ export default {
         this.billIdCosponsored = cosponsored.length
         this.billIdSponsored = sponsored.length
 
-        return this.fetchBills([...cosponsored, ...sponsored])
+        return this.fetchBills(latestBills)
       })
       .then(({ data }) => {
         let lastSupportBill = { role: '', time: null, bill: '' }
@@ -186,40 +195,6 @@ export default {
       } else {
         return `${this.member.titleLong} for ${this.states[this.member.state][lang]}`
       }
-    },
-    billType () {
-      return {
-        s: 'Bill',
-        hr: 'Bill',
-        hconres: 'Concurrent Resolution',
-        sconres: 'Concurrent Resolution',
-        hres: 'Resolution',
-        sres: 'Resolution',
-        hjres: 'Joint Resolution',
-        sjres: 'Joint Resolution'
-      }[this.bill.billType.code]
-    },
-    billProgress () {
-      const totalSteps = this.bill.trackers.length
-      let currentStep
-      this.bill.trackers.forEach((step, index) => {
-        if (step.selected) currentStep = index + 1
-      })
-      return currentStep / totalSteps * 100
-    },
-    billLatestAction () {
-      let latestActionTime = 0
-      let latestAction = ''
-      this.bill.actions.forEach(action => {
-        if (action.datetime > latestActionTime) {
-          latestAction = action.description
-          latestActionTime = action.datetime
-        }
-      })
-      // strip html tags from the string
-      var dom = document.createElement('DIV')
-      dom.innerHTML = latestAction
-      return dom.textContent || dom.innerText || ''
     }
   },
   methods: {
@@ -310,7 +285,7 @@ export default {
   @extend .card-info-block;
 
   .social {
-    margin-right: 10px;
+    margin-right: 12px;
   }
 
   .twitter {

@@ -3,5 +3,6 @@ query RolesQuery($lang: String, $personIds: [ID]) {
     id
     billIdCosponsored
     billIdSponsored
+    congressNumbers
   }
 }
