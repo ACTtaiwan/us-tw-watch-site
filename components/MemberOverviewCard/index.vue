@@ -14,9 +14,17 @@
     </div>
     <Row>
       <Col :span="this.isDesktop ? 6 : 12" class="overview-card-info-block">
-        <!-- Sponsored -->
-        <span class="label">In office</span>
-        <p class="value" v-if="sponsoredBills">{{ sponsoredBills.length }}</p>
+        <!-- In Congress -->
+        <span class="label">In Congress</span>
+        <div v-if="inCongress" class="in-congress-block">
+          <p class="value">{{ inCongress.length }}</p>
+          <Poptip class="poptip" trigger="hover" placement="right">
+            <Icon type="information-circled"></Icon>
+            <div class="in-congress-content" slot="content">
+              <p v-for="congress in inCongress" :key="congress">{{ congress }}th</p>
+            </div>
+          </Poptip>
+        </div>
         <BeatLoader v-else />
       </Col>
       <Col :span="this.isDesktop ? 6 : 12" class="overview-card-info-block">
@@ -128,6 +136,9 @@ export default {
         return `${this.members[0].state}`
       }
     },
+    inCongress () {
+      return this.ppMember.roles ? this.ppMember.roles.map(role => role.congress) : null
+    },
     chartData () {
       // const labels = this.categories.map(category => category.name.replace(' & ', '&').split(' '))
       // const data = this.categories.map(category => this.billIdsByCategory[category.id])
@@ -220,6 +231,22 @@ export default {
   @extend .card-info-block;
 }
 
+.in-congress-block {
+  display: flex;
+
+  .poptip {
+    margin-left: 5px;
+    color: $twGrayLight;
+    cursor: pointer;
+  }
+
+  .in-congress-content {
+    padding: 10px;
+    color: $twGrayDark;
+    font-size: 14px;
+  }
+}
+
 .chart {
   max-height: 140px;
   position: relative;
@@ -228,46 +255,5 @@ export default {
   &.isLoading {
     opacity: 0.5;
   }
-}
-
-.bill-sponsor {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-
-  .avatar {
-    border-radius: 50%;
-    border-style: solid;
-    border-width: 3px;
-    margin-right: 10px;
-
-    &.red {
-      border-color: $twRed;
-    }
-
-    &.blue {
-      border-color: $twBlue;
-    }
-
-    &.gray {
-      border-color: $twGrayLight;
-    }
-  }
-
-  .name {
-    font-size: 1em;
-    color: $twGrayDark;
-    // font-weight: $twSemiBold;
-  }
-
-  .area {
-    font-size: 1em;
-    color: $twGrayDark;
-    // font-weight: $twSemiBold;
-  }
-}
-
-.bill-tracker {
-  margin-top: 20px;
 }
 </style>
