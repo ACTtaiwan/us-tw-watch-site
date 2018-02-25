@@ -3,6 +3,7 @@
     <div class="member-meta">
       <span class="member-meta-info">{{ memberAreaCode }}</span>
       <span class="member-meta-info">{{ members[0].party}}</span>
+      <sapn v-if="isInCongress" class="member-meta-info success">In Congress</sapn>
     </div>
     <div class="member-profile">
       <img class="avatar" :class="avatarClass" :src="avatarSource" :style="avatarStyle" />
@@ -14,17 +15,23 @@
     </div>
     <Row>
       <Col :span="this.isDesktop ? 6 : 12" class="overview-card-info-block">
-        <!-- In Congress -->
-        <span class="label">In Congress</span>
-        <div v-if="inCongress" class="in-congress-block">
-          <p class="value">{{ inCongress.length }}</p>
+        <!-- Terms -->
+        <span class="label">Terms</span>
+        <div v-if="terms" class="terms-block">
+          <p class="value">{{ terms.length }}</p>
           <Poptip class="poptip" trigger="hover" placement="right">
             <Icon type="information-circled"></Icon>
-            <div class="in-congress-content" slot="content">
-              <p v-for="congress in inCongress" :key="congress">{{ congress }}th</p>
+            <div class="terms-content" slot="content">
+              <p v-for="term in terms" :key="term">{{ term }}th</p>
             </div>
           </Poptip>
         </div>
+        <BeatLoader v-else />
+      </Col>
+      <Col :span="this.isDesktop ? 6 : 12" class="overview-card-info-block">
+        <!-- Committee -->
+        <span class="label">Committee</span>
+        <p class="value" v-if="sponsoredBills">{{ sponsoredBills.length }}</p>
         <BeatLoader v-else />
       </Col>
       <Col :span="this.isDesktop ? 6 : 12" class="overview-card-info-block">
@@ -103,6 +110,9 @@ export default {
         height: ${this.size}px;
       `
     },
+    currentCongress () {
+      return this.$store.state.currentCongress
+    },
     avatarSource () {
       const pictures = this.members[0].person.profilePictures
       return pictures && pictures.medium ? pictures.medium : defaultAvatar
@@ -136,8 +146,19 @@ export default {
         return `${this.members[0].state}`
       }
     },
-    inCongress () {
+    terms () {
       return this.ppMember.roles ? this.ppMember.roles.map(role => role.congress) : null
+    },
+    isInCongress () {
+      let isInCongress = false
+      if (this.ppMember && this.ppMember.roles) {
+        this.ppMember.roles.forEach(role => {
+          if (Number(role.congress) === this.currentCongress) {
+            isInCongress = true
+          }
+        })
+      }
+      return isInCongress
     },
     chartData () {
       // const labels = this.categories.map(category => category.name.replace(' & ', '&').split(' '))
@@ -191,6 +212,11 @@ export default {
     border-radius: 10px;
     padding: 1px 8px;
     margin-right: 5px;
+
+    &.success {
+      color: $twWhite;
+      background: $twGreen;
+    }
   }
 }
 
@@ -231,7 +257,7 @@ export default {
   @extend .card-info-block;
 }
 
-.in-congress-block {
+.terms-block {
   display: flex;
 
   .poptip {
@@ -240,7 +266,7 @@ export default {
     cursor: pointer;
   }
 
-  .in-congress-content {
+  .terms-content {
     padding: 10px;
     color: $twGrayDark;
     font-size: 14px;
