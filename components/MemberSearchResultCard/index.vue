@@ -7,7 +7,7 @@
     <div class="member-profile">
       <img class="avatar" :class="avatarClass" :src="avatarSource" :style="avatarStyle" />
       <div class="member-name-title">
-        <router-link :to="path(this, `/members/${member.id}`)">
+        <router-link :to="path(this, `/members/${member.person.id}`)">
           <h1 class="member-name">{{ member.title }} {{ member.person.firstname }} {{ member.person.middlename }} {{ member.person.lastname }}</h1>
         </router-link>
         <p class="area">{{ this.memberTitle }} </p>
@@ -40,7 +40,7 @@
           <span class="label">Website</span>
           <a class="value website" :href="member.website" target="_blank">{{ member.website }}</a>
         </Col>
-        <Col :span="24" class="member-card-info-block" v-if="lastSupportBill">
+        <Col :span="24" class="member-card-info-block" v-if="lastSupportBill.time">
           <!-- Last Support Bill -->
           <span class="label">Last support bill</span>
           <p class="value">{{ lastSupportBill.bill.billCode }} - {{ lastSupportBill.bill.title | truncate(200) }}
@@ -54,7 +54,7 @@
         <TwButton class="social-button" icon="android-bookmark" type="icon" style="light"></TwButton>
         <TwButton class="social-button" icon="android-share" type="icon" style="light"></TwButton>
       </div>
-      <router-link :to="path(this, `/members/${member.id}`)">
+      <router-link :to="path(this, `/members/${member.person.id}`)">
         <TwButton label="More"></TwButton>
       </router-link>
     </div>
@@ -111,7 +111,7 @@ export default {
         return this.fetchBills([...cosponsored, ...sponsored])
       })
       .then(({ data }) => {
-        let lastSupportBill = { role: '', time: 0, bill: '' }
+        let lastSupportBill = { role: '', time: null, bill: '' }
 
         data.bills.forEach(bill => {
           if (bill.sponsor.person.id === personId && Number(bill.introducedDate) > lastSupportBill.time) {
@@ -127,6 +127,7 @@ export default {
             }
           })
         })
+
         this.lastSupportBill = lastSupportBill
       })
       .catch(error => {

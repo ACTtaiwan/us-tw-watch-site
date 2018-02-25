@@ -3,7 +3,7 @@
     <Col :span="this.isTablet ? 12 : 24" class="filter-block" :class="{ tablet: this.isTablet }">
       <h2 class="filter-title">State</h2>
       <Select multiple v-model="filterData.selectedStates" @on-change="onStateSelect" placeholder="select member states">
-        <Option v-for="state in stateList" :value="state.en" :key="state.code">{{ state.en }}</Option>
+        <Option v-for="state in stateList" :value="state.code" :key="state.code">{{ locale === 'en-us' ? state.en : state.zh }}</Option>
       </Select>
     </Col>
     <Col :span="24" class="filter-block">
@@ -13,7 +13,6 @@
 </template>
 
 <script>
-// import _ from 'lodash'
 import TwButton from '~/components/TwButton'
 
 export default {
@@ -28,16 +27,9 @@ export default {
     }
   },
   data () {
-    console.log(this.loading)
     return {
       filterData: {
-        congressFrom: 115,
-        congressTo: 115,
-        selectedStates: [],
-        selectedSponsorId: ''
-      },
-      errors: {
-        congressError: ''
+        selectedStates: []
       }
     }
   },
@@ -45,17 +37,8 @@ export default {
     locale () {
       return this.$store.state.locale
     },
-    isPhone () {
-      return this.$store.getters.isPhone
-    },
     isTablet () {
       return this.$store.getters.isTablet
-    },
-    congressMax () {
-      return this.$store.state.currentCongress
-    },
-    congressMin () {
-      return this.$store.state.earliestCongress
     },
     stateList () {
       let stateList = []
@@ -66,39 +49,15 @@ export default {
           zh: this.states[code].zh
         }))
       }
-      console.log('QQQQQ', stateList)
       return stateList
     }
   },
   methods: {
     onStateSelect (selected) {
-      console.log('select category', this.filterData.selectedStates)
-    },
-    onSponsorSelect () {},
-    getSponsorSuggestList () {},
-    clearErros () {
-      for (var property in this.errors) {
-        this.errors[property] = ''
-      }
+      console.log('select state', this.filterData.selectedStates)
     },
     submit () {
-      let ok = true
-      this.clearErros()
-
-      // check congress
-      if (!this.filterData.congressTo || !this.filterData.congressFrom) {
-        this.errors.congressError = 'Please specify the range for congress'
-        ok = false
-      }
-
-      if (this.filterData.congressTo < this.filterData.congressFrom) {
-        this.errors.congressError = 'Initial congress is greater than ending congress'
-        ok = false
-      }
-
-      if (ok) {
-        this.$emit('on-filter', this.filterData)
-      }
+      this.$emit('on-filter', this.filterData)
     }
   },
   components: {
@@ -152,28 +111,10 @@ export default {
 }
 </style>
 
-<style scoped lang="scss">
-@import 'assets/css/app';
-@import 'assets/css/colors';
-@import 'assets/css/typography';
-
-.formErrorBlock {
-  margin-top: 5px;
-  color: $twRed;
-  font-weight: $twRegular;
-  font-size: 12px;
-}
-</style>
-
 <style lang="scss">
 @import 'assets/css/app';
 @import 'assets/css/colors';
 @import 'assets/css/typography';
-
-.ivu-input-number-input {
-  font-weight: $twMedium;
-  color: $twGrayDark;
-}
 
 .ivu-select-placeholder {
   font-weight: $twMedium !important;

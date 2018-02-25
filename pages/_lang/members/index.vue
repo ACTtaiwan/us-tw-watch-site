@@ -114,7 +114,7 @@ export default {
     prefetchMemberIds () {
       return this.$apollo.query({
         query: MembersPrefetchQuery,
-        variables: { lang: this.locale, congress: this.congress }
+        variables: { lang: this.locale, congress: this.congress, states: this.selectedStates }
       })
     },
     fetchMembers (ids) {
@@ -127,6 +127,8 @@ export default {
       return this.memberIds.filter((id, index) => index >= this.page * this.pageSize && index < (this.page + 1) * this.pageSize)
     },
     async moreItems ($state) {
+      console.log('fetch more!!!!!')
+
       // make sure memberIds is fetched
       if (!this.memberIds.length) {
         try {
@@ -162,7 +164,7 @@ export default {
       this.filterLoading = true
       this.resetPage()
       this.filterData = filterData
-      console.log('filterData', filterData.congressTo)
+      console.log('filterData', filterData.selectedStates)
     }
   },
   computed: {
@@ -178,15 +180,10 @@ export default {
       return this.$store.getters.isTablet
     },
     congress () {
-      let congress = []
-      if (this.filterData.congressFrom && this.filterData.congressTo) {
-        for (var i = this.filterData.congressFrom; i <= this.filterData.congressTo; i++) {
-          congress.push(i)
-        }
-      } else {
-        congress.push(this.$store.state.currentCongress)
-      }
-      return congress
+      return [this.$store.state.currentCongress]
+    },
+    selectedStates () {
+      return this.filterData.selectedStates ? this.filterData.selectedStates : []
     }
   },
   apollo: {
