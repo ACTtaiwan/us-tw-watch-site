@@ -1,5 +1,6 @@
 <template>
   <div class="overview-card" :class="{ phone: this.isPhone }">
+    <h1 class="overview-card-title">Overview</h1>
     <div class="member-meta">
       <span class="member-meta-info">{{ memberAreaCode }}</span>
       <span class="member-meta-info">{{ members[0].party}}</span>
@@ -63,7 +64,6 @@
       </Col>
     </Row>
   </div>
-
 </template>
 
 <script>
@@ -192,11 +192,7 @@ export default {
   margin-bottom: 20px;
 
   .overview-card-title {
-    font-weight: $twSemiBold;
-    color: $twGrayDark;
-    font-size: 1.4em;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
+    @extend .card-title;
   }
 }
 

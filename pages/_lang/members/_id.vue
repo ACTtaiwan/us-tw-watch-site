@@ -16,14 +16,16 @@
               :cosponsoredBills="cosponsoredBills">
             </MemberOverviewCard>
             <Spinner v-else />
-            <!-- Summary -->
-            <!-- <BillSummaryCard v-if="this.bill.summary.paragraphs" :bill="this.bill"></BillSummaryCard> -->
+
             <!-- Support Map -->
             <!-- <BillSponsorsMapCard :bill="this.bill"></BillSponsorsMapCard> -->
           </Col>
           <!-- Summary -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="detail-block">
-            <!-- <BillActionsCard :bill="this.bill"></BillActionsCard> -->
+            <MemberContactCard v-if="this.ppMember"
+              :member="this.ppMember">
+            </MemberContactCard>
+            <Spinner v-else />
           </Col>
         </Row>
       </div>
@@ -38,9 +40,8 @@
 import { get } from '@/plugins/utils'
 // Components
 import MemberOverviewCard from '~/components/MemberOverviewCard'
-import BillSummaryCard from '~/components/BillSummaryCard'
 import BillSponsorsMapCard from '~/components/BillSponsorsMapCard'
-import BillActionsCard from '~/components/BillActionsCard'
+import MemberContactCard from '~/components/MemberDetailPage/MemberContactCard'
 import Spinner from '~/components/Spinner'
 
 // Queries
@@ -133,8 +134,10 @@ export default {
         return data.members
       },
       result (result) {
-        this.fetchSupportBills(result.data.members)
-        this.fetchProPublicaMember(result.data.members[0].person.bioGuideId)
+        if (!result.loading) {
+          this.fetchSupportBills(result.data.members)
+          this.fetchProPublicaMember(result.data.members[0].person.bioGuideId)
+        }
       }
     },
     states: {
@@ -166,9 +169,8 @@ export default {
   },
   components: {
     MemberOverviewCard,
-    BillSummaryCard,
     BillSponsorsMapCard,
-    BillActionsCard,
+    MemberContactCard,
     Spinner
   }
 }

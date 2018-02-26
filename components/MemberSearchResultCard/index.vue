@@ -38,7 +38,7 @@
         <Col :span="this.isDesktop ? 8 : 12" class="member-card-info-block">
           <!-- Website -->
           <span class="label">Website</span>
-          <a class="value website" :href="member.website" target="_blank">{{ member.website }}</a>
+          <a class="value link" :href="member.website" target="_blank">{{ member.website }}</a>
         </Col>
         <Col :span="24" class="member-card-info-block" v-if="lastSupportBill.time">
           <!-- Last Support Bill -->
@@ -301,10 +301,9 @@ export default {
     margin-bottom: 2px;
   }
 
-  .website {
-    &:hover {
-      color: $twIndigo;
-    }
+  .link {
+    color: $twIndigo;
+    text-decoration: underline;
   }
 
   .support-bill {
