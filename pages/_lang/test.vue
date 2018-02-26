@@ -1,12 +1,18 @@
 <template>
   <div>
     <h1>This is the test page</h1>
+    <FbShareButton />
   </div>
 </template>
 
 <script>
+import FbShareButton from '~/components/FbShareButton'
+
 export default {
-  data () {}
+  data () {},
+  components: {
+    FbShareButton
+  }
 }
 </script>
 
