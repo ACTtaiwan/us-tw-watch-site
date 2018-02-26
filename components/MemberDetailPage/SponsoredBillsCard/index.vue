@@ -229,8 +229,8 @@ export default {
   }
 
   .sponsored-bills-card-body {
-    max-height: 700px;
-    overflow: scroll;
+    // max-height: 700px;
+    // overflow: scroll;
   }
 }
 

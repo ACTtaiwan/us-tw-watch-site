@@ -37,8 +37,8 @@ export default {
       categoryColorMap: {
         // International Participation
         '6ca1b2d8-9c15-471d-b680-8a5a3712b052': {
-          color: 'rgba(34,139,230, 1)',
-          colorLight: 'rgba(34,139,230, 0.3)'
+          color: 'rgba(54, 162, 235, 1)',
+          colorLight: 'rgba(54, 162, 235, 0.3)'
         },
         // Trade & Economy
         'ea86372b-69e5-4102-a087-2e61b73a129a': {
@@ -52,18 +52,18 @@ export default {
         },
         // Arms Sales & Transfer
         '88911008-392b-4934-b05e-516e3574f4bb': {
-          color: 'rgba(250,82,82,1)',
-          colorLight: 'rgba(250,82,82,0.3)'
+          color: 'rgba(255, 205, 86, 1)',
+          colorLight: 'rgba(255, 205, 86, 0.3)'
         },
         // U.S.-Taiwan Relations
         'a3442a55-c606-42bb-914f-27b876df26c7': {
-          color: 'rgba(230,73,128,1)',
-          colorLight: 'rgba(230,73,128,0.3)'
+          color: 'rgba(255, 99, 132, 1)',
+          colorLight: 'rgba(238, 110, 133, 0.3)'
         },
         // Appropriation
         '37504cbc-ac87-4146-996a-e2f036f716b8': {
-          color: 'rgba(121,80,242,1)',
-          colorLight: 'rgba(121,80,242,0.3)'
+          color: 'rgba(255, 159, 64, 1)',
+          colorLight: 'rgba(255, 159, 64, 0.3)'
         },
         // Taiwan's Defense
         '4fcc4e02-4cb5-4248-9be2-70f4c244d8b6': {
@@ -72,13 +72,13 @@ export default {
         },
         // Taiwan Relations Act
         'a054cf33-978d-4d74-adeb-a4114da4f96f': {
-          color: 'rgba(76,110,245,1)',
-          colorLight: 'rgba(76,110,245,0.3)'
+          color: 'rgba(153, 102, 255, 1)',
+          colorLight: 'rgba(153, 102, 255, 0.3)'
         },
         // Other
         '51bd7b94-a7f7-4417-bff6-f41ac6b00c08': {
-          color: 'rgba(134,142,150,1)',
-          colorLight: 'rgba(134,142,150,0.3)'
+          color: 'rgba(201, 203, 207, 1)',
+          colorLight: 'rgba(201, 203, 207, 0.3)'
         }
       },
       chartOptions: {
