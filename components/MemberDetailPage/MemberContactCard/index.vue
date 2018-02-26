@@ -18,17 +18,17 @@
             <a v-if="cspanLink" :href="cspanLink" target="_blank"><img class="social cspan" :src="cspanLogo"/></a>
           </p>
         </Col>
-        <Col :span="24" class="contact-card-info-block">
+        <Col v-if="member.roles[0].phone" :span="24" class="contact-card-info-block">
           <!-- Phone -->
           <span class="label">Phone</span>
           <p class="value" >{{ member.roles[0].phone }}</p>
         </Col>
-        <Col :span="24" class="contact-card-info-block">
+        <Col v-if="member.roles[0].fax" :span="24" class="contact-card-info-block">
           <!-- Fax -->
           <span class="label">Fax</span>
           <p class="value" >{{ member.roles[0].fax }}</p>
         </Col>
-        <Col :span="24" class="contact-card-info-block">
+        <Col v-if="member.roles[0].office" :span="24" class="contact-card-info-block">
           <!-- Office -->
           <span class="label">Office</span>
           <p class="value" >{{ member.roles[0].office }}</p>

@@ -59,7 +59,7 @@
         <span class="label">Current Committees</span>
         <!-- <DoughnutChart class="chart" :class="{ isLoading: this.isChartLoading }" ref="chart" :chartData="this.chartData" :options="this.chartOptions"></DoughnutChart> -->
         <p class="value" v-for="committee in ppMember.roles[0].committees" :key="committee.code">{{ committee.name }}
-          <span class="note">({{ committee.title }})</span>
+          <span class="note">({{ committee.title.toLowerCase() }})</span>
         </p>
       </Col>
     </Row>
@@ -155,7 +155,9 @@ export default {
     isInCongress () {
       let isInCongress = false
       this.ppMember.roles.forEach(role => {
-        if (Number(role.congress) === this.currentCongress) {
+        const roleEndDate = new Date(role.end_date).getTime()
+        const now = new Date().getTime()
+        if (roleEndDate >= now) {
           isInCongress = true
         }
       })

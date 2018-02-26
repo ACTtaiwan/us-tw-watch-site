@@ -25,7 +25,6 @@
             <MemberContactCard v-if="this.ppMember"
               :member="this.ppMember">
             </MemberContactCard>
-            <Spinner v-else />
           </Col>
         </Row>
       </div>
