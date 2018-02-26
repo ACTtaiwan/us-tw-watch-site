@@ -48,10 +48,24 @@ export function truncate (text, length = 30) {
   return tcText + ' ' + clamp
 }
 
+export function billType (code) {
+  return {
+    s: 'Bill',
+    hr: 'Bill',
+    hconres: 'Concurrent Resolution',
+    sconres: 'Concurrent Resolution',
+    hres: 'Resolution',
+    sres: 'Resolution',
+    hjres: 'Joint Resolution',
+    sjres: 'Joint Resolution'
+  }[code]
+}
+
 const filters = {
   localTime,
   trimConGovAction,
-  truncate
+  truncate,
+  billType
 }
 export default filters
 

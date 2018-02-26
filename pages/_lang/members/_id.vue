@@ -16,15 +16,22 @@
               :cosponsoredBills="cosponsoredBills">
             </MemberOverviewCard>
             <Spinner v-else />
-
-            <!-- Support Map -->
-            <!-- <BillSponsorsMapCard :bill="this.bill"></BillSponsorsMapCard> -->
+            <!-- Sponsored Bills -->
+            <SponsoredBillsCard v-if="this.ppMember && sponsoredBills && sponsoredBills.length > 0"
+              :member="this.ppMember"
+              :sponsoredBills="sponsoredBills">
+            </SponsoredBillsCard>
+            <!-- Cosponsored Bills -->
+            <CosponsoredBillsCard v-if="this.ppMember && cosponsoredBills && cosponsoredBills.length > 0"
+              :member="this.ppMember"
+              :cosponsoredBills="cosponsoredBills">
+            </CosponsoredBillsCard>
           </Col>
           <!-- Summary -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="detail-block">
-            <MemberContactCard v-if="this.ppMember"
+            <ContactCard v-if="this.ppMember"
               :member="this.ppMember">
-            </MemberContactCard>
+            </ContactCard>
           </Col>
         </Row>
       </div>
@@ -36,11 +43,14 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import { get } from '@/plugins/utils'
 // Components
 import MemberOverviewCard from '~/components/MemberOverviewCard'
 import BillSponsorsMapCard from '~/components/BillSponsorsMapCard'
-import MemberContactCard from '~/components/MemberDetailPage/MemberContactCard'
+import ContactCard from '~/components/MemberDetailPage/ContactCard'
+import SponsoredBillsCard from '~/components/MemberDetailPage/SponsoredBillsCard'
+import CosponsoredBillsCard from '~/components/MemberDetailPage/CosponsoredBillsCard'
 import Spinner from '~/components/Spinner'
 
 // Queries
@@ -99,8 +109,8 @@ export default {
       const sponsoredBills = await this.fetchBills(sponsored)
       const cosponsoredBills = await this.fetchBills(cosponsored)
 
-      this.sponsoredBills = sponsoredBills.data.bills
-      this.cosponsoredBills = cosponsoredBills.data.bills
+      this.sponsoredBills = _.orderBy(sponsoredBills.data.bills, bill => Number(bill.introducedDate), ['desc'])
+      this.cosponsoredBills = _.orderBy(cosponsoredBills.data.bills, bill => Number(bill.introducedDate), ['desc'])
     },
     async fetchProPublicaMember (bioGuideId) {
       const response = await get(`https://api.propublica.org/congress/v1/members/${bioGuideId}.json`)
@@ -169,7 +179,9 @@ export default {
   components: {
     MemberOverviewCard,
     BillSponsorsMapCard,
-    MemberContactCard,
+    ContactCard,
+    SponsoredBillsCard,
+    CosponsoredBillsCard,
     Spinner
   }
 }

@@ -19,7 +19,7 @@
         <span class="label">Terms</span>
         <div v-if="terms" class="poptip-block">
           <p class="value stats">{{ terms.length }}</p>
-          <Poptip class="poptip" trigger="hover" placement="right">
+          <Poptip class="poptip" :trigger="this.isPhone ? 'click' : 'hover'" placement="right">
             <Icon type="information-circled"></Icon>
             <div class="poptip-content" slot="content">
               <p v-for="term in terms" :key="term">{{ term }}th</p>
@@ -57,7 +57,6 @@
       <Col :span="24" class="overview-card-info-block">
         <!-- Committees -->
         <span class="label">Current Committees</span>
-        <!-- <DoughnutChart class="chart" :class="{ isLoading: this.isChartLoading }" ref="chart" :chartData="this.chartData" :options="this.chartOptions"></DoughnutChart> -->
         <p class="value" v-for="committee in ppMember.roles[0].committees" :key="committee.code">{{ committee.name }}
           <span class="note">({{ committee.title.toLowerCase() }})</span>
         </p>
@@ -95,14 +94,7 @@ export default {
   },
   data () {
     return {
-      avatarSize: 50,
-      chartOptions: {
-        legend: {
-          display: false
-        },
-        responsive: true,
-        maintainAspectRatio: false
-      }
+      avatarSize: 50
     }
   },
   asyncComputed: {},
@@ -162,20 +154,6 @@ export default {
         }
       })
       return isInCongress
-    },
-    chartData () {
-      // const labels = this.categories.map(category => category.name.replace(' & ', '&').split(' '))
-      // const data = this.categories.map(category => this.billIdsByCategory[category.id])
-      const dataSet = {
-        backgroundColor: ['#D46763', '#4792D5', '#333333', '#D46763', '#4792D5'],
-        borderColor: 'rgba(0, 51, 78, 1)',
-        borderWidth: 1,
-        data: [3, 5, 6, 3, 2]
-      }
-      return {
-        labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
-        datasets: [dataSet]
-      }
     }
   },
   components: {

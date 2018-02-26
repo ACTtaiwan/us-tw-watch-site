@@ -82,24 +82,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import 'assets/css/app';
-@import 'assets/css/typography';
-@import 'assets/css/colors';
-
-.ivu-timeline-item-content {
-  color: $twGrayDark;
-  font-size: 14px;
-
-  .time {
-    font-size: 13px;
-    font-weight: $twBold;
-    letter-spacing: 0.02em;
-    margin-bottom: 5px;
-  }
-}
-</style>
-
 <style scoped lang="scss">
 @import 'assets/css/app';
 @import 'assets/css/typography';
@@ -125,6 +107,8 @@ export default {
   .link {
     color: $twIndigo;
     text-decoration: underline;
+    word-wrap: break-word;
+    @extend .textFont;
   }
 
   .social {

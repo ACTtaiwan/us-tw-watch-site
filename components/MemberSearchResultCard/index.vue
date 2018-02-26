@@ -107,6 +107,7 @@ export default {
           const maxCongressNumber = _.max(member.congressNumbers)
           if (maxCongressNumber > latestCongress && (member.billIdCosponsored || member.billIdSponsored)) {
             latestCongress = _.max(member.congressNumbers)
+            latestBills = []
             latestBills = member.billIdCosponsored ? [...latestBills, ...member.billIdCosponsored] : latestBills
             latestBills = member.billIdSponsored ? [...latestBills, ...member.billIdSponsored] : latestBills
           }
