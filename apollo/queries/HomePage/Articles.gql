@@ -1,0 +1,10 @@
+query ArticlesQuery($lang: String) {
+  articles(lang: $lang) {
+    id
+    publishedAt
+    imageUrl
+    source
+    title
+    url
+  }
+}

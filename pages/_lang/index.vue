@@ -18,14 +18,14 @@
     </section>
 
     <!-- Bills Updates -->
-    <section class="bills-update section">
+    <section class="bills section">
       <div class="section-wrapper">
         <h1 class="section-title">Bill updates</h1>
         <div class="info-cards-section-wrapper">
           <Spinner v-if="isBillUpdateLoading" ></Spinner>
           <Row :gutter="30">
             <Col :span="isPhone ? 24 : isTablet ? 12 : 8" v-for="bill in bills" :key="bill.id">
-              <BillUpdateCard class="bill-update-card" :bill="bill" />
+              <BillCard class="bill-card" :bill="bill" />
             </Col>
           </Row>
         </div>
@@ -33,41 +33,14 @@
     </section>
 
     <!-- Articles -->
-    <section class="bills-update section">
+    <section class="articles section">
       <div class="section-wrapper">
         <h1 class="section-title">Articles</h1>
         <div class="info-cards-section-wrapper">
-          {{ this.locale }}
-          <Row :gutter="30" type="flex">
-            <Col style="margin-bottom: 30px;" :span="cardSpan" >
-              <Card >
-                <p slot="title">No border title</p>
-                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
-              </Card>
-            </Col>
-            <Col style="margin-bottom: 30px;" :span="cardSpan">
-              <Card >
-                <p slot="title">No border title</p>
-                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
-              </Card>
-            </Col>
-            <Col style="margin-bottom: 30px;" :span="cardSpan">
-              <Card >
-                <p slot="title">No border title</p>
-                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
-              </Card>
-            </Col>
-            <Col style="margin-bottom: 30px;" :span="cardSpan">
-              <Card >
-                <p slot="title">No border title</p>
-                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
-              </Card>
-            </Col>
-            <Col style="margin-bottom: 30px;" :span="cardSpan">
-              <Card >
-                <p slot="title">No border title</p>
-                <p>Content of no border type. Content of no border type. Content of no border type. Content of no border type. </p>
-              </Card>
+          <Spinner v-if="isArticleUpdateLoading" ></Spinner>
+          <Row :gutter="30">
+            <Col :span="isPhone ? 24 : isTablet ? 12 : 8" v-for="article in articles" :key="article.id">
+              <ArticleCard class="article-card" :article="article" />
             </Col>
           </Row>
         </div>
@@ -83,19 +56,22 @@ import congress from '~/assets/img/banner-home.png'
 import people from '~/assets/img/banner-people.png'
 
 import Spinner from '~/components/Spinner'
-import BillUpdateCard from '~/components/BillUpdateCard'
+import BillCard from '~/components/HomePage/BillCard'
+import ArticleCard from '~/components/HomePage/ArticleCard'
 
 import prefetchBillsQuery from '~/apollo/queries/prefetchBills'
 import billsQuery from '~/apollo/queries/BillUpdatePage'
+import ArticlesQuery from '~/apollo/queries/HomePage/Articles'
 
 export default {
   data () {
     return {
-      loading: 0,
       numberOfBillCards: 6,
       isBillUpdateLoading: true,
+      isArticleUpdateLoading: true,
       bills: [],
       billIds: [],
+      articles: [],
       congress,
       people,
       style: `background-image: url("${congress}"); background-size: cover;`
@@ -106,9 +82,6 @@ export default {
       title: this.$t('site.title.mainTitle'),
       meta: [{ hid: 'description', name: 'description', content: this.$t('site.description.mainDescription') }]
     }
-  },
-  mounted () {
-    // this.getUpdatedBills()
   },
   methods: {
     getLatestActionDate (actions) {
@@ -132,7 +105,6 @@ export default {
       if (this.billIds.length > 0) {
         this.fetchBills(this.billIds)
           .then(({ data }) => {
-            this.filterLoading = false
             const billsMap = _.keyBy(data.bills, 'id')
             this.bills = this.billIds
               .map(id => billsMap[id])
@@ -181,10 +153,28 @@ export default {
       result (data) {
         this.getUpdatedBills()
       }
+    },
+    articles: {
+      query: ArticlesQuery,
+      fetchPolicy: 'cache-and-network',
+      variables () {
+        return {
+          lang: this.locale
+        }
+      },
+      update (data) {
+        return _.orderBy(data.articles, article => parseInt(article.publishedAt), ['desc'])
+      },
+      result (result) {
+        if (!result.loading) {
+          this.isArticleUpdateLoading = false
+        }
+      }
     }
   },
   components: {
-    BillUpdateCard,
+    BillCard,
+    ArticleCard,
     Spinner
   }
 }
@@ -327,6 +317,10 @@ export default {
       font-weight: $twSemiBold;
       margin-bottom: 20px;
     }
+  }
+
+  &:last-child {
+    margin-bottom: 40px;
   }
 }
 </style>
