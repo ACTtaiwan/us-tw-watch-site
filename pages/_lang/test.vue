@@ -1,17 +1,21 @@
 <template>
   <div>
     <h1>This is the test page</h1>
-    <FbShareButton />
+    <FbShareWrapper url="https://www.google.com/">
+      <p>Hello</p>
+    </FbShareWrapper>
   </div>
 </template>
 
 <script>
-import FbShareButton from '~/components/FbShareButton'
+import FbShareWrapper from '~/components/FbShareWrapper'
 
 export default {
-  data () {},
+  data () {
+    return {}
+  },
   components: {
-    FbShareButton
+    FbShareWrapper
   }
 }
 </script>

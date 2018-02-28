@@ -18,7 +18,9 @@
     <div class="bill-footer">
       <div class="social">
         <TwButton class="social-button" icon="android-bookmark" type="icon" style="light"></TwButton>
-        <TwButton class="social-button" icon="android-share" type="icon" style="light"></TwButton>
+        <FbShareWrapper :url="path(this, `/bills/${bill.id}`)">
+          <TwButton class="social-button" icon="android-share" type="icon" style="light"></TwButton>
+        </FbShareWrapper>
       </div>
       <router-link :to="path(this, `/bills/${bill.id}`)">
         <TwButton label="More"></TwButton>
@@ -30,6 +32,7 @@
 import { path } from '@/plugins/utils'
 import BillTracker from '~/components/BillTracker'
 import TwButton from '~/components/TwButton'
+import FbShareWrapper from '~/components/FbShareWrapper'
 
 export default {
   props: {
@@ -91,7 +94,8 @@ export default {
   },
   components: {
     BillTracker,
-    TwButton
+    TwButton,
+    FbShareWrapper
   }
 }
 </script>
