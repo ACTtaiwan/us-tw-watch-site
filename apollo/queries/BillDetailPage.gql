@@ -24,6 +24,7 @@ query BillDetailPageQuery($lang: String, $ids: [ID]) {
     categories {
       id
       name
+      code
     }
     billType {
       id

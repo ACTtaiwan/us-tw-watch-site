@@ -36,7 +36,7 @@
           <!-- Categories -->
           <span class="label">Categories</span>
           <div v-if="bill.categories">
-            <Tooltip class="valu category" v-for="category in bill.categories" :key="category.id" :content="category.name">
+            <Tooltip class="value category" v-for="category in bill.categories" :key="category.id" :content="category.name">
               <img :src="categoryMap[category.code]"/>
             </Tooltip>
           </div>
@@ -84,7 +84,6 @@ export default {
   },
   data () {
     return {
-      catAppropriation,
       size: 40,
       categoryMap: {
         arm: catArms,

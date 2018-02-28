@@ -19,7 +19,7 @@
             <!-- Support Map -->
             <BillSponsorsMapCard :bill="this.bill"></BillSponsorsMapCard>
             <!-- Versions -->
-            <BillVersionsCard :bill="this.bill"></BillVersionsCard>
+            <BillVersionsCard v-if="this.bill.versions.length > 0" :bill="this.bill"></BillVersionsCard>
           </Col>
 
           <!-- Summary -->

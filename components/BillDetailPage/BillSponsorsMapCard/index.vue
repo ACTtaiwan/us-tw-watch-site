@@ -3,11 +3,16 @@
     <h1 class="sponsors-map-card-title">Sponsors Map</h1>
     <div class="sponsors-map-card-body">
       <div class="sponsors">
-        <Tag v-for="cosponsor in bill.cosponsors"
-          :key="cosponsor.role.id"
-          :name="cosponsor.role.id"
-          :color="{Republican: 'red', Democrat: 'blue'}[cosponsor.role.party]"
-          type="dot">{{ `${cosponsor.role.person.firstname} ${cosponsor.role.person.lastname} (${cosponsor.role.state})` }}</Tag>
+        <!-- {{cosponsor.role.person.id}} -->
+        <router-link v-for="cosponsor in bill.cosponsors" :to="path(getThis(), `/members/${cosponsor.role.person.id}`)">
+          <Tag :key="cosponsor.role.id"
+            :name="cosponsor.role.id"
+            :color="{Republican: 'red', Democrat: 'blue'}[cosponsor.role.party]"
+            type="dot">
+            {{ `${cosponsor.role.person.firstname} ${cosponsor.role.person.lastname} (${cosponsor.role.state})` }}
+          </Tag>
+        </router-link>
+
       </div>
       <Spinner v-if="!isMapDataLoaded"></Spinner>
       <SponsorsMap
@@ -23,6 +28,7 @@
 </template>
 
 <script>
+import { path } from '@/plugins/utils'
 import queryMapUtils from '~/apollo/queries/mapUtils'
 import queryCdMap from '~/apollo/queries/cdMap'
 import SponsorsMap from '~/components/SponsorsMap'
@@ -76,9 +82,7 @@ export default {
       const cosponsors = this.bill.cosponsors
       const hasCosponsors = cosponsors && cosponsors.length > 0
       const mainSponsorArray = [sponsor]
-      const sponsors = hasCosponsors
-        ? mainSponsorArray.concat(cosponsors.map(cosponsor => cosponsor.role))
-        : mainSponsorArray
+      const sponsors = hasCosponsors ? mainSponsorArray.concat(cosponsors.map(cosponsor => cosponsor.role)) : mainSponsorArray
       return sponsors
     }
   },
@@ -109,6 +113,12 @@ export default {
       }
     }
   },
+  methods: {
+    path,
+    getThis () {
+      return this
+    }
+  },
   components: {
     SponsorsMap,
     Spinner
@@ -124,6 +134,7 @@ export default {
 .ivu-tag-text {
   color: $twGrayDark;
   font-size: 14px;
+  font-weight: $twRegular;
 }
 </style>
 

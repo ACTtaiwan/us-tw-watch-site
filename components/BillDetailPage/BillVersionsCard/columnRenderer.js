@@ -6,7 +6,7 @@ const columnRenderer = vm => {
       title: 'Version',
       key: 'version',
       className: 'version-col table-col',
-      width: 220,
+      width: 200,
       render: (h, params) => {
         const versionName = params.row.name
         const dataObject = {

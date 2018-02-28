@@ -30,9 +30,12 @@
         <!-- Categories -->
         <span class="label">Categories</span>
         <div v-if="bill.categories">
-          <span class="value bill-category" v-for="category in bill.categories" :key="category.id">
+          <!-- <span class="value bill-category" v-for="category in bill.categories" :key="category.id">
             <Icon type="social-codepen-outline"></Icon>
-          </span>
+          </span> -->
+          <Tooltip class="value category" v-for="category in bill.categories" :key="category.id" :content="category.name">
+            <img :src="categoryMap[category.code]"/>
+          </Tooltip>
         </div>
         <span v-else class="value">none</span>
       </Col>
@@ -51,6 +54,14 @@
 import BillTracker from '~/components/BillTracker'
 import defaultAvatar from '~/assets/img/tw-logo-color.png'
 
+// categories icons
+import catAppropriation from '~/assets/img/cat-appropriation.svg'
+import catArms from '~/assets/img/cat-arms.svg'
+import catUsTw from '~/assets/img/cat-ustaiwan.svg'
+import catDemocracy from '~/assets/img/cat-democracy.svg'
+import catTrade from '~/assets/img/cat-trade.svg'
+import catInternational from '~/assets/img/cat-international.svg'
+
 export default {
   props: {
     bill: {
@@ -60,7 +71,18 @@ export default {
   },
   data () {
     return {
-      avatarSize: 40
+      avatarSize: 40,
+      categoryMap: {
+        arm: catArms,
+        int: catInternational,
+        trade: catTrade,
+        other: catAppropriation,
+        dem: catDemocracy,
+        ustw: catUsTw,
+        appn: catAppropriation,
+        def: catAppropriation,
+        tra: catAppropriation
+      }
     }
   },
   computed: {
@@ -158,6 +180,18 @@ export default {
 
 .overview-card-info-block {
   @extend .card-info-block;
+
+  .category {
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0px;
+    }
+
+    img {
+      height: 14px;
+    }
+  }
 }
 
 .bill-sponsor {
