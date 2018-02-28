@@ -1,7 +1,7 @@
 <template>
   <div class="bill-map" >
-    <div class="map" id="bills-map" />
-    <tooltip :title="tooltipTitle" :count="tooltipCount"/>
+    <div class="map" :id="mapId" />
+    <tooltip :title="tooltipTitle" :mapId="mapId" :count="tooltipCount"/>
   </div>
 </template>
 
@@ -15,7 +15,28 @@ export default {
   components: {
     tooltip
   },
-  props: ['bills', 'usMap', 'stateToFips', 'fipsToState'],
+  props: {
+    bills: {
+      type: Array,
+      required: true
+    },
+    mapId: {
+      type: String,
+      required: true
+    },
+    usMap: {
+      type: Object,
+      required: true
+    },
+    stateToFips: {
+      type: Object,
+      required: true
+    },
+    fipsToState: {
+      type: Object,
+      required: true
+    }
+  },
   data () {
     return {
       tooltipTitle: '',
@@ -43,7 +64,7 @@ export default {
         .on('zoom', this.zoomed)
 
       return d3
-        .select('#bills-map')
+        .select('#' + this.mapId)
         .classed('svg-container', true)
         .append('svg')
         .attr('viewBox', `0 0 ${this.defaultWidth} ${this.defaultHeight}`)
@@ -93,7 +114,6 @@ export default {
   watch: {
     bills () {
       this.redraw()
-      console.log('update!!!')
     }
   },
   methods: {
@@ -130,8 +150,6 @@ export default {
       return ('0' + value).slice(-2)
     },
     drawMap () {
-      console.log('hhhh', this.BillCountByState, this.maxCount, this.minCount)
-
       let self = this
       const path = d3.geoPath().projection(this.projection)
 
@@ -161,7 +179,7 @@ export default {
         .attr('id', function (d) {
           const fips = d.id
           const id = self.getId(fips)
-          return id
+          return self.mapId + '-' + id
         })
 
       // draw border
@@ -179,7 +197,7 @@ export default {
     },
     redraw () {
       let self = this
-      const tooltip = d3.select('#tooltip')
+      const tooltip = d3.select(`#${this.mapId}-tooltip`)
 
       this.BillCountByState.forEach(state => {
         const geoId = self.getGeoIdFromState(state.code)
@@ -187,7 +205,7 @@ export default {
         let color = self.getColorForCount(state.count)
 
         d3
-          .select(`#${selectedId}`)
+          .select(`#${self.mapId}-${selectedId}`)
           .attr('class', 'selected')
           .style('fill', color)
           .on('mouseover', function (d) {

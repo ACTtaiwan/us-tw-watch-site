@@ -9,6 +9,7 @@
       <div class="chart-container">
         <BillCountMap v-if="mapUtils && bills && isInitiated"
           v-show="!isChartLoading"
+          mapId="sponsored-bill-count-map"
           :bills="bills"
           :usMap="usMap"
           :stateToFips="stateToFips"
@@ -23,7 +24,7 @@
         <!-- Initializer -->
         <div class="overlay-container" v-if="!isInitiated">
           <div class="overlay-block">
-            <TwButton label="Start" @press="onInitChart"></TwButton>
+            <TwButton label="Start Analysis" @press="onInitChart"></TwButton>
           </div>
         </div>
       </div>

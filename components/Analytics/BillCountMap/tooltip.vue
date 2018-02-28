@@ -1,5 +1,5 @@
 <template>
-  <div id="tooltip">
+  <div :id="mapId + '-' + 'tooltip'" class="tooltip">
     <p slot="title" class="title">{{ title }}</p>
     <P class="count">{{ count }}</P>
   </div>
@@ -8,8 +8,20 @@
 import { path } from '@/plugins/utils'
 
 export default {
-  props: ['title', 'count'],
-
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    mapId: {
+      type: String,
+      required: true
+    },
+    count: {
+      type: Number,
+      required: true
+    }
+  },
   methods: {
     path,
     getPartyStyleObject (color) {
@@ -22,7 +34,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-#tooltip {
+.tooltip {
   position: absolute;
   z-index: 10;
   visibility: hidden;
@@ -33,15 +45,15 @@ export default {
   border: 0px;
   border-radius: 3px;
   pointer-events: none;
-}
 
-.title {
-  color: white;
-  font-size: 16px;
-  margin-bottom: 15px;
-}
+  .title {
+    color: white;
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
 
-.count {
-  color: aquamarine;
+  .count {
+    color: aquamarine;
+  }
 }
 </style>
