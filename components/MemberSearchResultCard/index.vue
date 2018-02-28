@@ -63,11 +63,12 @@
 <script>
 import _ from 'lodash'
 import { path } from '@/plugins/utils'
+import TwButton from '~/components/TwButton'
 import defaultAvatar from '~/assets/img/tw-logo-color.png'
+// logos
 import cspanLogo from '~/assets/img/cspan_logo.svg'
 import facebookLogo from '~/assets/img/facebook_logo.svg'
 import twitterLogo from '~/assets/img/twitter_logo.svg'
-import TwButton from '~/components/TwButton'
 // Queries
 import RolesQuery from '~/apollo/queries/MemberLandingPage/Roles'
 import BillsQuery from '~/apollo/queries/MemberLandingPage/Bills'

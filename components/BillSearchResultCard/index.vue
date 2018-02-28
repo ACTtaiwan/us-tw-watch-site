@@ -36,16 +36,16 @@
           <!-- Categories -->
           <span class="label">Categories</span>
           <div v-if="bill.categories">
-            <span class="value bill-category" v-for="category in bill.categories" :key="category.id">
-              <Icon type="social-codepen-outline"></Icon>
-            </span>
+            <Tooltip class="valu category" v-for="category in bill.categories" :key="category.id" :content="category.name">
+              <img :src="categoryMap[category.code]"/>
+            </Tooltip>
           </div>
           <span v-else class="value">none</span>
         </Col>
         <Col :span="24" class="bill-card-info-block">
           <!-- Tracker -->
           <span class="label">Status</span>
-           <p class="value">{{ billLatestAction | trimConGovAction }}</p>
+          <p class="value">{{ billLatestAction | trimConGovAction }}</p>
           <BillTracker class="tracker" :steps="bill.trackers" :progress="billProgress"></BillTracker>
         </Col>
       </Row>
@@ -67,6 +67,14 @@ import defaultAvatar from '~/assets/img/tw-logo-color.png'
 import BillTracker from '~/components/BillTracker'
 import TwButton from '~/components/TwButton'
 
+// categories icons
+import catAppropriation from '~/assets/img/cat-appropriation.svg'
+import catArms from '~/assets/img/cat-arms.svg'
+import catUsTw from '~/assets/img/cat-ustaiwan.svg'
+import catDemocracy from '~/assets/img/cat-democracy.svg'
+import catTrade from '~/assets/img/cat-trade.svg'
+import catInternational from '~/assets/img/cat-international.svg'
+
 export default {
   props: {
     bill: {
@@ -76,7 +84,19 @@ export default {
   },
   data () {
     return {
-      size: 40
+      catAppropriation,
+      size: 40,
+      categoryMap: {
+        arm: catArms,
+        int: catInternational,
+        trade: catTrade,
+        other: catAppropriation,
+        dem: catDemocracy,
+        ustw: catUsTw,
+        appn: catAppropriation,
+        def: catAppropriation,
+        tra: catAppropriation
+      }
     }
   },
   computed: {
@@ -251,6 +271,18 @@ export default {
 
 .bill-card-info-block {
   @extend .card-info-block;
+
+  .category {
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0px;
+    }
+
+    img {
+      height: 14px;
+    }
+  }
 }
 
 .bill-footer {
