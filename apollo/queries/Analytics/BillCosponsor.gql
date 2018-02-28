@@ -1,0 +1,11 @@
+query BillsQuery($lang: String, $ids: [ID]) {
+  bills(lang: $lang, ids: $ids) {
+    id
+    cosponsors {
+      role {
+        id
+        state
+      }
+    }
+  }
+}

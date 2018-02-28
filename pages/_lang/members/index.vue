@@ -53,7 +53,7 @@
             <SponsoredBillCountMapCard></SponsoredBillCountMapCard>
           </Col>
           <Col :span="this.isTablet || this.isPhone ? 24 : 12" class="map-chart-container">
-            <!-- <BillCountCategoryByCongressCard :categories="this.categories"></BillCountCategoryByCongressCard> -->
+            <CosponsoredBillCountMapCard></CosponsoredBillCountMapCard>
           </Col>
         </Row>
       </div>
@@ -73,6 +73,7 @@ import TabButton from '~/components/TabButton'
 import Spinner from '~/components/Spinner'
 import MembersFilters from '~/components/MembersFilters'
 import SponsoredBillCountMapCard from '~/components/Analytics/SponsoredBillCountMapCard'
+import CosponsoredBillCountMapCard from '~/components/Analytics/CosponsoredBillCountMapCard'
 // Queries
 import MembersPrefetchQuery from '~/apollo/queries/MemberLandingPage/MembersPrefetch'
 import MembersQuery from '~/apollo/queries/MemberLandingPage/Members'
@@ -207,7 +208,8 @@ export default {
     MemberSearchResultCard,
     Spinner,
     TabButton,
-    SponsoredBillCountMapCard
+    SponsoredBillCountMapCard,
+    CosponsoredBillCountMapCard
   }
 }
 </script>

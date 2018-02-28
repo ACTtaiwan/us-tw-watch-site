@@ -1,7 +1,7 @@
 <template>
   <div class="bill-map" >
     <div class="map" id="bills-map" />
-    <tooltip :title="tooltipTitle" :count="tooltipSponsors"/>
+    <tooltip :title="tooltipTitle" :count="tooltipCount"/>
   </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
   data () {
     return {
       tooltipTitle: '',
-      tooltipSponsors: [],
+      tooltipCount: 0,
       defaultWidth: 900,
       defaultHeight: 500,
       maxCount: 0,
@@ -58,10 +58,22 @@ export default {
       let min = 100000
 
       this.bills.forEach(bill => {
-        if (!stateHashmap[bill.sponsor.state]) {
-          stateHashmap[bill.sponsor.state] = 0
+        // sponsor
+        if (bill.sponsor) {
+          if (!stateHashmap[bill.sponsor.state]) {
+            stateHashmap[bill.sponsor.state] = 0
+          }
+          stateHashmap[bill.sponsor.state]++
         }
-        stateHashmap[bill.sponsor.state]++
+        // cosponsor
+        if (bill.cosponsors) {
+          bill.cosponsors.forEach(cosponsor => {
+            if (!stateHashmap[cosponsor.role.state]) {
+              stateHashmap[cosponsor.role.state] = 0
+            }
+            stateHashmap[cosponsor.role.state]++
+          })
+        }
       })
 
       const countByStateArray = _.map(stateHashmap, (value, prop) => ({ code: prop, count: value }))
@@ -109,7 +121,7 @@ export default {
       return value.length > 2 ? `ID-${value}` : `ID-${Number(value)}`
     },
 
-    getGeoIdFromSponsor (code) {
+    getGeoIdFromState (code) {
       const fips = this.getFipsFromStateCode(code)
       return this.getFormattedNumber(fips)
     },
@@ -170,7 +182,7 @@ export default {
       const tooltip = d3.select('#tooltip')
 
       this.BillCountByState.forEach(state => {
-        const geoId = self.getGeoIdFromSponsor(state.code)
+        const geoId = self.getGeoIdFromState(state.code)
         const selectedId = self.getId(geoId)
         let color = self.getColorForCount(state.count)
 
@@ -181,7 +193,7 @@ export default {
           .on('mouseover', function (d) {
             const geoName = self.getGeoNameFromGeoId(geoId)
             self.tooltipTitle = geoName
-            self.tooltipSponsors = state.count
+            self.tooltipCount = state.count
             return tooltip.style('visibility', 'visible')
           })
           .on('mousemove', function (d) {
