@@ -1,6 +1,6 @@
 <template>
   <div class="analytic-card" :class="{ phone: this.isPhone }">
-    <h1 class="analytic-card-title">Sponsored bills by states</h1>
+    <h1 class="analytic-card-title">Sponsorship of bills by states</h1>
     <div class="analytic-card-body">
       <div class="analytic-card-info-block">
         <span class="label">Congress ({{ this.congressRange[0] }} - {{ this.congressRange[1] }})</span>
