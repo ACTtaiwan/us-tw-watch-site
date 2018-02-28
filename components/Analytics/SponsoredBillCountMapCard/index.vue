@@ -7,13 +7,18 @@
         <Slider class="slider" v-model="congressRange" @on-change="updateChart" :step="1" show-stops range :min="this.congressMin" :max="this.congressMax"></Slider>
       </div>
       <div class="chart-container">
-        <Spinner v-if="!mapUtils || !bills"></Spinner>
-        <BillCountMap v-else
+        <BillCountMap v-if="mapUtils && bills"
+          v-show="!isChartLoading"
           :bills="bills"
           :usMap="usMap"
           :stateToFips="stateToFips"
           :fipsToState="fipsToState">
         </BillCountMap>
+        <div class="loader-container" v-if="isChartLoading">
+          <div class="loader-block">
+            <Spinner></Spinner>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -96,6 +101,8 @@ export default {
       return chunckedIds
     },
     async updateChart () {
+      this.isChartLoading = true
+
       let response = await this.prefetchBillIds({ congress: this.congress })
       let billIds = response.data.bills[0].prefetchIds
       let bills = []
@@ -148,6 +155,18 @@ export default {
 
 .analytic-card-info-block {
   @extend .card-info-block;
+}
+
+.loader-container {
+  padding-top: 55%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  .loader-block {
+    position: absolute;
+    top: 40%;
+  }
 }
 
 .slider {
