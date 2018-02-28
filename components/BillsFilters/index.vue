@@ -20,12 +20,12 @@
         <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
       </Select>
     </Col>
-    <Col :span="this.isTablet ? 12 : 24" class="filter-block" :class="{ tablet: this.isTablet }">
+    <!-- <Col :span="this.isTablet ? 12 : 24" class="filter-block" :class="{ tablet: this.isTablet }">
       <h2 class="filter-title">Sponsor</h2>
       <Select v-model="filterData.selectedSponsorId" @on-change="onSponsorSelect" clearable remote :remote-method="getSponsorSuggestList" placeholder="select a sponsor">
         <Option v-for="category in categories" :value="category.id" :key="category.id">{{ category.name }}</Option>
       </Select>
-    </Col>
+    </Col> -->
     <Col :span="24" class="filter-block">
       <TwButton label="Search" @press="submit" :loading="loading"></TwButton>
     </Col>

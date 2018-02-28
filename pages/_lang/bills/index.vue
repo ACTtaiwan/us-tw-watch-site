@@ -114,7 +114,11 @@ export default {
     prefetchBillIds () {
       return this.$apollo.query({
         query: prefetchBillsQuery,
-        variables: { lang: this.locale, congress: this.congress }
+        variables: {
+          lang: this.locale,
+          congress: this.selectedCongress,
+          categories: this.selectedCategories
+        }
       })
     },
     fetchBills (ids) {
@@ -162,7 +166,7 @@ export default {
       this.filterLoading = true
       this.resetPage()
       this.filterData = filterData
-      console.log('filterData', filterData.congressTo)
+      console.log('filterData', filterData)
     }
   },
   computed: {
@@ -177,7 +181,10 @@ export default {
     isTablet () {
       return this.$store.getters.isTablet
     },
-    congress () {
+    selectedCategories () {
+      return this.filterData.selectedCategories ? this.filterData.selectedCategories : []
+    },
+    selectedCongress () {
       let congress = []
       if (this.filterData.congressFrom && this.filterData.congressTo) {
         for (var i = this.filterData.congressFrom; i <= this.filterData.congressTo; i++) {
