@@ -80,7 +80,7 @@ export default {
   },
   watch: {
     bills () {
-      this.drawMap()
+      this.redraw()
       console.log('update!!!')
     }
   },
@@ -93,18 +93,12 @@ export default {
       const state = this.fipsToState[fips]
       return state
     },
-    getColorFromSponsor (sponsor) {
-      let color = 'gray'
+    getColorForCount (count) {
+      const colors = ['#90caff', '#7cadf0', '#6791e0', '#5374d1', '#3e57c1']
+      let index = Math.floor((count - this.minCount) / (this.maxCount - this.minCount) * colors.length)
+      index = index === colors.length ? colors.length - 1 : index
 
-      if (sponsor.party === 'Republican') {
-        color = 'red'
-      }
-
-      if (sponsor.party === 'Democrat') {
-        color = 'blue'
-      }
-
-      return color
+      return colors[index]
     },
 
     getFipsFromStateCode (stateCode) {
@@ -128,7 +122,6 @@ export default {
 
       let self = this
       const path = d3.geoPath().projection(this.projection)
-      const tooltip = d3.select('#tooltip')
 
       this.svg
         .append('defs')
@@ -143,6 +136,7 @@ export default {
         .append('use')
         .attr('xlink:href', '#land')
 
+      // draw states
       this.svg
         .append('g')
         .attr('class', 'states')
@@ -158,6 +152,7 @@ export default {
           return id
         })
 
+      // draw border
       this.svg
         .append('path')
         .attr('class', 'state-boundaries')
@@ -168,10 +163,16 @@ export default {
         )
         .attr('d', path)
 
+      this.redraw()
+    },
+    redraw () {
+      let self = this
+      const tooltip = d3.select('#tooltip')
+
       this.BillCountByState.forEach(state => {
         const geoId = self.getGeoIdFromSponsor(state.code)
         const selectedId = self.getId(geoId)
-        let color = '#e8e8e8'
+        let color = self.getColorForCount(state.count)
 
         d3
           .select(`#${selectedId}`)

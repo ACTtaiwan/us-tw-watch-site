@@ -7,9 +7,6 @@
         <Slider class="slider" v-model="congressRange" @on-change="updateChart" :step="1" show-stops range :min="this.congressMin" :max="this.congressMax"></Slider>
       </div>
       <div class="chart-container">
-        <!-- <div class="chart-loading-overlay" v-if="isChartLoading">
-          <Spinner></Spinner>
-        </div> -->
         <Spinner v-if="!mapUtils || !bills"></Spinner>
         <BillCountMap v-else
           :bills="bills"
@@ -108,6 +105,8 @@ export default {
         console.log('+++++')
       })
 
+      this.isChartLoading = false
+
       console.log('wwwww', bills)
       this.bills = bills
     }
@@ -157,24 +156,6 @@ export default {
 
 .chart-container {
   position: inherit;
-
-  .chart-loading-overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .chart {
-    max-height: 360px;
-    position: relative;
-
-    &.isLoading {
-      opacity: 0.5;
-    }
-  }
 }
 </style>
 
