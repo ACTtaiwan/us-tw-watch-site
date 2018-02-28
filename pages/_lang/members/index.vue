@@ -1,6 +1,5 @@
 <template>
   <div class="members-page">
-
     <!-- Banner -->
     <section class="banner" :style="bannerStyle" :class="{ tablet: this.isTablet, phone: this.isPhone }">
       <div class="banner-wrapper">
@@ -16,7 +15,6 @@
         </div>
       </div>
     </section>
-
     <!-- Members -->
     <section v-if="this.membersTabSelected" class="members-section">
       <div class="members-section-wrapper">
@@ -51,10 +49,10 @@
     <section v-if="this.insightTabSelected" class="insights-section">
       <div class="insights-section-wrapper">
         <Row :gutter="20">
-          <Col :span="this.isTablet || this.isPhone ? 24 : 12">
-            <!-- <BillCountCongressByCategoryCard :categories="this.categories"></BillCountCongressByCategoryCard> -->
+          <Col :span="this.isTablet || this.isPhone ? 24 : 12" class="map-chart-container">
+            <SponsoredBillCountMapCard></SponsoredBillCountMapCard>
           </Col>
-          <Col :span="this.isTablet || this.isPhone ? 24 : 12">
+          <Col :span="this.isTablet || this.isPhone ? 24 : 12" class="map-chart-container">
             <!-- <BillCountCategoryByCongressCard :categories="this.categories"></BillCountCategoryByCongressCard> -->
           </Col>
         </Row>
@@ -74,6 +72,7 @@ import MemberSearchResultCard from '~/components/MemberSearchResultCard'
 import TabButton from '~/components/TabButton'
 import Spinner from '~/components/Spinner'
 import MembersFilters from '~/components/MembersFilters'
+import SponsoredBillCountMapCard from '~/components/Analytics/SponsoredBillCountMapCard'
 // Queries
 import MembersPrefetchQuery from '~/apollo/queries/MemberLandingPage/MembersPrefetch'
 import MembersQuery from '~/apollo/queries/MemberLandingPage/Members'
@@ -207,7 +206,8 @@ export default {
     InfiniteLoading,
     MemberSearchResultCard,
     Spinner,
-    TabButton
+    TabButton,
+    SponsoredBillCountMapCard
   }
 }
 </script>
@@ -308,6 +308,16 @@ export default {
 
   .insights-section-wrapper {
     @extend .pageWrapper-large;
+
+    .map-chart-container {
+      position: inherit;
+    }
   }
+}
+</style>
+
+<style lang="scss">
+.ivu-row {
+  position: inherit;
 }
 </style>

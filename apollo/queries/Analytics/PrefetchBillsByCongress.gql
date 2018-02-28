@@ -1,0 +1,5 @@
+query PrefetchBillsByCongressQuery($congress: [Int]) {
+  bills(congress: $congress) {
+    prefetchIds
+  }
+}

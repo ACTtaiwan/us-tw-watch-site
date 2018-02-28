@@ -1,6 +1,5 @@
 <template>
   <div class="bills-page">
-
     <!-- Banner -->
     <section class="banner" :style="bannerStyle" :class="{ tablet: this.isTablet, phone: this.isPhone }">
       <div class="banner-wrapper">
@@ -16,7 +15,6 @@
         </div>
       </div>
     </section>
-
     <!-- Bills -->
     <section v-if="this.billsTabSelected" class="bills-section">
       <div class="bills-section-wrapper">
