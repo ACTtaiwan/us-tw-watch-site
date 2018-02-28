@@ -26,7 +26,7 @@
 
 <script>
 import BillDetailPageQuery from '~/apollo/queries/BillDetailPage'
-import BillOverviewCard from '~/components/BillOverviewCard'
+import BillOverviewCard from '~/components/BillDetailPage/BillOverviewCard'
 import BillSummaryCard from '~/components/BillSummaryCard'
 import BillSponsorsMapCard from '~/components/BillDetailPage/BillSponsorsMapCard'
 import BillActionsCard from '~/components/BillActionsCard'

@@ -40,10 +40,10 @@
           <Col :span="getIsDesktop() ? 6 : 12" class="cosponsored-bills-card-info-block">
             <!-- Categories -->
             <span class="label">Categories</span>
-            <div v-if="bill.categories">
-              <span class="value bill-category" v-for="category in bill.categories" :key="category.id">
-                <Icon type="social-codepen-outline"></Icon>
-              </span>
+            <div class="categories" v-if="bill.categories">
+              <Tooltip class="value category" v-for="category in bill.categories" :key="category.id" :content="category.name">
+                <img :src="categoryMap[category.code]"/>
+              </Tooltip>
             </div>
             <span v-else class="value">none</span>
           </Col>
@@ -74,6 +74,14 @@ import facebookLogo from '~/assets/img/facebook_logo.svg'
 import youtubeLogo from '~/assets/img/youtube_logo.svg'
 import twitterLogo from '~/assets/img/twitter_logo.svg'
 
+// categories icons
+import catAppropriation from '~/assets/img/cat-appropriation.svg'
+import catArms from '~/assets/img/cat-arms.svg'
+import catUsTw from '~/assets/img/cat-ustaiwan.svg'
+import catDemocracy from '~/assets/img/cat-democracy.svg'
+import catTrade from '~/assets/img/cat-trade.svg'
+import catInternational from '~/assets/img/cat-international.svg'
+
 // components
 import BillTracker from '~/components/BillTracker'
 import TwButton from '~/components/TwButton'
@@ -95,6 +103,17 @@ export default {
       facebookLogo,
       youtubeLogo,
       twitterLogo,
+      categoryMap: {
+        arm: catArms,
+        int: catInternational,
+        trade: catTrade,
+        other: catAppropriation,
+        dem: catDemocracy,
+        ustw: catUsTw,
+        appn: catAppropriation,
+        def: catAppropriation,
+        tra: catAppropriation
+      },
       chartOptions: {
         legend: {
           display: true,
@@ -308,5 +327,40 @@ export default {
 
 .cosponsored-bills-card-info-block {
   @extend .card-info-block;
+
+  .categories {
+    display: flex;
+    flex-wrap: wrap;
+
+    .category {
+      margin-right: 10px;
+      background: $twGrayLighter;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5px;
+
+      &:last-child {
+        margin-right: 0px;
+      }
+
+      img {
+        height: 14px;
+      }
+    }
+  }
+}
+</style>
+
+<style lang="scss">
+@import 'assets/css/app';
+@import 'assets/css/typography';
+@import 'assets/css/colors';
+
+.ivu-tooltip-rel {
+  display: inherit;
 }
 </style>

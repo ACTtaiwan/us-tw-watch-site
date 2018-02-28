@@ -34,10 +34,7 @@
       <Col :span="this.isDesktop ? 6 : 12" class="overview-card-info-block">
         <!-- Categories -->
         <span class="label">Categories</span>
-        <div v-if="bill.categories">
-          <!-- <span class="value bill-category" v-for="category in bill.categories" :key="category.id">
-            <Icon type="social-codepen-outline"></Icon>
-          </span> -->
+        <div class="categories" v-if="bill.categories">
           <Tooltip class="value category" v-for="category in bill.categories" :key="category.id" :content="category.name">
             <img :src="categoryMap[category.code]"/>
           </Tooltip>
@@ -186,15 +183,28 @@ export default {
 .overview-card-info-block {
   @extend .card-info-block;
 
-  .category {
-    margin-right: 10px;
+  .categories {
+    display: flex;
+    flex-wrap: wrap;
 
-    &:last-child {
-      margin-right: 0px;
-    }
+    .category {
+      margin-right: 10px;
+      background: $twGrayLighter;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5px;
 
-    img {
-      height: 14px;
+      &:last-child {
+        margin-right: 0px;
+      }
+
+      img {
+        height: 14px;
+      }
     }
   }
 }
@@ -266,5 +276,15 @@ export default {
 
 .bill-tracker {
   margin-top: 20px;
+}
+</style>
+
+<style lang="scss">
+@import 'assets/css/app';
+@import 'assets/css/typography';
+@import 'assets/css/colors';
+
+.ivu-tooltip-rel {
+  display: inherit;
 }
 </style>
