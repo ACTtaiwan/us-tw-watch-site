@@ -7,16 +7,23 @@
         <Slider class="slider" v-model="congressRange" @on-change="updateChart" :step="1" show-stops range :min="this.congressMin" :max="this.congressMax"></Slider>
       </div>
       <div class="chart-container">
-        <BillCountMap v-if="mapUtils && bills"
+        <BillCountMap v-if="mapUtils && bills && isInitiated"
           v-show="!isChartLoading"
           :bills="bills"
           :usMap="usMap"
           :stateToFips="stateToFips"
           :fipsToState="fipsToState">
         </BillCountMap>
-        <div class="loader-container" v-if="isChartLoading">
-          <div class="loader-block">
+        <!-- loader -->
+        <div class="overlay-container" v-if="isChartLoading && isInitiated">
+          <div class="overlay-block">
             <Spinner></Spinner>
+          </div>
+        </div>
+        <!-- Initializer -->
+        <div class="overlay-container" v-if="!isInitiated">
+          <div class="overlay-block">
+            <TwButton label="Start" @press="onInitChart"></TwButton>
           </div>
         </div>
       </div>
@@ -27,6 +34,7 @@
 
 <script>
 import Spinner from '~/components/Spinner'
+import TwButton from '~/components/TwButton'
 import BillCountMap from '~/components/Analytics/BillCountMap'
 // Queries
 import queryMapUtils from '~/apollo/queries/mapUtils'
@@ -38,13 +46,14 @@ export default {
   data () {
     return {
       isChartLoading: true,
+      isInitiated: false,
       congressRange: [114, 115],
       mapUtils: null,
       bills: null
     }
   },
   mounted () {
-    this.updateChart()
+    // this.updateChart()
   },
   computed: {
     isPhone () {
@@ -74,6 +83,10 @@ export default {
     }
   },
   methods: {
+    onInitChart () {
+      this.isInitiated = true
+      this.updateChart()
+    },
     prefetchBillIds ({ congress }) {
       return this.$apollo.query({
         query: PrefetchBillsByCongressQuery,
@@ -134,6 +147,7 @@ export default {
   },
   components: {
     Spinner,
+    TwButton,
     BillCountMap
   }
 }
@@ -157,13 +171,13 @@ export default {
   @extend .card-info-block;
 }
 
-.loader-container {
+.overlay-container {
   padding-top: 55%;
   position: relative;
   display: flex;
   justify-content: center;
 
-  .loader-block {
+  .overlay-block {
     position: absolute;
     top: 40%;
   }
