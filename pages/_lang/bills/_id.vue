@@ -18,8 +18,9 @@
             <BillSummaryCard v-if="this.bill.summary.paragraphs" :bill="this.bill"></BillSummaryCard>
             <!-- Support Map -->
             <BillSponsorsMapCard :bill="this.bill"></BillSponsorsMapCard>
+            <!-- Versions -->
+            <BillVersionsCard :bill="this.bill"></BillVersionsCard>
           </Col>
-
 
           <!-- Summary -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="detail-block">
@@ -29,9 +30,6 @@
         </Row>
       </div>
     </section>
-
-
-
   </div>
 </template>
 
@@ -39,8 +37,9 @@
 import BillDetailPageQuery from '~/apollo/queries/BillDetailPage'
 import BillOverviewCard from '~/components/BillOverviewCard'
 import BillSummaryCard from '~/components/BillSummaryCard'
-import BillSponsorsMapCard from '~/components/BillSponsorsMapCard'
+import BillSponsorsMapCard from '~/components/BillDetailPage/BillSponsorsMapCard'
 import BillActionsCard from '~/components/BillActionsCard'
+import BillVersionsCard from '~/components/BillDetailPage/BillVersionsCard'
 
 export default {
   data () {
@@ -121,7 +120,8 @@ export default {
     BillOverviewCard,
     BillSummaryCard,
     BillSponsorsMapCard,
-    BillActionsCard
+    BillActionsCard,
+    BillVersionsCard
   }
 }
 </script>

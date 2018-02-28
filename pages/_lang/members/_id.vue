@@ -47,7 +47,6 @@ import _ from 'lodash'
 import { get } from '@/plugins/utils'
 // Components
 import MemberOverviewCard from '~/components/MemberOverviewCard'
-import BillSponsorsMapCard from '~/components/BillSponsorsMapCard'
 import ContactCard from '~/components/MemberDetailPage/ContactCard'
 import SponsoredBillsCard from '~/components/MemberDetailPage/SponsoredBillsCard'
 import CosponsoredBillsCard from '~/components/MemberDetailPage/CosponsoredBillsCard'
@@ -178,7 +177,6 @@ export default {
   },
   components: {
     MemberOverviewCard,
-    BillSponsorsMapCard,
     ContactCard,
     SponsoredBillsCard,
     CosponsoredBillsCard,

@@ -45,6 +45,16 @@ query BillDetailPageQuery($lang: String, $ids: [ID]) {
         }
       }
     }
+    versions {
+      id
+      name
+      date
+      description
+      documents {
+        contentType
+        s3Entity
+      }
+    }
     actions {
       datetime
       description
