@@ -1,6 +1,11 @@
 <template>
   <div class="overview-card" :class="{ phone: this.isPhone }">
     <h1 class="overview-card-title">Overview</h1>
+    <div class="bill-meta">
+      <span class="bill-meta-info">{{ bill.billCode}}</span>
+      <span class="bill-meta-info">{{ bill.billType.code | billType }}</span>
+    </div>
+    <h1 class="bill-title">{{ bill.title }}</h1>
     <Row>
       <Col :span="24" class="overview-card-info-block">
         <!-- Sponsor -->
@@ -192,6 +197,34 @@ export default {
       height: 14px;
     }
   }
+}
+
+.bill-meta {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  .bill-meta-info {
+    font-size: 1em;
+    font-weight: $twSemiBold;
+    color: $twGrayLight;
+    background: $twGrayLighter;
+    border-radius: 10px;
+    padding: 1px 8px;
+    margin-right: 5px;
+
+    &.success {
+      color: $twWhite;
+      background: $twGreen;
+    }
+  }
+}
+
+.bill-title {
+  font-size: 1.4em;
+  font-weight: $twSemiBold;
+  color: $twGrayDark;
+  margin-bottom: 20px;
 }
 
 .bill-sponsor {

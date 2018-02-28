@@ -4,9 +4,8 @@
     <div class="sponsors-map-card-body">
       <div class="sponsors">
         <!-- {{cosponsor.role.person.id}} -->
-        <router-link v-for="cosponsor in bill.cosponsors" :to="path(getThis(), `/members/${cosponsor.role.person.id}`)">
-          <Tag :key="cosponsor.role.id"
-            :name="cosponsor.role.id"
+        <router-link v-for="cosponsor in bill.cosponsors" :key="cosponsor.role.id" :to="path(getThis(), `/members/${cosponsor.role.person.id}`)">
+          <Tag :name="cosponsor.role.id"
             :color="{Republican: 'red', Democrat: 'blue'}[cosponsor.role.party]"
             type="dot">
             {{ `${cosponsor.role.person.firstname} ${cosponsor.role.person.lastname} (${cosponsor.role.state})` }}

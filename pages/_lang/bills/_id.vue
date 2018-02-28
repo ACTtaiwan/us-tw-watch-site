@@ -1,15 +1,8 @@
 <template>
   <div class="bill-page">
-
     <!-- Bill -->
     <section v-if="bill" class="bill-section" :class="{ phone: this.isPhone }">
       <div class="bill-section-wrapper">
-        <div class="bill-meta">
-          <span class="bill-code">{{ bill.billCode}}</span>
-          <span class="bill-type">{{ this.billType }}</span>
-        </div>
-        <h1 class="bill-title">{{ bill.title }}</h1>
-
         <Row>
           <Col :span="this.isTablet || this.isPhone ? 24 : 18"  class="main-block" :class="{ mobile: this.isTablet || this.isPhone }">
             <!-- Overview -->
@@ -21,10 +14,8 @@
             <!-- Versions -->
             <BillVersionsCard v-if="this.bill.versions.length > 0" :bill="this.bill"></BillVersionsCard>
           </Col>
-
           <!-- Summary -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="detail-block">
-
             <BillActionsCard :bill="this.bill"></BillActionsCard>
           </Col>
         </Row>
@@ -57,29 +48,6 @@ export default {
     },
     isTablet () {
       return this.$store.getters.isTablet
-    },
-    // pdfUrl () {
-    //   let url = ''
-    //   if (this.bill && this.bill.versions) {
-    //     let numOfVersions = this.bill.versions.length
-    //     let latestVersion = this.bill.versions[numOfVersions - 1]
-    //     let bucketKey = latestVersion.documents.filter(doc => doc.contentType === 'pdf')[0].bucketKey
-    //     url = `https://s3.amazonaws.com/volunteer.bills/${bucketKey}`
-    //   }
-    //   console.log('url', url)
-    //   return url
-    // },
-    billType () {
-      return {
-        s: 'Bill',
-        hr: 'Bill',
-        hconres: 'Concurrent Resolution',
-        sconres: 'Concurrent Resolution',
-        hres: 'Resolution',
-        sres: 'Resolution',
-        hjres: 'Joint Resolution',
-        sjres: 'Joint Resolution'
-      }[this.bill.billType.code]
     }
   },
 
@@ -143,37 +111,6 @@ export default {
   .bill-section-wrapper {
     @extend .pageWrapper-large;
   }
-}
-
-.bill-meta {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-
-  .bill-code {
-    font-size: 1.1em;
-    font-weight: $twSemiBold;
-    color: $twWhite;
-    background: $twGrayLight;
-    border-radius: 10px;
-    padding: 1px 8px;
-    margin-right: 5px;
-  }
-  .bill-type {
-    font-size: 1.1em;
-    font-weight: $twSemiBold;
-    color: $twWhite;
-    background: $twGrayLight;
-    border-radius: 10px;
-    padding: 1px 8px;
-  }
-}
-
-.bill-title {
-  font-size: 1.8em;
-  font-weight: $twSemiBold;
-  color: $twGrayDark;
-  margin-bottom: 20px;
 }
 
 .main-block {
