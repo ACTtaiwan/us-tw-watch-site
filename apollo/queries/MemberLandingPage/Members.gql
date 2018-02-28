@@ -11,6 +11,7 @@ query MembersQuery($lang: String, $ids: [ID]) {
       firstname
       lastname
       middlename
+      bioGuideId
       profilePictures {
         tiny
       }

@@ -20,6 +20,7 @@ query BillsQuery($lang: String, $ids: [ID]) {
       }
     }
     sponsor {
+      id
       person {
         id
       }

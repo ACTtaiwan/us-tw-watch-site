@@ -3,7 +3,7 @@
     <h1 class="contact-card-title">Contact</h1>
     <div class="contact-card-body">
       <Row>
-        <Col :span="24" class="contact-card-info-block">
+        <Col v-if="member.url" :span="24" class="contact-card-info-block">
           <!-- Website -->
           <span class="label">Website</span>
           <a :href="member.url" target="_blank" class="value link" >{{ member.url }}</a>

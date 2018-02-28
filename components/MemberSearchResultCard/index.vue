@@ -30,9 +30,10 @@
           <!-- Social Media -->
           <span class="label">Social Media</span>
           <p class="value">
-            <img class="social twitter" :src="twitterLogo"/>
-            <img class="social facebook" :src="facebookLogo"/>
-            <img class="social cspan" :src="cspanLogo"/>
+            <a v-if="twitterLink" :href="twitterLink" target="_blank"><img class="social twitter" :src="twitterLogo"/></a>
+            <a v-if="youtubeLink" :href="youtubeLink" target="_blank"><img class="social youtube" :src="youtubeLogo"/></a>
+            <a v-if="facebookLink" :href="facebookLink" target="_blank"><img class="social facebook" :src="facebookLogo"/></a>
+            <a v-if="cspanLink" :href="cspanLink" target="_blank"><img class="social cspan" :src="cspanLogo"/></a>
           </p>
         </Col>
         <Col :span="this.isDesktop ? 8 : 12" class="member-card-info-block">
@@ -52,7 +53,9 @@
     <div class="bill-footer">
       <div class="social">
         <TwButton class="social-button" icon="android-bookmark" type="icon" style="light"></TwButton>
-        <TwButton class="social-button" icon="android-share" type="icon" style="light"></TwButton>
+        <FbShareWrapper :url="path(this, `/members/${member.person.id}`)">
+          <TwButton class="social-button" icon="android-share" type="icon" style="light"></TwButton>
+        </FbShareWrapper>
       </div>
       <router-link :to="path(this, `/members/${member.person.id}`)">
         <TwButton label="More"></TwButton>
@@ -62,13 +65,17 @@
 </template>
 <script>
 import _ from 'lodash'
-import { path } from '@/plugins/utils'
+import { path, get } from '@/plugins/utils'
 import TwButton from '~/components/TwButton'
 import defaultAvatar from '~/assets/img/tw-logo-color.png'
+import FbShareWrapper from '~/components/FbShareWrapper'
+
 // logos
 import cspanLogo from '~/assets/img/cspan_logo.svg'
 import facebookLogo from '~/assets/img/facebook_logo.svg'
+import youtubeLogo from '~/assets/img/youtube_logo.svg'
 import twitterLogo from '~/assets/img/twitter_logo.svg'
+
 // Queries
 import RolesQuery from '~/apollo/queries/MemberLandingPage/Roles'
 import BillsQuery from '~/apollo/queries/MemberLandingPage/Bills'
@@ -86,9 +93,11 @@ export default {
   },
   data () {
     return {
-      twitterLogo,
-      facebookLogo,
       cspanLogo,
+      facebookLogo,
+      youtubeLogo,
+      twitterLogo,
+      ppMember: null,
       size: 50,
       billIdCosponsored: 0,
       billIdSponsored: 0,
@@ -96,6 +105,7 @@ export default {
     }
   },
   mounted () {
+    const personBioGuideId = this.member.person.bioGuideId
     const personId = this.member.person.id
     this.fetchMemberRoles({ personIds: [personId] })
       .then(result => {
@@ -144,6 +154,7 @@ export default {
       .catch(error => {
         console.log('get all roles data error -->', error)
       })
+    this.fetchProPublicaMember(personBioGuideId)
   },
   computed: {
     locale () {
@@ -197,6 +208,18 @@ export default {
       } else {
         return `${this.member.titleLong} for ${this.states[this.member.state][lang]}`
       }
+    },
+    twitterLink () {
+      return this.ppMember && this.ppMember.twitter_account ? `https://twitter.com/${this.ppMember.twitter_account}` : null
+    },
+    facebookLink () {
+      return this.ppMember && this.ppMember.facebook_account ? `https://www.facebook.com/${this.ppMember.facebook_account}` : null
+    },
+    youtubeLink () {
+      return this.ppMember && this.ppMember.youtube_account ? `https://www.youtube.com/user/${this.ppMember.youtube_account}` : null
+    },
+    cspanLink () {
+      return this.ppMember && this.ppMember.cspan_id ? `https://www.c-span.org/person/?${this.ppMember.cspan_id}` : null
     }
   },
   methods: {
@@ -212,10 +235,15 @@ export default {
         query: BillsQuery,
         variables: { lang: this.locale, ids: ids }
       })
+    },
+    async fetchProPublicaMember (bioGuideId) {
+      const response = await get(`https://api.propublica.org/congress/v1/members/${bioGuideId}.json`)
+      this.ppMember = response.data.results[0]
     }
   },
   components: {
-    TwButton
+    TwButton,
+    FbShareWrapper
   }
 }
 </script>
@@ -292,6 +320,10 @@ export default {
 
   .twitter {
     width: 18px;
+  }
+
+  .youtube {
+    width: 22px;
   }
 
   .facebook {

@@ -12,6 +12,7 @@ query BillsQuery($lang: String, $ids: [ID]) {
       code
     }
     actions {
+      id
       datetime
       description
     }
@@ -33,6 +34,7 @@ query BillsQuery($lang: String, $ids: [ID]) {
       }
     }
     sponsor {
+      id
       person {
         id
       }

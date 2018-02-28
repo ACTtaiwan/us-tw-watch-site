@@ -13,7 +13,9 @@
           <!-- Sponsor -->
           <div class="bill-sponsor">
             <img class="avatar" :class="avatarClass" :src="avatarSource" :style="avatarStyle" />
-            <p class="name">{{ bill.sponsor.title }} {{ bill.sponsor.person.firstname }} {{ bill.sponsor.person.lastname }}</p>
+            <router-link :to="path(this, `/members/${bill.sponsor.person.id}`)">
+              <p class="name">{{ bill.sponsor.title }} {{ bill.sponsor.person.firstname }} {{ bill.sponsor.person.lastname }}</p>
+            </router-link>
             <p class="area">{{ this.memberArea }} </p>
           </div>
         </Col>
@@ -53,7 +55,9 @@
     <div class="bill-footer">
       <div class="social">
         <TwButton class="social-button" icon="android-bookmark" type="icon" style="light"></TwButton>
-        <TwButton class="social-button" icon="android-share" type="icon" style="light"></TwButton>
+        <FbShareWrapper :url="path(this, `/bills/${bill.id}`)">
+          <TwButton class="social-button" icon="android-share" type="icon" style="light"></TwButton>
+        </FbShareWrapper>
       </div>
       <router-link :to="path(this, `/bills/${bill.id}`)">
         <TwButton label="More"></TwButton>
@@ -66,6 +70,7 @@ import { path } from '@/plugins/utils'
 import defaultAvatar from '~/assets/img/tw-logo-color.png'
 import BillTracker from '~/components/BillTracker'
 import TwButton from '~/components/TwButton'
+import FbShareWrapper from '~/components/FbShareWrapper'
 
 // categories icons
 import catAppropriation from '~/assets/img/cat-appropriation.svg'
@@ -178,7 +183,8 @@ export default {
   },
   components: {
     BillTracker,
-    TwButton
+    TwButton,
+    FbShareWrapper
   }
 }
 </script>
@@ -254,13 +260,16 @@ export default {
   .name {
     font-size: 1em;
     color: $twGrayDark;
-    // font-weight: $twSemiBold;
+    font-weight: $twSemiBold;
+    &:hover {
+      color: $twIndigo;
+    }
   }
 
   .area {
     font-size: 1em;
     color: $twGrayDark;
-    // font-weight: $twSemiBold;
+    font-weight: $twSemiBold;
   }
 }
 

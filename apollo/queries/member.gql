@@ -10,6 +10,7 @@ query Member($id: ID!) {
       state
       district
       person {
+        id
         lastname
         firstname
       }
@@ -21,6 +22,7 @@ query Member($id: ID!) {
       state
       district
       person {
+        id
         lastname
         firstname
       }
