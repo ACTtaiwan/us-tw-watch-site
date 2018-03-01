@@ -57,7 +57,7 @@ import people from '~/assets/img/banner-people.png'
 
 import Spinner from '~/components/Spinner'
 import BillCard from '~/components/HomePage/BillCard'
-import ArticleCard from '~/components/HomePage/ArticleCard'
+import ArticleCard from '~/components/ArticleCard'
 
 import prefetchBillsQuery from '~/apollo/queries/prefetchBills'
 import billsQuery from '~/apollo/queries/BillUpdatePage'

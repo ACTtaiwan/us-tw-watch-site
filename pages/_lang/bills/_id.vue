@@ -17,6 +17,11 @@
           <!-- Summary -->
           <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="detail-block">
             <BillActionsCard :bill="this.bill"></BillActionsCard>
+            <Row :gutter="30" v-if="this.bill.articles">
+              <Col :span="24" v-for="article in this.bill.articles" :key="article.id">
+                <ArticleCard class="article-card" :article="article" />
+              </Col>
+            </Row>
           </Col>
         </Row>
       </div>
@@ -25,12 +30,15 @@
 </template>
 
 <script>
+import { trimConGovAction } from '~/plugins/filters'
 import BillDetailPageQuery from '~/apollo/queries/BillDetailPage'
 import BillOverviewCard from '~/components/BillDetailPage/BillOverviewCard'
 import BillSummaryCard from '~/components/BillSummaryCard'
 import BillSponsorsMapCard from '~/components/BillDetailPage/BillSponsorsMapCard'
 import BillActionsCard from '~/components/BillActionsCard'
 import BillVersionsCard from '~/components/BillDetailPage/BillVersionsCard'
+
+import ArticleCard from '~/components/ArticleCard'
 
 export default {
   data () {
@@ -48,6 +56,34 @@ export default {
     },
     isTablet () {
       return this.$store.getters.isTablet
+    },
+    billLatestAction () {
+      let latestActionTime = 0
+      let latestAction = ''
+      this.bill.actions.forEach(action => {
+        if (action.datetime > latestActionTime) {
+          latestAction = action.description
+          latestActionTime = action.datetime
+        }
+      })
+      if (process.browser) {
+        // strip html tags from the string
+        var dom = document.createElement('DIV')
+        dom.innerHTML = latestAction
+        latestAction = dom.textContent || dom.innerText || ''
+      }
+      return trimConGovAction(latestAction)
+    },
+    memberArea () {
+      if (this.bill.sponsor.district) {
+        return `${this.bill.sponsor.state}-${this.bill.sponsor.district}`
+      } else {
+        return `${this.bill.sponsor.state}`
+      }
+    },
+    billSponsorTitle () {
+      const title = `${this.bill.sponsor.title} ${this.bill.sponsor.person.firstname} ${this.bill.sponsor.person.lastname} [${this.memberArea}]`
+      return title
     }
   },
 
@@ -76,11 +112,12 @@ export default {
     return {
       title: this.bill ? this.bill.title : 'Loading',
       meta: [
-        {
-          hid: `description`,
-          name: 'description',
-          content: this.bill ? this.bill.id : 'Loading'
-        }
+        // { hid: 'description', name: 'description', content: this.bill ? this.bill.id : 'Loading' },
+        { name: 'og:title', content: this.bill ? this.bill.title : 'Loading' },
+        { name: 'twitter:label1', content: 'Current Status' },
+        { name: 'twitter:data1', content: this.bill ? this.billLatestAction : 'Loading' },
+        { name: 'twitter:label2', content: 'Sponsor' },
+        { name: 'twitter:data2', content: this.bill ? this.billSponsorTitle : 'Loading' }
       ]
     }
   },
@@ -89,7 +126,8 @@ export default {
     BillSummaryCard,
     BillSponsorsMapCard,
     BillActionsCard,
-    BillVersionsCard
+    BillVersionsCard,
+    ArticleCard
   }
 }
 </script>

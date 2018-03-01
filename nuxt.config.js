@@ -4,12 +4,10 @@ module.exports = {
   head: {
     titleTemplate: '',
     meta: [
-      {
-        property: 'og:image',
-        content: 'https://s3.amazonaws.com/taiwanwatch-static/assets/tw-site-banner.png'
-      },
+      { property: 'og:image', content: 'https://s3.amazonaws.com/taiwanwatch-static/assets/tw-og-image.png' },
+      { property: 'og:site_name', content: 'Taiwan Watch' },
+      { property: 'fb:app_id', content: '2017625051893386' },
       { property: 'twitter:card', content: 'summary_large_image' },
-      { property: 'twitter:site', content: '@nuxt_js' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }, { rel: 'dns-prefetch', href: appConfig.api.url }]

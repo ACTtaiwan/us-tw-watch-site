@@ -6,6 +6,14 @@ query BillDetailPageQuery($lang: String, $ids: [ID]) {
     billCode
     billNumber
     introducedDate
+    articles {
+      id
+      publishedAt
+      imageUrl
+      source
+      title
+      url
+    }
     cosponsors {
       role {
         id

@@ -167,11 +167,12 @@ export default {
     return {
       title: this.person ? `${this.person.firstname} ${this.person.lastname}` : 'Loading',
       meta: [
-        {
-          hid: `description`,
-          name: 'description',
-          content: this.memberTitle ? this.memberTitle : 'Loading'
-        }
+        { hid: 'description', name: 'description', content: this.memberTitle ? this.memberTitle : 'Loading' },
+        { name: 'og:title', content: this.person ? `${this.person.firstname} ${this.person.lastname}` : 'Loading' },
+        { name: 'twitter:label1', content: 'Sponsored bills' },
+        { name: 'twitter:data1', content: this.sponsoredBills ? this.sponsoredBills.length : 0 },
+        { name: 'twitter:label2', content: 'Cosponsored bills' },
+        { name: 'twitter:data2', content: this.cosponsoredBills ? this.cosponsoredBills.length : 0 }
       ]
     }
   },
