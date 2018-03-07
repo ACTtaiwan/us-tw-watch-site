@@ -2,7 +2,7 @@
   <div class="landing">
 
     <!-- Banner -->
-    <section class="banner" :style="style">
+    <section class="banner" :style="bannerStyle">
       <div class="banner-wrapper" :class="{ tablet: this.isTablet, phone: this.isPhone }">
         <div class="image-container" >
           <img class="front-img" :src="people" />
@@ -51,15 +51,17 @@
 </template>
 
 <script>
+// libraries
 import _ from 'lodash'
+// images
 import congress from '~/assets/img/banner-home.png'
 import people from '~/assets/img/banner-people.png'
-
+// components
 import Spinner from '~/components/Spinner'
 import BillCard from '~/components/HomePage/BillCard'
 import ArticleCard from '~/components/ArticleCard'
-
-import prefetchBillsQuery from '~/apollo/queries/prefetchBills'
+// queriess
+import PrefetchBillIdsQuery from '~/apollo/queries/HomePage/PrefetchBillIds'
 import billsQuery from '~/apollo/queries/BillUpdatePage'
 import ArticlesQuery from '~/apollo/queries/HomePage/Articles'
 
@@ -73,8 +75,7 @@ export default {
       billIds: [],
       articles: [],
       congress,
-      people,
-      style: `background-image: url("${congress}"); background-size: cover;`
+      people
     }
   },
   head () {
@@ -91,7 +92,7 @@ export default {
           latestActionTime = action.datetime
         }
       })
-      return latestActionTime
+      return parseInt(latestActionTime)
     },
     fetchBills (ids) {
       return this.$apollo.query({
@@ -99,29 +100,26 @@ export default {
         variables: { lang: this.locale, ids: ids }
       })
     },
-    async getUpdatedBills () {
-      this.isBillUpdateLoading = true
+    getUpdatedBills () {
+      this.fetchBills(this.billIds)
+        .then(({ data }) => {
+          // the returned bill order is not the same as the bill id order provided
+          // TODO: move this to graphql server side
+          const billsMap = _.keyBy(data.bills, 'id')
+          this.bills = this.billIds
+            .map(id => billsMap[id])
+            .sort((a, b) => this.getLatestActionDate(b.actionsAll) - this.getLatestActionDate(a.actionsAll))
+            .filter((bill, index) => index < this.numberOfBillCards)
 
-      if (this.billIds.length > 0) {
-        this.fetchBills(this.billIds)
-          .then(({ data }) => {
-            const billsMap = _.keyBy(data.bills, 'id')
-            this.bills = this.billIds
-              .map(id => billsMap[id])
-              .sort((a, b) => this.getLatestActionDate(b.actionsAll) - this.getLatestActionDate(a.actionsAll))
-              .filter((bill, index) => index < this.numberOfBillCards)
-
-            this.isBillUpdateLoading = false
-          })
-          .catch(error => {
-            console.log('get bills error', error)
-          })
-      }
+          this.isBillUpdateLoading = false
+        })
+        .catch(error => {
+          console.log('get bills error', error)
+        })
     }
   },
   computed: {
     locale () {
-      // when locale changes, reset the current page
       return this.$store.state.locale
     },
     isPhone () {
@@ -130,16 +128,13 @@ export default {
     isTablet () {
       return this.$store.getters.isTablet
     },
-    cardSpan () {
-      let span = 8
-      if (this.$store.getters.isTablet) span = 12
-      if (this.$store.getters.isPhone) span = 24
-      return span
+    bannerStyle () {
+      return `background-image: url("${this.congress}"); background-size: cover;`
     }
   },
   apollo: {
     billIds: {
-      query: prefetchBillsQuery,
+      query: PrefetchBillIdsQuery,
       fetchPolicy: 'cache-and-network',
       variables () {
         return {
@@ -150,8 +145,10 @@ export default {
       update (data) {
         return data.bills[0].prefetchIds
       },
-      result (data) {
-        this.getUpdatedBills()
+      result (result) {
+        if (!result.loading) {
+          this.getUpdatedBills()
+        }
       }
     },
     articles: {
