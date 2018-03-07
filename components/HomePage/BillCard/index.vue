@@ -3,7 +3,7 @@
     <div class="bill-meta">
       <span class="bill-update-time">{{ billLatestActionDate | localTime }}</span>
       <span class="bill-code">{{ bill.billCode }}</span>
-      <span class="bill-type">{{ this.billType }}</span>
+      <span class="bill-type">{{ bill.billType.code | billType }}</span>
     </div>
     <router-link :to="path(this, `/bills/${bill.id}`)">
       <h1 class="bill-title">{{ bill.title | truncate(100) }}</h1>
@@ -17,9 +17,9 @@
     </div>
     <div class="bill-footer">
       <div class="social">
-        <TwButton class="social-button" icon="android-bookmark" type="icon" style="light"></TwButton>
+        <TwButton class="social-button" icon="android-bookmark" type="icon"></TwButton>
         <FbShareWrapper :url="path(this, `/bills/${bill.id}`)">
-          <TwButton class="social-button" icon="android-share" type="icon" style="light"></TwButton>
+          <TwButton class="social-button" icon="android-share" type="icon"></TwButton>
         </FbShareWrapper>
       </div>
       <router-link :to="path(this, `/bills/${bill.id}`)">
@@ -52,18 +52,6 @@ export default {
     },
     isPhone () {
       return this.$store.getters.isPhone
-    },
-    billType () {
-      return {
-        s: 'Bill',
-        hr: 'Bill',
-        hconres: 'Concurrent Resolution',
-        sconres: 'Concurrent Resolution',
-        hres: 'Resolution',
-        sres: 'Resolution',
-        hjres: 'Joint Resolution',
-        sjres: 'Joint Resolution'
-      }[this.bill.billType.code]
     },
     billProgress () {
       const totalSteps = this.bill.trackers.length

@@ -62,7 +62,7 @@ import BillCard from '~/components/HomePage/BillCard'
 import ArticleCard from '~/components/ArticleCard'
 // queriess
 import PrefetchBillIdsQuery from '~/apollo/queries/HomePage/PrefetchBillIds'
-import billsQuery from '~/apollo/queries/BillUpdatePage'
+import BillsQuery from '~/apollo/queries/HomePage/Bills'
 import ArticlesQuery from '~/apollo/queries/HomePage/Articles'
 
 export default {
@@ -96,7 +96,7 @@ export default {
     },
     fetchBills (ids) {
       return this.$apollo.query({
-        query: billsQuery,
+        query: BillsQuery,
         variables: { lang: this.locale, ids: ids }
       })
     },
