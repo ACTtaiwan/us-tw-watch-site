@@ -38,7 +38,7 @@ import BillSponsorsMapCard from '~/components/BillDetailPage/BillSponsorsMapCard
 import BillActionsCard from '~/components/BillActionsCard'
 import BillVersionsCard from '~/components/BillDetailPage/BillVersionsCard'
 
-import ArticleCard from '~/components/ArticleCard'
+import ArticleCard from '~/components/HomePage/ArticleCard'
 
 export default {
   data () {

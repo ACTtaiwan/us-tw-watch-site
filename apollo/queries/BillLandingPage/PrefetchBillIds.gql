@@ -1,4 +1,4 @@
-query PrefetchBillsQuery($congress: [Int], $categories: [ID]) {
+query PrefetchBillIdsQuery($congress: [Int], $categories: [ID]) {
   bills(congress: $congress, categories: $categories) {
     prefetchIds
   }

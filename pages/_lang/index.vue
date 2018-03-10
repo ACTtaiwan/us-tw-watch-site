@@ -59,7 +59,7 @@ import people from '~/assets/img/banner-people.png'
 // components
 import Spinner from '~/components/Spinner'
 import BillCard from '~/components/HomePage/BillCard'
-import ArticleCard from '~/components/ArticleCard'
+import ArticleCard from '~/components/HomePage/ArticleCard'
 // queriess
 import PrefetchBillIdsQuery from '~/apollo/queries/HomePage/PrefetchBillIds'
 import BillsQuery from '~/apollo/queries/HomePage/Bills'

@@ -59,7 +59,6 @@
 </template>
 <script>
 // Packages
-import _ from 'lodash'
 import InfiniteLoading from 'vue-infinite-loading/src/components/InfiniteLoading.vue'
 // Images
 import bannerBackground from '~/assets/img/banner.png'
@@ -72,9 +71,9 @@ import BillsFilters from '~/components/BillsFilters'
 import BillCountCategoryByCongressCard from '~/components/Analytics/BillCountCategoryByCongressCard'
 import BillCountCongressByCategoryCard from '~/components/Analytics/BillCountCongressByCategoryCard'
 // Queries
-import prefetchBillsQuery from '~/apollo/queries/prefetchBills'
-import billsQuery from '~/apollo/queries/BillLandingPage'
-import allCategoriesQuery from '~/apollo/queries/allCategories'
+import PrefetchBillIdsQuery from '~/apollo/queries/BillLandingPage/PrefetchBillIds'
+import BillsQuery from '~/apollo/queries/BillLandingPage/Bills'
+import CategoriesQuery from '~/apollo/queries/BillLandingPage/Categories'
 
 export default {
   head () {
@@ -113,7 +112,7 @@ export default {
     },
     prefetchBillIds () {
       return this.$apollo.query({
-        query: prefetchBillsQuery,
+        query: PrefetchBillIdsQuery,
         variables: {
           lang: this.locale,
           congress: this.selectedCongress,
@@ -123,7 +122,7 @@ export default {
     },
     fetchBills (ids) {
       return this.$apollo.query({
-        query: billsQuery,
+        query: BillsQuery,
         variables: { lang: this.locale, ids: ids }
       })
     },
@@ -147,12 +146,11 @@ export default {
         this.fetchBills(items)
           .then(({ data }) => {
             this.filterLoading = false
-            const billsMap = _.keyBy(data.bills, 'id')
-            const bills = items.map(id => billsMap[id])
+            const bills = data.bills
             this.bills = [...this.bills, ...bills]
             this.page++
             $state.loaded()
-            console.log('BBBBB', data.bills)
+            console.log('fetched bills', data.bills)
           })
           .catch(error => {
             console.log('get bills error', error)
@@ -198,7 +196,7 @@ export default {
   },
   apollo: {
     categories: {
-      query: allCategoriesQuery,
+      query: CategoriesQuery,
       fetchPolicy: 'cache-and-network',
       variables () {
         return { lang: this.locale }

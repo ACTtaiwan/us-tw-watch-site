@@ -1,0 +1,7 @@
+query CategoriesQuery($lang: String) {
+  categories(lang: $lang) {
+    id
+    code
+    name
+  }
+}
