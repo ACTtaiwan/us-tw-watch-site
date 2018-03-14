@@ -63,6 +63,8 @@ import catUsTw from '~/assets/img/cat-ustaiwan.svg'
 import catDemocracy from '~/assets/img/cat-democracy.svg'
 import catTrade from '~/assets/img/cat-trade.svg'
 import catInternational from '~/assets/img/cat-international.svg'
+import catDefense from '~/assets/img/cat-defense.svg'
+import catOther from '~/assets/img/cat-other.svg'
 
 export default {
   props: {
@@ -78,11 +80,11 @@ export default {
         arm: catArms,
         int: catInternational,
         trade: catTrade,
-        other: catAppropriation,
+        other: catOther,
         dem: catDemocracy,
         ustw: catUsTw,
         appn: catAppropriation,
-        def: catAppropriation,
+        def: catDefense,
         tra: catAppropriation
       }
     }
