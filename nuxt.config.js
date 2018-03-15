@@ -4,8 +4,9 @@ module.exports = {
   head: {
     titleTemplate: '',
     meta: [
-      { property: 'og:image', content: 'https://s3.amazonaws.com/taiwanwatch-static/assets/tw-og-image.png' },
+      { property: 'og:image', content: 'https://s3.amazonaws.com/taiwanwatch-static/assets/tw-fb-og-image.png' },
       { property: 'og:site_name', content: 'Taiwan Watch' },
+      { property: 'og:type', content: 'website' },
       { property: 'fb:app_id', content: '2017625051893386' },
       { property: 'twitter:card', content: 'summary_large_image' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }

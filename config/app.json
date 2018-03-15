@@ -1,6 +1,6 @@
 {
   "site": {
-    "url": "https://www.taiwanwatch.org"
+    "url": "https://dev.www.taiwanwatch.org"
   },
   "api": {
     "url": "https://api.taiwanwatch.org/dev/api"

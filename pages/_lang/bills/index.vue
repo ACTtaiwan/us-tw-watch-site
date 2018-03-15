@@ -58,6 +58,7 @@
   </div>
 </template>
 <script>
+import appConfig from '~/config/app.json'
 // Packages
 import InfiniteLoading from 'vue-infinite-loading/src/components/InfiniteLoading.vue'
 // Images
@@ -78,7 +79,13 @@ import CategoriesQuery from '~/apollo/queries/BillLandingPage/Categories'
 export default {
   head () {
     return {
-      title: `${this.$t('site.title.billsPageTitle')} | ${this.$t('site.title.mainTitle')}`
+      title: `${this.$t('billsPage.title')} | ${this.$t('site.title.mainTitle')}`,
+      meta: [
+        { hid: 'description', name: 'description', content: this.$t('billsPage.description') },
+        { property: 'og:url', content: `${appConfig.site.url}/${this.locale}/bills` },
+        { property: 'og:title', content: `${this.$t('billsPage.title')} | ${this.$t('site.title.mainTitle')}` },
+        { property: 'og:description', content: this.$t('billsPage.description') }
+      ]
     }
   },
   data () {

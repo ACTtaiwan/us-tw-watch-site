@@ -30,7 +30,8 @@
 </template>
 
 <script>
-import { trimConGovAction } from '~/plugins/filters'
+import appConfig from '~/config/app.json'
+import { trimConGovAction, localTime } from '~/plugins/filters'
 import BillDetailPageQuery from '~/apollo/queries/BillDetailPage'
 import BillOverviewCard from '~/components/BillDetailPage/BillOverviewCard'
 import BillSummaryCard from '~/components/BillSummaryCard'
@@ -81,9 +82,19 @@ export default {
         return `${this.bill.sponsor.state}`
       }
     },
+    billIntroducedDate () {
+      return localTime(this.bill.introducedDate)
+    },
     billSponsorTitle () {
+      const title = `${this.bill.sponsor.title} ${this.bill.sponsor.person.firstname} ${this.bill.sponsor.person.lastname}`
+      return title
+    },
+    billSponsorTitleArea () {
       const title = `${this.bill.sponsor.title} ${this.bill.sponsor.person.firstname} ${this.bill.sponsor.person.lastname} [${this.memberArea}]`
       return title
+    },
+    billDescription () {
+      return `This bill is sponsored by ${this.billSponsorTitle} on ${this.billIntroducedDate}. The latest action is: ${this.billLatestAction}. `
     }
   },
 
@@ -108,16 +119,22 @@ export default {
       }
     }
   },
-  head () {
+  head (a, b, c) {
     return {
       title: this.bill ? this.bill.title : 'Loading',
       meta: [
-        // { hid: 'description', name: 'description', content: this.bill ? this.bill.id : 'Loading' },
-        { name: 'og:title', content: this.bill ? this.bill.title : 'Loading' },
-        { name: 'twitter:label1', content: 'Current Status' },
-        { name: 'twitter:data1', content: this.bill ? this.billLatestAction : 'Loading' },
-        { name: 'twitter:label2', content: 'Sponsor' },
-        { name: 'twitter:data2', content: this.bill ? this.billSponsorTitle : 'Loading' }
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.bill ? this.billDescription : 'Loading'
+        },
+        { property: 'og:url', content: `${appConfig.site.url}/${this.locale}/bills/${this.$route.params.id}` },
+        { property: 'og:title', content: this.bill ? this.bill.title : 'Loading' },
+        { property: 'og:description', content: this.bill ? this.billDescription : 'Loading' },
+        { property: 'twitter:label1', content: 'Current Status' },
+        { property: 'twitter:data1', content: this.bill ? this.billLatestAction : 'Loading' },
+        { property: 'twitter:label2', content: 'Sponsor' },
+        { property: 'twitter:data2', content: this.bill ? this.billSponsorTitleArea : 'Loading' }
       ]
     }
   },

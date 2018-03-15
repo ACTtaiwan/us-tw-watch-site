@@ -53,6 +53,7 @@
 <script>
 // libraries
 import _ from 'lodash'
+import appConfig from '~/config/app.json'
 // images
 import congress from '~/assets/img/banner-home.png'
 import people from '~/assets/img/banner-people.png'
@@ -81,7 +82,12 @@ export default {
   head () {
     return {
       title: this.$t('site.title.mainTitle'),
-      meta: [{ hid: 'description', name: 'description', content: this.$t('site.description.mainDescription') }]
+      meta: [
+        { hid: 'description', name: 'description', content: this.$t('landingPage.description') },
+        { property: 'og:url', content: appConfig.site.url },
+        { property: 'og:title', content: this.$t('landingPage.title') },
+        { property: 'og:description', content: this.$t('landingPage.description') }
+      ]
     }
   },
   methods: {

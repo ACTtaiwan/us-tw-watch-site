@@ -19,12 +19,17 @@
     }
   },
   "landingPage": {
+    "title": "Taiwan Watch",
+    "description":
+      "Are your local representatives supportive of Taiwan? What are the Taiwan-related bills in Congress now? Check out Taiwan Watch and learn Taiwan affairs in Congress 😎",
     "bannerTitle": "Taiwan affairs in Congress",
     "newsTitle": "Taiwan Travel Act passed Senate",
     "newsContent":
       "The U.S. Senate unanimously passed Taiwan Travel Act (HR535) on Feburary 28. Once the bill has been signed by the President, it will become the second-most political bill after Taiwan Relations Act."
   },
   "billsPage": {
+    "title": "Bills",
+    "description": "What are the Taiwan-related bills in the current Congress? Let's find out! 🔍",
     "bannerTitle": "Taiwan related bills",
     "table": {
       "congressColLabel": "Congress",
