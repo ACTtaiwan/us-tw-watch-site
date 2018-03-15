@@ -22,8 +22,7 @@ Vue.prototype.$initFbSdk = () => {
       version: 'v2.12'
     })
     FB.AppEvents.logPageView()
-    Vue.FB = FB
+    Vue.prototype.FB = FB
     window.dispatchEvent(new Event('fb-sdk-ready'))
   }
-  Vue.FB = undefined
 }

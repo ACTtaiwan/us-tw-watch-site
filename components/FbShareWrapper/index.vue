@@ -17,23 +17,20 @@ export default {
     }
   },
   data: function () {
-    return {
-      isFBReady: false
-    }
+    return {}
   },
   mounted () {
-    this.$initFbSdk()
-    window.addEventListener('fb-sdk-ready', this.onFbReady)
+    if (!this.FB) {
+      this.$initFbSdk()
+    }
+    // window.addEventListener('fb-sdk-ready', this.onFbReady)
   },
   beforeDestroy: function () {
-    window.removeEventListener('fb-sdk-ready', this.onFbReady)
+    // window.removeEventListener('fb-sdk-ready', this.onFbReady)
   },
   methods: {
-    onFbReady: function () {
-      this.isFBReady = true
-    },
     onClick () {
-      if (this.isFBReady) {
+      if (this.FB) {
         this.shareLink()
       }
     },
