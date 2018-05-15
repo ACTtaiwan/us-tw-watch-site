@@ -1,4 +1,4 @@
-# Taiwan Watch Main Site
+# U.S. Taiwan Watch Site
 
 > Nuxt.js project
 
