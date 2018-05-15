@@ -134,7 +134,9 @@ export default {
       })
     },
     getCurrentPageItems () {
-      return this.billIds.filter((id, index) => index >= this.page * this.pageSize && index < (this.page + 1) * this.pageSize)
+      return this.billIds.filter(
+        (id, index) => index >= this.page * this.pageSize && index < (this.page + 1) * this.pageSize
+      )
     },
     async moreItems ($state) {
       // make sure billIds is fetched

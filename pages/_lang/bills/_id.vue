@@ -86,15 +86,21 @@ export default {
       return localTime(this.bill.introducedDate)
     },
     billSponsorTitle () {
-      const title = `${this.bill.sponsor.title} ${this.bill.sponsor.person.firstname} ${this.bill.sponsor.person.lastname}`
+      const title = `${this.bill.sponsor.title} ${
+        this.bill.sponsor.person.firstname
+      } ${this.bill.sponsor.person.lastname}`
       return title
     },
     billSponsorTitleArea () {
-      const title = `${this.bill.sponsor.title} ${this.bill.sponsor.person.firstname} ${this.bill.sponsor.person.lastname} [${this.memberArea}]`
+      const title = `${this.bill.sponsor.title} ${
+        this.bill.sponsor.person.firstname
+      } ${this.bill.sponsor.person.lastname} [${this.memberArea}]`
       return title
     },
     billDescription () {
-      return `This bill is sponsored by ${this.billSponsorTitle} on ${this.billIntroducedDate}. The latest action is: ${this.billLatestAction}. `
+      return `This bill is sponsored by ${this.billSponsorTitle} on ${
+        this.billIntroducedDate
+      }. The latest action is: ${this.billLatestAction}. `
     }
   },
 
@@ -128,13 +134,30 @@ export default {
           name: 'description',
           content: this.bill ? this.billDescription : 'Loading'
         },
-        { property: 'og:url', content: `${appConfig.site.url}/${this.locale}/bills/${this.$route.params.id}` },
-        { property: 'og:title', content: this.bill ? this.bill.title : 'Loading' },
-        { property: 'og:description', content: this.bill ? this.billDescription : 'Loading' },
+        {
+          property: 'og:url',
+          content: `${appConfig.site.url}/${this.locale}/bills/${
+            this.$route.params.id
+          }`
+        },
+        {
+          property: 'og:title',
+          content: this.bill ? this.bill.title : 'Loading'
+        },
+        {
+          property: 'og:description',
+          content: this.bill ? this.billDescription : 'Loading'
+        },
         { property: 'twitter:label1', content: 'Current Status' },
-        { property: 'twitter:data1', content: this.bill ? this.billLatestAction : 'Loading' },
+        {
+          property: 'twitter:data1',
+          content: this.bill ? this.billLatestAction : 'Loading'
+        },
         { property: 'twitter:label2', content: 'Sponsor' },
-        { property: 'twitter:data2', content: this.bill ? this.billSponsorTitleArea : 'Loading' }
+        {
+          property: 'twitter:data2',
+          content: this.bill ? this.billSponsorTitleArea : 'Loading'
+        }
       ]
     }
   },
