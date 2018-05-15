@@ -1,9 +1,6 @@
 # file meta data
 .DS_Store
 
-# IDE
-.vscode
-
 # Node.js
 node_modules
 jspm_packages
@@ -16,3 +13,6 @@ npm-debug.log*
 
 # Serverless directories
 .serverless
+
+# IDE
+.vscode/seetings.json
