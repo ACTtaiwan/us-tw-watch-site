@@ -1,7 +1,7 @@
 <template>
   <nuxt-link class="logo" :to="path(this, '/')">
     <img class="logo-img" :src="logo" alt="logo" />
-    <span class="logo-text">TAIWAN WATCH</span>
+    <span class="logo-text">U.S. TAIWAN WATCH</span>
   </nuxt-link>
 </template>
 
@@ -27,7 +27,7 @@ export default {
 @import 'assets/css/typography';
 
 .logo {
-  width: 200px;
+  width: 300px;
   height: 40px;
   position: relative;
   top: 10px;
@@ -43,7 +43,7 @@ export default {
 .logo-text {
   color: $twBlack;
   margin-left: 10px;
-  font-weight: $twMedium;
+  font-weight: $twSemiBold;
   letter-spacing: 1px;
 }
 

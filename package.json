@@ -18,7 +18,7 @@
     "generate": "nuxt generate"
   },
   "now": {
-    "alias": "www.taiwanwatch.org"
+    "alias": "www.uswatch.tw"
   },
   "dependencies": {
     "@nuxtjs/apollo": "^3.0.6",
