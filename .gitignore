@@ -15,4 +15,4 @@ npm-debug.log*
 .serverless
 
 # IDE
-.vscode/seetings.json
+.vscode
