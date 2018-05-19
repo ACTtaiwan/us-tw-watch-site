@@ -57,7 +57,7 @@
 
 ## Directory Structure
 
-```
+```text
 └── 📂 src
     ├── 📂 api --------------- methods to call 3rd-party services
     ├── 📂 assets ------------ un-compiled assets such as Less, Sass or JavaScript
