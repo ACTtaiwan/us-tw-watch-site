@@ -86,21 +86,21 @@ export default {
       return localTime(this.bill.introducedDate)
     },
     billSponsorTitle () {
-      const title = `${this.bill.sponsor.title} ${
-        this.bill.sponsor.person.firstname
-      } ${this.bill.sponsor.person.lastname}`
+      const title = `${this.bill.sponsor.title} ${this.bill.sponsor.person.firstname} ${
+        this.bill.sponsor.person.lastname
+      }`
       return title
     },
     billSponsorTitleArea () {
-      const title = `${this.bill.sponsor.title} ${
-        this.bill.sponsor.person.firstname
-      } ${this.bill.sponsor.person.lastname} [${this.memberArea}]`
+      const title = `${this.bill.sponsor.title} ${this.bill.sponsor.person.firstname} ${
+        this.bill.sponsor.person.lastname
+      } [${this.memberArea}]`
       return title
     },
     billDescription () {
-      return `This bill is sponsored by ${this.billSponsorTitle} on ${
-        this.billIntroducedDate
-      }. The latest action is: ${this.billLatestAction}. `
+      return `This bill is sponsored by ${this.billSponsorTitle} on ${this.billIntroducedDate}. The latest action is: ${
+        this.billLatestAction
+      }. `
     }
   },
 
@@ -136,9 +136,7 @@ export default {
         },
         {
           property: 'og:url',
-          content: `${appConfig.site.url}/${this.locale}/bills/${
-            this.$route.params.id
-          }`
+          content: `${appConfig.site.url}/${this.locale}/bills/${this.$route.params.id}`
         },
         {
           property: 'og:title',
