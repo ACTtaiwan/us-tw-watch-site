@@ -2,10 +2,16 @@
   <div class="landing">
 
     <!-- Banner -->
-    <section class="banner" :style="bannerStyle">
-      <div class="banner-wrapper" :class="{ tablet: this.isTablet, phone: this.isPhone }">
+    <section
+      :style="bannerStyle"
+      class="banner">
+      <div
+        :class="{ tablet: isTablet, phone: isPhone }"
+        class="banner-wrapper">
         <div class="image-container" >
-          <img class="front-img" :src="people" />
+          <img
+            :src="people"
+            class="front-img">
         </div>
         <div class="text-container">
           <h1 class="banner-title">{{ this.$t('landingPage.bannerTitle') }}</h1>
@@ -22,11 +28,16 @@
       <div class="section-wrapper">
         <h1 class="section-title">Bill updates</h1>
         <div class="info-cards-section-wrapper">
-          <Spinner v-if="isBillUpdateLoading" ></Spinner>
+          <Spinner v-if="isBillUpdateLoading" />
           <Row :gutter="30">
-            <Col :span="isPhone ? 24 : isTablet ? 12 : 8" v-for="bill in bills" :key="bill.id">
-              <BillCard class="bill-card" :bill="bill" />
-            </Col>
+            <i-col
+              v-for="bill in bills"
+              :key="bill.id"
+              :span="isPhone ? 24 : isTablet ? 12 : 8">
+              <BillCard
+                :bill="bill"
+                class="bill-card" />
+            </i-col>
           </Row>
         </div>
       </div>
@@ -37,11 +48,16 @@
       <div class="section-wrapper">
         <h1 class="section-title">Articles</h1>
         <div class="info-cards-section-wrapper">
-          <Spinner v-if="isArticleUpdateLoading" ></Spinner>
+          <Spinner v-if="isArticleUpdateLoading" />
           <Row :gutter="30">
-            <Col :span="isPhone ? 24 : isTablet ? 12 : 8" v-for="article in articles" :key="article.id">
-              <ArticleCard class="article-card" :article="article" />
-            </Col>
+            <i-col
+              v-for="article in articles"
+              :key="article.id"
+              :span="isPhone ? 24 : isTablet ? 12 : 8">
+              <ArticleCard
+                :article="article"
+                class="article-card" />
+            </i-col>
           </Row>
         </div>
       </div>
@@ -67,7 +83,12 @@ import BillsQuery from '~/apollo/queries/HomePage/Bills'
 import ArticlesQuery from '~/apollo/queries/HomePage/Articles'
 
 export default {
-  data () {
+  components: {
+    BillCard,
+    ArticleCard,
+    Spinner
+  },
+  data() {
     return {
       numberOfBillCards: 6,
       isBillUpdateLoading: true,
@@ -79,7 +100,7 @@ export default {
       people
     }
   },
-  head () {
+  head() {
     return {
       title: this.$t('site.title.mainTitle'),
       meta: [
@@ -90,8 +111,22 @@ export default {
       ]
     }
   },
+  computed: {
+    locale() {
+      return this.$store.state.locale
+    },
+    isPhone() {
+      return this.$store.getters.isPhone
+    },
+    isTablet() {
+      return this.$store.getters.isTablet
+    },
+    bannerStyle() {
+      return `background-image: url("${this.congress}"); background-size: cover;`
+    }
+  },
   methods: {
-    getLatestActionDate (actions) {
+    getLatestActionDate(actions) {
       let latestActionTime = 0
       actions.forEach(action => {
         if (action.datetime > latestActionTime) {
@@ -100,13 +135,13 @@ export default {
       })
       return parseInt(latestActionTime)
     },
-    fetchBills (ids) {
+    fetchBills(ids) {
       return this.$apollo.query({
         query: BillsQuery,
         variables: { lang: this.locale, ids: ids }
       })
     },
-    getUpdatedBills () {
+    getUpdatedBills() {
       this.fetchBills(this.billIds)
         .then(({ data }) => {
           // the returned bill order is not the same as the bill id order provided
@@ -124,34 +159,20 @@ export default {
         })
     }
   },
-  computed: {
-    locale () {
-      return this.$store.state.locale
-    },
-    isPhone () {
-      return this.$store.getters.isPhone
-    },
-    isTablet () {
-      return this.$store.getters.isTablet
-    },
-    bannerStyle () {
-      return `background-image: url("${this.congress}"); background-size: cover;`
-    }
-  },
   apollo: {
     billIds: {
       query: PrefetchBillIdsQuery,
       fetchPolicy: 'cache-and-network',
-      variables () {
+      variables() {
         return {
           lang: this.locale,
           congress: [115]
         }
       },
-      update (data) {
+      update(data) {
         return data.bills[0].prefetchIds
       },
-      result (result) {
+      result(result) {
         if (!result.loading) {
           this.getUpdatedBills()
         }
@@ -160,25 +181,20 @@ export default {
     articles: {
       query: ArticlesQuery,
       fetchPolicy: 'cache-and-network',
-      variables () {
+      variables() {
         return {
           lang: this.locale
         }
       },
-      update (data) {
+      update(data) {
         return _.orderBy(data.articles, article => parseInt(article.publishedAt), ['desc'])
       },
-      result (result) {
+      result(result) {
         if (!result.loading) {
           this.isArticleUpdateLoading = false
         }
       }
     }
-  },
-  components: {
-    BillCard,
-    ArticleCard,
-    Spinner
   }
 }
 </script>

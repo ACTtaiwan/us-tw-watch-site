@@ -1,28 +1,43 @@
 <template>
   <div class="bill-page">
     <!-- Bill -->
-    <section v-if="bill" class="bill-section" :class="{ phone: this.isPhone }">
+    <section
+      v-if="bill"
+      :class="{ phone: isPhone }"
+      class="bill-section">
       <div class="bill-section-wrapper">
         <Row>
-          <Col :span="this.isTablet || this.isPhone ? 24 : 18"  class="main-block" :class="{ mobile: this.isTablet || this.isPhone }">
-            <!-- Overview -->
-            <BillOverviewCard :bill="this.bill"></BillOverviewCard>
-            <!-- Summary -->
-            <BillSummaryCard v-if="this.bill.summary.paragraphs" :bill="this.bill"></BillSummaryCard>
-            <!-- Support Map -->
-            <BillSponsorsMapCard :bill="this.bill"></BillSponsorsMapCard>
-            <!-- Versions -->
-            <BillVersionsCard v-if="this.bill.versions.length > 0" :bill="this.bill"></BillVersionsCard>
-          </Col>
+          <i-col
+            :span="isTablet || isPhone ? 24 : 18"
+            :class="{ mobile: isTablet || isPhone }"
+            class="main-block">
+            <BillOverviewCard :bill="bill" />
+            <BillSummaryCard
+              v-if="bill.summary.paragraphs"
+              :bill="bill" />
+            <BillSponsorsMapCard :bill="bill" />
+            <BillVersionsCard
+              v-if="bill.versions.length > 0"
+              :bill="bill" />
+          </i-col>
           <!-- Summary -->
-          <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="detail-block">
-            <BillActionsCard :bill="this.bill"></BillActionsCard>
-            <Row :gutter="30" v-if="this.bill.articles">
-              <Col :span="24" v-for="article in this.bill.articles" :key="article.id">
-                <ArticleCard class="article-card" :article="article" />
-              </Col>
+          <i-col
+            :span="isTablet || isPhone ? 24 : 6"
+            class="detail-block">
+            <BillActionsCard :bill="bill" />
+            <Row
+              v-if="bill.articles"
+              :gutter="30">
+              <i-col
+                v-for="article in bill.articles"
+                :key="article.id"
+                :span="24" >
+                <ArticleCard
+                  :article="article"
+                  class="article-card" />
+              </i-col>
             </Row>
-          </Col>
+          </i-col>
         </Row>
       </div>
     </section>
@@ -42,23 +57,31 @@ import BillVersionsCard from '~/components/BillDetailPage/BillVersionsCard'
 import ArticleCard from '~/components/HomePage/ArticleCard'
 
 export default {
-  data () {
+  components: {
+    BillOverviewCard,
+    BillSummaryCard,
+    BillSponsorsMapCard,
+    BillActionsCard,
+    BillVersionsCard,
+    ArticleCard
+  },
+  data() {
     return {}
   },
   computed: {
-    locale () {
+    locale() {
       return this.$store.state.locale
     },
-    isDesktop () {
+    isDesktop() {
       return this.$store.getters.isDesktop
     },
-    isPhone () {
+    isPhone() {
       return this.$store.getters.isPhone
     },
-    isTablet () {
+    isTablet() {
       return this.$store.getters.isTablet
     },
-    billLatestAction () {
+    billLatestAction() {
       let latestActionTime = 0
       let latestAction = ''
       this.bill.actions.forEach(action => {
@@ -75,29 +98,29 @@ export default {
       }
       return trimConGovAction(latestAction)
     },
-    memberArea () {
+    memberArea() {
       if (this.bill.sponsor.district) {
         return `${this.bill.sponsor.state}-${this.bill.sponsor.district}`
       } else {
         return `${this.bill.sponsor.state}`
       }
     },
-    billIntroducedDate () {
+    billIntroducedDate() {
       return localTime(this.bill.introducedDate)
     },
-    billSponsorTitle () {
+    billSponsorTitle() {
       const title = `${this.bill.sponsor.title} ${this.bill.sponsor.person.firstname} ${
         this.bill.sponsor.person.lastname
       }`
       return title
     },
-    billSponsorTitleArea () {
+    billSponsorTitleArea() {
       const title = `${this.bill.sponsor.title} ${this.bill.sponsor.person.firstname} ${
         this.bill.sponsor.person.lastname
       } [${this.memberArea}]`
       return title
     },
-    billDescription () {
+    billDescription() {
       return `This bill is sponsored by ${this.billSponsorTitle} on ${this.billIntroducedDate}. The latest action is: ${
         this.billLatestAction
       }. `
@@ -114,18 +137,18 @@ export default {
         ids: [route.params.id],
         lang: app.store.state.locale
       }),
-      variables () {
+      variables() {
         return {
           ids: [this.$route.params.id],
           lang: this.locale
         }
       },
-      update (data) {
+      update(data) {
         return data.bills[0]
       }
     }
   },
-  head (a, b, c) {
+  head(a, b, c) {
     return {
       title: this.bill ? this.bill.title : 'Loading',
       meta: [
@@ -158,14 +181,6 @@ export default {
         }
       ]
     }
-  },
-  components: {
-    BillOverviewCard,
-    BillSummaryCard,
-    BillSponsorsMapCard,
-    BillActionsCard,
-    BillVersionsCard,
-    ArticleCard
   }
 }
 </script>

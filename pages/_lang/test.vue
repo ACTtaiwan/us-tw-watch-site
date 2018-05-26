@@ -11,11 +11,11 @@
 import FbShareWrapper from '~/components/FbShareWrapper'
 
 export default {
-  data () {
-    return {}
-  },
   components: {
     FbShareWrapper
+  },
+  data() {
+    return {}
   }
 }
 </script>

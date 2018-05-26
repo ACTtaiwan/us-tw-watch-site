@@ -1,38 +1,71 @@
 <template>
   <div class="members-page">
     <!-- Banner -->
-    <section class="banner" :style="bannerStyle" :class="{ tablet: this.isTablet, phone: this.isPhone }">
+    <section
+      :style="bannerStyle"
+      :class="{ tablet: isTablet, phone: isPhone }"
+      class="banner">
       <div class="banner-wrapper">
         <div class="text-container">
           <h1 class="banner-title">{{ this.$t('membersPage.bannerTitle') }}</h1>
           <div class="tabs">
-            <TabButton class="tab-button" icon="ios-paper" label="Members" :selected="this.membersTabSelected" @select="selectTab({members: true, insight: false})"/>
-            <TabButton class="tab-button" icon="stats-bars" label="Insight" :selected="this.insightTabSelected" @select="selectTab({members: false, insight: true})"/>
+            <TabButton
+              :selected="membersTabSelected"
+              class="tab-button"
+              icon="ios-paper"
+              label="Members"
+              @select="selectTab({members: true, insight: false})"/>
+            <TabButton
+              :selected="insightTabSelected"
+              class="tab-button"
+              icon="stats-bars"
+              label="Insight"
+              @select="selectTab({members: false, insight: true})"/>
           </div>
         </div>
         <div class="image-container" >
-          <img class="front-img" :src="bannerMembers" />
+          <img
+            :src="bannerMembers"
+            class="front-img">
         </div>
       </div>
     </section>
     <!-- Members -->
-    <section v-if="this.membersTabSelected" class="members-section">
+    <section
+      v-if="membersTabSelected"
+      class="members-section">
       <div class="members-section-wrapper">
         <Row>
           <!-- Filters -->
-          <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="filters" :class="{ mobile: this.isTablet || this.isPhone }">
-            <MembersFilters :states="states" @on-filter="filterMembers" :loading="filterLoading"></MembersFilters>
-          </Col>
+          <i-col
+            :span="isTablet || isPhone ? 24 : 6"
+            :class="{ mobile: isTablet || isPhone }"
+            class="filters">
+            <MembersFilters
+              :states="states"
+              :loading="filterLoading"
+              @on-filter="filterMembers"/>
+          </i-col>
           <!-- List -->
-          <Col :span="this.isTablet || this.isPhone ? 24 : 18" class="list" :class="{ mobile: this.isTablet || this.isPhone, phone: this.isPhone }">
+          <i-col
+            :span="isTablet || isPhone ? 24 : 18"
+            :class="{ mobile: isTablet || isPhone, phone: isPhone }"
+            class="list">
             <Row>
-              <Col span="24" v-for="member in members" :key="member.id">
-                <MemberSearchResultCard :member="member" :states="states" />
-              </Col>
+              <i-col
+                v-for="member in members"
+                :key="member.id"
+                span="24">
+                <MemberSearchResultCard
+                  :member="member"
+                  :states="states" />
+              </i-col>
             </Row>
-            <InfiniteLoading ref="infiniteLoading" @infinite="moreItems">
+            <InfiniteLoading
+              ref="infiniteLoading"
+              @infinite="moreItems">
               <span slot="spinner">
-                <Spinner></Spinner>
+                <Spinner/>
               </span>
               <span slot="no-more">
                 no more data 😂
@@ -41,20 +74,26 @@
                 no results 😭
               </span>
             </InfiniteLoading>
-          </Col>
+          </i-col>
         </Row>
       </div>
     </section>
     <!-- Insights -->
-    <section v-if="this.insightTabSelected" class="insights-section">
+    <section
+      v-if="insightTabSelected"
+      class="insights-section">
       <div class="insights-section-wrapper">
         <Row :gutter="20">
-          <Col :span="this.isTablet || this.isPhone ? 24 : 12" class="map-chart-container">
-            <SponsoredBillCountMapCard></SponsoredBillCountMapCard>
-          </Col>
-          <Col :span="this.isTablet || this.isPhone ? 24 : 12" class="map-chart-container">
-            <CosponsoredBillCountMapCard></CosponsoredBillCountMapCard>
-          </Col>
+          <i-col
+            :span="isTablet || isPhone ? 24 : 12"
+            class="map-chart-container">
+            <SponsoredBillCountMapCard />
+          </i-col>
+          <i-col
+            :span="isTablet || isPhone ? 24 : 12"
+            class="map-chart-container">
+            <CosponsoredBillCountMapCard />
+          </i-col>
         </Row>
       </div>
     </section>
@@ -80,12 +119,21 @@ import MembersQuery from '~/apollo/queries/MemberLandingPage/Members'
 import StateListQuery from '~/apollo/queries/StateList'
 
 export default {
-  head () {
+  head() {
     return {
       title: `${this.$t('site.title.membersPageTitle')} | ${this.$t('site.title.mainTitle')}`
     }
   },
-  data () {
+  components: {
+    MembersFilters,
+    InfiniteLoading,
+    MemberSearchResultCard,
+    Spinner,
+    TabButton,
+    SponsoredBillCountMapCard,
+    CosponsoredBillCountMapCard
+  },
+  data() {
     return {
       members: [],
       memberIds: [],
@@ -100,13 +148,31 @@ export default {
       bannerStyle: `background-image: url("${bannerBackground}"); background-size: cover;`
     }
   },
-
+  computed: {
+    locale() {
+      // when locale changes, reset the current page
+      this.resetPage()
+      return this.$store.state.locale
+    },
+    isPhone() {
+      return this.$store.getters.isPhone
+    },
+    isTablet() {
+      return this.$store.getters.isTablet
+    },
+    congress() {
+      return [this.$store.state.currentCongress]
+    },
+    selectedStates() {
+      return this.filterData.selectedStates ? this.filterData.selectedStates : []
+    }
+  },
   methods: {
-    selectTab ({ members, insight }) {
+    selectTab({ members, insight }) {
       this.membersTabSelected = members
       this.insightTabSelected = insight
     },
-    resetPage () {
+    resetPage() {
       if (this.$refs.infiniteLoading) {
         this.$refs.infiniteLoading.stateChanger.reset()
       }
@@ -114,22 +180,24 @@ export default {
       this.memberIds = []
       this.page = 0
     },
-    prefetchMemberIds () {
+    prefetchMemberIds() {
       return this.$apollo.query({
         query: MembersPrefetchQuery,
         variables: { lang: this.locale, congress: this.congress, states: this.selectedStates }
       })
     },
-    fetchMembers (ids) {
+    fetchMembers(ids) {
       return this.$apollo.query({
         query: MembersQuery,
         variables: { lang: this.locale, ids: ids }
       })
     },
-    getCurrentPageItems () {
-      return this.memberIds.filter((id, index) => index >= this.page * this.pageSize && index < (this.page + 1) * this.pageSize)
+    getCurrentPageItems() {
+      return this.memberIds.filter(
+        (id, index) => index >= this.page * this.pageSize && index < (this.page + 1) * this.pageSize
+      )
     },
-    async moreItems ($state) {
+    async moreItems($state) {
       // make sure memberIds is fetched
       if (!this.memberIds.length) {
         try {
@@ -164,52 +232,24 @@ export default {
         $state.complete()
       }
     },
-    filterMembers (filterData) {
+    filterMembers(filterData) {
       this.filterLoading = true
       this.resetPage()
       this.filterData = filterData
       console.log('filterData', filterData.selectedStates)
     }
   },
-  computed: {
-    locale () {
-      // when locale changes, reset the current page
-      this.resetPage()
-      return this.$store.state.locale
-    },
-    isPhone () {
-      return this.$store.getters.isPhone
-    },
-    isTablet () {
-      return this.$store.getters.isTablet
-    },
-    congress () {
-      return [this.$store.state.currentCongress]
-    },
-    selectedStates () {
-      return this.filterData.selectedStates ? this.filterData.selectedStates : []
-    }
-  },
   apollo: {
     states: {
       query: StateListQuery,
       fetchPolicy: 'cache-and-network',
-      variables () {
+      variables() {
         return { lang: this.locale, stateList: true }
       },
-      update (data) {
+      update(data) {
         return JSON.parse(data.maps[0].states)
       }
     }
-  },
-  components: {
-    MembersFilters,
-    InfiniteLoading,
-    MemberSearchResultCard,
-    Spinner,
-    TabButton,
-    SponsoredBillCountMapCard,
-    CosponsoredBillCountMapCard
   }
 }
 </script>

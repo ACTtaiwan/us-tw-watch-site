@@ -1,38 +1,44 @@
 <template>
   <div class="bill-page">
-
     <!-- Member -->
-    <section v-if="members" class="member-section" :class="{ phone: this.isPhone }">
+    <section
+      v-if="members"
+      :class="{ phone: isPhone }"
+      class="member-section">
       <div class="member-section-wrapper">
         <Row>
           <!-- Main -->
-          <Col :span="this.isTablet || this.isPhone ? 24 : 18"  class="main-block" :class="{ mobile: this.isTablet || this.isPhone }">
-            <!-- Overview -->
-            <MemberOverviewCard v-if="this.ppMember"
-              :ppMember="this.ppMember"
-              :members="this.members"
+          <i-col
+            :span="isTablet || isPhone ? 24 : 18"
+            :class="{ mobile: isTablet || isPhone }"
+            class="main-block">
+            <MemberOverviewCard
+              v-if="ppMember"
+              :ppMember="ppMember"
+              :members="members"
               :memberTitle="memberTitle"
               :sponsoredBills="sponsoredBills"
-              :cosponsoredBills="cosponsoredBills">
-            </MemberOverviewCard>
+              :cosponsoredBills="cosponsoredBills"/>
             <Spinner v-else />
             <!-- Sponsored Bills -->
-            <SponsoredBillsCard v-if="this.ppMember && sponsoredBills && sponsoredBills.length > 0"
-              :member="this.ppMember"
-              :sponsoredBills="sponsoredBills">
-            </SponsoredBillsCard>
+            <SponsoredBillsCard
+              v-if="ppMember && sponsoredBills && sponsoredBills.length > 0"
+              :member="ppMember"
+              :sponsoredBills="sponsoredBills" />
             <!-- Cosponsored Bills -->
-            <CosponsoredBillsCard v-if="this.ppMember && cosponsoredBills && cosponsoredBills.length > 0"
-              :member="this.ppMember"
-              :cosponsoredBills="cosponsoredBills">
-            </CosponsoredBillsCard>
-          </Col>
+            <CosponsoredBillsCard
+              v-if="ppMember && cosponsoredBills && cosponsoredBills.length > 0"
+              :member="ppMember"
+              :cosponsoredBills="cosponsoredBills"/>
+          </i-col>
           <!-- Summary -->
-          <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="detail-block">
-            <ContactCard v-if="this.ppMember"
-              :member="this.ppMember">
-            </ContactCard>
-          </Col>
+          <i-col
+            :span="isTablet || isPhone ? 24 : 6"
+            class="detail-block">
+            <ContactCard
+              v-if="ppMember"
+              :member="ppMember" />
+          </i-col>
         </Row>
       </div>
     </section>
@@ -58,7 +64,14 @@ import MemberQuery from '~/apollo/queries/MemberDetailPage/Member'
 import BillsQuery from '~/apollo/queries/MemberDetailPage/Bills'
 
 export default {
-  data () {
+  components: {
+    MemberOverviewCard,
+    ContactCard,
+    SponsoredBillsCard,
+    CosponsoredBillsCard,
+    Spinner
+  },
+  data() {
     return {
       sponsoredBills: null,
       cosponsoredBills: null,
@@ -66,37 +79,39 @@ export default {
     }
   },
   computed: {
-    locale () {
+    locale() {
       return this.$store.state.locale
     },
-    isDesktop () {
+    isDesktop() {
       return this.$store.getters.isDesktop
     },
-    isPhone () {
+    isPhone() {
       return this.$store.getters.isPhone
     },
-    isTablet () {
+    isTablet() {
       return this.$store.getters.isTablet
     },
-    person () {
+    person() {
       return this.members ? this.members[0].person : {}
     },
-    member () {
+    member() {
       return this.members ? this.members[0] : {}
     },
-    memberTitle () {
+    memberTitle() {
       const lang = { 'en-us': 'en', 'zh-tw': 'zh' }[this.$store.state.locale]
 
       if (!this.states || !this.members) return ''
       if (this.members[0].district) {
-        return `${this.members[0].titleLong} for ${this.states[this.members[0].state][lang]}'s ${this.members[0].district}th congressional district`
+        return `${this.members[0].titleLong} for ${this.states[this.members[0].state][lang]}'s ${
+          this.members[0].district
+        }th congressional district`
       } else {
         return `${this.members[0].titleLong} for ${this.states[this.members[0].state][lang]}`
       }
     }
   },
   methods: {
-    async fetchSupportBills (members) {
+    async fetchSupportBills(members) {
       let sponsored = []
       let cosponsored = []
 
@@ -111,11 +126,11 @@ export default {
       this.sponsoredBills = _.orderBy(sponsoredBills.data.bills, bill => Number(bill.introducedDate), ['desc'])
       this.cosponsoredBills = _.orderBy(cosponsoredBills.data.bills, bill => Number(bill.introducedDate), ['desc'])
     },
-    async fetchProPublicaMember (bioGuideId) {
+    async fetchProPublicaMember(bioGuideId) {
       const response = await get(`https://api.propublica.org/congress/v1/members/${bioGuideId}.json`)
       this.ppMember = response.data.results[0]
     },
-    fetchBills (ids) {
+    fetchBills(ids) {
       return this.$apollo.query({
         query: BillsQuery,
         variables: { lang: this.locale, ids: ids }
@@ -132,16 +147,16 @@ export default {
         personIds: [route.params.id],
         lang: app.store.state.locale
       }),
-      variables () {
+      variables() {
         return {
           personIds: [this.$route.params.id],
           lang: this.locale
         }
       },
-      update (data) {
+      update(data) {
         return data.members
       },
-      result (result) {
+      result(result) {
         if (!result.loading) {
           this.fetchSupportBills(result.data.members)
           this.fetchProPublicaMember(result.data.members[0].person.bioGuideId)
@@ -155,15 +170,15 @@ export default {
         lang: app.store.state.locale,
         stateList: true
       }),
-      variables () {
+      variables() {
         return { lang: this.locale, stateList: true }
       },
-      update (data) {
+      update(data) {
         return JSON.parse(data.maps[0].states)
       }
     }
   },
-  head () {
+  head() {
     return {
       title: this.person ? `${this.person.firstname} ${this.person.lastname}` : 'Loading',
       meta: [
@@ -175,13 +190,6 @@ export default {
         { name: 'twitter:data2', content: this.cosponsoredBills ? this.cosponsoredBills.length : 0 }
       ]
     }
-  },
-  components: {
-    MemberOverviewCard,
-    ContactCard,
-    SponsoredBillsCard,
-    CosponsoredBillsCard,
-    Spinner
   }
 }
 </script>

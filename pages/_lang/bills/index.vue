@@ -1,57 +1,90 @@
 <template>
   <div class="bills-page">
     <!-- Banner -->
-    <section class="banner" :style="bannerStyle" :class="{ tablet: this.isTablet, phone: this.isPhone }">
+    <section
+      :style="bannerStyle"
+      :class="{ tablet: isTablet, phone: isPhone }"
+      class="banner">
       <div class="banner-wrapper">
         <div class="text-container">
           <h1 class="banner-title">{{ this.$t('billsPage.bannerTitle') }}</h1>
           <div class="tabs">
-            <TabButton class="tab-button" icon="ios-paper" label="Bills" :selected="this.billsTabSelected" @select="selectTab({bills: true, insight: false})"/>
-            <TabButton class="tab-button" icon="stats-bars" label="Insight" :selected="this.insightTabSelected" @select="selectTab({bills: false, insight: true})"/>
+            <TabButton
+              :selected="billsTabSelected"
+              class="tab-button"
+              icon="ios-paper"
+              label="Bills"
+              @select="selectTab({bills: true, insight: false})"/>
+            <TabButton
+              :selected="insightTabSelected"
+              class="tab-button"
+              icon="stats-bars"
+              label="Insight"
+              @select="selectTab({bills: false, insight: true})"/>
           </div>
         </div>
         <div class="image-container" >
-          <img class="front-img" :src="bannerBills" />
+          <img
+            :src="bannerBills"
+            class="front-img">
         </div>
       </div>
     </section>
     <!-- Bills -->
-    <section v-if="this.billsTabSelected" class="bills-section">
+    <section
+      v-if="billsTabSelected"
+      class="bills-section">
       <div class="bills-section-wrapper">
         <Row>
           <!-- Filters -->
-          <Col :span="this.isTablet || this.isPhone ? 24 : 6" class="filters" :class="{ mobile: this.isTablet || this.isPhone }">
-            <BillsFilters :categories="categories" @on-filter="filterBills" :loading="filterLoading"></BillsFilters>
-          </Col>
+          <i-col
+            :span="isTablet || isPhone ? 24 : 6"
+            :class="{ mobile: isTablet || isPhone }"
+            class="filters">
+            <BillsFilters
+              :categories="categories"
+              :loading="filterLoading"
+              @on-filter="filterBills" />
+          </i-col>
           <!-- List -->
-          <Col :span="this.isTablet || this.isPhone ? 24 : 18" class="list" :class="{ mobile: this.isTablet || this.isPhone, phone: this.isPhone }">
+          <i-col
+            :span="isTablet || isPhone ? 24 : 18"
+            :class="{ mobile: isTablet || isPhone, phone: isPhone }"
+            class="list">
             <Row>
-              <Col span="24" v-for="bill in bills" :key="bill.id">
+              <i-col
+                v-for="bill in bills"
+                :key="bill.id"
+                span="24">
                 <BillSearchResultCard :bill="bill" />
-              </Col>
+              </i-col>
             </Row>
-            <InfiniteLoading ref="infiniteLoading" @infinite="moreItems">
+            <InfiniteLoading
+              ref="infiniteLoading"
+              @infinite="moreItems">
               <span slot="spinner">
-                <Spinner></Spinner>
+                <Spinner />
               </span>
               <span slot="no-more">
                 no more data 😂
               </span>
             </InfiniteLoading>
-          </Col>
+          </i-col>
         </Row>
       </div>
     </section>
     <!-- Insights -->
-    <section v-if="this.insightTabSelected" class="insights-section">
+    <section
+      v-if="insightTabSelected"
+      class="insights-section">
       <div class="insights-section-wrapper">
         <Row :gutter="20">
-          <Col :span="this.isTablet || this.isPhone ? 24 : 12">
-            <BillCountCongressByCategoryCard :categories="this.categories"></BillCountCongressByCategoryCard>
-          </Col>
-          <Col :span="this.isTablet || this.isPhone ? 24 : 12">
-            <BillCountCategoryByCongressCard :categories="this.categories"></BillCountCategoryByCongressCard>
-          </Col>
+          <i-col :span="isTablet || isPhone ? 24 : 12">
+            <BillCountCongressByCategoryCard :categories="categories" />
+          </i-col>
+          <i-col :span="isTablet || isPhone ? 24 : 12">
+            <BillCountCategoryByCongressCard :categories="categories" />
+          </i-col>
         </Row>
       </div>
     </section>
@@ -77,7 +110,7 @@ import BillsQuery from '~/apollo/queries/BillLandingPage/Bills'
 import CategoriesQuery from '~/apollo/queries/BillLandingPage/Categories'
 
 export default {
-  head () {
+  head() {
     return {
       title: `${this.$t('billsPage.title')} | ${this.$t('site.title.mainTitle')}`,
       meta: [
@@ -88,7 +121,16 @@ export default {
       ]
     }
   },
-  data () {
+  components: {
+    InfiniteLoading,
+    BillSearchResultCard,
+    TabButton,
+    Spinner,
+    BillsFilters,
+    BillCountCategoryByCongressCard,
+    BillCountCongressByCategoryCard
+  },
+  data() {
     return {
       categories: [],
       bills: [],
@@ -104,12 +146,39 @@ export default {
       bannerStyle: `background-image: url("${bannerBackground}"); background-size: cover;`
     }
   },
+  computed: {
+    locale() {
+      // when locale changes, reset the current page
+      this.resetPage()
+      return this.$store.state.locale
+    },
+    isPhone() {
+      return this.$store.getters.isPhone
+    },
+    isTablet() {
+      return this.$store.getters.isTablet
+    },
+    selectedCategories() {
+      return this.filterData.selectedCategories ? this.filterData.selectedCategories : []
+    },
+    selectedCongress() {
+      let congress = []
+      if (this.filterData.congressFrom && this.filterData.congressTo) {
+        for (var i = this.filterData.congressFrom; i <= this.filterData.congressTo; i++) {
+          congress.push(i)
+        }
+      } else {
+        congress.push(this.$store.state.currentCongress)
+      }
+      return congress
+    }
+  },
   methods: {
-    selectTab ({ bills, insight }) {
+    selectTab({ bills, insight }) {
       this.billsTabSelected = bills
       this.insightTabSelected = insight
     },
-    resetPage () {
+    resetPage() {
       if (this.$refs.infiniteLoading) {
         this.$refs.infiniteLoading.stateChanger.reset()
       }
@@ -117,7 +186,7 @@ export default {
       this.billIds = []
       this.page = 0
     },
-    prefetchBillIds () {
+    prefetchBillIds() {
       return this.$apollo.query({
         query: PrefetchBillIdsQuery,
         variables: {
@@ -127,18 +196,18 @@ export default {
         }
       })
     },
-    fetchBills (ids) {
+    fetchBills(ids) {
       return this.$apollo.query({
         query: BillsQuery,
         variables: { lang: this.locale, ids: ids }
       })
     },
-    getCurrentPageItems () {
+    getCurrentPageItems() {
       return this.billIds.filter(
         (id, index) => index >= this.page * this.pageSize && index < (this.page + 1) * this.pageSize
       )
     },
-    async moreItems ($state) {
+    async moreItems($state) {
       // make sure billIds is fetched
       if (!this.billIds.length) {
         try {
@@ -169,57 +238,21 @@ export default {
         $state.complete()
       }
     },
-    filterBills (filterData) {
+    filterBills(filterData) {
       this.filterLoading = true
       this.resetPage()
       this.filterData = filterData
       console.log('filterData', filterData)
     }
   },
-  computed: {
-    locale () {
-      // when locale changes, reset the current page
-      this.resetPage()
-      return this.$store.state.locale
-    },
-    isPhone () {
-      return this.$store.getters.isPhone
-    },
-    isTablet () {
-      return this.$store.getters.isTablet
-    },
-    selectedCategories () {
-      return this.filterData.selectedCategories ? this.filterData.selectedCategories : []
-    },
-    selectedCongress () {
-      let congress = []
-      if (this.filterData.congressFrom && this.filterData.congressTo) {
-        for (var i = this.filterData.congressFrom; i <= this.filterData.congressTo; i++) {
-          congress.push(i)
-        }
-      } else {
-        congress.push(this.$store.state.currentCongress)
-      }
-      return congress
-    }
-  },
   apollo: {
     categories: {
       query: CategoriesQuery,
       fetchPolicy: 'cache-and-network',
-      variables () {
+      variables() {
         return { lang: this.locale }
       }
     }
-  },
-  components: {
-    InfiniteLoading,
-    BillSearchResultCard,
-    TabButton,
-    Spinner,
-    BillsFilters,
-    BillCountCategoryByCongressCard,
-    BillCountCongressByCategoryCard
   }
 }
 </script>

@@ -1,11 +1,14 @@
 export default {
-  isDesktop (state, getters) {
+  isDesktop(state) {
+    // (state, getters)
     return state.clientWidth > 850
   },
-  isTablet (state, getters) {
+  isTablet(state) {
+    // (state, getters)
     return !!(state.clientWidth > 550 && state.clientWidth <= 850)
   },
-  isPhone (state, getters) {
+  isPhone(state) {
+    // (state, getters)
     return !(state.clientWidth > 550)
   }
 }

@@ -11,7 +11,10 @@ module.exports = {
       { property: 'twitter:card', content: 'summary_large_image' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }, { rel: 'dns-prefetch', href: appConfig.api.url }]
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'dns-prefetch', href: appConfig.api.url }
+    ]
   },
   loading: {
     color: '#3762CC'
@@ -56,7 +59,7 @@ module.exports = {
   build: {
     vendor: ['vue-i18n', 'd3', 'topojson'],
     // run ESLINT on save
-    extend (config, ctx) {
+    extend(config, ctx) {
       if (ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',

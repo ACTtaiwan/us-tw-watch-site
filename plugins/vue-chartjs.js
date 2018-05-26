@@ -6,8 +6,18 @@ import { Bar, Line, Doughnut, mixins } from 'vue-chartjs'
 Vue.component('BarChart', {
   extends: Bar,
   mixins: [mixins.reactiveProp],
-  props: ['chartData', 'options'],
-  mounted () {
+  props: {
+    chartData: {
+      type: Object,
+      required: true,
+      default: () => ({})
+    },
+    options: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  mounted() {
     this.renderChart(this.chartData, this.options)
   }
 })
@@ -15,8 +25,18 @@ Vue.component('BarChart', {
 Vue.component('LineChart', {
   extends: Line,
   mixins: [mixins.reactiveProp],
-  props: ['chartData', 'options'],
-  mounted () {
+  props: {
+    chartData: {
+      type: Object,
+      required: true,
+      default: () => ({})
+    },
+    options: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  mounted() {
     this.renderChart(this.chartData, this.options)
   }
 })
@@ -24,8 +44,18 @@ Vue.component('LineChart', {
 Vue.component('DoughnutChart', {
   extends: Doughnut,
   mixins: [mixins.reactiveProp],
-  props: ['chartData', 'options'],
-  mounted () {
+  props: {
+    chartData: {
+      type: Object,
+      required: true,
+      default: () => ({})
+    },
+    options: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  mounted() {
     this.renderChart(this.chartData, this.options)
   }
 })
