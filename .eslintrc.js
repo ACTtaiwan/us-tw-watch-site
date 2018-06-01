@@ -16,9 +16,19 @@ module.exports = {
   plugins: ['vue'],
   // add your custom rules here
   rules: {
-    camelcase: 'off',
+    'space-before-function-paren': ['error', 'always'],
     'vue/no-parsing-error': [2, { 'x-invalid-end-tag': false }],
-    'vue/attribute-hyphenation': [2, 'never']
+    'vue/attribute-hyphenation': [2, 'never'],
+    'vue/max-attributes-per-line': [
+      2,
+      {
+        singleline: 6,
+        multiline: {
+          max: 6,
+          allowFirstLine: false
+        }
+      }
+    ]
   },
   globals: {}
 }

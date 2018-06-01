@@ -18,7 +18,7 @@ import AppFooter from '~/components/AppFooter'
 import appConfig from '~/config/app.json'
 
 export default {
-  head() {
+  head () {
     return {
       link: [
         // We use $route.path since we don't use query parameters
@@ -31,19 +31,19 @@ export default {
     AppFooter
   },
   computed: {
-    isPhone() {
+    isPhone () {
       return this.$store.getters.isPhone
     }
   },
-  mounted() {
+  mounted () {
     window.addEventListener('resize', _.debounce(this.parseWindowWidth, 500))
     this.parseWindowWidth()
   },
-  beforeDestroy() {
+  beforeDestroy () {
     window.removeEventListener('resize', this.parseWindowWidth)
   },
   methods: {
-    parseWindowWidth(event) {
+    parseWindowWidth (event) {
       this.$store.commit('SET_WINDOW_WIDTH', document.documentElement.clientWidth)
     }
   }

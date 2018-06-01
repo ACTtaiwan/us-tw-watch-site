@@ -31,6 +31,10 @@ module.exports = {
     middleware: ['https', 'i18n'],
     base: '/'
   },
+
+  /*
+  ** Nuxt.js modules
+  */
   modules: [
     [
       // https://ssr.vuejs.org/en/caching.html#component-level-caching
@@ -42,6 +46,10 @@ module.exports = {
     ],
     '@nuxtjs/apollo'
   ],
+
+  /*
+  ** Apollo settings
+  */
   apollo: {
     clientConfigs: {
       default: '~/apollo/client-configs/default.js'
@@ -56,11 +64,18 @@ module.exports = {
     '~/plugins/asyncComputed',
     '~/plugins/fb-sdk'
   ],
+
+  /*
+  ** Build configuration
+  */
   build: {
     vendor: ['vue-i18n', 'd3', 'topojson'],
-    // run ESLINT on save
+    /*
+    ** You can extend webpack config here
+    */
     extend(config, ctx) {
-      if (ctx.isClient) {
+      // run ESLINT on save
+      if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
@@ -70,6 +85,10 @@ module.exports = {
       }
     }
   },
+
+  /*
+  ** Customize runtime options for rendering pages
+  */
   render: {
     bundleRenderer: {
       shouldPreload: (file, type) => {

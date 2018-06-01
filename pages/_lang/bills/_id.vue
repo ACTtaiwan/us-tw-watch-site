@@ -65,23 +65,23 @@ export default {
     BillVersionsCard,
     ArticleCard
   },
-  data() {
+  data () {
     return {}
   },
   computed: {
-    locale() {
+    locale () {
       return this.$store.state.locale
     },
-    isDesktop() {
+    isDesktop () {
       return this.$store.getters.isDesktop
     },
-    isPhone() {
+    isPhone () {
       return this.$store.getters.isPhone
     },
-    isTablet() {
+    isTablet () {
       return this.$store.getters.isTablet
     },
-    billLatestAction() {
+    billLatestAction () {
       let latestActionTime = 0
       let latestAction = ''
       this.bill.actions.forEach(action => {
@@ -98,29 +98,29 @@ export default {
       }
       return trimConGovAction(latestAction)
     },
-    memberArea() {
+    memberArea () {
       if (this.bill.sponsor.district) {
         return `${this.bill.sponsor.state}-${this.bill.sponsor.district}`
       } else {
         return `${this.bill.sponsor.state}`
       }
     },
-    billIntroducedDate() {
+    billIntroducedDate () {
       return localTime(this.bill.introducedDate)
     },
-    billSponsorTitle() {
+    billSponsorTitle () {
       const title = `${this.bill.sponsor.title} ${this.bill.sponsor.person.firstname} ${
         this.bill.sponsor.person.lastname
       }`
       return title
     },
-    billSponsorTitleArea() {
+    billSponsorTitleArea () {
       const title = `${this.bill.sponsor.title} ${this.bill.sponsor.person.firstname} ${
         this.bill.sponsor.person.lastname
       } [${this.memberArea}]`
       return title
     },
-    billDescription() {
+    billDescription () {
       return `This bill is sponsored by ${this.billSponsorTitle} on ${this.billIntroducedDate}. The latest action is: ${
         this.billLatestAction
       }. `
@@ -137,18 +137,18 @@ export default {
         ids: [route.params.id],
         lang: app.store.state.locale
       }),
-      variables() {
+      variables () {
         return {
           ids: [this.$route.params.id],
           lang: this.locale
         }
       },
-      update(data) {
+      update (data) {
         return data.bills[0]
       }
     }
   },
-  head(a, b, c) {
+  head (a, b, c) {
     return {
       title: this.bill ? this.bill.title : 'Loading',
       meta: [

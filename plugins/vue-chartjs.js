@@ -17,7 +17,7 @@ Vue.component('BarChart', {
       default: () => ({})
     }
   },
-  mounted() {
+  mounted () {
     this.renderChart(this.chartData, this.options)
   }
 })
@@ -36,7 +36,7 @@ Vue.component('LineChart', {
       default: () => ({})
     }
   },
-  mounted() {
+  mounted () {
     this.renderChart(this.chartData, this.options)
   }
 })
@@ -55,7 +55,7 @@ Vue.component('DoughnutChart', {
       default: () => ({})
     }
   },
-  mounted() {
+  mounted () {
     this.renderChart(this.chartData, this.options)
   }
 })

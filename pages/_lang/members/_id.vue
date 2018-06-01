@@ -71,7 +71,7 @@ export default {
     CosponsoredBillsCard,
     Spinner
   },
-  data() {
+  data () {
     return {
       sponsoredBills: null,
       cosponsoredBills: null,
@@ -79,25 +79,25 @@ export default {
     }
   },
   computed: {
-    locale() {
+    locale () {
       return this.$store.state.locale
     },
-    isDesktop() {
+    isDesktop () {
       return this.$store.getters.isDesktop
     },
-    isPhone() {
+    isPhone () {
       return this.$store.getters.isPhone
     },
-    isTablet() {
+    isTablet () {
       return this.$store.getters.isTablet
     },
-    person() {
+    person () {
       return this.members ? this.members[0].person : {}
     },
-    member() {
+    member () {
       return this.members ? this.members[0] : {}
     },
-    memberTitle() {
+    memberTitle () {
       const lang = { 'en-us': 'en', 'zh-tw': 'zh' }[this.$store.state.locale]
 
       if (!this.states || !this.members) return ''
@@ -111,7 +111,7 @@ export default {
     }
   },
   methods: {
-    async fetchSupportBills(members) {
+    async fetchSupportBills (members) {
       let sponsored = []
       let cosponsored = []
 
@@ -126,11 +126,11 @@ export default {
       this.sponsoredBills = _.orderBy(sponsoredBills.data.bills, bill => Number(bill.introducedDate), ['desc'])
       this.cosponsoredBills = _.orderBy(cosponsoredBills.data.bills, bill => Number(bill.introducedDate), ['desc'])
     },
-    async fetchProPublicaMember(bioGuideId) {
+    async fetchProPublicaMember (bioGuideId) {
       const response = await get(`https://api.propublica.org/congress/v1/members/${bioGuideId}.json`)
       this.ppMember = response.data.results[0]
     },
-    fetchBills(ids) {
+    fetchBills (ids) {
       return this.$apollo.query({
         query: BillsQuery,
         variables: { lang: this.locale, ids: ids }
@@ -147,16 +147,16 @@ export default {
         personIds: [route.params.id],
         lang: app.store.state.locale
       }),
-      variables() {
+      variables () {
         return {
           personIds: [this.$route.params.id],
           lang: this.locale
         }
       },
-      update(data) {
+      update (data) {
         return data.members
       },
-      result(result) {
+      result (result) {
         if (!result.loading) {
           this.fetchSupportBills(result.data.members)
           this.fetchProPublicaMember(result.data.members[0].person.bioGuideId)
@@ -170,15 +170,15 @@ export default {
         lang: app.store.state.locale,
         stateList: true
       }),
-      variables() {
+      variables () {
         return { lang: this.locale, stateList: true }
       },
-      update(data) {
+      update (data) {
         return JSON.parse(data.maps[0].states)
       }
     }
   },
-  head() {
+  head () {
     return {
       title: this.person ? `${this.person.firstname} ${this.person.lastname}` : 'Loading',
       meta: [

@@ -14,7 +14,7 @@ export default {
   components: {
     FbShareWrapper
   },
-  data() {
+  data () {
     return {}
   }
 }

@@ -110,7 +110,7 @@ import BillsQuery from '~/apollo/queries/BillLandingPage/Bills'
 import CategoriesQuery from '~/apollo/queries/BillLandingPage/Categories'
 
 export default {
-  head() {
+  head () {
     return {
       title: `${this.$t('billsPage.title')} | ${this.$t('site.title.mainTitle')}`,
       meta: [
@@ -130,7 +130,7 @@ export default {
     BillCountCategoryByCongressCard,
     BillCountCongressByCategoryCard
   },
-  data() {
+  data () {
     return {
       categories: [],
       bills: [],
@@ -147,21 +147,21 @@ export default {
     }
   },
   computed: {
-    locale() {
+    locale () {
       // when locale changes, reset the current page
       this.resetPage()
       return this.$store.state.locale
     },
-    isPhone() {
+    isPhone () {
       return this.$store.getters.isPhone
     },
-    isTablet() {
+    isTablet () {
       return this.$store.getters.isTablet
     },
-    selectedCategories() {
+    selectedCategories () {
       return this.filterData.selectedCategories ? this.filterData.selectedCategories : []
     },
-    selectedCongress() {
+    selectedCongress () {
       let congress = []
       if (this.filterData.congressFrom && this.filterData.congressTo) {
         for (var i = this.filterData.congressFrom; i <= this.filterData.congressTo; i++) {
@@ -174,11 +174,11 @@ export default {
     }
   },
   methods: {
-    selectTab({ bills, insight }) {
+    selectTab ({ bills, insight }) {
       this.billsTabSelected = bills
       this.insightTabSelected = insight
     },
-    resetPage() {
+    resetPage () {
       if (this.$refs.infiniteLoading) {
         this.$refs.infiniteLoading.stateChanger.reset()
       }
@@ -186,7 +186,7 @@ export default {
       this.billIds = []
       this.page = 0
     },
-    prefetchBillIds() {
+    prefetchBillIds () {
       return this.$apollo.query({
         query: PrefetchBillIdsQuery,
         variables: {
@@ -196,18 +196,18 @@ export default {
         }
       })
     },
-    fetchBills(ids) {
+    fetchBills (ids) {
       return this.$apollo.query({
         query: BillsQuery,
         variables: { lang: this.locale, ids: ids }
       })
     },
-    getCurrentPageItems() {
+    getCurrentPageItems () {
       return this.billIds.filter(
         (id, index) => index >= this.page * this.pageSize && index < (this.page + 1) * this.pageSize
       )
     },
-    async moreItems($state) {
+    async moreItems ($state) {
       // make sure billIds is fetched
       if (!this.billIds.length) {
         try {
@@ -238,7 +238,7 @@ export default {
         $state.complete()
       }
     },
-    filterBills(filterData) {
+    filterBills (filterData) {
       this.filterLoading = true
       this.resetPage()
       this.filterData = filterData
@@ -249,7 +249,7 @@ export default {
     categories: {
       query: CategoriesQuery,
       fetchPolicy: 'cache-and-network',
-      variables() {
+      variables () {
         return { lang: this.locale }
       }
     }

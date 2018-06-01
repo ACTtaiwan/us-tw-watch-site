@@ -119,7 +119,7 @@ import MembersQuery from '~/apollo/queries/MemberLandingPage/Members'
 import StateListQuery from '~/apollo/queries/StateList'
 
 export default {
-  head() {
+  head () {
     return {
       title: `${this.$t('site.title.membersPageTitle')} | ${this.$t('site.title.mainTitle')}`
     }
@@ -133,7 +133,7 @@ export default {
     SponsoredBillCountMapCard,
     CosponsoredBillCountMapCard
   },
-  data() {
+  data () {
     return {
       members: [],
       memberIds: [],
@@ -149,30 +149,30 @@ export default {
     }
   },
   computed: {
-    locale() {
+    locale () {
       // when locale changes, reset the current page
       this.resetPage()
       return this.$store.state.locale
     },
-    isPhone() {
+    isPhone () {
       return this.$store.getters.isPhone
     },
-    isTablet() {
+    isTablet () {
       return this.$store.getters.isTablet
     },
-    congress() {
+    congress () {
       return [this.$store.state.currentCongress]
     },
-    selectedStates() {
+    selectedStates () {
       return this.filterData.selectedStates ? this.filterData.selectedStates : []
     }
   },
   methods: {
-    selectTab({ members, insight }) {
+    selectTab ({ members, insight }) {
       this.membersTabSelected = members
       this.insightTabSelected = insight
     },
-    resetPage() {
+    resetPage () {
       if (this.$refs.infiniteLoading) {
         this.$refs.infiniteLoading.stateChanger.reset()
       }
@@ -180,24 +180,24 @@ export default {
       this.memberIds = []
       this.page = 0
     },
-    prefetchMemberIds() {
+    prefetchMemberIds () {
       return this.$apollo.query({
         query: MembersPrefetchQuery,
         variables: { lang: this.locale, congress: this.congress, states: this.selectedStates }
       })
     },
-    fetchMembers(ids) {
+    fetchMembers (ids) {
       return this.$apollo.query({
         query: MembersQuery,
         variables: { lang: this.locale, ids: ids }
       })
     },
-    getCurrentPageItems() {
+    getCurrentPageItems () {
       return this.memberIds.filter(
         (id, index) => index >= this.page * this.pageSize && index < (this.page + 1) * this.pageSize
       )
     },
-    async moreItems($state) {
+    async moreItems ($state) {
       // make sure memberIds is fetched
       if (!this.memberIds.length) {
         try {
@@ -232,7 +232,7 @@ export default {
         $state.complete()
       }
     },
-    filterMembers(filterData) {
+    filterMembers (filterData) {
       this.filterLoading = true
       this.resetPage()
       this.filterData = filterData
@@ -243,10 +243,10 @@ export default {
     states: {
       query: StateListQuery,
       fetchPolicy: 'cache-and-network',
-      variables() {
+      variables () {
         return { lang: this.locale, stateList: true }
       },
-      update(data) {
+      update (data) {
         return JSON.parse(data.maps[0].states)
       }
     }

@@ -88,7 +88,7 @@ export default {
     ArticleCard,
     Spinner
   },
-  data() {
+  data () {
     return {
       numberOfBillCards: 6,
       isBillUpdateLoading: true,
@@ -100,7 +100,7 @@ export default {
       people
     }
   },
-  head() {
+  head () {
     return {
       title: this.$t('site.title.mainTitle'),
       meta: [
@@ -112,21 +112,21 @@ export default {
     }
   },
   computed: {
-    locale() {
+    locale () {
       return this.$store.state.locale
     },
-    isPhone() {
+    isPhone () {
       return this.$store.getters.isPhone
     },
-    isTablet() {
+    isTablet () {
       return this.$store.getters.isTablet
     },
-    bannerStyle() {
+    bannerStyle () {
       return `background-image: url("${this.congress}"); background-size: cover;`
     }
   },
   methods: {
-    getLatestActionDate(actions) {
+    getLatestActionDate (actions) {
       let latestActionTime = 0
       actions.forEach(action => {
         if (action.datetime > latestActionTime) {
@@ -135,13 +135,13 @@ export default {
       })
       return parseInt(latestActionTime)
     },
-    fetchBills(ids) {
+    fetchBills (ids) {
       return this.$apollo.query({
         query: BillsQuery,
         variables: { lang: this.locale, ids: ids }
       })
     },
-    getUpdatedBills() {
+    getUpdatedBills () {
       this.fetchBills(this.billIds)
         .then(({ data }) => {
           // the returned bill order is not the same as the bill id order provided
@@ -163,16 +163,16 @@ export default {
     billIds: {
       query: PrefetchBillIdsQuery,
       fetchPolicy: 'cache-and-network',
-      variables() {
+      variables () {
         return {
           lang: this.locale,
           congress: [115]
         }
       },
-      update(data) {
+      update (data) {
         return data.bills[0].prefetchIds
       },
-      result(result) {
+      result (result) {
         if (!result.loading) {
           this.getUpdatedBills()
         }
@@ -181,15 +181,15 @@ export default {
     articles: {
       query: ArticlesQuery,
       fetchPolicy: 'cache-and-network',
-      variables() {
+      variables () {
         return {
           lang: this.locale
         }
       },
-      update(data) {
+      update (data) {
         return _.orderBy(data.articles, article => parseInt(article.publishedAt), ['desc'])
       },
-      result(result) {
+      result (result) {
         if (!result.loading) {
           this.isArticleUpdateLoading = false
         }

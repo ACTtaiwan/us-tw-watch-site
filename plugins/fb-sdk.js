@@ -2,7 +2,7 @@
 import Vue from 'vue'
 
 Vue.prototype.$initFbSdk = () => {
-  (function(d, s, id) {
+  ;(function (d, s, id) {
     let js
     let fjs = d.getElementsByTagName(s)[0]
     if (d.getElementById(id)) {
