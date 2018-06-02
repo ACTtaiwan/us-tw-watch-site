@@ -1,50 +1,45 @@
 <template>
   <div class="bill-page">
-    <!-- Member -->
-    <section
-      v-if="members"
-      :class="{ phone: isPhone }"
-      class="member-section">
-      <div class="member-section-wrapper">
-        <Row>
-          <!-- Main -->
-          <i-col
-            :span="isTablet || isPhone ? 24 : 18"
-            :class="{ mobile: isTablet || isPhone }"
-            class="main-block">
-            <MemberOverviewCard
-              v-if="ppMember"
-              :ppMember="ppMember"
-              :members="members"
-              :memberTitle="memberTitle"
-              :sponsoredBills="sponsoredBills"
-              :cosponsoredBills="cosponsoredBills"/>
-            <Spinner v-else />
-            <!-- Sponsored Bills -->
-            <SponsoredBillsCard
-              v-if="ppMember && sponsoredBills && sponsoredBills.length > 0"
-              :member="ppMember"
-              :sponsoredBills="sponsoredBills" />
-            <!-- Cosponsored Bills -->
-            <CosponsoredBillsCard
-              v-if="ppMember && cosponsoredBills && cosponsoredBills.length > 0"
-              :member="ppMember"
-              :cosponsoredBills="cosponsoredBills"/>
-          </i-col>
-          <!-- Summary -->
-          <i-col
-            :span="isTablet || isPhone ? 24 : 6"
-            class="detail-block">
-            <ContactCard
-              v-if="ppMember"
-              :member="ppMember" />
-          </i-col>
-        </Row>
-      </div>
-    </section>
+    <no-ssr>
+      <section
+        v-if="members"
+        :class="{ phone: isPhone }"
+        class="member-section">
+        <div class="member-section-wrapper">
+          <Row>
+            <i-col
+              :span="isTablet || isPhone ? 24 : 18"
+              :class="{ mobile: isTablet || isPhone }"
+              class="main-block">
+              <MemberOverviewCard
+                v-if="ppMember"
+                :ppMember="ppMember"
+                :members="members"
+                :memberTitle="memberTitle"
+                :sponsoredBills="sponsoredBills"
+                :cosponsoredBills="cosponsoredBills"/>
+              <Spinner v-else />
+              <SponsoredBillsCard
+                v-if="ppMember && sponsoredBills && sponsoredBills.length > 0"
+                :member="ppMember"
+                :sponsoredBills="sponsoredBills" />
+              <CosponsoredBillsCard
+                v-if="ppMember && cosponsoredBills && cosponsoredBills.length > 0"
+                :member="ppMember"
+                :cosponsoredBills="cosponsoredBills"/>
+            </i-col>
+            <i-col
+              :span="isTablet || isPhone ? 24 : 6"
+              class="detail-block">
+              <ContactCard
+                v-if="ppMember"
+                :member="ppMember" />
+            </i-col>
+          </Row>
 
-
-
+        </div>
+      </section>
+    </no-ssr>
   </div>
 </template>
 
@@ -117,17 +112,29 @@ export default {
 
       members.forEach(member => {
         sponsored = member.billIdSponsored ? [...sponsored, ...member.billIdSponsored] : sponsored
-        cosponsored = member.billIdCosponsored ? [...cosponsored, ...member.billIdCosponsored] : cosponsored
+        cosponsored = member.billIdCosponsored
+          ? [...cosponsored, ...member.billIdCosponsored]
+          : cosponsored
       })
 
       const sponsoredBills = await this.fetchBills(sponsored)
       const cosponsoredBills = await this.fetchBills(cosponsored)
 
-      this.sponsoredBills = _.orderBy(sponsoredBills.data.bills, bill => Number(bill.introducedDate), ['desc'])
-      this.cosponsoredBills = _.orderBy(cosponsoredBills.data.bills, bill => Number(bill.introducedDate), ['desc'])
+      this.sponsoredBills = _.orderBy(
+        sponsoredBills.data.bills,
+        bill => Number(bill.introducedDate),
+        ['desc']
+      )
+      this.cosponsoredBills = _.orderBy(
+        cosponsoredBills.data.bills,
+        bill => Number(bill.introducedDate),
+        ['desc']
+      )
     },
     async fetchProPublicaMember (bioGuideId) {
-      const response = await get(`https://api.propublica.org/congress/v1/members/${bioGuideId}.json`)
+      const response = await get(
+        `https://api.propublica.org/congress/v1/members/${bioGuideId}.json`
+      )
       this.ppMember = response.data.results[0]
     },
     fetchBills (ids) {
@@ -182,8 +189,15 @@ export default {
     return {
       title: this.person ? `${this.person.firstname} ${this.person.lastname}` : 'Loading',
       meta: [
-        { hid: 'description', name: 'description', content: this.memberTitle ? this.memberTitle : 'Loading' },
-        { name: 'og:title', content: this.person ? `${this.person.firstname} ${this.person.lastname}` : 'Loading' },
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.memberTitle ? this.memberTitle : 'Loading'
+        },
+        {
+          name: 'og:title',
+          content: this.person ? `${this.person.firstname} ${this.person.lastname}` : 'Loading'
+        },
         { name: 'twitter:label1', content: 'Sponsored bills' },
         { name: 'twitter:data1', content: this.sponsoredBills ? this.sponsoredBills.length : 0 },
         { name: 'twitter:label2', content: 'Cosponsored bills' },

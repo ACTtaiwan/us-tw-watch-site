@@ -1,46 +1,46 @@
 <template>
   <div class="bill-page">
-    <!-- Bill -->
-    <section
-      v-if="bill"
-      :class="{ phone: isPhone }"
-      class="bill-section">
-      <div class="bill-section-wrapper">
-        <Row>
-          <i-col
-            :span="isTablet || isPhone ? 24 : 18"
-            :class="{ mobile: isTablet || isPhone }"
-            class="main-block">
-            <BillOverviewCard :bill="bill" />
-            <BillSummaryCard
-              v-if="bill.summary.paragraphs"
-              :bill="bill" />
-            <BillSponsorsMapCard :bill="bill" />
-            <BillVersionsCard
-              v-if="bill.versions.length > 0"
-              :bill="bill" />
-          </i-col>
-          <!-- Summary -->
-          <i-col
-            :span="isTablet || isPhone ? 24 : 6"
-            class="detail-block">
-            <BillActionsCard :bill="bill" />
-            <Row
-              v-if="bill.articles"
-              :gutter="30">
-              <i-col
-                v-for="article in bill.articles"
-                :key="article.id"
-                :span="24" >
-                <ArticleCard
-                  :article="article"
-                  class="article-card" />
-              </i-col>
-            </Row>
-          </i-col>
-        </Row>
-      </div>
-    </section>
+    <no-ssr>
+      <section
+        v-if="bill"
+        :class="{ phone: isPhone }"
+        class="bill-section">
+        <div class="bill-section-wrapper">
+          <Row>
+            <i-col
+              :span="isTablet || isPhone ? 24 : 18"
+              :class="{ mobile: isTablet || isPhone }"
+              class="main-block">
+              <BillOverviewCard :bill="bill" />
+              <BillSummaryCard
+                v-if="bill.summary.paragraphs"
+                :bill="bill" />
+              <BillSponsorsMapCard :bill="bill" />
+              <BillVersionsCard
+                v-if="bill.versions.length > 0"
+                :bill="bill" />
+            </i-col>
+            <i-col
+              :span="isTablet || isPhone ? 24 : 6"
+              class="detail-block">
+              <BillActionsCard :bill="bill" />
+              <Row
+                v-if="bill.articles"
+                :gutter="30">
+                <i-col
+                  v-for="article in bill.articles"
+                  :key="article.id"
+                  :span="24" >
+                  <ArticleCard
+                    :article="article"
+                    class="article-card" />
+                </i-col>
+              </Row>
+            </i-col>
+          </Row>
+        </div>
+      </section>
+    </no-ssr>
   </div>
 </template>
 
@@ -121,9 +121,9 @@ export default {
       return title
     },
     billDescription () {
-      return `This bill is sponsored by ${this.billSponsorTitle} on ${this.billIntroducedDate}. The latest action is: ${
-        this.billLatestAction
-      }. `
+      return `This bill is sponsored by ${this.billSponsorTitle} on ${
+        this.billIntroducedDate
+      }. The latest action is: ${this.billLatestAction}. `
     }
   },
 
