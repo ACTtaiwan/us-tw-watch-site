@@ -35,7 +35,7 @@ module.exports = {
   ** Overwrite the default Nuxt.js configuration of Vue Router
   */
   router: {
-    middleware: ['https', 'i18n'],
+    middleware: ['https'],
     base: '/'
   },
 

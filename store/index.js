@@ -7,8 +7,8 @@ import getters from './getters'
 export default () => {
   return new Vuex.Store({
     state: {
-      locales: ['en-us', 'zh-tw'],
-      locale: 'en-us',
+      locales: ['zh-tw'],
+      locale: 'zh-tw',
       clientWidth: null,
       earliestCongress: 96,
       currentCongress: 115
