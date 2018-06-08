@@ -99,6 +99,7 @@
     </section>
   </div>
 </template>
+
 <script>
 // Packages
 import _ from 'lodash'

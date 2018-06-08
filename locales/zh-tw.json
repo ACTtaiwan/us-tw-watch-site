@@ -50,5 +50,8 @@
       "partyColLabel": "政黨",
       "lastUpdatedColLabel": "更新時間"
     }
+  },
+  "insightsPage": {
+    "bannerTitle": "洞察資料"
   }
 }

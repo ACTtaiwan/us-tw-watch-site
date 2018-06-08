@@ -1,5 +1,5 @@
 <template>
-  <div class="bill-page">
+  <div class="member-page">
     <no-ssr>
       <section
         v-if="members"
