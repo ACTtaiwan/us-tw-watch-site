@@ -1,7 +1,7 @@
 <template>
   <div class="insights-page">
     <!-- Banner -->
-    <section :style="bannerStyle" :class="{ tablet: isTablet, phone: isPhone }" class="banner">
+    <section :style="bannerStyle" class="banner">
       <div class="banner-wrapper">
         <div class="text-container">
           <h1 class="banner-title">{{ this.$t('insightsPage.bannerTitle') }}</h1>
@@ -9,6 +9,36 @@
         <div class="image-container" >
           <img :src="bannerMembers" class="front-img">
         </div>
+      </div>
+    </section>
+    <!-- Insights -->
+    <section class="insights-section">
+      <div class="insights-section-wrapper">
+        <Row>
+          <!-- Filters -->
+          <i-col :xs="{ span: 24 }" :sm="{ span: 6 }" class="filters">
+            <MembersFilters :states="states" :loading="filterLoading" @on-filter="filterMembers"/>
+          </i-col>
+          <!-- List -->
+          <i-col :xs="{ span: 24 }" :sm="{ span: 18 }" class="list">
+            <Row>
+              <i-col v-for="member in members" :key="member.id" span="24">
+                <MemberSearchResultCard :member="member" :states="states" />
+              </i-col>
+            </Row>
+            <InfiniteLoading ref="infiniteLoading" @infinite="moreItems">
+              <span slot="spinner">
+                <Spinner/>
+              </span>
+              <span slot="no-more">
+                no more data 😂
+              </span>
+              <span slot="no-results">
+                no results 😭
+              </span>
+            </InfiniteLoading>
+          </i-col>
+        </Row>
       </div>
     </section>
   </div>
@@ -54,8 +84,6 @@ export default {
       memberIds: [],
       page: 0,
       pageSize: 10,
-      membersTabSelected: true,
-      insightTabSelected: false,
       filterLoading: false,
       filterData: {},
       bannerBackground,
@@ -65,15 +93,7 @@ export default {
   },
   computed: {
     locale () {
-      // when locale changes, reset the current page
-      this.resetPage()
       return this.$store.state.locale
-    },
-    isPhone () {
-      return this.$store.getters.isPhone
-    },
-    isTablet () {
-      return this.$store.getters.isTablet
     },
     congress () {
       return [this.$store.state.currentCongress]
@@ -83,10 +103,6 @@ export default {
     }
   },
   methods: {
-    selectTab ({ members, insight }) {
-      this.membersTabSelected = members
-      this.insightTabSelected = insight
-    },
     resetPage () {
       if (this.$refs.infiniteLoading) {
         this.$refs.infiniteLoading.stateChanger.reset()
@@ -176,7 +192,6 @@ export default {
 @import 'assets/css/typography';
 
 .banner {
-  // desktop
   .banner-wrapper {
     height: 180px;
     display: flex;
@@ -198,57 +213,20 @@ export default {
         margin-top: 15px;
         margin-right: 20px;
       }
-
-      .tabs {
-        display: inline-block;
-        vertical-align: bottom;
-        margin-top: 15px;
-
-        .tab-button {
-          margin-right: 10px;
-
-          &:last-child {
-            margin-right: 0px;
-          }
-        }
-      }
     }
-
     .image-container {
-      order: 1;
-      display: flex;
-      margin-right: 100px;
-
       .front-img {
         width: 200px;
         margin: auto 30px 10px 0;
       }
     }
   }
-
-  // tablet
-  &.tablet {
-    .banner-wrapper {
-      .image-container {
-        display: none;
-      }
-    }
-  }
-
-  // phone
-  &.phone {
-    .banner-wrapper {
-      .image-container {
-        display: none;
-      }
-    }
-  }
 }
 
-.members-section {
+.insights-section {
   padding: 40px 0;
 
-  .members-section-wrapper {
+  .insights-section-wrapper {
     @extend .pageWrapper-large;
   }
 }
@@ -256,10 +234,6 @@ export default {
 .filters {
   padding-right: 40px;
   margin-bottom: 20px;
-
-  &.mobile {
-    padding-right: 0px;
-  }
 }
 
 .insights-section {
@@ -271,6 +245,37 @@ export default {
     .map-chart-container {
       position: inherit;
     }
+  }
+}
+
+// desktop
+@media screen and (min-width: $mediumDeviceWidth + 1) {
+  .image-container {
+    order: 1;
+    display: flex;
+    margin-right: 100px;
+  }
+}
+
+// tablet
+@media screen and (max-width: $mediumDeviceWidth) {
+  .banner-wrapper {
+    .image-container {
+      display: none;
+    }
+  }
+}
+
+// phone
+@media screen and (max-width: $smallDeviceWidth) {
+  .banner-wrapper {
+    .image-container {
+      display: none;
+    }
+  }
+
+  .filters {
+    padding-right: 0px;
   }
 }
 </style>
