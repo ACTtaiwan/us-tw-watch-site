@@ -236,18 +236,6 @@ export default {
   margin-bottom: 20px;
 }
 
-.insights-section {
-  padding: 40px 0;
-
-  .insights-section-wrapper {
-    @extend .pageWrapper-large;
-
-    .map-chart-container {
-      position: inherit;
-    }
-  }
-}
-
 // desktop
 @media screen and (min-width: $mediumDeviceWidth + 1) {
   .image-container {
