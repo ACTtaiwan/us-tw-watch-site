@@ -1,8 +1,4 @@
 {
-  "locales": {
-    "en-us": "EN",
-    "zh-tw": "中文"
-  },
   "site": {
     "title": {
       "mainTitle": "美國國會台灣觀測站",
@@ -14,17 +10,18 @@
     },
     "menu": {
       "billItemText": "法案",
-      "votesItemText": "投票",
-      "congressMemberItemText": "議員"
+      "congressMemberItemText": "議員",
+      "insightsItemText": "洞察",
+      "articlesItemText": "文章"
     }
   },
   "landingPage": {
     "title": "美國國會台灣觀測站",
     "description": "你知道美國國會也有台灣相關法案嗎？你知道哪些國會有哪些挺台議員嗎？快來了解美國國會台灣大小事 😎",
     "bannerTitle": "美國國會台灣大小事",
-    "newsTitle": "《台灣旅行法》通過參議院",
+    "newsTitle": "美國通過《台灣旅行法》",
     "newsContent":
-      "美國當地時間2月28日，參議院無異議通過《台灣旅行法》，目前只待總統川普簽名法案即能生效。法案生效後，將成為繼《台灣關係法》之後，政治意義最高的台灣相關法案。"
+      "美國當地時間3月16日，美國總統川普正式簽署通過《台灣旅行法》，這是繼《台灣關係法》之後，政治意義最高的台灣相關法案。"
   },
   "billsPage": {
     "title": "法案",
@@ -53,5 +50,8 @@
       "partyColLabel": "政黨",
       "lastUpdatedColLabel": "更新時間"
     }
+  },
+  "insightsPage": {
+    "bannerTitle": "洞察資料"
   }
 }

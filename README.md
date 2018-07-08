@@ -2,11 +2,32 @@
 
 > Nuxt.js project
 
-## Table of contents
+## Known Issues
 
-* **[Stack](#stack)**
-* **[Directory Structure](#directory-structure)**
-* **[Development](#development)**
+### `No parser and no filepath given, using 'babylon'`
+
+you'll find it in file `node_modules/vue-loader/lib/template-compiler/index.js` line 80
+replacing it with this
+
+```js
+code = prettier.format(code, { semi: false, parser: 'babylon' })
+```
+
+will fix all errors.
+
+### Clone SubModules
+If you clone this repo, make sure you also clone its sub modules as well.
+
+```sh
+git clone --recurse-submodules
+```
+
+If you already cloned the repo, use:
+
+```sh
+git submodule update --init --recursive
+```
+
 
 ## Stack
 

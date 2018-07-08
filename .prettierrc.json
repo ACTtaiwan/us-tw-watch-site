@@ -1,7 +1,9 @@
 {
-  "printWidth": 120,
+  "printWidth": 100,
   "parser": "flow",
   "singleQuote": true,
   "semi": false,
-  "bracketSpacing": true
+  "bracketSpacing": true,
+  "tabWidth": 2,
+  "useTabs": false
 }

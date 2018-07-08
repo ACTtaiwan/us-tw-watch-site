@@ -1,69 +1,32 @@
 <template>
-  <div class="members-page">
+  <div class="insights-page">
     <!-- Banner -->
-    <section
-      :style="bannerStyle"
-      :class="{ tablet: isTablet, phone: isPhone }"
-      class="banner">
+    <section :style="bannerStyle" class="banner">
       <div class="banner-wrapper">
         <div class="text-container">
-          <h1 class="banner-title">{{ this.$t('membersPage.bannerTitle') }}</h1>
-          <div class="tabs">
-            <TabButton
-              :selected="membersTabSelected"
-              class="tab-button"
-              icon="ios-paper"
-              label="Members"
-              @select="selectTab({members: true, insight: false})"/>
-            <TabButton
-              :selected="insightTabSelected"
-              class="tab-button"
-              icon="stats-bars"
-              label="Insight"
-              @select="selectTab({members: false, insight: true})"/>
-          </div>
+          <h1 class="banner-title">{{ this.$t('insightsPage.bannerTitle') }}</h1>
         </div>
         <div class="image-container" >
-          <img
-            :src="bannerMembers"
-            class="front-img">
+          <img :src="bannerMembers" class="front-img">
         </div>
       </div>
     </section>
-    <!-- Members -->
-    <section
-      v-if="membersTabSelected"
-      class="members-section">
-      <div class="members-section-wrapper">
+    <!-- Insights -->
+    <section class="insights-section">
+      <div class="insights-section-wrapper">
         <Row>
           <!-- Filters -->
-          <i-col
-            :span="isTablet || isPhone ? 24 : 6"
-            :class="{ mobile: isTablet || isPhone }"
-            class="filters">
-            <MembersFilters
-              :states="states"
-              :loading="filterLoading"
-              @on-filter="filterMembers"/>
+          <i-col :xs="{ span: 24 }" :sm="{ span: 6 }" class="filters">
+            <MembersFilters :states="states" :loading="filterLoading" @on-filter="filterMembers"/>
           </i-col>
           <!-- List -->
-          <i-col
-            :span="isTablet || isPhone ? 24 : 18"
-            :class="{ mobile: isTablet || isPhone, phone: isPhone }"
-            class="list">
+          <i-col :xs="{ span: 24 }" :sm="{ span: 18 }" class="list">
             <Row>
-              <i-col
-                v-for="member in members"
-                :key="member.id"
-                span="24">
-                <MemberSearchResultCard
-                  :member="member"
-                  :states="states" />
+              <i-col v-for="member in members" :key="member.id" span="24">
+                <MemberSearchResultCard :member="member" :states="states" />
               </i-col>
             </Row>
-            <InfiniteLoading
-              ref="infiniteLoading"
-              @infinite="moreItems">
+            <InfiniteLoading ref="infiniteLoading" @infinite="moreItems">
               <span slot="spinner">
                 <Spinner/>
               </span>
@@ -78,27 +41,9 @@
         </Row>
       </div>
     </section>
-    <!-- Insights -->
-    <section
-      v-if="insightTabSelected"
-      class="insights-section">
-      <div class="insights-section-wrapper">
-        <Row :gutter="20">
-          <i-col
-            :span="isTablet || isPhone ? 24 : 12"
-            class="map-chart-container">
-            <SponsoredBillCountMapCard />
-          </i-col>
-          <i-col
-            :span="isTablet || isPhone ? 24 : 12"
-            class="map-chart-container">
-            <CosponsoredBillCountMapCard />
-          </i-col>
-        </Row>
-      </div>
-    </section>
   </div>
 </template>
+
 <script>
 // Packages
 import _ from 'lodash'
@@ -139,8 +84,6 @@ export default {
       memberIds: [],
       page: 0,
       pageSize: 10,
-      membersTabSelected: true,
-      insightTabSelected: false,
       filterLoading: false,
       filterData: {},
       bannerBackground,
@@ -150,15 +93,7 @@ export default {
   },
   computed: {
     locale () {
-      // when locale changes, reset the current page
-      this.resetPage()
       return this.$store.state.locale
-    },
-    isPhone () {
-      return this.$store.getters.isPhone
-    },
-    isTablet () {
-      return this.$store.getters.isTablet
     },
     congress () {
       return [this.$store.state.currentCongress]
@@ -168,10 +103,6 @@ export default {
     }
   },
   methods: {
-    selectTab ({ members, insight }) {
-      this.membersTabSelected = members
-      this.insightTabSelected = insight
-    },
     resetPage () {
       if (this.$refs.infiniteLoading) {
         this.$refs.infiniteLoading.stateChanger.reset()
@@ -254,13 +185,13 @@ export default {
 }
 </script>
 
+
 <style scoped lang="scss">
 @import 'assets/css/app';
 @import 'assets/css/colors';
 @import 'assets/css/typography';
 
 .banner {
-  // desktop
   .banner-wrapper {
     height: 180px;
     display: flex;
@@ -279,69 +210,17 @@ export default {
         text-align: left;
         letter-spacing: 0.02em;
         color: $twWhite;
-        margin-right: 20px;
-      }
-
-      .tabs {
-        display: inline-block;
-        vertical-align: bottom;
         margin-top: 15px;
-
-        .tab-button {
-          margin-right: 10px;
-
-          &:last-child {
-            margin-right: 0px;
-          }
-        }
+        margin-right: 20px;
       }
     }
 
     .image-container {
-      order: 1;
-      display: flex;
-      margin-right: 100px;
-
       .front-img {
         width: 200px;
         margin: auto 30px 10px 0;
       }
     }
-  }
-
-  // tablet
-  &.tablet {
-    .banner-wrapper {
-      .image-container {
-        display: none;
-      }
-    }
-  }
-
-  // phone
-  &.phone {
-    .banner-wrapper {
-      .image-container {
-        display: none;
-      }
-    }
-  }
-}
-
-.members-section {
-  padding: 40px 0;
-
-  .members-section-wrapper {
-    @extend .pageWrapper-large;
-  }
-}
-
-.filters {
-  padding-right: 40px;
-  margin-bottom: 20px;
-
-  &.mobile {
-    padding-right: 0px;
   }
 }
 
@@ -350,10 +229,42 @@ export default {
 
   .insights-section-wrapper {
     @extend .pageWrapper-large;
+  }
+}
 
-    .map-chart-container {
-      position: inherit;
+.filters {
+  padding-right: 40px;
+  margin-bottom: 20px;
+}
+
+// desktop
+@media screen and (min-width: $mediumDeviceWidth + 1) {
+  .image-container {
+    order: 1;
+    display: flex;
+    margin-right: 100px;
+  }
+}
+
+// tablet
+@media screen and (max-width: $mediumDeviceWidth) {
+  .banner-wrapper {
+    .image-container {
+      display: none;
     }
+  }
+}
+
+// phone
+@media screen and (max-width: $smallDeviceWidth) {
+  .banner-wrapper {
+    .image-container {
+      display: none;
+    }
+  }
+
+  .filters {
+    padding-right: 0px;
   }
 }
 </style>

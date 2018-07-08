@@ -1,36 +1,68 @@
-var appConfig = require('./config/app.json')
+const pkg = require('./package')
+const app = require('./config/app')
 
 module.exports = {
+  mode: 'universal',
+
+  /*
+  ** Headers of the page
+  */
   head: {
     titleTemplate: '',
     meta: [
-      { property: 'og:image', content: 'https://s3.amazonaws.com/taiwanwatch-static/assets/tw-fb-og-image.png' },
-      { property: 'og:site_name', content: 'Taiwan Watch' },
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { property: 'og:image', content: app.thumbnail },
+      { property: 'og:site_name', content: app.name },
       { property: 'og:type', content: 'website' },
-      { property: 'fb:app_id', content: '2017625051893386' },
-      { property: 'twitter:card', content: 'summary_large_image' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+      { property: 'fb:app_id', content: app.fbAppId },
+      { property: 'twitter:card', content: 'summary_large_image' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'dns-prefetch', href: appConfig.api.url }
+      { rel: 'dns-prefetch', href: app.api.url }
     ]
   },
-  loading: {
-    color: '#3762CC'
-  },
-  loadingIndicator: {
-    name: 'rectangle-bounce',
-    color: 'white',
-    background: '#3762CC'
-  },
+
+  /*
+  ** Define environment variables
+  */
   env: {
     baseUrl: '/'
   },
+
+  /*
+  ** Overwrite the default Nuxt.js configuration of Vue Router
+  */
   router: {
-    middleware: ['https', 'i18n'],
+    middleware: ['https'],
     base: '/'
   },
+
+  /*
+  ** Customize the progress-bar color
+  */
+  loading: {
+    color: '#3762CC'
+  },
+
+  /*
+  ** Global CSS
+  */
+  css: [],
+
+  /*
+  ** Plugins to load before mounting the App
+  */
+  plugins: [
+    '~/plugins/utils',
+    '~/plugins/i18n.js',
+    '~/plugins/filters',
+    '~/plugins/iview',
+    '~/plugins/vue-chartjs',
+    '~/plugins/asyncComputed',
+    '~/plugins/fb-sdk'
+  ],
 
   /*
   ** Nuxt.js modules
@@ -52,18 +84,9 @@ module.exports = {
   */
   apollo: {
     clientConfigs: {
-      default: '~/apollo/client-configs/default.js'
+      default: '~/config/apollo.js'
     }
   },
-  plugins: [
-    '~/plugins/utils',
-    '~/plugins/i18n.js',
-    '~/plugins/filters',
-    '~/plugins/iview',
-    '~/plugins/vue-chartjs',
-    '~/plugins/asyncComputed',
-    '~/plugins/fb-sdk'
-  ],
 
   /*
   ** Build configuration
@@ -73,7 +96,7 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend(config, ctx) {
+    extend (config, ctx) {
       // run ESLINT on save
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({
