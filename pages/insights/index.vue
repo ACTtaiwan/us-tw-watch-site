@@ -214,6 +214,7 @@ export default {
         margin-right: 20px;
       }
     }
+
     .image-container {
       .front-img {
         width: 200px;

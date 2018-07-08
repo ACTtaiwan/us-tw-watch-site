@@ -1,72 +1,40 @@
 <template>
   <div class="bills-page">
     <!-- Banner -->
-    <section
-      :style="bannerStyle"
-      :class="{ tablet: isTablet, phone: isPhone }"
-      class="banner">
+    <section :style="bannerStyle" class="banner">
       <div class="banner-wrapper">
         <div class="text-container">
           <h1 class="banner-title">{{ this.$t('billsPage.bannerTitle') }}</h1>
-          <div class="tabs">
-            <TabButton
-              :selected="billsTabSelected"
-              class="tab-button"
-              icon="ios-paper"
-              label="Bills"
-              @select="selectTab({bills: true, insight: false})"/>
-            <TabButton
-              :selected="insightTabSelected"
-              class="tab-button"
-              icon="stats-bars"
-              label="Insight"
-              @select="selectTab({bills: false, insight: true})"/>
-          </div>
         </div>
         <div class="image-container" >
-          <img
-            :src="bannerBills"
-            class="front-img">
+          <img :src="bannerBills" class="front-img">
         </div>
       </div>
     </section>
     <!-- Bills -->
-    <section
-      v-if="billsTabSelected"
-      class="bills-section">
+    <section class="bills-section">
       <div class="bills-section-wrapper">
         <Row>
           <!-- Filters -->
-          <i-col
-            :span="isTablet || isPhone ? 24 : 6"
-            :class="{ mobile: isTablet || isPhone }"
-            class="filters">
-            <BillsFilters
-              :categories="categories"
-              :loading="filterLoading"
-              @on-filter="filterBills" />
+          <i-col :xs="{ span: 24 }" :sm="{ span: 6 }" class="filters">
+            <BillsFilters :categories="categories" :loading="filterLoading" @on-filter="filterBills" />
           </i-col>
           <!-- List -->
-          <i-col
-            :span="isTablet || isPhone ? 24 : 18"
-            :class="{ mobile: isTablet || isPhone, phone: isPhone }"
-            class="list">
+          <i-col :xs="{ span: 24 }" :sm="{ span: 18 }" class="list">
             <Row>
-              <i-col
-                v-for="bill in bills"
-                :key="bill.id"
-                span="24">
+              <i-col v-for="bill in bills" :key="bill.id" span="24">
                 <BillSearchResultCard :bill="bill" />
               </i-col>
             </Row>
-            <InfiniteLoading
-              ref="infiniteLoading"
-              @infinite="moreItems">
+            <InfiniteLoading ref="infiniteLoading" @infinite="moreItems">
               <span slot="spinner">
                 <Spinner />
               </span>
               <span slot="no-more">
                 no more data 😂
+              </span>
+              <span slot="no-results">
+                no results 😭
               </span>
             </InfiniteLoading>
           </i-col>
@@ -74,22 +42,21 @@
       </div>
     </section>
     <!-- Insights -->
-    <section
-      v-if="insightTabSelected"
-      class="insights-section">
+    <!-- <section class="insights-section">
       <div class="insights-section-wrapper">
         <Row :gutter="20">
-          <i-col :span="isTablet || isPhone ? 24 : 12">
+          <i-col>
             <BillCountCongressByCategoryCard :categories="categories" />
           </i-col>
-          <i-col :span="isTablet || isPhone ? 24 : 12">
+          <i-col>
             <BillCountCategoryByCongressCard :categories="categories" />
           </i-col>
         </Row>
       </div>
-    </section>
+    </section> -->
   </div>
 </template>
+
 <script>
 import appConfig from '~/config/app.json'
 // Packages
@@ -99,7 +66,6 @@ import bannerBackground from '~/assets/img/banner.png'
 import bannerBills from '~/assets/img/banner-bills.png'
 // Components
 import BillSearchResultCard from '~/components/BillSearchResultCard'
-import TabButton from '~/components/TabButton'
 import Spinner from '~/components/Spinner'
 import BillsFilters from '~/components/BillsFilters'
 import BillCountCategoryByCongressCard from '~/components/Analytics/BillCountCategoryByCongressCard'
@@ -127,7 +93,6 @@ export default {
   components: {
     InfiniteLoading,
     BillSearchResultCard,
-    TabButton,
     Spinner,
     BillsFilters,
     BillCountCategoryByCongressCard,
@@ -140,8 +105,6 @@ export default {
       billIds: [],
       page: 0,
       pageSize: 10,
-      billsTabSelected: true,
-      insightTabSelected: false,
       filterLoading: false,
       filterData: {},
       bannerBackground,
@@ -154,12 +117,6 @@ export default {
       // when locale changes, reset the current page
       this.resetPage()
       return this.$store.state.locale
-    },
-    isPhone () {
-      return this.$store.getters.isPhone
-    },
-    isTablet () {
-      return this.$store.getters.isTablet
     },
     selectedCategories () {
       return this.filterData.selectedCategories ? this.filterData.selectedCategories : []
@@ -177,10 +134,6 @@ export default {
     }
   },
   methods: {
-    selectTab ({ bills, insight }) {
-      this.billsTabSelected = bills
-      this.insightTabSelected = insight
-    },
     resetPage () {
       if (this.$refs.infiniteLoading) {
         this.$refs.infiniteLoading.stateChanger.reset()
@@ -266,7 +219,6 @@ export default {
 @import 'assets/css/typography';
 
 .banner {
-  // desktop
   .banner-wrapper {
     height: 180px;
     display: flex;
@@ -285,50 +237,15 @@ export default {
         text-align: left;
         letter-spacing: 0.02em;
         color: $twWhite;
-        margin-right: 20px;
-      }
-
-      .tabs {
-        display: inline-block;
-        vertical-align: bottom;
         margin-top: 15px;
-
-        .tab-button {
-          margin-right: 10px;
-
-          &:last-child {
-            margin-right: 0px;
-          }
-        }
+        margin-right: 20px;
       }
     }
 
     .image-container {
-      order: 1;
-      display: flex;
-      margin-right: 100px;
-
       .front-img {
-        margin-top: auto;
-        width: 280px;
-      }
-    }
-  }
-
-  // tablet
-  &.tablet {
-    .banner-wrapper {
-      .image-container {
-        display: none;
-      }
-    }
-  }
-
-  // phone
-  &.phone {
-    .banner-wrapper {
-      .image-container {
-        display: none;
+        width: 200px;
+        margin: auto 30px 10px 0;
       }
     }
   }
@@ -345,17 +262,42 @@ export default {
 .filters {
   padding-right: 40px;
   margin-bottom: 20px;
+}
 
-  &.mobile {
-    padding-right: 0px;
+// desktop
+@media screen and (min-width: $mediumDeviceWidth + 1) {
+  .image-container {
+    order: 1;
+    display: flex;
+    margin-right: 100px;
   }
 }
 
-.insights-section {
-  padding: 40px 0;
-
-  .insights-section-wrapper {
-    @extend .pageWrapper-large;
+// tablet
+@media screen and (max-width: $mediumDeviceWidth) {
+  .banner-wrapper {
+    .image-container {
+      display: none;
+    }
   }
+}
+
+// phone
+@media screen and (max-width: $smallDeviceWidth) {
+  .banner-wrapper {
+    .image-container {
+      display: none;
+    }
+  }
+
+  .filters {
+    padding-right: 0px;
+  }
+}
+</style>
+
+<style lang="scss">
+.ivu-row {
+  position: inherit;
 }
 </style>
