@@ -6,13 +6,11 @@ $appFooterHeight: 40px;
 $appFooterHeightPhone: 60px;
 
 // Device
-
 $largeDeviceWidth: 1024px;
 $mediumDeviceWidth: 768px;
 $smallDeviceWidth: 576px;
 
 // Font
-
 .textFont {
   font-family: 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -21,49 +19,28 @@ $smallDeviceWidth: 576px;
   font-family: 'SF Pro Display', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+// Layout Wrapper
+
 .pageWrapper-large {
   width: 100%;
   max-width: 1264px;
-  padding: 0 64px;
   margin: 0 auto;
 }
-@media (max-width: $largeDeviceWidth) {
-  .pageWrapper-large {
-    padding: 0 40px;
-  }
-}
-@media (max-width: $mediumDeviceWidth - 1) {
-  .pageWrapper-large {
-    padding: 0 15px;
-  }
-}
+
 .pageWrapper-medium {
   width: 100%;
   max-width: 964px;
-  padding: 0 60px;
   margin: 0 auto;
 }
-@media (max-width: 850px) {
-  .pageWrapper-medium {
-    padding: 0 40px;
-  }
-}
-@media (max-width: 550px) {
-  .pageWrapper-medium {
-    padding: 0 15px;
-  }
-}
+
+
 .pageWrapper-small {
   width: 100%;
   max-width: 630px;
-  padding: 0 40px;
   margin: 0 auto;
 }
-@media (max-width: 550px) {
-  .pageWrapper-small {
-    padding: 0 15px;
-  }
-}
+
+// Basic Card Style
 
 .card {
   position: inherit;
@@ -73,12 +50,6 @@ $smallDeviceWidth: 576px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   transition-property: box-shadow;
-
-  &.phone {
-    margin-left: calc(15px * -1);
-    margin-right: calc(15px * -1);
-    border-radius: 0px;
-  }
 
   &:hover {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -111,6 +82,51 @@ $smallDeviceWidth: 576px;
   .value {
     font-size: 1em;
     color: $twGrayDark;
-    // font-weight: $twSemiBold;
   }
 }
+
+
+// desktop
+@media screen and (min-width: $mediumDeviceWidth) {
+  .pageWrapper-large {
+    padding: 0 64px;
+  }
+  .pageWrapper-medium {
+    padding: 0 60px;
+  }
+  .pageWrapper-small {
+    padding: 0 40px;
+  }
+}
+
+// tablet
+@media screen and (max-width: $mediumDeviceWidth - 1) {
+  .pageWrapper-large {
+    padding: 0 40px;
+  }
+  .pageWrapper-medium {
+    padding: 0 40px;
+  }
+  .pageWrapper-small {
+    padding: 0 40px;
+  }
+}
+
+// phone
+@media screen and (max-width: $smallDeviceWidth - 1) {
+  .pageWrapper-large {
+    padding: 0 15px;
+  }
+  .pageWrapper-medium {
+    padding: 0 15px;
+  }
+  .pageWrapper-small {
+    padding: 0 15px;
+  }
+  .card {
+    margin-left: calc(15px * -1);
+    margin-right: calc(15px * -1);
+    border-radius: 0px;
+  }
+}
+
