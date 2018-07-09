@@ -265,7 +265,7 @@ export default {
 }
 
 // desktop
-@media screen and (min-width: $mediumDeviceWidth + 1) {
+@media screen and (min-width: $mediumDeviceWidth) {
   .image-container {
     order: 1;
     display: flex;
@@ -274,7 +274,7 @@ export default {
 }
 
 // tablet
-@media screen and (max-width: $mediumDeviceWidth) {
+@media screen and (max-width: $mediumDeviceWidth - 1) {
   .banner-wrapper {
     .image-container {
       display: none;
@@ -283,7 +283,7 @@ export default {
 }
 
 // phone
-@media screen and (max-width: $smallDeviceWidth) {
+@media screen and (max-width: $smallDeviceWidth - 1) {
   .banner-wrapper {
     .image-container {
       display: none;

@@ -8,7 +8,6 @@ $appFooterHeightPhone: 60px;
 // Device
 
 $largeDeviceWidth: 1024px;
-$largeDeviceWidthPlusOne: 1025px;
 $mediumDeviceWidth: 768px;
 $smallDeviceWidth: 576px;
 
@@ -28,12 +27,12 @@ $smallDeviceWidth: 576px;
   padding: 0 64px;
   margin: 0 auto;
 }
-@media (max-width: 850px) {
+@media (max-width: $largeDeviceWidth) {
   .pageWrapper-large {
     padding: 0 40px;
   }
 }
-@media (max-width: 550px) {
+@media (max-width: $mediumDeviceWidth - 1) {
   .pageWrapper-large {
     padding: 0 15px;
   }
