@@ -3,10 +3,10 @@
   "fbAppId": "2017625051893386",
   "thumbnail": "https://s3.amazonaws.com/taiwanwatch-static/assets/tw-fb-og-image.png",
   "site": {
-    "url": "https://dev.www.taiwanwatch.org"
+    "url": "https://www.uswatch.tw"
   },
   "api": {
-    "url": "https://api.taiwanwatch.org/dev/api"
+    "url": "https://graphql.uswatch.tw/dev/api"
   },
   "binaryMimeTypes": [
     "application/javascript",
