@@ -5,7 +5,7 @@
   "author": "dieface <fockerlee@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "nuxt dev",
+    "dev": "HOST=0.0.0.0 nuxt dev",
     "build": "nuxt build",
     "build-analyze": "nuxt build --analyze",
     "start": "nuxt start",
@@ -36,7 +36,7 @@
     "hchs-vue-charts": "^1.2.8",
     "iview": "^2.14.1",
     "moment": "^2.20.1",
-    "nuxt": "^1.4.0",
+    "nuxt": "1.4.1",
     "topojson": "v1.6.27",
     "vue-async-computed": "^3.3.1",
     "vue-chartjs": "^3.2.1",
