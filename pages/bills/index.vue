@@ -55,8 +55,6 @@ import bannerBills from '~/assets/img/banner-bills.png'
 import BillSearchResultCard from '~/components/BillSearchResultCard'
 import Spinner from '~/components/Spinner'
 import BillsFilters from '~/components/BillsFilters'
-import BillCountCategoryByCongressCard from '~/components/Analytics/BillCountCategoryByCongressCard'
-import BillCountCongressByCategoryCard from '~/components/Analytics/BillCountCongressByCategoryCard'
 // Queries
 import PrefetchBillIdsQuery from '~/apollo/queries/BillLandingPage/PrefetchBillIds'
 import BillsQuery from '~/apollo/queries/BillLandingPage/Bills'
@@ -81,9 +79,7 @@ export default {
     InfiniteLoading,
     BillSearchResultCard,
     Spinner,
-    BillsFilters,
-    BillCountCategoryByCongressCard,
-    BillCountCongressByCategoryCard
+    BillsFilters
   },
   data () {
     return {

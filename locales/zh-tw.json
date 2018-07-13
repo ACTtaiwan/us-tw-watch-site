@@ -40,6 +40,8 @@
     }
   },
   "membersPage": {
+    "title": "議員",
+    "description": "你選區的議員關注台灣法案嗎？快來看看！ 🤓",
     "bannerTitle": "國會議員",
     "table": {
       "congressColLabel": "國會屆數",

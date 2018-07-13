@@ -28,6 +28,12 @@
               <i-col>
                 <BillCountCategoryByCongressCard :categories="categories" />
               </i-col>
+              <i-col class="map-chart-container">
+                <SponsoredBillCountMapCard />
+              </i-col>
+              <i-col class="map-chart-container">
+                <CosponsoredBillCountMapCard />
+              </i-col>
             </Row>
           </i-col>
         </Row>
