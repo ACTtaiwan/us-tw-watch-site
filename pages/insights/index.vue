@@ -21,22 +21,14 @@
           </i-col>
           <!-- List -->
           <i-col :xs="{ span: 24 }" :sm="{ span: 18 }" class="list">
-            <Row>
-              <i-col v-for="member in members" :key="member.id" span="24">
-                <MemberSearchResultCard :member="member" :states="states" />
+            <Row :gutter="20">
+              <i-col>
+                <BillCountCongressByCategoryCard :categories="categories" />
+              </i-col>
+              <i-col>
+                <BillCountCategoryByCongressCard :categories="categories" />
               </i-col>
             </Row>
-            <InfiniteLoading ref="infiniteLoading" @infinite="moreItems">
-              <span slot="spinner">
-                <Spinner/>
-              </span>
-              <span slot="no-more">
-                no more data 😂
-              </span>
-              <span slot="no-results">
-                no results 😭
-              </span>
-            </InfiniteLoading>
           </i-col>
         </Row>
       </div>
@@ -58,10 +50,13 @@ import Spinner from '~/components/Spinner'
 import MembersFilters from '~/components/MembersFilters'
 import SponsoredBillCountMapCard from '~/components/Analytics/SponsoredBillCountMapCard'
 import CosponsoredBillCountMapCard from '~/components/Analytics/CosponsoredBillCountMapCard'
+import BillCountCategoryByCongressCard from '~/components/Analytics/BillCountCategoryByCongressCard'
+import BillCountCongressByCategoryCard from '~/components/Analytics/BillCountCongressByCategoryCard'
 // Queries
 import MembersPrefetchQuery from '~/apollo/queries/MemberLandingPage/MembersPrefetch'
 import MembersQuery from '~/apollo/queries/MemberLandingPage/Members'
 import StateListQuery from '~/apollo/queries/StateList'
+import CategoriesQuery from '~/apollo/queries/BillLandingPage/Categories'
 
 export default {
   head () {
@@ -76,10 +71,13 @@ export default {
     Spinner,
     TabButton,
     SponsoredBillCountMapCard,
-    CosponsoredBillCountMapCard
+    CosponsoredBillCountMapCard,
+    BillCountCategoryByCongressCard,
+    BillCountCongressByCategoryCard
   },
   data () {
     return {
+      categories: [],
       members: [],
       memberIds: [],
       page: 0,
@@ -179,6 +177,13 @@ export default {
       },
       update (data) {
         return JSON.parse(data.maps[0].states)
+      }
+    },
+    categories: {
+      query: CategoriesQuery,
+      fetchPolicy: 'cache-and-network',
+      variables () {
+        return { lang: this.locale }
       }
     }
   }

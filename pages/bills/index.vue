@@ -41,19 +41,6 @@
         </Row>
       </div>
     </section>
-    <!-- Insights -->
-    <!-- <section class="insights-section">
-      <div class="insights-section-wrapper">
-        <Row :gutter="20">
-          <i-col>
-            <BillCountCongressByCategoryCard :categories="categories" />
-          </i-col>
-          <i-col>
-            <BillCountCategoryByCongressCard :categories="categories" />
-          </i-col>
-        </Row>
-      </div>
-    </section> -->
   </div>
 </template>
 
