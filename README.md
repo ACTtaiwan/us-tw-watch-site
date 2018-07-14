@@ -83,6 +83,35 @@
 
 ### Setup
 
+Docker:
+```bash
+# create production image for base usage
+$ docker build -f prod.Dockerfile -t ustw/frontend-app .
+
+# build development image based on production image
+$ docker build -f dev.Dockerfile -t ustw/frontend-app-dev .
+
+# run app on a docker container
+$ docker run --name ustw-dev -p 3000:3000 -v $(pwd)/config:/usr/src/app/config \
+-v $(pwd)/runCmdInDocker.sh:/usr/src/app/runCmdInDocker.sh \
+-v $(pwd)/middleware:/usr/src/app/middleware \
+-v $(pwd)/plugins:/usr/src/app/plugins \
+-v $(pwd)/README.md:/usr/src/app/README \
+-v $(pwd)/apollo:/usr/src/app/apollo \
+-v $(pwd)/handler.js:/usr/src/app/handler \
+-v $(pwd)/nuxt.config.js:/usr/src/app/nuxt \
+-v $(pwd)/serverless.yml:/usr/src/app/serverless \
+-v $(pwd)/assets:/usr/src/app/assets \
+-v $(pwd)/layouts:/usr/src/app/layouts \
+-v $(pwd)/package.json:/usr/src/app/package \
+-v $(pwd)/static:/usr/src/app/static \
+-v $(pwd)/components:/usr/src/app/components \
+-v $(pwd)/locales:/usr/src/app/locales \
+-v $(pwd)/pages:/usr/src/app/pages \
+-v $(pwd)/store:/usr/src/app/store \
+ustw/frontend-app-dev 
+
+
 Build:
 
 ```bash
