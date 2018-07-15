@@ -28,7 +28,7 @@ module.exports = {
     baseUrl: '/'
   },
   router: {
-    middleware: ['https', 'i18n'],
+    middleware: ['https', 'i18n', 'check-auth'],
     base: '/'
   },
 

@@ -30,5 +30,9 @@
     "text/plain",
     "text/text",
     "text/xml"
-  ]
+  ],
+  "auth0": {
+    "AUTH0_CLIENT_ID": "IPvay-ojMqyasRhTcfBxuBI3OLF9G4qM",
+    "AUTH0_CLIENT_DOMAIN": "ustw.auth0.com"
+  }  
 }

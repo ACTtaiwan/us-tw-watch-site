@@ -10,5 +10,11 @@ export default {
   isPhone (state) {
     // (state, getters)
     return !(state.clientWidth > 550)
+  },
+  isAuthenticated (state) {
+    return !!state.user
+  },
+  loggedUser (state) {
+    return state.user
   }
 }

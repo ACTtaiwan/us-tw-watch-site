@@ -9,5 +9,9 @@ export default {
 
   SET_WINDOW_WIDTH (state, width) {
     Vue.set(state, 'clientWidth', width)
-  }
+  },
+
+  SET_USER (state, user) {
+    state.user = user || null
+  }  
 }
