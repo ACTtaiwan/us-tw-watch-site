@@ -2,8 +2,10 @@ import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 // import our own locale file
 import zhTW from '~/locales/zh-tw.json'
+// import locale file from components
+import zhTwComponents from '~/components/zh-tw'
 // import i18n texts for iView
-import zhIview from 'iview/dist/locale/zh-TW'
+import zhTwIview from 'iview/dist/locale/zh-TW'
 
 Vue.use(VueI18n)
 
@@ -16,7 +18,8 @@ export default ({ app, isClient, store }) => {
     messages: {
       'zh-tw': {
         ...zhTW,
-        ...zhIview
+        ...zhTwComponents,
+        ...zhTwIview
       }
     }
   })
