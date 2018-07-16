@@ -1,6 +1,6 @@
 export default function ({ store, route, redirect }) {
   if (!store.getters.isAuthenticated) {
-    return redirect('/test')
+    return redirect('/auth/login')
   }
 }
 

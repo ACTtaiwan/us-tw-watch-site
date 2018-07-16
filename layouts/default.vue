@@ -18,6 +18,7 @@ import AppFooter from '~/components/AppFooter'
 import appConfig from '~/config/app.json'
 
 export default {
+  middleware: 'check-auth',
   head () {
     return {
       link: [

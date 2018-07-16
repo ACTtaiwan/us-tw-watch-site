@@ -12,6 +12,7 @@ export default {
   },
 
   SET_USER (state, user) {
+    console.log('SET_USER (state, user) {');
     state.user = user || null
   }  
 }

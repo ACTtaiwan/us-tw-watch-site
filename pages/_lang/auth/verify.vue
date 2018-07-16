@@ -1,5 +1,5 @@
 <template>
-  <p>Signing in...</p>
+  <p>Verifying ...</p>
 </template>
 
 <script>

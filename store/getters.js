@@ -12,6 +12,8 @@ export default {
     return !(state.clientWidth > 550)
   },
   isAuthenticated (state) {
+    // let expiresAt = JSON.parse(localStorage.getItem('expires_at'))
+    // return new Date().getTime() < expiresAt
     return !!state.user
   },
   loggedUser (state) {

@@ -17,8 +17,9 @@ const getOptions = (container) => {
     container,
     closable: false,
     auth: {
-      responseType: 'token',
-      redirectUrl: `${getBaseUrl()}`,
+      responseType: 'token id_token',
+      redirectUrl: `${getBaseUrl()}/auth/verify`,
+      audience: 'https://ustw.auth0.com/userinfo',
       params: {
         scope: 'openid profile email',
         state: secret
