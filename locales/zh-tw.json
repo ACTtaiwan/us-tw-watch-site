@@ -12,7 +12,8 @@
       "billItemText": "法案",
       "congressMemberItemText": "議員",
       "insightsItemText": "洞察",
-      "articlesItemText": "文章"
+      "articlesItemText": "文章",
+      "aboutItemText": "關於"
     }
   },
   "landingPage": {
