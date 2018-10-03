@@ -19,7 +19,7 @@ service: taiwanwatch-main-site
 
 provider:
   name: aws
-  runtime: nodejs6.10
+  runtime: nodejs8.10
 
 # you can overwrite defaults here
 #  stage: dev
@@ -102,7 +102,7 @@ functions:
 #       Value: "Some output value"
 # plugins:
 #   - serverless-apigw-binary
-  
+
 # custom:
 #   apigwBinary:
 #     types:

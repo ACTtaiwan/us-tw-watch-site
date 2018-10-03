@@ -1,5 +1,6 @@
 const pkg = require('./package')
 const app = require('./config/app')
+require('dotenv').config()
 
 module.exports = {
   mode: 'universal',
@@ -28,7 +29,8 @@ module.exports = {
   ** Define environment variables
   */
   env: {
-    baseUrl: '/'
+    baseUrl: '/',
+    FRONTEND_API_KEY: process.env.FRONTEND_API_KEY
   },
 
   /*
@@ -96,7 +98,7 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
       // run ESLINT on save
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({
@@ -105,6 +107,11 @@ module.exports = {
           loader: 'eslint-loader',
           exclude: /(node_modules)/
         })
+      }
+      if (ctx.isClient) {
+        config.devtool = 'eval-source-map'
+      } else {
+        config.devtool = 'inline-source-map'
       }
     }
   },

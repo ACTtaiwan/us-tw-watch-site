@@ -8,6 +8,7 @@
   "api": {
     "url": "https://graphql.uswatch.tw/dev/api"
   },
+  "articleList": "ustw",
   "binaryMimeTypes": [
     "application/javascript",
     "application/json",

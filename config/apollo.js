@@ -12,7 +12,7 @@ export default ctx => {
   // middleware
   const middlewareLink = new ApolloLink((operation, forward) => {
     operation.setContext({
-      headers: { authorization: `Bearer ${token}` }
+      headers: { 'x-api-key': process.env.FRONTEND_API_KEY }
     })
     return forward(operation)
   })
