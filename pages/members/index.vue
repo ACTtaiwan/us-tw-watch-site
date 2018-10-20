@@ -64,13 +64,13 @@ import StateListQuery from '~/apollo/queries/StateList'
 export default {
   head () {
     return {
-      title: `${this.$t('site.title.membersPageTitle')} | ${this.$t('site.title.mainTitle')}`,
+      title: `${this.$t('site.title.membersPageTitle')} | ${this.$t('site.title')}`,
       meta: [
         { hid: 'description', name: 'description', content: this.$t('membersPage.description') },
         { property: 'og:url', content: `${appConfig.site.url}/${this.locale}/bills` },
         {
           property: 'og:title',
-          content: `${this.$t('membersPage.title')} | ${this.$t('site.title.mainTitle')}`
+          content: `${this.$t('membersPage.title')} | ${this.$t('site.title')}`
         },
         { property: 'og:description', content: this.$t('membersPage.description') }
       ]

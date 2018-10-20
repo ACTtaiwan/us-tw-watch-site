@@ -1,28 +1,35 @@
 {
   "site": {
-    "title": {
-      "mainTitle": "美國國會台灣觀測站",
-      "billsPageTitle": "法案",
-      "membersPageTitle": "國會成員"
-    },
-    "description": {
-      "mainDescription": "美國國會台灣大小事"
-    },
+    "title": "美國國會台灣觀測站",
+    "logoTitle": "U.S. TAIWAN WATCH",
+    "description": "你知道美國國會也有台灣相關法案嗎？你知道哪些國會有哪些挺台議員嗎？快來了解美國國會台灣大小事 😎",
     "menu": {
       "billItemText": "法案",
       "congressMemberItemText": "議員",
       "insightsItemText": "洞察",
       "articlesItemText": "文章",
       "aboutItemText": "關於"
+    },
+    "donate": {
+      "donateBtnLabel": "支持我們"
     }
   },
   "landingPage": {
     "title": "美國國會台灣觀測站",
     "description": "你知道美國國會也有台灣相關法案嗎？你知道哪些國會有哪些挺台議員嗎？快來了解美國國會台灣大小事 😎",
-    "bannerTitle": "美國國會台灣大小事",
+    "bannerTitle": "美國國會台灣觀測站",
     "newsTitle": "美國通過《台灣旅行法》",
-    "newsContent":
-      "美國當地時間3月16日，美國總統川普正式簽署通過《台灣旅行法》，這是繼《台灣關係法》之後，政治意義最高的台灣相關法案。"
+    "newsContent": "美國當地時間3月16日，美國總統川普正式簽署通過《台灣旅行法》，這是繼《台灣關係法》之後，政治意義最高的台灣相關法案。",
+    "introSection": {
+      "title": "Every American can play a role in protecting Taiwan's democracy, Especially You!",
+      "text": "Find out how important Taiwan is to America by reading the blog. Ask your members of Congress to support pro-Taiwan legislation. Support ACT's work with a donation to keep things going."
+    },
+    "billSection": {
+      "title": "查法案"
+    },
+    "articleSection": {
+      "title": "讀法案"
+    }
   },
   "billsPage": {
     "title": "法案",

@@ -1,10 +1,12 @@
-query ArticlesQuery($lang: String) {
-  articles(lang: $lang) {
+query ArticlesQuery($list: String, $limit: Int, $before: String) {
+  articles(list: $list, limit: $limit, before: $before) {
     id
-    publishedAt
-    imageUrl
-    source
-    title
+    headline
+    subhead
+    author
+    intro
     url
+    imageUrl
+    date
   }
 }

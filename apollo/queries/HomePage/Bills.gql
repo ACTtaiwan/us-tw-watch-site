@@ -2,6 +2,7 @@ query BillsQuery($lang: String, $ids: [ID]) {
   bills(lang: $lang, ids: $ids) {
     id
     title
+    congress
     billCode
     billNumber
     billType {

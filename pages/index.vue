@@ -2,16 +2,10 @@
   <div class="landing">
 
     <!-- Banner -->
-    <section
-      :style="bannerStyle"
-      class="banner">
-      <div
-        :class="{ tablet: isTablet, phone: isPhone }"
-        class="banner-wrapper">
+    <section :style="bannerStyle" class="banner">
+      <div :class="{ tablet: isTablet, phone: isPhone }" class="banner-wrapper">
         <div class="image-container" >
-          <img
-            :src="people"
-            class="front-img">
+          <img :src="people" class="front-img">
         </div>
         <div class="text-container">
           <h1 class="banner-title">{{ this.$t('landingPage.bannerTitle') }}</h1>
@@ -20,6 +14,63 @@
             <p class="news-content">{{ this.$t('landingPage.newsContent') }}</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Intro -->
+    <section class="intro section">
+      <div class="section-wrapper">
+        <h1 class="section-title">{{ $t('landingPage.introSection.title') }}</h1>
+        <div class="info-cards-section-wrapper">
+          <h3 class="intro-text">{{ $t('landingPage.introSection.text') }}</h3>
+        </div>
+        <div class="actions-wrapper">
+          <ActionCard
+            :card="actionCardSubscribe"
+            :showImage="true"
+            :showTitle="true"
+            :showSubtitle="true"
+            @press="showSubscription = true"/>
+          <router-link :to="`/bills`">
+            <ActionCard
+              :card="actionCardTakeAction"
+              :showImage="true"
+              :showTitle="true"
+              :showSubtitle="true"/>
+          </router-link>
+          <ActionCard
+            :card="actionCardDonate"
+            :showImage="true"
+            :showTitle="true"
+            :showSubtitle="true"
+            @press="showDonorbox = true"/>
+        </div>
+      </div>
+    </section>
+
+    <!-- Articles -->
+    <section class="articles section">
+      <div class="section-wrapper">
+        <h1 class="section-title">{{ $t('landingPage.articleSection.title') }}</h1>
+        <div class="info-cards-section-wrapper">
+          <Spinner v-if="isArticleUpdateLoading" />
+          <Row :gutter="30">
+            <i-col
+              v-for="article in articles"
+              :key="article.id"
+              :span="isPhone ? 24 : isTablet ? 12 : 8">
+              <ArticleCard
+                :article="article"
+                imgNoMargin
+                class="article-card" />
+            </i-col>
+          </Row>
+        </div>
+        <router-link :to="`/articles`">
+          <div class="more-btn">
+            <TwButton label="More Articles" color="gray" fontSize="1.3em" width="100%" height="100%"/>
+          </div>
+        </router-link>
       </div>
     </section>
 
@@ -40,26 +91,11 @@
             </i-col>
           </Row>
         </div>
-      </div>
-    </section>
-
-    <!-- Articles -->
-    <section class="articles section">
-      <div class="section-wrapper">
-        <h1 class="section-title">Articles</h1>
-        <div class="info-cards-section-wrapper">
-          <Spinner v-if="isArticleUpdateLoading" />
-          <Row :gutter="30">
-            <i-col
-              v-for="article in articles"
-              :key="article.id"
-              :span="isPhone ? 24 : isTablet ? 12 : 8">
-              <ArticleCard
-                :article="article"
-                class="article-card" />
-            </i-col>
-          </Row>
-        </div>
+        <router-link :to="`/bills`">
+          <div class="more-btn">
+            <TwButton label="More Bills" color="gray" fontSize="1.3em" width="100%" height="100%"/>
+          </div>
+        </router-link>
       </div>
     </section>
 
@@ -73,36 +109,69 @@ import appConfig from '~/config/app.json'
 // images
 import congress from '~/assets/img/banner-home.png'
 import people from '~/assets/img/banner-people.png'
+import actionImgSubscribe from '~/assets/img/keep-posted.svg'
+import actionImgTakeAction from '~/assets/img/take-action.svg'
+import actionImgSupportAct from '~/assets/img/support-act.svg'
 // components
 import Spinner from '~/components/Spinner'
 import BillCard from '~/components/HomePage/BillCard'
 import ArticleCard from '~/components/HomePage/ArticleCard'
+import Subscription from '~/components/Subscription'
+import Donorbox from '~/components/Donorbox'
+import TwButton from '~/components/TwButton'
+import ActionCard from '~/components/ActionCard'
 // queriess
 import PrefetchBillIdsQuery from '~/apollo/queries/HomePage/PrefetchBillIds'
 import BillsQuery from '~/apollo/queries/HomePage/Bills'
 import ArticlesQuery from '~/apollo/queries/HomePage/Articles'
 
+import axios from 'axios'
+
 export default {
   components: {
     BillCard,
     ArticleCard,
-    Spinner
+    Spinner,
+    Subscription,
+    Donorbox,
+    TwButton,
+    ActionCard
   },
-  data () {
+  data (context) {
+    let urlQuery = context.$route.query
+
     return {
       numberOfBillCards: 6,
+      numberOfArticleCards: 6,
       isBillUpdateLoading: true,
       isArticleUpdateLoading: true,
       bills: [],
       billIds: [],
       articles: [],
       congress,
-      people
+      people,
+      showSubscription: urlQuery.subscribe === 'true' ? true : false,
+      showDonorbox: urlQuery.donate === 'true' ? true : false,
+      actionCardSubscribe: {
+        imageUrl: actionImgSubscribe,
+        title: this.$t('landingPage.actionCards.subscribe.title'),
+        subtitle: this.$t('landingPage.actionCards.subscribe.subtitle')
+      },
+      actionCardTakeAction: {
+        imageUrl: actionImgTakeAction,
+        title: this.$t('landingPage.actionCards.takeAction.title'),
+        subtitle: this.$t('landingPage.actionCards.takeAction.subtitle')
+      },
+      actionCardDonate: {
+        imageUrl: actionImgSupportAct,
+        title: this.$t('landingPage.actionCards.supportAct.title'),
+        subtitle: this.$t('landingPage.actionCards.supportAct.subtitle')
+      }
     }
   },
   head () {
     return {
-      title: this.$t('site.title.mainTitle'),
+      title: this.$t('site.title'),
       meta: [
         { hid: 'description', name: 'description', content: this.$t('landingPage.description') },
         { property: 'og:url', content: appConfig.site.url },
@@ -128,11 +197,13 @@ export default {
   methods: {
     getLatestActionDate (actions) {
       let latestActionTime = 0
-      actions.forEach(action => {
-        if (action.datetime > latestActionTime) {
-          latestActionTime = action.datetime
-        }
-      })
+      if (actions && actions.length > 0) {
+        actions.forEach(action => {
+          if (action.datetime > latestActionTime) {
+            latestActionTime = action.datetime
+          }
+        })
+      }
       return parseInt(latestActionTime)
     },
     fetchBills (ids) {
@@ -149,6 +220,7 @@ export default {
           const billsMap = _.keyBy(data.bills, 'id')
           this.bills = this.billIds
             .map(id => billsMap[id])
+            .filter(x => !!x.actionsAll)
             .sort(
               (a, b) =>
                 this.getLatestActionDate(b.actionsAll) - this.getLatestActionDate(a.actionsAll)
@@ -186,11 +258,14 @@ export default {
       fetchPolicy: 'cache-and-network',
       variables () {
         return {
-          lang: this.locale
+          list: appConfig.articleList
         }
       },
       update (data) {
-        return _.orderBy(data.articles, article => parseInt(article.publishedAt), ['desc'])
+        return _.orderBy(data.articles, article => parseInt(article.date), ['desc']).slice(
+          0,
+          this.numberOfArticleCards
+        )
       },
       result (result) {
         if (!result.loading) {
@@ -233,8 +308,9 @@ export default {
     order: 1;
 
     .banner-title {
+      @extend .displayFont;
       font-size: 3em;
-      font-weight: $twSemiBold;
+      font-weight: $twLight;
       line-height: 1.1em;
       padding-top: 50px;
       text-align: left;
@@ -344,5 +420,18 @@ export default {
   &:last-child {
     margin-bottom: 40px;
   }
+}
+
+.more-btn {
+  margin: 20px auto;
+  width: 200px;
+  height: 50px;
+}
+
+.actions-wrapper {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 </style>

@@ -67,7 +67,7 @@ import CategoriesQuery from '~/apollo/queries/BillLandingPage/Categories'
 export default {
   head () {
     return {
-      title: `${this.$t('site.title.membersPageTitle')} | ${this.$t('site.title.mainTitle')}`
+      title: `${this.$t('site.title.membersPageTitle')} | ${this.$t('site.title')}`
     }
   },
   components: {

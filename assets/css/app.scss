@@ -2,6 +2,7 @@
 @import 'assets/css/typography';
 
 $appHeaderHeight: 60px;
+$appCopyRightHeight: 50px;
 $appFooterHeight: 40px;
 $appFooterHeightPhone: 60px;
 
@@ -12,11 +13,11 @@ $smallDeviceWidth: 576px;
 
 // Font
 .textFont {
-  font-family: 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "-apple-system", "SF Pro Text", "Myriad Set Pro", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
 }
 
 .displayFont {
-  font-family: 'SF Pro Display', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "-apple-system", "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
 }
 
 // Layout Wrapper
@@ -85,6 +86,17 @@ $smallDeviceWidth: 576px;
   }
 }
 
+@mixin button-color($btnColor, $btnTextColor) {
+  background: $btnColor;
+  color: $btnTextColor;
+
+  &:hover,
+  &:focus {
+    color: $btnTextColor;
+    background: darken($btnColor, 10%);
+    transition: background 250ms;
+  }
+}
 
 // desktop
 @media screen and (min-width: $mediumDeviceWidth) {

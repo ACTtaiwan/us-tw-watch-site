@@ -13,8 +13,8 @@
 
 <script>
 import _ from 'lodash'
-import AppHeader from '~/components/AppHeader'
-import AppFooter from '~/components/AppFooter'
+import AppHeader from '~/components/AppHeaderUSTW'
+import AppFooter from '~/components/AppFooterUSTW'
 import appConfig from '~/config/app.json'
 
 export default {
