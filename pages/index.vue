@@ -8,10 +8,10 @@
           <img :src="people" class="front-img">
         </div>
         <div class="text-container">
-          <h1 class="banner-title">{{ this.$t('landingPage.bannerTitle') }}</h1>
-          <div class="news">
-            <h1 class="news-title">{{ this.$t('landingPage.newsTitle') }}</h1>
-            <p class="news-content">{{ this.$t('landingPage.newsContent') }}</p>
+          <div class="text-wrapper">
+            <h1 class="banner-title">{{ this.$t('landingPage.bannerTitle') }}</h1>
+            <p class="banner-content">{{ this.$t('landingPage.bannerContent') }}</p>
+            <TwButton label="看法案" color="gray-light" fontSize="14px" lineHeight="22px" />
           </div>
         </div>
       </div>
@@ -213,19 +213,22 @@ export default {
       })
     },
     getUpdatedBills () {
-      this.fetchBills(this.billIds)
+      this.fetchBills(this.billIds.slice(0, this.numberOfBillCards))
         .then(({ data }) => {
           // the returned bill order is not the same as the bill id order provided
           // TODO: move this to graphql server side
-          const billsMap = _.keyBy(data.bills, 'id')
-          this.bills = this.billIds
-            .map(id => billsMap[id])
-            .filter(x => !!x.actionsAll)
-            .sort(
-              (a, b) =>
-                this.getLatestActionDate(b.actionsAll) - this.getLatestActionDate(a.actionsAll)
-            )
-            .filter((bill, index) => index < this.numberOfBillCards)
+
+          // const billsMap = _.keyBy(data.bills, 'id')
+          // this.bills = this.billIds
+          //   .map(id => billsMap[id])
+          //   .filter(x => !!x.actionsAll)
+          //   .sort(
+          //     (a, b) =>
+          //       this.getLatestActionDate(b.actionsAll) - this.getLatestActionDate(a.actionsAll)
+          //   )
+          //   .filter((bill, index) => index < this.numberOfBillCards)
+
+          this.bills = data.bills
 
           this.isBillUpdateLoading = false
         })
@@ -306,31 +309,27 @@ export default {
 
   .text-container {
     order: 1;
+    display: flex;
+    align-items: center;
 
-    .banner-title {
-      @extend .displayFont;
-      font-size: 3em;
-      font-weight: $twLight;
-      line-height: 1.1em;
-      padding-top: 50px;
-      text-align: left;
-      margin-bottom: 20px;
-      color: $twWhite;
-    }
-
-    .news {
-      .news-title {
-        font-weight: 400;
-        font-size: 1.8em;
-        line-height: 1.1em;
+    .text-wrapper {
+      .banner-title {
+        @extend .displayFont;
+        font-size: 3em;
+        font-weight: $twLight;
+        line-height: 1em;
+        text-align: left;
+        margin-bottom: 20px;
         color: $twWhite;
-        letter-spacing: 1px;
-        margin-bottom: 5px;
       }
 
-      .news-content {
+      .banner-content {
+        font-weight: $twMedium;
+        font-size: 18px;
+        line-height: 1em;
         color: $twWhite;
-        max-width: 350px;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
       }
     }
   }
