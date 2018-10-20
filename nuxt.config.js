@@ -63,7 +63,8 @@ module.exports = {
     '~/plugins/iview',
     '~/plugins/vue-chartjs',
     '~/plugins/asyncComputed',
-    '~/plugins/fb-sdk'
+    '~/plugins/fb-sdk',
+    { src: '~/plugins/infinite-loading', ssr: false }
   ],
 
   /*
@@ -98,7 +99,7 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend(config, ctx) {
+    extend (config, ctx) {
       // run ESLINT on save
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({

@@ -26,17 +26,19 @@
                 <BillSearchResultCard :bill="bill" />
               </i-col>
             </Row>
-            <InfiniteLoading ref="infiniteLoading" @infinite="moreItems">
-              <span slot="spinner">
-                <Spinner />
-              </span>
-              <span slot="no-more">
-                no more data 😂
-              </span>
-              <span slot="no-results">
-                no results 😭
-              </span>
-            </InfiniteLoading>
+            <no-ssr>
+              <InfiniteLoading ref="infiniteLoading" @infinite="moreItems">
+                <span slot="spinner">
+                  <Spinner />
+                </span>
+                <span slot="no-more">
+                  no more data 😂
+                </span>
+                <span slot="no-results">
+                  no results 😭
+                </span>
+              </InfiniteLoading>
+            </no-ssr>
           </i-col>
         </Row>
       </div>
@@ -46,8 +48,7 @@
 
 <script>
 import appConfig from '~/config/app.json'
-// Packages
-import InfiniteLoading from 'vue-infinite-loading/src/components/InfiniteLoading.vue'
+
 // Images
 import bannerBackground from '~/assets/img/banner.png'
 import bannerBills from '~/assets/img/banner-bills.png'
@@ -76,7 +77,6 @@ export default {
     }
   },
   components: {
-    InfiniteLoading,
     BillSearchResultCard,
     Spinner,
     BillsFilters
