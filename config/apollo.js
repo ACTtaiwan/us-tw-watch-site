@@ -1,10 +1,10 @@
 import { ApolloLink } from 'apollo-link'
-import { HttpLink } from 'apollo-link-http'
+import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import app from '~/config/app.json'
 
 export default ctx => {
-  const httpLink = new HttpLink({ uri: app.api.url })
+  const httpLink = createHttpLink({ uri: app.api.url })
   // auth token
   // let token = ctx.isServer ? ctx.req.session : window.__NUXT__.state.session
   let token = null

@@ -37,13 +37,23 @@
           </div>
           <div class="text-area">
             <h1 class="title">台灣相關法案</h1>
-            <p class="description">美國也有台灣法案？</p>
             <p class="content">台灣和美國之間雖沒有正式的外交關係，但官方和民間長期以來卻保有高度互動，為了管理以及保障這類的互動交流，美國國會長期以來提出許多台灣相關法案。這些法案一旦通過美國國會，即成為美國國內法，約束著美國相關機關與台灣往來等外交政策。如果要了解美國的政策決策者是如何理解看待台灣，就從台灣相關法案開始吧。</p>
             <TwButton label="看法案" fontSize="14px" lineHeight="22px" />
           </div>
 
-
         </div>
+
+        <Spinner v-if="isBillUpdateLoading" />
+        <Row :gutter="30">
+          <i-col
+            v-for="bill in bills"
+            :key="bill.id"
+            :span="isPhone ? 24 : isTablet ? 12 : 8">
+            <BillCard
+              :bill="bill"
+              class="bill-card" />
+          </i-col>
+        </Row>
 
 
       </div>
@@ -141,8 +151,8 @@ export default {
     let urlQuery = context.$route.query
 
     return {
-      numberOfBillCards: 6,
-      numberOfArticleCards: 6,
+      numberOfBillCards: 3,
+      numberOfArticleCards: 3,
       isBillUpdateLoading: true,
       isArticleUpdateLoading: true,
       bills: [],
@@ -411,7 +421,7 @@ export default {
   display: flex;
   justify-content: space-between;
   margin: 10px auto 50px;
-  padding: 30px 60px;
+  padding: 30px 0;
 
   .text-area {
     .title {
@@ -463,7 +473,7 @@ export default {
 
 .tw-bill {
   .text-area {
-    flex: 2;
+    flex: 4;
   }
 
   .img-area {
