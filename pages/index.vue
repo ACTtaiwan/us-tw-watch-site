@@ -73,7 +73,7 @@
         <div class="hero-block tw-bill">
           <div class="img-area">
             <img
-              :src="twBill"
+              :src="twMember"
               class="twBillImg">
           </div>
           <div class="text-area">
@@ -143,6 +143,7 @@ import bannerFg from '~/assets/img/banner-people.png'
 
 import sail from '~/assets/img/sail.png'
 import twBill from '~/assets/img/intro-tw-bill.png'
+import twMember from '~/assets/img/intro-tw-member.png'
 
 // components
 import Spinner from '~/components/Spinner'
@@ -183,6 +184,7 @@ export default {
       bannerBg,
       bannerFg,
       twBill,
+      twMember,
       sail,
       showSubscription: urlQuery.subscribe === 'true' ? true : false,
       showDonorbox: urlQuery.donate === 'true' ? true : false
