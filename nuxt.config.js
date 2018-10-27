@@ -64,6 +64,7 @@ module.exports = {
     '~/plugins/vue-chartjs',
     '~/plugins/asyncComputed',
     '~/plugins/fb-sdk',
+    { src: '~/plugins/vue-line-clamp', ssr: false },
     { src: '~/plugins/infinite-loading', ssr: false }
   ],
 

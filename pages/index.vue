@@ -59,7 +59,7 @@
             v-for="bill in bills"
             :key="bill.id"
             :span="isPhone ? 24 : isTablet ? 12 : 8">
-            <BillCard
+            <BillSimpleCard
               :bill="bill"
               class="bill-card" />
           </i-col>
@@ -90,7 +90,7 @@
             v-for="bill in bills"
             :key="bill.id"
             :span="isPhone ? 24 : isTablet ? 12 : 8">
-            <BillCard
+            <BillSimpleCard
               :bill="bill"
               class="bill-card" />
           </i-col>
@@ -147,7 +147,7 @@ import twMember from '~/assets/img/intro-tw-member.png'
 
 // components
 import Spinner from '~/components/Spinner'
-import BillCard from '~/components/HomePage/BillCard'
+import BillSimpleCard from '~/components/BillSimpleCard'
 import ArticleCard from '~/components/HomePage/ArticleCard'
 import Subscription from '~/components/Subscription'
 import Donorbox from '~/components/Donorbox'
@@ -162,7 +162,7 @@ import axios from 'axios'
 
 export default {
   components: {
-    BillCard,
+    BillSimpleCard,
     ArticleCard,
     Spinner,
     Subscription,
