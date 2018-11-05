@@ -4,6 +4,19 @@ query BillsQuery($lang: String, $ids: [ID]) {
     title
     congress
     billCode
+    introducedDate
+    sponsor {
+      id
+      roleType
+      party
+      state
+      district
+      person {
+        id
+        lastname
+        firstname
+      }
+    }
     billNumber
     billType {
       id

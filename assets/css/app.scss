@@ -75,9 +75,28 @@ $smallDeviceWidth: 576px;
   flex-direction: column;
   margin-bottom: 20px;
 
-  .label-row {
-    line-height: 18px;
+  .item-row {
+    line-height: 16px;
+    display: flex;
     margin-bottom: 10px;
+
+    &.v-center {
+      align-items: center;
+    }
+
+    .item-label {
+      min-width: 70px;
+      font-size: 12px;
+      color: $twGrayDark;
+      font-weight: $twMedium;
+      @extend .displayFont;
+    }
+
+    .item-value {
+      font-size: 12px;
+      color: $twGrayDark;
+      @extend .textFont;
+    }
   }
 
   .label {

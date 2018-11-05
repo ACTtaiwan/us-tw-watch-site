@@ -15,6 +15,7 @@ export function trimConGovAction (description) {
   // Remove "Action By"
   // It will always be the last part
   result = result.split(' Action By')[0]
+  result = result.split('Action By')[0]
 
   // Remove unnecessary parenthesis
   let matched = result.match(parenRegExp)

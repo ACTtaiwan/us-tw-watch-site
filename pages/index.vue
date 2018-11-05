@@ -428,7 +428,7 @@ export default {
 
   &.bills,
   &.articles {
-    background-color: #f0f0f0;
+    background-color: #eef2f6;
   }
 
   .section-wrapper {
