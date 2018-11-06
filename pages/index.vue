@@ -41,9 +41,7 @@
       <div class="section-wrapper">
         <div class="hero-block tw-bill">
           <div class="img-area">
-            <img
-              :src="twBill"
-              class="twBillImg">
+            <img :src="twBill" class="twBillImg">
           </div>
           <div class="text-area">
             <h1 class="title">台灣相關法案</h1>
@@ -55,13 +53,8 @@
 
         <Spinner v-if="isBillUpdateLoading" />
         <Row :gutter="30">
-          <i-col
-            v-for="bill in bills"
-            :key="bill.id"
-            :span="isPhone ? 24 : isTablet ? 12 : 8">
-            <BillSimpleCard
-              :bill="bill"
-              class="bill-card" />
+          <i-col v-for="bill in bills" :key="bill.id" :span="isPhone ? 24 : isTablet ? 12 : 8">
+            <BillSimpleCard :bill="bill" class="bill-card" />
           </i-col>
         </Row>
       </div>
@@ -72,9 +65,7 @@
       <div class="section-wrapper">
         <div class="hero-block tw-bill">
           <div class="img-area">
-            <img
-              :src="twMember"
-              class="twBillImg">
+            <img :src="twMember" class="twBillImg">
           </div>
           <div class="text-area">
             <h1 class="title">挺台議員</h1>
@@ -86,13 +77,8 @@
 
         <Spinner v-if="isBillUpdateLoading" />
         <Row :gutter="30">
-          <i-col
-            v-for="bill in bills"
-            :key="bill.id"
-            :span="isPhone ? 24 : isTablet ? 12 : 8">
-            <BillSimpleCard
-              :bill="bill"
-              class="bill-card" />
+          <i-col v-for="bill in bills" :key="bill.id" :span="isPhone ? 24 : isTablet ? 12 : 8">
+            <BillSimpleCard :bill="bill" class="bill-card" />
           </i-col>
         </Row>
       </div>
@@ -507,12 +493,12 @@ export default {
 
 .tw-bill {
   .text-area {
-    flex: 4;
+    flex: 6;
   }
 
   .img-area {
     flex: 1;
-    padding-right: 100px;
+    padding-right: 40px;
   }
 }
 
