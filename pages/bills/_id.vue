@@ -6,6 +6,10 @@
         :class="{ phone: isPhone }"
         class="bill-section">
         <div class="bill-section-wrapper">
+
+
+
+
           <Row>
             <i-col
               :span="isTablet || isPhone ? 24 : 18"

@@ -9,6 +9,7 @@ node_modules
 
 # logs
 npm-debug.log
+.env
 
 # Nuxt build
 .nuxt
