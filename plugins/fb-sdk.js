@@ -10,7 +10,7 @@ Vue.prototype.$initFbSdk = () => {
     }
     js = d.createElement(s)
     js.id = id
-    js.src = 'https://connect.facebook.net/en_US/sdk.js'
+    js.src = 'https://connect.facebook.net/zh_TW/sdk.js'
     fjs.parentNode.insertBefore(js, fjs)
   })(document, 'script', 'facebook-jssdk')
 
@@ -19,7 +19,7 @@ Vue.prototype.$initFbSdk = () => {
       appId: '2017625051893386',
       autoLogAppEvents: true,
       xfbml: true,
-      version: 'v2.12'
+      version: 'v3.2'
     })
     FB.AppEvents.logPageView()
     Vue.prototype.FB = FB

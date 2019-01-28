@@ -1,11 +1,8 @@
 <template>
   <div id="app">
-    <AppHeader />
-    <main
-      id="main-content"
-      :class="{ phone: isPhone}"
-      class="main-content">
-      <nuxt nuxtChildKey="none" />
+    <AppHeader/>
+    <main id="main-content" :class="{ phone: isPhone}" class="main-content">
+      <nuxt nuxtChildKey="none"/>
     </main>
     <AppFooter/>
   </div>
@@ -14,7 +11,7 @@
 <script>
 import _ from 'lodash'
 import AppHeader from '~/components/AppHeaderUSTW'
-import AppFooter from '~/components/AppFooterUSTW'
+import AppFooter from '~/components/AppFooter'
 import appConfig from '~/config/app.json'
 
 export default {

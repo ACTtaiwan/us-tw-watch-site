@@ -62,5 +62,9 @@
   },
   "insightsPage": {
     "bannerTitle": "洞察資料"
+  },
+  "aboutPage": {
+    "title": "關於我們",
+    "description": "觀測站團隊是由一群旅居海外的台灣人所組成，雖然是各行各業，但卻都有一顆愛台灣的心。"
   }
 }

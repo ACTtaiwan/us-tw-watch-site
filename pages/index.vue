@@ -1,17 +1,16 @@
 <template>
   <div class="landing">
-
     <!-- Banner -->
     <section :style="bannerStyle" class="banner">
       <div :class="{ tablet: isTablet, phone: isPhone }" class="banner-wrapper">
-        <div class="image-container" >
+        <div class="image-container">
           <img :src="bannerFg" class="front-img">
         </div>
         <div class="text-container">
           <div class="text-wrapper">
             <h1 class="banner-title">{{ this.$t('landingPage.bannerTitle') }}</h1>
             <p class="banner-content">{{ this.$t('landingPage.bannerContent') }}</p>
-            <TwButton label="看法案" color="gray-light" fontSize="14px" lineHeight="22px" />
+            <TwButton label="看法案" color="gray-light" fontSize="14px" lineHeight="22px"/>
           </div>
         </div>
       </div>
@@ -24,13 +23,12 @@
           <div class="text-area" style="padding-right: 30px;">
             <h1 class="title">為何觀測？</h1>
             <p class="description">走出兩岸對壘窄巷</p>
-            <p class="content">台灣在國際上的處境艱辛，與各個盟國之間的交往互動更顯重要。然而，在台灣島內卻鮮少看到對於台灣國際關係的報導，主流媒體永遠只報導兩岸關係，似乎台灣的外交困境只能從兩岸尋求解方。但事實是，光以美國為例，從過去到現在提出的法案中有相當大的比例都是在為台灣爭取自由民主以及保障國際空間。是以，從美國國會作為觀測對象，就能知道美國決策圈是如何看待台灣議題以及其態度。長期以來台灣人對於自身的地位常常被鎖在兩岸關係對壘的窄巷中，資訊蓬勃發展的時代，或許我們在這個方面也是時候與國際接軌，看看其他國家怎麼看我們。</p>
+            <p
+              class="content"
+            >台灣在國際上的處境艱辛，與各個盟國之間的交往互動更顯重要。然而，在台灣島內卻鮮少看到對於台灣國際關係的報導，主流媒體永遠只報導兩岸關係，似乎台灣的外交困境只能從兩岸尋求解方。但事實是，光以美國為例，從過去到現在提出的法案中有相當大的比例都是在為台灣爭取自由民主以及保障國際空間。是以，從美國國會作為觀測對象，就能知道美國決策圈是如何看待台灣議題以及其態度。長期以來台灣人對於自身的地位常常被鎖在兩岸關係對壘的窄巷中，資訊蓬勃發展的時代，或許我們在這個方面也是時候與國際接軌，看看其他國家怎麼看我們。</p>
           </div>
           <div class="img-area" style="position: relative;">
-            <img
-              :src="sail"
-              style="position: absolute; bottom: 0;"
-              class="twBillImg">
+            <img :src="sail" style="position: absolute; bottom: 0;" class="twBillImg">
           </div>
         </div>
       </div>
@@ -45,16 +43,17 @@
           </div>
           <div class="text-area">
             <h1 class="title">台灣相關法案</h1>
-            <p class="content">台灣和美國之間雖沒有正式的外交關係，但官方和民間長期以來卻保有高度互動，為了管理以及保障這類的互動交流，美國國會長期以來提出許多台灣相關法案。這些法案一旦通過美國國會，即成為美國國內法，約束著美國相關機關與台灣往來等外交政策。如果要了解美國的政策決策者是如何理解看待台灣，就從台灣相關法案開始吧。</p>
-            <TwButton label="更多法案" fontSize="14px" lineHeight="22px" />
+            <p
+              class="content"
+            >台灣和美國之間雖沒有正式的外交關係，但官方和民間長期以來卻保有高度互動，為了管理以及保障這類的互動交流，美國國會長期以來提出許多台灣相關法案。這些法案一旦通過美國國會，即成為美國國內法，約束著美國相關機關與台灣往來等外交政策。如果要了解美國的政策決策者是如何理解看待台灣，就從台灣相關法案開始吧。</p>
+            <TwButton label="更多法案" fontSize="14px" lineHeight="22px"/>
           </div>
-
         </div>
 
-        <Spinner v-if="isBillUpdateLoading" />
+        <Spinner v-if="isBillUpdateLoading"/>
         <Row :gutter="30">
           <i-col v-for="bill in bills" :key="bill.id" :span="isPhone ? 24 : isTablet ? 12 : 8">
-            <BillSimpleCard :bill="bill" class="bill-card" />
+            <BillSimpleCard :bill="bill" class="bill-card"/>
           </i-col>
         </Row>
       </div>
@@ -69,16 +68,17 @@
           </div>
           <div class="text-area">
             <h1 class="title">挺台議員</h1>
-            <p class="content">台灣和美國之間雖沒有正式的外交關係，但官方和民間長期以來卻保有高度互動，為了管理以及保障這類的互動交流，美國國會長期以來提出許多台灣相關法案。這些法案一旦通過美國國會，即成為美國國內法，約束著美國相關機關與台灣往來等外交政策。如果要了解美國的政策決策者是如何理解看待台灣，就從台灣相關法案開始吧。</p>
-            <TwButton label="更多議員" fontSize="14px" lineHeight="22px" />
+            <p
+              class="content"
+            >台灣和美國之間雖沒有正式的外交關係，但官方和民間長期以來卻保有高度互動，為了管理以及保障這類的互動交流，美國國會長期以來提出許多台灣相關法案。這些法案一旦通過美國國會，即成為美國國內法，約束著美國相關機關與台灣往來等外交政策。如果要了解美國的政策決策者是如何理解看待台灣，就從台灣相關法案開始吧。</p>
+            <TwButton label="更多議員" fontSize="14px" lineHeight="22px"/>
           </div>
-
         </div>
 
-        <Spinner v-if="isBillUpdateLoading" />
+        <Spinner v-if="isBillUpdateLoading"/>
         <Row :gutter="30">
           <i-col v-for="bill in bills" :key="bill.id" :span="isPhone ? 24 : isTablet ? 12 : 8">
-            <BillSimpleCard :bill="bill" class="bill-card" />
+            <BillSimpleCard :bill="bill" class="bill-card"/>
           </i-col>
         </Row>
       </div>
@@ -89,33 +89,29 @@
       <div class="section-wrapper">
         <div class="hero-block tw-bill">
           <div class="img-area">
-            <img
-              :src="twBill"
-              class="twBillImg">
+            <img :src="twBill" class="twBillImg">
           </div>
           <div class="text-area">
             <h1 class="title">台美議題</h1>
-            <p class="content">台灣和美國之間雖沒有正式的外交關係，但官方和民間長期以來卻保有高度互動，為了管理以及保障這類的互動交流，美國國會長期以來提出許多台灣相關法案。這些法案一旦通過美國國會，即成為美國國內法，約束著美國相關機關與台灣往來等外交政策。如果要了解美國的政策決策者是如何理解看待台灣，就從台灣相關法案開始吧。</p>
-            <TwButton label="更多新聞" fontSize="14px" lineHeight="22px" />
+            <p
+              class="content"
+            >台灣和美國之間雖沒有正式的外交關係，但官方和民間長期以來卻保有高度互動，為了管理以及保障這類的互動交流，美國國會長期以來提出許多台灣相關法案。這些法案一旦通過美國國會，即成為美國國內法，約束著美國相關機關與台灣往來等外交政策。如果要了解美國的政策決策者是如何理解看待台灣，就從台灣相關法案開始吧。</p>
+            <TwButton label="更多新聞" fontSize="14px" lineHeight="22px"/>
           </div>
-
         </div>
 
-        <Spinner v-if="isArticleUpdateLoading" />
+        <Spinner v-if="isArticleUpdateLoading"/>
         <Row :gutter="30">
           <i-col
             v-for="article in articles"
             :key="article.id"
-            :span="isPhone ? 24 : isTablet ? 12 : 8">
-            <ArticleCard
-              :article="article"
-              imgNoMargin
-              class="article-card" />
+            :span="isPhone ? 24 : isTablet ? 12 : 8"
+          >
+            <ArticleCard :article="article" imgNoMargin class="article-card"/>
           </i-col>
         </Row>
       </div>
     </section>
-
   </div>
 </template>
 
@@ -430,10 +426,6 @@ export default {
 
   .section-wrapper-medium {
     @extend .pageWrapper-medium;
-  }
-
-  &:last-child {
-    margin-bottom: 40px;
   }
 }
 
