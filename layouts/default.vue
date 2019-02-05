@@ -1,20 +1,53 @@
 <template>
   <div id="app">
+    <!-- Header -->
     <AppHeader/>
-    <main id="main-content" :class="{ phone: isPhone}" class="main-content">
+    <!-- Body -->
+    <main id="main-content" class="main-content">
       <nuxt nuxtChildKey="none"/>
     </main>
-    <AppFooter/>
+    <!-- Footer -->
+    <AppFooter
+      :showPoweredby="footerMenu.showPoweredby"
+      :sections="footerMenu.sections"
+      :copyright="footerMenu.copyright"
+      :fbLikeBtn="footerMenu.fbLikeBtn"
+      :lineAddBtn="footerMenu.lineAddBtn"
+      :logo="footerMenu.logo"
+      :logoImgAlt="footerMenu.logoImgAlt"
+    />
+    <!-- Subscription -->
+    <Subscription :show="showSubscription" @close="showSubscription = false"/>
+    <!-- Donorbox -->
+    <Donorbox :show="showDonorbox" @close="showDonorbox = false"/>
   </div>
 </template>
 
 <script>
 import _ from 'lodash'
+import appConfig from '~/config/app.json'
+import footerConfig from '~/config/footer.js'
+
+// components
 import AppHeader from '~/components/AppHeaderUSTW'
 import AppFooter from '~/components/AppFooter'
-import appConfig from '~/config/app.json'
+import Subscription from '~/components/Subscription'
+import Donorbox from '~/components/Donorbox'
 
 export default {
+  components: {
+    AppHeader,
+    AppFooter,
+    Subscription,
+    Donorbox
+  },
+  data () {
+    return {
+      footerMenu: footerConfig(this),
+      showSubscription: false,
+      showDonorbox: false
+    }
+  },
   head () {
     return {
       link: [
@@ -23,15 +56,7 @@ export default {
       ]
     }
   },
-  components: {
-    AppHeader,
-    AppFooter
-  },
-  computed: {
-    isPhone () {
-      return this.$store.getters.isPhone
-    }
-  },
+  computed: {},
   mounted () {
     window.addEventListener('resize', _.debounce(this.parseWindowWidth, 500))
     this.parseWindowWidth()
@@ -54,11 +79,6 @@ export default {
 
 .main-content {
   padding-top: $appHeaderHeight;
-  min-height: calc(100vh - #{$appFooterHeight});
   background: $backgroundColorLight;
-
-  &.phone {
-    min-height: calc(100vh - #{$appFooterHeightPhone});
-  }
 }
 </style>
