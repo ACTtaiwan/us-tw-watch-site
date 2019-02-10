@@ -11,7 +11,9 @@ export default () => {
       locale: 'zh-tw',
       clientWidth: null,
       earliestCongress: 96,
-      currentCongress: 115
+      currentCongress: 116,
+      subscription: false,
+      donation: false
     },
     actions,
     mutations,

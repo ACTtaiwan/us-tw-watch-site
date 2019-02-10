@@ -16,10 +16,10 @@
       :logo="footerMenu.logo"
       :logoImgAlt="footerMenu.logoImgAlt"
     />
-    <!-- Subscription -->
+    <!-- Subscription Popup -->
     <Subscription :show="showSubscription" @close="showSubscription = false"/>
-    <!-- Donorbox -->
-    <Donorbox :show="showDonorbox" @close="showDonorbox = false"/>
+    <!-- Donation Popup -->
+    <Donorbox :show="showDonation" @close="showDonation = false"/>
   </div>
 </template>
 
@@ -41,11 +41,11 @@ export default {
     Subscription,
     Donorbox
   },
-  data () {
+  data (context) {
+    let urlQuery = context.$route.query
+
     return {
-      footerMenu: footerConfig(this),
-      showSubscription: false,
-      showDonorbox: false
+      footerMenu: footerConfig(this)
     }
   },
   head () {
@@ -56,10 +56,39 @@ export default {
       ]
     }
   },
-  computed: {},
+  computed: {
+    showSubscription: {
+      get: function () {
+        return this.$store.getters.showSubscription
+      },
+      set: function (value) {
+        this.$store.commit('SET_SUBSCRIPTION', value)
+      }
+    },
+    showDonation: {
+      get: function () {
+        return this.$store.getters.showDonation
+      },
+      set: function (value) {
+        this.$store.commit('SET_DONATION', value)
+      }
+    }
+  },
   mounted () {
+    let urlQuery = this.$route.query
+
+    // detect window size
     window.addEventListener('resize', _.debounce(this.parseWindowWidth, 500))
     this.parseWindowWidth()
+
+    // detect subscription
+    if (urlQuery.subscription) {
+      this.$store.commit('SET_SUBSCRIPTION', urlQuery.subscription === 'true' ? true : false)
+    }
+    // detect donation
+    if (urlQuery.donation) {
+      this.$store.commit('SET_DONATION', urlQuery.donation === 'true' ? true : false)
+    }
   },
   beforeDestroy () {
     window.removeEventListener('resize', this.parseWindowWidth)

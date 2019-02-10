@@ -10,5 +10,11 @@ export default {
   isPhone (state) {
     // (state, getters)
     return !(state.clientWidth > 550)
+  },
+  showSubscription (state) {
+    return state.subscription
+  },
+  showDonation (state) {
+    return state.donation
   }
 }

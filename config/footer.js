@@ -1,4 +1,4 @@
-export default layout => {
+export default Vue => {
   return {
     sections: [
       {
@@ -25,7 +25,7 @@ export default layout => {
             link: '',
             router: false,
             action: () => {
-              layout.showSubscription = true
+              Vue.$store.commit('SET_SUBSCRIPTION', true)
             }
           },
           {
@@ -33,7 +33,7 @@ export default layout => {
             link: '',
             router: false,
             action: () => {
-              layout.showDonorbox = true
+              Vue.$store.commit('SET_DONATION', true)
             }
           }
         ]

@@ -102,11 +102,7 @@
 
         <Spinner v-if="isArticleUpdateLoading"/>
         <Row :gutter="30">
-          <i-col
-            v-for="article in articles"
-            :key="article.id"
-            :span="isPhone ? 24 : isTablet ? 12 : 8"
-          >
+          <i-col v-for="article in articles" :key="article.id" :span="isPhone ? 24 : isTablet ? 12 : 8">
             <ArticleCard :article="article" imgNoMargin class="article-card"/>
           </i-col>
         </Row>
@@ -119,10 +115,10 @@
 // libraries
 import _ from 'lodash'
 import appConfig from '~/config/app.json'
+
 // images
 import bannerBg from '~/assets/img/banner-home.png'
 import bannerFg from '~/assets/img/banner-people.png'
-
 import sail from '~/assets/img/sail.png'
 import twBill from '~/assets/img/intro-tw-bill.png'
 import twMember from '~/assets/img/intro-tw-member.png'
@@ -131,10 +127,9 @@ import twMember from '~/assets/img/intro-tw-member.png'
 import Spinner from '~/components/Spinner'
 import BillSimpleCard from '~/components/BillSimpleCard'
 import ArticleCard from '~/components/HomePage/ArticleCard'
-import Subscription from '~/components/Subscription'
-import Donorbox from '~/components/Donorbox'
 import TwButton from '~/components/TwButton'
 import ActionCard from '~/components/ActionCard'
+
 // queriess
 import PrefetchBillIdsQuery from '~/apollo/queries/HomePage/PrefetchBillIds'
 import BillsQuery from '~/apollo/queries/HomePage/Bills'
@@ -147,14 +142,10 @@ export default {
     BillSimpleCard,
     ArticleCard,
     Spinner,
-    Subscription,
-    Donorbox,
     TwButton,
     ActionCard
   },
-  data (context) {
-    let urlQuery = context.$route.query
-
+  data () {
     return {
       numberOfBillCards: 3,
       numberOfArticleCards: 3,
@@ -167,9 +158,7 @@ export default {
       bannerFg,
       twBill,
       twMember,
-      sail,
-      showSubscription: urlQuery.subscribe === 'true' ? true : false,
-      showDonorbox: urlQuery.donate === 'true' ? true : false
+      sail
     }
   },
   head () {
