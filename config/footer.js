@@ -43,7 +43,7 @@ export default Vue => {
         items: [
           {
             text: 'Facebook',
-            link: 'http://www.facebook.com/AmericanCitizensforTaiwan',
+            link: 'https://www.facebook.com/ustaiwanwatch',
             router: false,
             action: '',
             target: '_blank'

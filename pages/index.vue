@@ -2,9 +2,9 @@
   <div class="landing">
     <!-- Banner -->
     <section :style="bannerStyle" class="banner">
-      <div :class="{ tablet: isTablet, phone: isPhone }" class="banner-wrapper">
+      <div class="banner-wrapper">
         <div class="image-container">
-          <img :src="bannerFg" class="front-img">
+          <img :src="bannerFgUrl" class="front-img">
         </div>
         <div class="text-container">
           <div class="text-wrapper">
@@ -28,7 +28,7 @@
             >台灣在國際上的處境艱辛，與各個盟國之間的交往互動更顯重要。然而，在台灣島內卻鮮少看到對於台灣國際關係的報導，主流媒體永遠只報導兩岸關係，似乎台灣的外交困境只能從兩岸尋求解方。但事實是，光以美國為例，從過去到現在提出的法案中有相當大的比例都是在為台灣爭取自由民主以及保障國際空間。是以，從美國國會作為觀測對象，就能知道美國決策圈是如何看待台灣議題以及其態度。長期以來台灣人對於自身的地位常常被鎖在兩岸關係對壘的窄巷中，資訊蓬勃發展的時代，或許我們在這個方面也是時候與國際接軌，看看其他國家怎麼看我們。</p>
           </div>
           <div class="img-area" style="position: relative;">
-            <img :src="sail" style="position: absolute; bottom: 0;" class="twBillImg">
+            <img :src="sailUrl" style="position: absolute; bottom: 0;" class="twBillImg">
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@
       <div class="section-wrapper">
         <div class="hero-block tw-bill">
           <div class="img-area">
-            <img :src="twBill" class="twBillImg">
+            <img :src="twBillUrl" class="twBillImg">
           </div>
           <div class="text-area">
             <h1 class="title">台灣相關法案</h1>
@@ -64,7 +64,7 @@
       <div class="section-wrapper">
         <div class="hero-block tw-bill">
           <div class="img-area">
-            <img :src="twMember" class="twBillImg">
+            <img :src="twMemberUrl" class="twBillImg">
           </div>
           <div class="text-area">
             <h1 class="title">挺台議員</h1>
@@ -116,13 +116,6 @@
 import _ from 'lodash'
 import appConfig from '~/config/app.json'
 
-// images
-import bannerBg from '~/assets/img/banner-home.png'
-import bannerFg from '~/assets/img/banner-people.png'
-import sail from '~/assets/img/sail.png'
-import twBill from '~/assets/img/intro-tw-bill.png'
-import twMember from '~/assets/img/intro-tw-member.png'
-
 // components
 import Spinner from '~/components/Spinner'
 import BillSimpleCard from '~/components/BillSimpleCard'
@@ -145,7 +138,7 @@ export default {
     TwButton,
     ActionCard
   },
-  data () {
+  data() {
     return {
       numberOfBillCards: 3,
       numberOfArticleCards: 3,
@@ -154,14 +147,14 @@ export default {
       bills: [],
       billIds: [],
       articles: [],
-      bannerBg,
-      bannerFg,
-      twBill,
-      twMember,
-      sail
+      bannerBgUrl: 'https://s3.amazonaws.com/taiwanwatch-static/assets/banner-home.png',
+      bannerFgUrl: 'https://s3.amazonaws.com/taiwanwatch-static/assets/banner-people.png',
+      sailUrl: 'https://s3.amazonaws.com/taiwanwatch-static/assets/sail.png',
+      twBillUrl: 'https://s3.amazonaws.com/taiwanwatch-static/assets/intro-tw-bill.png',
+      twMemberUrl: 'https://s3.amazonaws.com/taiwanwatch-static/assets/intro-tw-member.png'
     }
   },
-  head () {
+  head() {
     return {
       title: this.$t('site.title'),
       meta: [
@@ -173,21 +166,21 @@ export default {
     }
   },
   computed: {
-    locale () {
+    locale() {
       return this.$store.state.locale
     },
-    isPhone () {
+    isPhone() {
       return this.$store.getters.isPhone
     },
-    isTablet () {
+    isTablet() {
       return this.$store.getters.isTablet
     },
-    bannerStyle () {
-      return `background-image: url("${this.bannerBg}"); background-size: cover;`
+    bannerStyle() {
+      return `background-image: url("${this.bannerBgUrl}"); background-size: cover;`
     }
   },
   methods: {
-    getLatestActionDate (actions) {
+    getLatestActionDate(actions) {
       let latestActionTime = 0
       if (actions && actions.length > 0) {
         actions.forEach(action => {
@@ -198,13 +191,13 @@ export default {
       }
       return parseInt(latestActionTime)
     },
-    fetchBills (ids) {
+    fetchBills(ids) {
       return this.$apollo.query({
         query: BillsQuery,
         variables: { lang: this.locale, ids: ids }
       })
     },
-    getUpdatedBills () {
+    getUpdatedBills() {
       this.fetchBills(this.billIds.slice(0, this.numberOfBillCards))
         .then(({ data }) => {
           // the returned bill order is not the same as the bill id order provided
@@ -233,16 +226,16 @@ export default {
     billIds: {
       query: PrefetchBillIdsQuery,
       fetchPolicy: 'cache-and-network',
-      variables () {
+      variables() {
         return {
           lang: this.locale,
           congress: [115]
         }
       },
-      update (data) {
+      update(data) {
         return data.bills[0].prefetchIds
       },
-      result (result) {
+      result(result) {
         if (!result.loading) {
           this.getUpdatedBills()
         }
@@ -251,18 +244,18 @@ export default {
     articles: {
       query: ArticlesQuery,
       fetchPolicy: 'cache-and-network',
-      variables () {
+      variables() {
         return {
           list: appConfig.articleList
         }
       },
-      update (data) {
+      update(data) {
         return _.orderBy(data.articles, article => parseInt(article.date), ['desc']).slice(
           0,
           this.numberOfArticleCards
         )
       },
-      result (result) {
+      result(result) {
         if (!result.loading) {
           this.isArticleUpdateLoading = false
         }
@@ -323,73 +316,6 @@ export default {
         letter-spacing: 2px;
         margin-bottom: 20px;
       }
-    }
-  }
-}
-
-.banner-wrapper.tablet {
-  height: 300px;
-  text-align: center;
-  justify-content: initial;
-
-  .image-container {
-    order: 0;
-    margin-right: 50px;
-    justify-content: center;
-
-    .front-img {
-      width: 260px;
-    }
-  }
-
-  .text-container {
-    order: 1;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    .banner-title {
-      font-size: 2.4em;
-      margin-bottom: 10px;
-    }
-
-    .news {
-      .news-title {
-        font-size: 1.4em;
-      }
-      .news-content {
-        display: none;
-      }
-    }
-  }
-}
-
-.banner-wrapper.phone {
-  height: 320px;
-  flex-direction: column;
-
-  .image-container {
-    order: 1;
-    margin-right: 0px;
-    justify-content: center;
-
-    .front-img {
-      width: 240px;
-    }
-  }
-
-  .text-container {
-    order: 0;
-
-    .banner-title {
-      font-size: 2.2em;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .news {
-      display: none;
     }
   }
 }
@@ -494,5 +420,69 @@ export default {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+}
+
+// desktop
+@media screen and (min-width: $mediumDeviceWidth) {
+}
+
+// tablet
+@media screen and (max-width: $mediumDeviceWidth - 1) {
+  .banner-wrapper {
+    height: 300px;
+    text-align: center;
+    justify-content: initial;
+
+    .image-container {
+      order: 0;
+      margin-right: 50px;
+      justify-content: center;
+
+      .front-img {
+        width: 260px;
+      }
+    }
+
+    .text-container {
+      order: 1;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .banner-title {
+        font-size: 2.4em;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+// phone
+@media screen and (max-width: $smallDeviceWidth - 1) {
+  .banner-wrapper {
+    height: 320px;
+    flex-direction: column;
+
+    .image-container {
+      order: 1;
+      margin-right: 0px;
+      justify-content: center;
+
+      .front-img {
+        width: 240px;
+      }
+    }
+
+    .text-container {
+      order: 0;
+
+      .banner-title {
+        font-size: 2.2em;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+    }
+  }
 }
 </style>
