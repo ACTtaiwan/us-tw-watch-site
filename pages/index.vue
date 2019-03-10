@@ -128,7 +128,6 @@ import Spinner from '~/components/Spinner'
 import BillSimpleCard from '~/components/BillSimpleCard'
 import ArticleCard from '~/components/HomePage/ArticleCard'
 import TwButton from '~/components/TwButton'
-import ActionCard from '~/components/ActionCard'
 
 // queriess
 import PrefetchBillIdsQuery from '~/apollo/queries/HomePage/PrefetchBillIds'
@@ -142,8 +141,7 @@ export default {
     BillSimpleCard,
     ArticleCard,
     Spinner,
-    TwButton,
-    ActionCard
+    TwButton
   },
   data () {
     return {
@@ -236,7 +234,7 @@ export default {
       variables () {
         return {
           lang: this.locale,
-          congress: [115]
+          congress: [this.$store.state.currentCongress]
         }
       },
       update (data) {

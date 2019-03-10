@@ -1,22 +1,24 @@
+import { ApolloLink } from 'apollo-link'
+import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import app from '~/config/app.json'
 
 export default ctx => {
+  const httpLink = new HttpLink({ uri: app.api.url })
   // auth token
   // let token = ctx.isServer ? ctx.req.session : window.__NUXT__.state.session
   let token = null
 
-  // change the apollo config based on:
-  // https://github.com/Akryum/vue-cli-plugin-apollo/issues/47
-
+  // middleware
+  const middlewareLink = new ApolloLink((operation, forward) => {
+    operation.setContext({
+      headers: { 'x-api-key': process.env.FRONTEND_API_KEY }
+    })
+    return forward(operation)
+  })
+  const link = middlewareLink.concat(httpLink)
   return {
-    httpEndpoint: app.api.url,
-    httpLinkOptions: {
-      credentials: 'same-origin',
-      headers: {
-        'x-api-key': process.env.FRONTEND_API_KEY
-      }
-    },
+    link,
     cache: new InMemoryCache({
       dataIdFromObject: o => o.id
     })
