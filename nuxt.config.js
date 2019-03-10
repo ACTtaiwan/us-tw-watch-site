@@ -6,8 +6,8 @@ module.exports = {
   mode: 'universal',
 
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
     titleTemplate: '',
     meta: [
@@ -26,36 +26,36 @@ module.exports = {
   },
 
   /*
-  ** Define environment variables
-  */
+   ** Define environment variables
+   */
   env: {
     baseUrl: '/',
     FRONTEND_API_KEY: process.env.FRONTEND_API_KEY
   },
 
   /*
-  ** Overwrite the default Nuxt.js configuration of Vue Router
-  */
+   ** Overwrite the default Nuxt.js configuration of Vue Router
+   */
   router: {
     middleware: ['https'],
     base: '/'
   },
 
   /*
-  ** Customize the progress-bar color
-  */
+   ** Customize the progress-bar color
+   */
   loading: {
     color: '#3762CC'
   },
 
   /*
-  ** Global CSS
-  */
+   ** Global CSS
+   */
   css: [],
 
   /*
-  ** Plugins to load before mounting the App
-  */
+   ** Plugins to load before mounting the App
+   */
   plugins: [
     '~/plugins/utils',
     '~/plugins/i18n.js',
@@ -69,8 +69,8 @@ module.exports = {
   ],
 
   /*
-  ** Nuxt.js modules
-  */
+   ** Nuxt.js modules
+   */
   modules: [
     [
       // https://ssr.vuejs.org/en/caching.html#component-level-caching
@@ -84,8 +84,8 @@ module.exports = {
   ],
 
   /*
-  ** Apollo settings
-  */
+   ** Apollo settings
+   */
   apollo: {
     clientConfigs: {
       default: '~/config/apollo.js'
@@ -93,13 +93,13 @@ module.exports = {
   },
 
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {
     vendor: ['vue-i18n', 'd3', 'topojson'],
     /*
-    ** You can extend webpack config here
-    */
+     ** You can extend webpack config here
+     */
     extend (config, ctx) {
       // run ESLINT on save
       if (ctx.isDev && ctx.isClient) {
@@ -118,9 +118,13 @@ module.exports = {
     }
   },
 
+  generate: {
+    routes: ['bills/95616e24-6ee1-4949-8f29-a79dfccccc5e']
+  },
+
   /*
-  ** Customize runtime options for rendering pages
-  */
+   ** Customize runtime options for rendering pages
+   */
   render: {
     bundleRenderer: {
       shouldPreload: (file, type) => {
