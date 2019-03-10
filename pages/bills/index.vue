@@ -23,7 +23,7 @@
           <i-col :xs="{ span: 24 }" :sm="{ span: 18 }" class="list">
             <Row>
               <i-col v-for="bill in bills" :key="bill.id" span="24">
-                <BillSearchResultCard :bill="bill" />
+                <BillSearchResultCard :enableBtnOfPopVox="false" :bill="bill" />
               </i-col>
             </Row>
             <no-ssr>
@@ -32,10 +32,10 @@
                   <Spinner />
                 </span>
                 <span slot="no-more">
-                  no more data 😂
+                  沒更多資料了 😂
                 </span>
                 <span slot="no-results">
-                  no results 😭
+                  沒有更多結果了 😭
                 </span>
               </InfiniteLoading>
             </no-ssr>
