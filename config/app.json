@@ -8,6 +8,9 @@
   "api": {
     "url": "https://graphql.uswatch.tw/dev/api/v2"
   },
+  "assets": {
+    "baseUrl": "https://s3.amazonaws.com/taiwanwatch-static/assets"
+  },
   "articleList": "ustw",
   "binaryMimeTypes": [
     "application/javascript",
