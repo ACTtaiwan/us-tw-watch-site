@@ -89,7 +89,7 @@
       <div class="section-wrapper">
         <div class="hero-block tw-bill">
           <div class="img-area">
-            <img :src="twBill" class="twBillImg">
+            <img :src="twBillUrl" class="twBillImg">
           </div>
           <div class="text-area">
             <h1 class="title">台美議題</h1>
@@ -138,7 +138,7 @@ export default {
     TwButton,
     ActionCard
   },
-  data() {
+  data () {
     return {
       numberOfBillCards: 3,
       numberOfArticleCards: 3,
@@ -154,7 +154,7 @@ export default {
       twMemberUrl: 'https://s3.amazonaws.com/taiwanwatch-static/assets/intro-tw-member.png'
     }
   },
-  head() {
+  head () {
     return {
       title: this.$t('site.title'),
       meta: [
@@ -166,21 +166,21 @@ export default {
     }
   },
   computed: {
-    locale() {
+    locale () {
       return this.$store.state.locale
     },
-    isPhone() {
+    isPhone () {
       return this.$store.getters.isPhone
     },
-    isTablet() {
+    isTablet () {
       return this.$store.getters.isTablet
     },
-    bannerStyle() {
+    bannerStyle () {
       return `background-image: url("${this.bannerBgUrl}"); background-size: cover;`
     }
   },
   methods: {
-    getLatestActionDate(actions) {
+    getLatestActionDate (actions) {
       let latestActionTime = 0
       if (actions && actions.length > 0) {
         actions.forEach(action => {
@@ -191,13 +191,13 @@ export default {
       }
       return parseInt(latestActionTime)
     },
-    fetchBills(ids) {
+    fetchBills (ids) {
       return this.$apollo.query({
         query: BillsQuery,
         variables: { lang: this.locale, ids: ids }
       })
     },
-    getUpdatedBills() {
+    getUpdatedBills () {
       this.fetchBills(this.billIds.slice(0, this.numberOfBillCards))
         .then(({ data }) => {
           // the returned bill order is not the same as the bill id order provided
@@ -226,16 +226,16 @@ export default {
     billIds: {
       query: PrefetchBillIdsQuery,
       fetchPolicy: 'cache-and-network',
-      variables() {
+      variables () {
         return {
           lang: this.locale,
           congress: [115]
         }
       },
-      update(data) {
+      update (data) {
         return data.bills[0].prefetchIds
       },
-      result(result) {
+      result (result) {
         if (!result.loading) {
           this.getUpdatedBills()
         }
@@ -244,18 +244,18 @@ export default {
     articles: {
       query: ArticlesQuery,
       fetchPolicy: 'cache-and-network',
-      variables() {
+      variables () {
         return {
           list: appConfig.articleList
         }
       },
-      update(data) {
+      update (data) {
         return _.orderBy(data.articles, article => parseInt(article.date), ['desc']).slice(
           0,
           this.numberOfArticleCards
         )
       },
-      result(result) {
+      result (result) {
         if (!result.loading) {
           this.isArticleUpdateLoading = false
         }
