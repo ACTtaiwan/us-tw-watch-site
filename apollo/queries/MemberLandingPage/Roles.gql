@@ -1,8 +1,0 @@
-query RolesQuery($lang: String, $personIds: [ID]) {
-  members(lang: $lang, personIds: $personIds) {
-    id
-    billIdCosponsored
-    billIdSponsored
-    congressNumbers
-  }
-}
