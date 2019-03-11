@@ -1,4 +1,4 @@
-query BillDetailPageQuery($lang: String, $ids: [ID]) {
+query BillsQuery($lang: String, $ids: [ID]) {
   bills(lang: $lang, ids: $ids) {
     id
     title
@@ -6,43 +6,53 @@ query BillDetailPageQuery($lang: String, $ids: [ID]) {
     billCode
     billNumber
     introducedDate
+    articles {
+      id
+      headline
+      subhead
+      author
+      intro
+      url
+      imageUrl
+      date
+    }
     cosponsors {
-      role {
+      dateCosponsored
+      member {
         id
-        party
-        state
-        district
-        title
-        person {
-          id
-          lastname
-          firstname
+        lastName
+        firstName
+        congressRoles {
+          startDate
+          endDate
+          party
+          state
+          district
+          title
         }
       }
-      dateCosponsored
     }
     billType {
-      id
       chamber
       code
     }
     sponsor {
       id
-      party
-      state
-      district
-      title
-      person {
-        id
-        lastname
-        firstname
-        profilePictures {
-          tiny
-        }
+      lastName
+      firstName
+      profilePictures {
+        tiny
+      }
+      congressRoles {
+        startDate
+        endDate
+        party
+        state
+        district
+        title
       }
     }
     versions {
-      id
       name
       date
       description

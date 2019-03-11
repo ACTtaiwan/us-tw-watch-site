@@ -6,10 +6,6 @@
         :class="{ phone: isPhone }"
         class="bill-section">
         <div class="bill-section-wrapper">
-
-
-
-
           <Row>
             <i-col
               :span="isTablet || isPhone ? 24 : 18"
@@ -17,17 +13,17 @@
               class="main-block">
               <BillOverviewCard :bill="bill" />
               <BillSummaryCard
-                v-if="bill.summary.paragraphs"
+                v-if="bill.summary && bill.summary.paragraphs"
                 :bill="bill" />
-              <BillSponsorsMapCard :bill="bill" />
+              <BillSponsorsMapCard v-if="bill.sponsor" :bill="bill" :mapLocale="'zh'" />
               <BillVersionsCard
-                v-if="bill.versions.length > 0"
+                v-if="bill.versions && bill.versions.length > 0 && !isPhone"
                 :bill="bill" />
             </i-col>
             <i-col
               :span="isTablet || isPhone ? 24 : 6"
               class="detail-block">
-              <BillActionsCard :bill="bill" />
+              <BillActionsCard v-if="bill.actions" :bill="bill" />
               <Row
                 v-if="bill.articles"
                 :gutter="30">
@@ -57,6 +53,7 @@ import BillSummaryCard from '~/components/BillSummaryCard'
 import BillSponsorsMapCard from '~/components/BillDetailPage/BillSponsorsMapCard'
 import BillActionsCard from '~/components/BillActionsCard'
 import BillVersionsCard from '~/components/BillDetailPage/BillVersionsCard'
+import _ from 'lodash'
 
 import ArticleCard from '~/components/HomePage/ArticleCard'
 
@@ -88,12 +85,14 @@ export default {
     billLatestAction () {
       let latestActionTime = 0
       let latestAction = ''
-      this.bill.actions.forEach(action => {
-        if (action.datetime > latestActionTime) {
-          latestAction = action.description
-          latestActionTime = action.datetime
-        }
-      })
+      if (!_.isEmpty(this.bill.actions)) {
+        this.bill.actions.forEach(action => {
+          if (action.datetime > latestActionTime) {
+            latestAction = action.description
+            latestActionTime = action.datetime
+          }
+        })
+      }
       if (process.browser) {
         // strip html tags from the string
         var dom = document.createElement('DIV')
@@ -103,26 +102,39 @@ export default {
       return trimConGovAction(latestAction)
     },
     memberArea () {
-      if (this.bill.sponsor.district) {
-        return `${this.bill.sponsor.state}-${this.bill.sponsor.district}`
+      if (!this.bill.sponsor) {
+        return ''
+      }
+
+      if (this.bill.sponsor.role.district) {
+        return `${this.bill.sponsor.role.state}-${this.bill.sponsor.role.district}`
       } else {
-        return `${this.bill.sponsor.state}`
+        return `${this.bill.sponsor.role.state}`
       }
     },
     billIntroducedDate () {
       return localTime(this.bill.introducedDate)
     },
     billSponsorTitle () {
-      const title = `${this.bill.sponsor.title} ${this.bill.sponsor.person.firstname} ${
-        this.bill.sponsor.person.lastname
-      }`
-      return title
+      if (this.bill.sponsor) {
+        const title = this.bill.sponsor.role.title || ''
+        const firstName = this.bill.sponsor.firstName || ''
+        const lastName = this.bill.sponsor.lastName || ''
+        return `${title} ${firstName} ${lastName}`
+      } else {
+        return ''
+      }
     },
     billSponsorTitleArea () {
-      const title = `${this.bill.sponsor.title} ${this.bill.sponsor.person.firstname} ${
-        this.bill.sponsor.person.lastname
-      } [${this.memberArea}]`
-      return title
+      if (this.bill.sponsor) {
+        const title = this.bill.sponsor.role.title || ''
+        const firstName = this.bill.sponsor.firstName || ''
+        const lastName = this.bill.sponsor.lastName || ''
+        const memberArea = !!this.memberArea ? `[${this.memberArea}]` : ''
+        return `${title} ${firstName} ${memberArea}`
+      } else {
+        return ''
+      }
     },
     billDescription () {
       return `This bill is sponsored by ${this.billSponsorTitle} on ${
@@ -148,7 +160,27 @@ export default {
         }
       },
       update (data) {
-        return data.bills[0]
+        let bill =  _.cloneDeep(data.bills[0])
+
+        // find correlated sponsor role
+        if (bill && bill.sponsor && bill.sponsor.congressRoles) {
+          const roles = bill.sponsor.congressRoles;
+          const sortCngrRoles = _.orderBy(roles, 'endDate', 'desc')
+          const sponsoredTime = parseInt(bill.introducedDate)
+          bill.sponsor.role = _.find(sortCngrRoles, r => sponsoredTime >= r.startDate && sponsoredTime < r.endDate)
+        }
+
+        // find correlated co-sponsor role
+        if (!_.isEmpty(bill.cosponsors)) {
+          _.each(bill.cosponsors, cosponsor => {
+            const roles = cosponsor.member.congressRoles;
+            const sortCngrRoles = _.orderBy(roles, 'endDate', 'desc')
+            const cosponsoredTime = parseInt(cosponsor.dateCosponsored)
+            cosponsor.role = _.find(sortCngrRoles, r => cosponsoredTime >= r.startDate && cosponsoredTime < r.endDate)
+          });
+        }
+
+        return bill
       }
     }
   },
