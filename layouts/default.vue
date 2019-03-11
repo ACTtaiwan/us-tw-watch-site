@@ -17,7 +17,7 @@
       :logoImgAlt="footerMenu.logoImgAlt"
     />
     <!-- Subscription Popup -->
-    <Subscription :show="showSubscription" @close="showSubscription = false"/>
+    <Subscription :show="showSubscription" :list="'ustw'" @close="showSubscription = false"/>
     <!-- Donation Popup -->
     <Donorbox :show="showDonation" @close="showDonation = false"/>
   </div>

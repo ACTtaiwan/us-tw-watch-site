@@ -12,7 +12,7 @@ export function trimConGovAction (description) {
   const parenRegExp = /\(([^)]+)\)/g
   const stripKeywords = ['TXT', 'PDF', 'CR ']
 
-  // Remove "Action By"
+  // Remove 'Action By'
   // It will always be the last part
   result = result.split(' Action By')[0]
   result = result.split('Action By')[0]
@@ -51,14 +51,14 @@ export function truncate (text, length = 30) {
 
 export function billType (code) {
   return {
-    s: 'Bill',
-    hr: 'Bill',
-    hconres: 'Concurrent Resolution',
-    sconres: 'Concurrent Resolution',
-    hres: 'Resolution',
-    sres: 'Resolution',
-    hjres: 'Joint Resolution',
-    sjres: 'Joint Resolution'
+    s: '法案',
+    hr: '法案',
+    hconres: '共同決議案',
+    sconres: '共同決議案',
+    hres: '決議案',
+    sres: '決議案',
+    hjres: '聯合決議案',
+    sjres: '聯合決議案'
   }[code]
 }
 

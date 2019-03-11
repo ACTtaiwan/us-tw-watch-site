@@ -17,13 +17,13 @@
         <Row>
           <!-- Filters -->
           <i-col :xs="{ span: 24 }" :sm="{ span: 6 }" class="filters">
-            <BillsFilters :categories="categories" :loading="filterLoading" @on-filter="filterBills" />
+            <BillsFilters :loading="filterLoading" @on-filter="filterBills" />
           </i-col>
           <!-- List -->
           <i-col :xs="{ span: 24 }" :sm="{ span: 18 }" class="list">
             <Row>
               <i-col v-for="bill in bills" :key="bill.id" span="24">
-                <BillSearchResultCard :bill="bill" />
+                <BillSearchResultCard :enableBtnOfPopVox="false" :bill="bill" />
               </i-col>
             </Row>
             <no-ssr>
@@ -32,10 +32,10 @@
                   <Spinner />
                 </span>
                 <span slot="no-more">
-                  no more data 😂
+                  沒更多資料了 😂
                 </span>
                 <span slot="no-results">
-                  no results 😭
+                  沒有更多結果了 😭
                 </span>
               </InfiniteLoading>
             </no-ssr>
@@ -48,7 +48,8 @@
 
 <script>
 import appConfig from '~/config/app.json'
-
+// Packages
+import InfiniteLoading from 'vue-infinite-loading/src/components/InfiniteLoading.vue'
 // Images
 import bannerBackground from '~/assets/img/banner.png'
 import bannerBills from '~/assets/img/banner-bills.png'
@@ -59,7 +60,6 @@ import BillsFilters from '~/components/BillsFilters'
 // Queries
 import PrefetchBillIdsQuery from '~/apollo/queries/BillLandingPage/PrefetchBillIds'
 import BillsQuery from '~/apollo/queries/BillLandingPage/Bills'
-import CategoriesQuery from '~/apollo/queries/BillLandingPage/Categories'
 
 export default {
   head () {
@@ -77,13 +77,13 @@ export default {
     }
   },
   components: {
+    InfiniteLoading,
     BillSearchResultCard,
     Spinner,
     BillsFilters
   },
   data () {
     return {
-      categories: [],
       bills: [],
       billIds: [],
       page: 0,
@@ -100,9 +100,6 @@ export default {
       // when locale changes, reset the current page
       this.resetPage()
       return this.$store.state.locale
-    },
-    selectedCategories () {
-      return this.filterData.selectedCategories ? this.filterData.selectedCategories : []
     },
     selectedCongress () {
       let congress = []
@@ -130,8 +127,7 @@ export default {
         query: PrefetchBillIdsQuery,
         variables: {
           lang: this.locale,
-          congress: this.selectedCongress,
-          categories: this.selectedCategories
+          congress: this.selectedCongress
         }
       })
     },
@@ -185,13 +181,6 @@ export default {
     }
   },
   apollo: {
-    categories: {
-      query: CategoriesQuery,
-      fetchPolicy: 'cache-and-network',
-      variables () {
-        return { lang: this.locale }
-      }
-    }
   }
 }
 </script>

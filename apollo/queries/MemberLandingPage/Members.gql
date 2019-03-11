@@ -1,32 +1,30 @@
 query MembersQuery($lang: String, $ids: [ID]) {
   members(lang: $lang, ids: $ids) {
-    caucus
-    congressNumbers
-    description
-    district
     id
-    leadershipTitle
-    party
-    person {
-      firstname
-      lastname
-      middlename
-      bioGuideId
-      profilePictures {
-        tiny
-      }
-      id
+		firstName
+		lastName
+		middleName
+    bioGuideId
+    profilePictures {
+      tiny  
     }
-    roleType
-    roleTypeDisplay
-    senatorClass
-    senatorClassDisplay
-    senatorRank
-    senatorRankDisplay
-    state
-    title
-    titleLong
+    currentRole {
+      congressNumbers
+			district
+	    party
+      roleTypeDisplay
+      senatorClass
+      senatorClassDisplay
+      state
+      title
+      titleLong
+    }
     website
     billIdCosponsored
+    billIdSponsored
+    cosponsorProperty {
+      billId
+      dateCosponsored
+    }
   }
 }

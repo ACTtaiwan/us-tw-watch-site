@@ -121,7 +121,6 @@ import Spinner from '~/components/Spinner'
 import BillSimpleCard from '~/components/BillSimpleCard'
 import ArticleCard from '~/components/HomePage/ArticleCard'
 import TwButton from '~/components/TwButton'
-import ActionCard from '~/components/ActionCard'
 
 // queriess
 import PrefetchBillIdsQuery from '~/apollo/queries/HomePage/PrefetchBillIds'
@@ -135,8 +134,7 @@ export default {
     BillSimpleCard,
     ArticleCard,
     Spinner,
-    TwButton,
-    ActionCard
+    TwButton
   },
   data () {
     return {
@@ -147,11 +145,11 @@ export default {
       bills: [],
       billIds: [],
       articles: [],
-      bannerBgUrl: 'https://s3.amazonaws.com/taiwanwatch-static/assets/banner-home.png',
-      bannerFgUrl: 'https://s3.amazonaws.com/taiwanwatch-static/assets/banner-people.png',
-      sailUrl: 'https://s3.amazonaws.com/taiwanwatch-static/assets/sail.png',
-      twBillUrl: 'https://s3.amazonaws.com/taiwanwatch-static/assets/intro-tw-bill.png',
-      twMemberUrl: 'https://s3.amazonaws.com/taiwanwatch-static/assets/intro-tw-member.png'
+      bannerBgUrl: `${appConfig.assets.baseUrl}/banner-home.png`,
+      bannerFgUrl: `${appConfig.assets.baseUrl}/banner-people.png`,
+      sailUrl: `${appConfig.assets.baseUrl}/sail.png`,
+      twBillUrl: `${appConfig.assets.baseUrl}/intro-tw-bill.png`,
+      twMemberUrl: `${appConfig.assets.baseUrl}/intro-tw-member.png`
     }
   },
   head () {
@@ -229,7 +227,7 @@ export default {
       variables () {
         return {
           lang: this.locale,
-          congress: [115]
+          congress: [this.$store.state.currentCongress]
         }
       },
       update (data) {

@@ -31,10 +31,10 @@
                 <Spinner />
               </span>
               <span slot="no-more">
-                no more data 😂
+                沒更多資料了 😂
               </span>
               <span slot="no-results">
-                no results 😭
+                沒有更多結果了 😭
               </span>
             </InfiniteLoading>
           </i-col>
@@ -64,7 +64,7 @@ import StateListQuery from '~/apollo/queries/StateList'
 export default {
   head () {
     return {
-      title: `${this.$t('site.title.membersPageTitle')} | ${this.$t('site.title')}`,
+      title: `${this.$t('membersPage.title')} | ${this.$t('site.title')}`,
       meta: [
         { hid: 'description', name: 'description', content: this.$t('membersPage.description') },
         { property: 'og:url', content: `${appConfig.site.url}/${this.locale}/bills` },

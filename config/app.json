@@ -6,7 +6,10 @@
     "url": "https://www.uswatch.tw"
   },
   "api": {
-    "url": "https://graphql.uswatch.tw/dev/api"
+    "url": "https://graphql.uswatch.tw/dev/api/v2"
+  },
+  "assets": {
+    "baseUrl": "https://s3.amazonaws.com/taiwanwatch-static/assets"
   },
   "articleList": "ustw",
   "binaryMimeTypes": [

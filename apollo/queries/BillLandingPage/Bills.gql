@@ -7,29 +7,31 @@ query BillsQuery($lang: String, $ids: [ID]) {
     billNumber
     introducedDate
     billType {
-      id
       chamber
       code
     }
     cosponsors {
-      dateCosponsored
+      member {
+        id
+      }
     }
     tags {
       tag
     }
     sponsor {
       id
-      party
-      state
-      district
-      title
-      person {
-        id
-        lastname
-        firstname
-        profilePictures {
-          tiny
-        }
+      lastName
+      firstName
+      congressRoles {
+        party
+        state
+        district
+        title
+        startDate
+        endDate
+      }
+      profilePictures {
+        tiny
       }
     }
     actions {
