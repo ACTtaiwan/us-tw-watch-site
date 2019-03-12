@@ -97,7 +97,7 @@ export default {
       const state = this.states[this.member.latestRole.state][lang]
       const hasDistrict = !!this.member.latestRole.district
       if (this.member.latestRole.district) {
-        const district = this.member.currentRole.district
+        const district = this.member.latestRole.district
         return `${state}第${district}區${title}`
       } else {
         return `${state}${title}`
