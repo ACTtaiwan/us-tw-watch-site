@@ -75,10 +75,10 @@
           </div>
         </div>
 
-        <Spinner v-if="isBillUpdateLoading"/>
+        <Spinner v-if="isMemberLoading"/>
         <Row :gutter="30">
-          <i-col v-for="bill in bills" :key="bill.id" :span="isPhone ? 24 : isTablet ? 12 : 8">
-            <BillSimpleCard :bill="bill" class="bill-card"/>
+          <i-col v-for="member in members" :key="member.id" :span="isPhone ? 24 : isTablet ? 12 : 8">
+            <MemberSimpleCard :member="member" :states="states" class="member-card"/>
           </i-col>
         </Row>
       </div>
@@ -119,6 +119,7 @@ import appConfig from '~/config/app.json'
 // components
 import Spinner from '~/components/Spinner'
 import BillSimpleCard from '~/components/BillSimpleCard'
+import MemberSimpleCard from '~/components/MemberSimpleCard'
 import ArticleCard from '~/components/HomePage/ArticleCard'
 import TwButton from '~/components/TwButton'
 
@@ -126,12 +127,15 @@ import TwButton from '~/components/TwButton'
 import PrefetchBillIdsQuery from '~/apollo/queries/HomePage/PrefetchBillIds'
 import BillsQuery from '~/apollo/queries/HomePage/Bills'
 import ArticlesQuery from '~/apollo/queries/HomePage/Articles'
+import MembersQuery from '~/apollo/queries/MemberLandingPage/Members'
+import StateListQuery from '~/apollo/queries/StateList'
 
 import axios from 'axios'
 
 export default {
   components: {
     BillSimpleCard,
+    MemberSimpleCard,
     ArticleCard,
     Spinner,
     TwButton
@@ -141,9 +145,12 @@ export default {
       numberOfBillCards: 3,
       numberOfArticleCards: 3,
       isBillUpdateLoading: true,
+      isMemberLoading: true,
       isArticleUpdateLoading: true,
       bills: [],
       billIds: [],
+      members: [],
+      memberIds: ['3e1dacf2-0892-4263-86e9-72c2c47cbfcb', '2c43ee07-1356-4c37-8764-fb6fc0d7f2cc', 'b1b80c61-265c-4270-8c12-21e42830dd00'],
       articles: [],
       bannerBgUrl: `${appConfig.assets.baseUrl}/banner-home.png`,
       bannerFgUrl: `${appConfig.assets.baseUrl}/banner-people.png`,
@@ -237,6 +244,27 @@ export default {
         if (!result.loading) {
           this.getUpdatedBills()
         }
+      }
+    },
+    members: {
+      query: MembersQuery,
+      fetchPolicy: 'cache-and-network',
+      variables () {
+        return { lang: this.locale, ids: this.memberIds }
+      },
+      update (data) {
+        this.isMemberLoading = false
+        return data.members
+      }
+    },
+    states: {
+      query: StateListQuery,
+      fetchPolicy: 'cache-and-network',
+      variables () {
+        return { lang: this.locale, stateList: true }
+      },
+      update (data) {
+        return JSON.parse(data.maps[0].states)
       }
     },
     articles: {
