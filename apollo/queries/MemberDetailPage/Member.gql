@@ -1,24 +1,29 @@
-query MemberQuery($lang: String, $personIds: [ID]) {
-  members(lang: $lang, personIds: $personIds) {
+query MemberQuery($lang: String, $ids: [ID]) {
+  members(lang: $lang, ids: $ids) {
     id
-    party
-    district
-    state
-    congressNumbers
-    description
+		firstName
+		lastName
+		middleName
+    bioGuideId
+    profilePictures {
+      medium
+    }
+    latestRole {
+      congressNumbers
+      district
+      party
+      state
+      title
+      titleLong
+    }
+    currentRole {
+      title
+    }
     billIdCosponsored
     billIdSponsored
-    person {
-      id
-      firstname
-      lastname
-      middlename
-      profilePictures {
-        medium
-      }
-      bioGuideId
+    cosponsorProperty {
+      billId
+      dateCosponsored
     }
-    title
-    titleLong
   }
 }

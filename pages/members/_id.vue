@@ -86,22 +86,21 @@ export default {
     isTablet () {
       return this.$store.getters.isTablet
     },
-    person () {
-      return this.members ? this.members[0].person : {}
-    },
     member () {
       return this.members ? this.members[0] : {}
     },
     memberTitle () {
       const lang = 'zh'
 
-      if (!this.states || !this.members) return ''
-      if (this.members[0].district) {
-        return `${this.members[0].titleLong} for ${this.states[this.members[0].state][lang]}'s ${
-          this.members[0].district
-        }th congressional district`
+      if (!this.states || !this.member || !this.member.latestRole) return ''
+      const title = this.member.latestRole.titleLong
+      const state = this.states[this.member.latestRole.state][lang]
+      const hasDistrict = !!this.member.latestRole.district
+      if (this.member.latestRole.district) {
+        const district = this.member.currentRole.district
+        return `${state}第${district}區${title}`
       } else {
-        return `${this.members[0].titleLong} for ${this.states[this.members[0].state][lang]}`
+        return `${state}${title}`
       }
     }
   },
@@ -121,13 +120,21 @@ export default {
       const cosponsoredBills = await this.fetchBills(cosponsored)
 
       this.sponsoredBills = _.orderBy(
-        sponsoredBills.data.bills,
+        sponsoredBills,
         bill => Number(bill.introducedDate),
         ['desc']
       )
+
+      const m = _.keyBy(this.member.cosponsorProperty, 'billId')
+      this.cosponsoredBills = _.map(cosponsoredBills, bill => {
+        return {
+          ...bill, 
+          dateCosponsored: (m[bill.id] && m[bill.id].dateCosponsored) || undefined
+        }
+      })
       this.cosponsoredBills = _.orderBy(
-        cosponsoredBills.data.bills,
-        bill => Number(bill.introducedDate),
+        this.cosponsoredBills,
+        bill => (bill.dateCosponsored && Number(bill.dateCosponsored)) || bill.introducedDate,
         ['desc']
       )
     },
@@ -137,11 +144,16 @@ export default {
       )
       this.ppMember = response.data.results[0]
     },
-    fetchBills (ids) {
-      return this.$apollo.query({
+    async fetchBills (ids) {
+      let chunckedIds = _.chunk(ids, 10)
+      let promises = chunckedIds.map(idsSubset => this.$apollo.query({
         query: BillsQuery,
-        variables: { lang: this.locale, ids: ids }
-      })
+        variables: { lang: this.locale, ids: idsSubset }
+      }))
+      let apiResult = await Promise.all(promises)
+      apiResult = _.map(apiResult, r => r.data.bills)
+      let billsFetched = _.flatten(apiResult)
+      return billsFetched
     }
   },
   apollo: {
@@ -151,12 +163,12 @@ export default {
       // Add prefetch for SSR
       // https://github.com/Akryum/vue-apollo#server-side-rendering
       prefetch: ({ route, app }) => ({
-        personIds: [route.params.id],
+        ids: [route.params.id],
         lang: app.store.state.locale
       }),
       variables () {
         return {
-          personIds: [this.$route.params.id],
+          ids: [this.$route.params.id],
           lang: this.locale
         }
       },
@@ -166,7 +178,7 @@ export default {
       result (result) {
         if (!result.loading) {
           this.fetchSupportBills(result.data.members)
-          this.fetchProPublicaMember(result.data.members[0].person.bioGuideId)
+          this.fetchProPublicaMember(result.data.members[0].bioGuideId)
         }
       }
     },
@@ -187,7 +199,7 @@ export default {
   },
   head () {
     return {
-      title: this.person ? `${this.person.firstname} ${this.person.lastname}` : 'Loading',
+      title: this.member ? `${this.member.firstName} ${this.member.lastName}` : 'Loading',
       meta: [
         {
           hid: 'description',
@@ -196,7 +208,7 @@ export default {
         },
         {
           name: 'og:title',
-          content: this.person ? `${this.person.firstname} ${this.person.lastname}` : 'Loading'
+          content: this.member ? `${this.member.firstName} ${this.member.lastName}` : 'Loading'
         },
         { name: 'twitter:label1', content: 'Sponsored bills' },
         { name: 'twitter:data1', content: this.sponsoredBills ? this.sponsoredBills.length : 0 },

@@ -6,13 +6,7 @@ query BillsQuery($lang: String, $ids: [ID]) {
     billNumber
     congress
     introducedDate
-    categories {
-      id
-      name
-      code
-    }
     actions {
-      id
       datetime
       description
     }
@@ -21,23 +15,16 @@ query BillsQuery($lang: String, $ids: [ID]) {
       stepName
     }
     billType {
-      id
       chamber
       code
     }
     cosponsors {
-      dateCosponsored
-      role {
-        person {
-          id
-        }
+      member {
+        id
       }
     }
     sponsor {
       id
-      person {
-        id
-      }
     }
   }
 }
