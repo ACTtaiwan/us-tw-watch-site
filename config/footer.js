@@ -16,7 +16,7 @@ export default Vue => {
           { text: '關於我們', link: '/about', router: true, action: '' },
           {
             text: '聯絡我們',
-            link: 'mailto:feedback@acttaiwan.org',
+            link: 'mailto:liho@uswatch.tw',
             router: false,
             action: ''
           },
