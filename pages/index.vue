@@ -95,7 +95,7 @@
       <div class="section-wrapper">
         <div class="hero-block tw-bill">
           <div class="img-area">
-            <img :src="twBillUrl" class="twBillImg">
+            <img :src="twIssuesUrl" class="twBillImg">
           </div>
           <div class="text-area">
             <h1 class="title">台美議題</h1>
@@ -158,13 +158,18 @@ export default {
       bills: [],
       billIds: [],
       members: [],
-      memberIds: ['3e1dacf2-0892-4263-86e9-72c2c47cbfcb', '2c43ee07-1356-4c37-8764-fb6fc0d7f2cc', 'b1b80c61-265c-4270-8c12-21e42830dd00'],
+      memberIds: [
+        '3e1dacf2-0892-4263-86e9-72c2c47cbfcb',
+        '2c43ee07-1356-4c37-8764-fb6fc0d7f2cc',
+        'b1b80c61-265c-4270-8c12-21e42830dd00'
+      ],
       articles: [],
       bannerBgUrl: `${appConfig.assets.baseUrl}/banner-home.png`,
       bannerFgUrl: `${appConfig.assets.baseUrl}/banner-people.png`,
       sailUrl: `${appConfig.assets.baseUrl}/sail.png`,
       twBillUrl: `${appConfig.assets.baseUrl}/intro-tw-bill.png`,
-      twMemberUrl: `${appConfig.assets.baseUrl}/intro-tw-member.png`
+      twMemberUrl: `${appConfig.assets.baseUrl}/intro-tw-member.png`,
+      twIssuesUrl: `${appConfig.assets.baseUrl}/intro-tw-issues.png`
     }
   },
   head () {
