@@ -12,6 +12,11 @@
     "baseUrl": "https://s3.amazonaws.com/taiwanwatch-static/assets"
   },
   "articleList": "ustw",
+  "highlightMemberIds": [
+    "3e1dacf2-0892-4263-86e9-72c2c47cbfcb",
+    "2c43ee07-1356-4c37-8764-fb6fc0d7f2cc",
+    "b1b80c61-265c-4270-8c12-21e42830dd00"
+  ],
   "binaryMimeTypes": [
     "application/javascript",
     "application/json",

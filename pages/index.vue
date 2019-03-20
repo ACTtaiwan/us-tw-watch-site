@@ -103,7 +103,7 @@
               class="content"
             >台灣和美國之間雖沒有正式的外交關係，但官方和民間長期以來卻保有高度互動，為了管理以及保障這類的互動交流，美國國會長期以來提出許多台灣相關法案。這些法案一旦通過美國國會，即成為美國國內法，約束著美國相關機關與台灣往來等外交政策。如果要了解美國的政策決策者是如何理解看待台灣，就從台灣相關法案開始吧。</p>
             <router-link :to="`/articles`">
-              <TwButton label="更多新聞" fontSize="14px" lineHeight="22px"/>
+              <TwButton label="更多文章" fontSize="14px" lineHeight="22px"/>
             </router-link>
           </div>
         </div>
@@ -158,11 +158,7 @@ export default {
       bills: [],
       billIds: [],
       members: [],
-      memberIds: [
-        '3e1dacf2-0892-4263-86e9-72c2c47cbfcb',
-        '2c43ee07-1356-4c37-8764-fb6fc0d7f2cc',
-        'b1b80c61-265c-4270-8c12-21e42830dd00'
-      ],
+      memberIds: appConfig.highlightMemberIds,
       articles: [],
       bannerBgUrl: `${appConfig.assets.baseUrl}/banner-home.png`,
       bannerFgUrl: `${appConfig.assets.baseUrl}/banner-people.png`,

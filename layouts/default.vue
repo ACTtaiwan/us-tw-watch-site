@@ -19,7 +19,7 @@
     <!-- Subscription Popup -->
     <Subscription :show="showSubscription" :list="'ustw'" @close="showSubscription = false"/>
     <!-- Donation Popup -->
-    <Donorbox :show="showDonation" @close="showDonation = false"/>
+    <Donorbox :show="showDonation" :config="'ustw'" @close="showDonation = false"/>
   </div>
 </template>
 
