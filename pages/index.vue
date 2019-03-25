@@ -498,6 +498,14 @@ export default {
 
 // phone
 @media screen and (max-width: $smallDeviceWidth - 1) {
+  .hero-block {
+    flex-direction: column;
+
+    .img-area {
+      padding: 0px 25% 30px;
+    }
+  }
+
   .banner-wrapper {
     height: 320px;
     flex-direction: column;
