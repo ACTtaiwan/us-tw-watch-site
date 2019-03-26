@@ -485,9 +485,12 @@ export default {
       flex-direction: column;
       justify-content: center;
 
-      .banner-title {
-        font-size: 2.4em;
-        margin-bottom: 10px;
+      .text-wrapper {
+        .banner-title {
+          font-size: 2.4em;
+          margin-top: 40px;
+          margin-bottom: 10px;
+        }
       }
     }
   }
@@ -495,6 +498,14 @@ export default {
 
 // phone
 @media screen and (max-width: $smallDeviceWidth - 1) {
+  .hero-block {
+    flex-direction: column;
+
+    .img-area {
+      padding: 0px 25% 30px;
+    }
+  }
+
   .banner-wrapper {
     height: 320px;
     flex-direction: column;
@@ -502,20 +513,26 @@ export default {
     .image-container {
       order: 1;
       margin-right: 0px;
+      margin-top: 20px;
       justify-content: center;
 
       .front-img {
-        width: 240px;
+        height: 100%;
+        width: 200px;
       }
     }
 
     .text-container {
       order: 0;
 
-      .banner-title {
-        font-size: 2.2em;
-        margin-bottom: 20px;
+      .text-wrapper {
         text-align: center;
+
+        .banner-title {
+          font-size: 2.2em;
+          margin-bottom: 20px;
+          text-align: center;
+        }
       }
     }
   }
