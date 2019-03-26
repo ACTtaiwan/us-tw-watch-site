@@ -46,6 +46,8 @@
 <script>
 import _ from 'lodash'
 import { get } from '@/plugins/utils'
+import appConfig from '~/config/app.json'
+
 // Components
 import MemberOverviewCard from '~/components/MemberOverviewCard'
 import ContactCard from '~/components/MemberDetailPage/ContactCard'
@@ -210,6 +212,7 @@ export default {
           name: 'og:title',
           content: this.member ? `${this.member.firstName} ${this.member.lastName}` : 'Loading'
         },
+        { property: 'og:image', content: `${appConfig.previewBaseUrl}/member/${this.member.id}.png` },
         { name: 'twitter:label1', content: 'Sponsored bills' },
         { name: 'twitter:data1', content: this.sponsoredBills ? this.sponsoredBills.length : 0 },
         { name: 'twitter:label2', content: 'Cosponsored bills' },

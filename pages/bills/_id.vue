@@ -205,6 +205,7 @@ export default {
           property: 'og:description',
           content: this.bill ? this.billDescription : 'Loading'
         },
+        { property: 'og:image', content: `${appConfig.previewBaseUrl}/bill/${this.$route.params.id}.png` },
         { property: 'twitter:label1', content: 'Current Status' },
         {
           property: 'twitter:data1',

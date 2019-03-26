@@ -13,7 +13,6 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { property: 'og:image', content: app.thumbnail },
       { property: 'og:site_name', content: app.name },
       { property: 'og:type', content: 'website' },
       { property: 'fb:app_id', content: app.fbAppId },
