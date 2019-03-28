@@ -213,7 +213,7 @@ export default {
         },
         {
           property: 'og:url',
-          content: `${appConfig.site.url}/member/${this.$route.params.id}`
+          content: `${appConfig.site.url}/members/${this.$route.params.id}`
         },
         {
           name: 'og:title',
@@ -223,7 +223,7 @@ export default {
           property: 'og:description',
           content: this.member ? this.memberDescription : 'Loading'
         },
-        { property: 'og:image', content: `${appConfig.previewBaseUrl}/members/${this.member.id}.png` },
+        { property: 'og:image', content: `${appConfig.previewBaseUrl}/member/${this.member.id}.png` },
         { name: 'twitter:label1', content: 'Sponsored bills' },
         { name: 'twitter:data1', content: this.sponsoredBills ? this.sponsoredBills.length : 0 },
         { name: 'twitter:label2', content: 'Cosponsored bills' },
