@@ -216,7 +216,7 @@ export default {
           content: `${appConfig.site.url}/members/${this.$route.params.id}`
         },
         {
-          name: 'og:title',
+          property: 'og:title',
           content: this.member ? `${this.member.firstName} ${this.member.lastName}` : 'Loading'
         },
         {
