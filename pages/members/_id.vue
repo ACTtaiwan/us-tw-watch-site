@@ -104,6 +104,9 @@ export default {
       } else {
         return `${state}${title}`
       }
+    },
+    memberDescription () {
+      return `${this.member.latestRole.title || '' } ${ this.member.firstName || '' } ${ this.member.middleName || '' } ${ this.member.lastName || ''} （${this.memberTitle}）`
     }
   },
   methods: {
@@ -206,11 +209,19 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: this.memberTitle ? this.memberTitle : 'Loading'
+          content: this.member ? this.memberDescription : 'Loading'
+        },
+        {
+          property: 'og:url',
+          content: `${appConfig.site.url}/member/${this.$route.params.id}`
         },
         {
           name: 'og:title',
           content: this.member ? `${this.member.firstName} ${this.member.lastName}` : 'Loading'
+        },
+        {
+          property: 'og:description',
+          content: this.member ? this.memberDescription : 'Loading'
         },
         { property: 'og:image', content: `${appConfig.previewBaseUrl}/member/${this.member.id}.png` },
         { name: 'twitter:label1', content: 'Sponsored bills' },

@@ -137,9 +137,9 @@ export default {
       }
     },
     billDescription () {
-      return `This bill is sponsored by ${this.billSponsorTitle} on ${
+      return `此案由${this.billSponsorTitle}於${
         this.billIntroducedDate
-      }. The latest action is: ${this.billLatestAction}. `
+      }提出. 此案最新進度為: ${this.billLatestAction}. `
     }
   },
 
@@ -195,7 +195,7 @@ export default {
         },
         {
           property: 'og:url',
-          content: `${appConfig.site.url}/${this.locale}/bills/${this.$route.params.id}`
+          content: `${appConfig.site.url}/bills/${this.$route.params.id}`
         },
         {
           property: 'og:title',
