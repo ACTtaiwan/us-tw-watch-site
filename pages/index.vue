@@ -22,15 +22,15 @@
     <section class="intro section">
       <div class="section-wrapper">
         <div class="hero-block why">
-          <div class="text-area" style="padding-right: 30px;">
+          <div class="text-area">
             <h1 class="title">為何觀測？</h1>
             <p class="description">走出兩岸對壘窄巷</p>
             <p
               class="content"
             >台灣在國際上的處境艱辛，與各個盟國之間的交往互動更顯重要。然而，在台灣島內卻鮮少看到對於台灣國際關係的報導，主流媒體永遠只報導兩岸關係，似乎台灣的外交困境只能從兩岸尋求解方。但事實是，光以美國為例，從過去到現在提出的法案中有相當大的比例都是在為台灣爭取自由民主以及保障國際空間。是以，從美國國會作為觀測對象，就能知道美國決策圈是如何看待台灣議題以及其態度。長期以來台灣人對於自身的地位常常被鎖在兩岸關係對壘的窄巷中，資訊蓬勃發展的時代，或許我們在這個方面也是時候與國際接軌，看看其他國家怎麼看我們。</p>
           </div>
-          <div class="img-area" style="position: relative;">
-            <img :src="sailUrl" style="position: absolute; bottom: 0;" class="twBillImg">
+          <div class="img-area banner-img">
+            <img :src="sailUrl">
           </div>
         </div>
       </div>
@@ -41,7 +41,7 @@
       <div class="section-wrapper">
         <div class="hero-block tw-bill">
           <div class="img-area">
-            <img :src="twBillUrl" class="twBillImg">
+            <img :src="twBillUrl">
           </div>
           <div class="text-area">
             <h1 class="title">台灣相關法案</h1>
@@ -68,7 +68,7 @@
       <div class="section-wrapper">
         <div class="hero-block tw-bill">
           <div class="img-area">
-            <img :src="twMemberUrl" class="twBillImg">
+            <img :src="twMemberUrl">
           </div>
           <div class="text-area">
             <h1 class="title">挺台議員</h1>
@@ -95,7 +95,7 @@
       <div class="section-wrapper">
         <div class="hero-block tw-bill">
           <div class="img-area">
-            <img :src="twIssuesUrl" class="twBillImg">
+            <img :src="twIssuesUrl">
           </div>
           <div class="text-area">
             <h1 class="title">台美議題</h1>
@@ -420,6 +420,16 @@ export default {
     img {
       width: 100%;
     }
+
+    &.banner-img {
+      position: relative;
+      padding: 0px 0px 0px 30px;
+
+      img {
+        position: absolute;
+        bottom: 0;
+      }
+    }
   }
 }
 
@@ -501,8 +511,21 @@ export default {
   .hero-block {
     flex-direction: column;
 
+    .text-area {
+      order: 1;
+    }
+
     .img-area {
       padding: 0px 25% 30px;
+      order: 0;
+
+      &.banner-img {
+        padding: 0px 10% 30px;
+
+        img {
+          position: relative;
+        }
+      }
     }
   }
 
