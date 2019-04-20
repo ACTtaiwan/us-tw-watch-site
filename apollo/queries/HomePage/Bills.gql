@@ -22,5 +22,10 @@ query BillsQuery($lang: String, $ids: [ID]) {
       lastName
       firstName
     }
+    cosponsors {
+      member {
+        id
+      }
+    }
   }
 }
