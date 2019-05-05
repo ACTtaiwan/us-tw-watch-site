@@ -29,7 +29,7 @@ module.exports = {
    */
   env: {
     baseUrl: '/',
-    FRONTEND_API_KEY: process.env.FRONTEND_API_KEY
+    FRONTEND_API_KEY: 'd41d8cd98f00b204e9800998ecf8427e'
   },
 
   /*
@@ -63,6 +63,7 @@ module.exports = {
     '~/plugins/vue-chartjs',
     '~/plugins/asyncComputed',
     '~/plugins/fb-sdk',
+    { src: '~/plugins/vue-stripe-checkout', ssr: false },
     { src: '~/plugins/vue-line-clamp', ssr: false },
     { src: '~/plugins/infinite-loading', ssr: false }
   ],
@@ -96,6 +97,7 @@ module.exports = {
    */
   build: {
     vendor: ['vue-i18n', 'd3', 'topojson'],
+    transpile: ['vue-stripe-checkout'],
     /*
      ** You can extend webpack config here
      */

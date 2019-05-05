@@ -19,7 +19,7 @@
     <!-- Subscription Popup -->
     <Subscription :show="showSubscription" :list="'ustw'" @close="showSubscription = false"/>
     <!-- Donation Popup -->
-    <Donorbox :show="showDonation" :config="'ustw'" @close="showDonation = false"/>
+    <Donation :show="showDonation" @close="showDonation = false"/>
   </div>
 </template>
 
@@ -32,14 +32,14 @@ import footerConfig from '~/config/footer.js'
 import AppHeader from '~/components/AppHeaderUSTW'
 import AppFooter from '~/components/AppFooter'
 import Subscription from '~/components/Subscription'
-import Donorbox from '~/components/Donorbox'
+import Donation from '~/components/Donation'
 
 export default {
   components: {
     AppHeader,
     AppFooter,
     Subscription,
-    Donorbox
+    Donation
   },
   data (context) {
     let urlQuery = context.$route.query

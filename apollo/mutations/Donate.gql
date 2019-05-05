@@ -1,0 +1,7 @@
+mutation donate($inputs: DonateInput!) {
+  donate(inputs: $inputs) {
+    isSuccess,
+    statusCode,
+    errorMsg
+  }
+}
