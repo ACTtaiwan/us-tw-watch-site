@@ -20,6 +20,8 @@ service: taiwanwatch-main-site
 provider:
   name: aws
   runtime: nodejs8.10
+  environment:
+    STAGE: ${opt:stage}
 
 # you can overwrite defaults here
 #  stage: dev

@@ -20,7 +20,7 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'dns-prefetch', href: app.api.url }
+      { rel: 'dns-prefetch', href: app.api.dev }
     ]
   },
 

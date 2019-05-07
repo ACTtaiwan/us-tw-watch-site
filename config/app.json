@@ -7,7 +7,8 @@
     "url": "https://www.uswatch.tw"
   },
   "api": {
-    "url": "https://graphql.uswatch.tw/dev/api/v2"
+    "dev": "https://ustw-frontend-api-dev.azurewebsites.net/api/v2",
+    "prod": "https://ustw-frontend-api-prod.azurewebsites.net/api/v2"
   },
   "assets": {
     "baseUrl": "https://s3.amazonaws.com/taiwanwatch-static/assets"

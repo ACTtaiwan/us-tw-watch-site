@@ -106,7 +106,8 @@ export default {
       }
     },
     memberDescription () {
-      return `${this.member.latestRole.title || '' } ${ this.member.firstName || '' } ${ this.member.middleName || '' } ${ this.member.lastName || ''} （${this.memberTitle}）`
+      const title = (this.member.latestRole && this.member.latestRole.title) || '';
+      return `${title} ${ this.member.firstName || '' } ${ this.member.middleName || '' } ${ this.member.lastName || ''} （${this.memberTitle}）`
     }
   },
   methods: {

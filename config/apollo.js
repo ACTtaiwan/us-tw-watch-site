@@ -4,7 +4,8 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import app from '~/config/app.json'
 
 export default ctx => {
-  const httpLink = new HttpLink({ uri: app.api.url })
+  const apiEndpoint = process.env.STAGE === 'prod' ? app.api.prod : app.api.dev
+  const httpLink = new HttpLink({ uri: apiEndpoint })
   // auth token
   // let token = ctx.isServer ? ctx.req.session : window.__NUXT__.state.session
   let token = null
