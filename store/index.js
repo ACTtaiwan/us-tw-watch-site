@@ -13,7 +13,8 @@ export default () => {
       earliestCongress: 96,
       currentCongress: 116,
       subscription: false,
-      donation: false
+      donation: false,
+      sharedEnv: {}
     },
     actions,
     mutations,

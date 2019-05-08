@@ -9,5 +9,8 @@ export default {
   },
   SET_DONATION (state, value) {
     Vue.set(state, 'donation', value)
+  },
+  SET_SHARED_ENV (state, obj) {
+    Vue.set(state, 'sharedEnv', obj)
   }
 }
