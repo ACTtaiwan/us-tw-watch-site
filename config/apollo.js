@@ -13,7 +13,8 @@ export default context => {
   }
   
   const apiEndpoint = sharedEnv.STAGE === 'prod' ? app.api.prod : app.api.dev
-  console.log(`BACKEND_API_ENDPOINT = ${apiEndpoint}`)
+  console.log(`FRONTEND_API_ENDPOINT = ${apiEndpoint}`)
+  console.log(`FRONTEND_API_KEY = ${sharedEnv.FRONTEND_API_KEY}`)
   const httpLink = new HttpLink({ uri: apiEndpoint })
   // auth token
   // let token = ctx.isServer ? ctx.req.session : window.__NUXT__.state.session
@@ -22,7 +23,7 @@ export default context => {
   // middleware
   const middlewareLink = new ApolloLink((operation, forward) => {
     operation.setContext({
-      headers: { 'x-api-key': process.env.FRONTEND_API_KEY }
+      headers: { 'x-api-key': sharedEnv.FRONTEND_API_KEY }
     })
     return forward(operation)
   })

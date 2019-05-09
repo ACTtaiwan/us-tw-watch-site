@@ -28,15 +28,14 @@ module.exports = {
    ** Define environment variables
    */
   env: {
-    baseUrl: '/',
-    FRONTEND_API_KEY: process.env.FRONTEND_API_KEY
+    baseUrl: '/'
   },
 
   /*
    ** Overwrite the default Nuxt.js configuration of Vue Router
    */
   router: {
-    middleware: ['https'],
+    // middleware: ['https'],
     base: '/'
   },
 
