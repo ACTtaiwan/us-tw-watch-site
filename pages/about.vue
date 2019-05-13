@@ -50,7 +50,7 @@
       <div class="section-wrapper">
         <h1 class="section-title">支持我們</h1>
         <Card :bordered="false" class="section-card">
-          <DonorboxContent :config="'ustw'"/>
+          <Donation :stripeConfig="{ showTitle: false }" :config="'ustw'"/>
         </Card>
       </div>
     </section>
@@ -80,11 +80,11 @@ import bannerBackImg from '~/assets/img/banner.png'
 import lineIcon from '~/assets/img/line-icon-outline.png'
 
 // components
-import DonorboxContent from '~/components/DonorboxContent'
+import Donation from '~/components/Donation'
 
 export default {
   components: {
-    DonorboxContent
+    Donation
   },
   data (context) {
     let urlQuery = context.$route.query
