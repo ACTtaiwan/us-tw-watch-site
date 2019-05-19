@@ -55,10 +55,11 @@
       </div>
     </section>
 
-    <!-- Data source -->
+    <!-- Data -->
     <section id="data-source" class="section">
       <div class="section-wrapper">
-        <h1 class="section-title">資料來源</h1>
+        <h1 class="section-title">本站資料</h1>
+        <p>觀測站是一個開源專案，所使用的資料以及這個網站的原始碼也都是<span class="underscore"><span>開源授權</span></span>。</p>
         <Card :bordered="false" class="section-card">
           <ul class="data-list">
             <li><a href="https://www.govtrack.us/" target="_blank">GovTrack</a></li>

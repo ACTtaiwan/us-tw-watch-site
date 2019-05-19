@@ -2,13 +2,14 @@ require('dotenv').config({ path: './express-server/.env' })
 const { Nuxt, Builder } = require('nuxt')
 
 const app = require('express')()
-const isProd = (process.env.NODE_ENV === 'production')
+const isProd = process.env.NODE_ENV === 'production'
 const port = process.env.PORT || 3000
 
 // init Application Insights (Azure telemetry)
 if (isProd) {
   const appInsights = require('applicationinsights')
-  appInsights.setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY)
+  appInsights
+    .setup(process.env.APPINSIGHTS_INSTRUMENTATIONKEY)
     .setAutoDependencyCorrelation(true)
     .setAutoCollectRequests(true)
     .setAutoCollectPerformance(true)
@@ -16,13 +17,17 @@ if (isProd) {
     .setAutoCollectDependencies(true)
     .setAutoCollectConsole(true, true)
     .setUseDiskRetryCaching(true)
-    .setSendLiveMetrics(false);
+    .setSendLiveMetrics(false)
   const role = `ustw-site-${process.env.STAGE || 'dev'}`
   appInsights.defaultClient.context.tags[appInsights.defaultClient.context.keys.cloudRole] = role
-  appInsights.start();
-  console.log(`NODE_ENV = production. Use Application Insights. Key = ${process.env.APPINSIGHTS_INSTRUMENTATIONKEY} Role = ${role}`);
+  appInsights.start()
+  console.log(
+    `NODE_ENV = production. Use Application Insights. Key = ${
+      process.env.APPINSIGHTS_INSTRUMENTATIONKEY
+    } Role = ${role}`
+  )
 } else {
-  console.log('NODE_ENV = dev. Not use Application Insights.');
+  console.log('NODE_ENV = dev. Not use Application Insights.')
 }
 
 // We instantiate Nuxt.js with the options
@@ -42,7 +47,7 @@ if (config.dev) {
   listen()
 }
 
-function listen() {
+function listen () {
   // Listen the server
   app.listen(port, '0.0.0.0')
   console.log('Server listening on `localhost:' + port + '`.')
