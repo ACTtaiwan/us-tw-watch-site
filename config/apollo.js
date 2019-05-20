@@ -6,15 +6,14 @@ import app from '~/config/app.json'
 export default context => {
   context.store.dispatch('NUXT_SERVER_INIT', context)
   const sharedEnv = { ...context.store.state.sharedEnv }
+
   if (process.server) {
     console.log(`[SERVER] sharedEnv = ${JSON.stringify(sharedEnv, null, 2)}`)
   } else {
     console.log(`[CLIENT] sharedEnv = ${JSON.stringify(sharedEnv, null, 2)}`)
   }
-  
+
   const apiEndpoint = sharedEnv.STAGE === 'prod' ? app.api.prod : app.api.dev
-  console.log(`FRONTEND_API_ENDPOINT = ${apiEndpoint}`)
-  console.log(`FRONTEND_API_KEY = ${sharedEnv.FRONTEND_API_KEY}`)
   const httpLink = new HttpLink({ uri: apiEndpoint })
   // auth token
   // let token = ctx.isServer ? ctx.req.session : window.__NUXT__.state.session

@@ -1,9 +1,10 @@
 function getSharedEnv () {
   return process.server
-    ? { 
-      STAGE: process.env.STAGE || 'dev',
-      FRONTEND_API_KEY: process.env.FRONTEND_API_KEY
-    }
+    ? {
+        STAGE: process.env.STAGE || 'dev',
+        FRONTEND_API_KEY: process.env.FRONTEND_API_KEY,
+        STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY
+      }
     : {}
 }
 
