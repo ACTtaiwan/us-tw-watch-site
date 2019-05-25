@@ -13,7 +13,7 @@
     </section>
 
     <!-- About us -->
-    <section id="data-source" class="section">
+    <section id="data-source" class="section about">
       <div class="section-wrapper">
         <h1 class="section-title">觀測員們</h1>
         <p class="content">
@@ -46,7 +46,7 @@
     </section>
 
     <!-- Data -->
-    <section id="data-source" class="section">
+    <section id="data-source" class="section data">
       <div class="section-wrapper">
         <h1 class="section-title">本站資料</h1>
         <p class="content">
@@ -68,19 +68,21 @@
     </section>
 
     <!-- Follow Us -->
-    <section id="data-source" class="section">
+    <section id="data-source" class="section follow">
       <div class="section-wrapper">
         <h1 class="section-title">成為粉絲</h1>
-        <Row :gutter="30">
-          <i-col v-for="social in accounts" :key="social.name" :span="isPhone ? 24 : isTablet ? 8 : 6">
-            <SocialMediaCard :source="social"/>
-          </i-col>
-        </Row>
+        <!-- <Row :gutter="30">
+        <i-col v-for="social in accounts" :key="social.name" :span="isPhone ? 24 : isTablet ? 8 : 6">-->
+        <div class="platforms">
+          <SocialMediaCard v-for="social in accounts" :key="social.name" :source="social" class="media"/>
+        </div>
+        <!-- </i-col>
+        </Row>-->
       </div>
     </section>
 
     <!-- Join Us -->
-    <section id="data-source" class="section">
+    <section id="data-source" class="section join">
       <div class="section-wrapper">
         <h1 class="section-title">加入我們</h1>
         <p class="content">
@@ -239,7 +241,12 @@ export default {
 }
 
 .section {
-  padding: 40px 0 0 0;
+  padding: 40px 0;
+
+  &.about,
+  &.follow {
+    background-color: #eef2f6;
+  }
 
   .section-wrapper {
     @extend .pageWrapper-large;
@@ -303,6 +310,26 @@ export default {
     &.right {
       flex: 2;
     }
+  }
+}
+
+.platforms {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px;
+  margin-left: -10px;
+  margin-right: -10px;
+
+  .media {
+    position: relative;
+    flex: 1;
+    flex-basis: 140px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-bottom: 10px;
   }
 }
 
