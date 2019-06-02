@@ -1,7 +1,7 @@
 {
   "name": "U.S. Taiwan Watch",
   "fbAppId": "2017625051893386",
-  "thumbnail": "https://s3.amazonaws.com/taiwanwatch-static/assets/tw-fb-og-image.png",
+  "thumbnail": "https://s3.amazonaws.com/taiwanwatch-static/assets/tw-fb-image.png",
   "previewBaseUrl": "https://preview.uswatch.tw",
   "site": {
     "url": "https://www.uswatch.tw"

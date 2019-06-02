@@ -174,6 +174,7 @@ export default {
       meta: [
         { hid: 'description', name: 'description', content: this.$t('landingPage.description') },
         { property: 'og:url', content: appConfig.site.url },
+        { property: 'og:image', content: appConfig.thumbnail },
         { property: 'og:title', content: this.$t('landingPage.title') },
         { property: 'og:description', content: this.$t('landingPage.description') }
       ]
@@ -319,6 +320,7 @@ export default {
   .image-container {
     order: 0;
     display: flex;
+    flex-direction: column;
     margin-right: 100px;
 
     .front-img {
@@ -537,6 +539,7 @@ export default {
       order: 1;
       margin-right: 0px;
       margin-top: 20px;
+      flex-direction: row;
       justify-content: center;
 
       .front-img {
