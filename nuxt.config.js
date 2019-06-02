@@ -15,7 +15,6 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { property: 'og:site_name', content: app.name },
       { property: 'og:type', content: 'website' },
-      { property: 'og:image', content: app.thumbnail },
       { property: 'fb:app_id', content: app.fbAppId },
       { property: 'twitter:card', content: 'summary_large_image' }
     ],
@@ -78,6 +77,12 @@ module.exports = {
       {
         max: 10000,
         maxAge: 1000 * 60 * 60
+      }
+    ],
+    [
+      '@nuxtjs/google-analytics',
+      {
+        id: 'UA-141286195-1'
       }
     ],
     '@nuxtjs/apollo'
