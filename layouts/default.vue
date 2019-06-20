@@ -77,17 +77,20 @@ export default {
   mounted () {
     let urlQuery = this.$route.query
 
+    console.log('XDDDD', urlQuery)
+
     // detect window size
     window.addEventListener('resize', _.debounce(this.parseWindowWidth, 500))
     this.parseWindowWidth()
 
-    // detect subscription
-    if (urlQuery.subscription) {
-      this.$store.commit('SET_SUBSCRIPTION', urlQuery.subscription === 'true' ? true : false)
+    // detect subscribe
+    if (urlQuery.subscribe) {
+      console.log('XDDDD')
+      this.$store.commit('SET_SUBSCRIPTION', urlQuery.subscribe === 'true' ? true : false)
     }
-    // detect donation
-    if (urlQuery.donation) {
-      this.$store.commit('SET_DONATION', urlQuery.donation === 'true' ? true : false)
+    // detect donate
+    if (urlQuery.donate) {
+      this.$store.commit('SET_DONATION', urlQuery.donate === 'true' ? true : false)
     }
   },
   beforeDestroy () {
