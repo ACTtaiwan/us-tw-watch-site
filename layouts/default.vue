@@ -77,15 +77,12 @@ export default {
   mounted () {
     let urlQuery = this.$route.query
 
-    console.log('XDDDD', urlQuery)
-
     // detect window size
     window.addEventListener('resize', _.debounce(this.parseWindowWidth, 500))
     this.parseWindowWidth()
 
     // detect subscribe
     if (urlQuery.subscribe) {
-      console.log('XDDDD')
       this.$store.commit('SET_SUBSCRIPTION', urlQuery.subscribe === 'true' ? true : false)
     }
     // detect donate
