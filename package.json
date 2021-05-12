@@ -32,7 +32,7 @@
     "aws-serverless-express": "^3.0.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.2",
-    "chart.js": "^2.7.1",
+    "chart.js": "^2.9.4",
     "d3": "^4.12.2",
     "express": "^4.15.2",
     "express-session": "^1.15.6",
