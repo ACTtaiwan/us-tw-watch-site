@@ -40,7 +40,7 @@
     "graphql-tag": "^2.7.3",
     "hchs-vue-charts": "^1.2.8",
     "iview": "^3.0.0",
-    "moment": "^2.20.1",
+    "moment": "^2.29.2",
     "nuxt": "^1.4.0",
     "topojson": "v1.6.27",
     "vue-async-computed": "^3.3.1",
