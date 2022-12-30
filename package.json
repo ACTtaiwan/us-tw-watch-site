@@ -41,7 +41,7 @@
     "hchs-vue-charts": "^1.2.8",
     "iview": "^3.0.0",
     "moment": "^2.20.1",
-    "nuxt": "^1.4.0",
+    "nuxt": "^3.0.0",
     "topojson": "v1.6.27",
     "vue-async-computed": "^3.3.1",
     "vue-chartjs": "^3.2.1",
@@ -55,13 +55,13 @@
     "cross-env": "^5.2.0",
     "dotenv": "^6.2.0",
     "eslint": "^4.19.1",
-    "eslint-loader": "^2.0.0",
+    "eslint-loader": "^4.0.2",
     "eslint-plugin-vue": "^4.5.0",
     "hoek": "^5.0.3",
     "less": "^2.7.3",
-    "less-loader": "^4.0.5",
+    "less-loader": "^11.1.0",
     "node-sass": "^4.11.0",
-    "sass-loader": "^6.0.6",
+    "sass-loader": "^13.2.0",
     "serverless": "^1.40.0"
   }
 }
